@@ -15,3 +15,34 @@ An electronic monstrosity workstation designed to examine and develop systems fo
 | _Upgrading the system_ | 
 | _Scientific Recall of the solution_ | Again, using the _Set Theory_ and the _Group Theory_, envision the environment to build is a universe set _E_ with a main board known as _GA_, and a set of peripherals _P_, and a set of external electronic modules _M_; thus the final scientific model will be _E = {GA, P, M}_; where _P = {p \| p is a peripheral device connected directly to the GA motherboard}_, and _M = {m \| m is an electronic module connected indirectly to the GA motherboard using one or more of the board communication protocols}_. |
 
+## Table of content: 
+### Hardware:
+- General Components.
+- General Circuitry scheme layout.
+- Substantial Circuitry description (i.e., main board, peripherals, and modules).
+### Software:
+- Basic Environment.
+- Electrostatic-Sandbox Tools (i.e., development tools, frameworks, and APIs).
+### Main Attachments:
+- GA-H61M-SP2V Rev-2.0
+- PCI-e USB Card.
+
+## DIY Tutorial:
+Find the do-it-yourself tutorial at [diy-tutorial]().
+
+### Credits:
+Credits should go to these products for being open-source and widely available with no constraints, hooray to them:
+- The Java Platform.
+- The CMake Building Framework.
+- The jMonkeyEngine game engine.
+- The Gradle API.
+- The Avrdude tool.
+- The Arduino Platform.
+- The Gigabyte Company (not open-source, but the main board depends on).
+- Zorin OS (the main OS currently in-use).
+- SanDisk (flash drive).
+- Microchip & ATMEL (for AVR microcontrollers).
+- The Linux Man Page & Micheal Kerrisk Linux Interfacing Book.
+- The GNU/Linux glibc and the interfacing libraries.
+
+And, To others who I didn't mention, and were essential predicates for the success of this project.
