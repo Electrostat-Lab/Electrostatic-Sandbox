@@ -52,7 +52,12 @@ Credits should go to these products for being open-source and widely available w
 - Zorin OS (the main OS currently in-use).
 - SanDisk (flash drive).
 - Microchip & ATMEL (for AVR microcontrollers).
-- The Linux Man Page & Micheal Kerrisk Linux Interfacing Book.
+- The Linux Man Page & Micheal Kerrisk's Linux Interfacing Book.
 - The GNU/Linux glibc and the interfacing libraries.
+- IEEE for providing the standards of I/O Communication interfaces.
+- The ACM digital library for providing publications about distributed simulation systems.
+- The GitHub Platform and Git VCS for hosting this project.
+- The KiCad project.
+- The Fritzing project.
 
 And, To others who I didn't mention, and were essential predicates for the success of this project.
