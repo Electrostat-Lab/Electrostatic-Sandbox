@@ -41,6 +41,16 @@ Find the do-it-yourself tutorial at [diy-tutorial]().
 ## Techdemos on YouTube:
 - [Serial4j, ShiftAvr, and jMonkeyEngine](https://youtu.be/4GFGsH4eyJs)
 
+## General progress:
+- [x] Serial4j.
+- [x] Articular-ES.
+- [x] Automata4j.
+- [x] Jector.
+- [ ] ShiftAvr.
+- [ ] Parallel4j.
+- [ ] Socket4j.
+- [ ] Electrostatic-sandbox-framework.
+
 ### Credits:
 Credits should go to these products for being open-source and widely available with no constraints, hooray to them:
 - The Java Platform.
