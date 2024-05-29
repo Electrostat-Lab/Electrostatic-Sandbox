@@ -15,7 +15,7 @@ An electronic monstrosity workstation designed to examine and develop systems fo
 | _Upgrading the system_ | Theoretically, the previously mentioned scientific model includes the complements of the _problem elements_ described, therefore for instance, the $P_{Modules}$ has its complement $P'_{Modules}$ which means that we can add expansion modules designated as complements for the pre-existing modules to our system, as well. The practicability of this is well-demonstrated, but half-revealed in a way that it's very much related to the original equation: **Which motherboard are we going to use? AND Which type of COM and modules are utilized in this set? Are they really compatible? We will see about these details when we scope down on the circuit-design level...** | 
 | _Scientific Recall of the solution_ | Again, using the _Set Theory_ and the _Group Theory_, envision the environment to build is a universe set _E_ with a main board known as _GA_ standing for _Gigabyte_, a set of peripherals _P_, and a set of communication modules providing communication protocols _COM_, and a set of external electronic modules _M_; thus the final scientific model will be $E = \[GA, P, COM, M\]$; where _COM = \{com \| "com" is a communication protocol provided by a SoC module providing the relations between "GA", "P" and "M" sets\}_, _P = \{p \| "p" is a peripheral device connected directly to the "GA" motherboard\}_, and _M = \{m \| "m" is an electronic module connected indirectly to the "GA" motherboard using one or more of the board communication protocols "com"\}_. |
 
-## Table of content: 
+## Table of content (WIP): 
 ### Hardware:
 - General Components.
 - General Circuitry scheme layout.
@@ -23,6 +23,7 @@ An electronic monstrosity workstation designed to examine and develop systems fo
 ### Software:
 - Basic Environment Setup.
 - Electrostatic-Sandbox Tools (i.e., development tools, frameworks, and APIs).
+- Electrostatic-Sandbox Framework (a set of APIs blending Serial4j, Socket4j, ShiftAvr, and Parallel4j for building distributed simulation systems).
 ### Main Attachments:
 - GA-H61M-SP2V Rev-2.0
 - PCI-e USB Card.
