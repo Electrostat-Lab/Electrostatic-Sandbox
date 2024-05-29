@@ -1,7 +1,8 @@
 # <img src="https://github.com/Electrostat-Lab/Electrostatic-Sandbox/blob/master/assets/electrostatic-logo-2.png" height=60 width=80/> Electrostatic-Sandbox
 
 ## Preface:
-An electronic monstrosity workstation designed to examine and develop systems for distributed simulations by providing an integrated environment housing the basic nostalgic communication protocols (i.e., Serial and Parallel COMs), the abstract networking interfaces, and a range of other electronic modules providing standards for controller interfaces, and sensor modules (e.g., the underdeveloped ShiftAvr, and Arduinos).
+An electronic monstrosity workstation designed to examine and develop systems for distributed simulations by providing an integrated environment housing the basic nostalgic communication protocols (i.e., Serial and Parallel COMs), the abstract networking interfaces, and a range of other electronic modules providing standards for controller interfaces, and sensor modules (e.g., the underdeveloped ShiftAvr, and Arduinos). 
+
 
 ## Hardware-Software specification overview:
 
@@ -14,6 +15,11 @@ An electronic monstrosity workstation designed to examine and develop systems fo
 | _Specific Minimal Approach_ | The minimal approach utilizes this simplistic model that uses the _Set Theory_. Nonetheless, we are merely concerned about the relation set $R_{Env.}$ inside the integrated environment, as it maps the behavior we are seeking from the system. |
 | _Upgrading the system_ | Theoretically, the previously mentioned scientific model includes the complements of the _problem elements_ described, therefore for instance, the $P_{Modules}$ has its complement $P'_{Modules}$ which means that we can add expansion modules designated as complements for the pre-existing modules to our system, as well. The practicability of this is well-demonstrated, but half-revealed in a way that it's very much related to the original equation: **Which motherboard are we going to use? AND Which type of COM and modules are utilized in this set? Are they really compatible? We will see about these details when we scope down on the circuit-design level...** | 
 | _Scientific Recall of the solution_ | Again, using the _Set Theory_ and the _Group Theory_, envision the environment to build is a universe set _E_ with a main board known as _GA_ standing for _Gigabyte_, a set of peripherals _P_, and a set of communication modules providing communication protocols _COM_, and a set of external electronic modules _M_; thus the final scientific model will be $E = \[GA, P, COM, M\]$; where _COM = \{com \| "com" is a communication protocol provided by a SoC module providing the relations between "GA", "P" and "M" sets\}_, _P = \{p \| "p" is a peripheral device connected directly to the "GA" motherboard\}_, and _M = \{m \| "m" is an electronic module connected indirectly to the "GA" motherboard using one or more of the board communication protocols "com"\}_. |
+
+| The main board | General layout | Scheme | 
+|----------------|-----------------------|--------|
+| ![image](https://github.com/Electrostat-Lab/Electrostatic-Sandbox/assets/60224159/24bf3e89-42d9-4394-9fd3-ae1a6afaec77) | ![image](https://github.com/Electrostat-Lab/Electrostatic-Sandbox/assets/60224159/320f771a-c3d9-4fd2-8e11-c24646d825ba) | ![image](https://github.com/Electrostat-Lab/Electrostatic-Sandbox/assets/60224159/28c2a865-c21c-4e0b-851d-974d92812368) |
+
 
 ## Table of content (WIP): 
 ### Hardware:
