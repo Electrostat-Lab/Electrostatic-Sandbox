@@ -32,6 +32,7 @@ An electronic monstrosity workstation designed to examine and develop systems fo
 - Electrostatic-Sandbox Framework (a set of APIs blending Serial4j, Socket4j, ShiftAvr, and Parallel4j for building distributed simulation systems).
 ### Main Attachments:
 - [GA-H61M-S2P Rev-2.0](https://www.gigabyte.com/Motherboard/GA-H61M-S2PV-rev-20#ov)
+- [Kingstone 4GB DIMM](https://www.kingston.com/en/memory/search/discontinuedmodels?partid=KVR1333D3N9K2%2F8G)
 - PCI-e USB Card.
 
 ## DIY Tutorial:
