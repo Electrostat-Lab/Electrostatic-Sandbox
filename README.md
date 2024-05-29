@@ -1,4 +1,4 @@
-# <img src="https://github.com/Electrostat-Lab/Electrostatic-Sandbox/assets/60224159/e8487c61-d5d2-46cc-98a0-6c2fef78760f" height=60 width=80/> Electrostatic-Sandbox
+# <img src="https://github.com/Electrostat-Lab/Electrostatic-Sandbox/blob/master/assets/electrostatic-logo-2.png" height=60 width=80/> Electrostatic-Sandbox
 
 ## Preface:
 An electronic monstrosity workstation designed to examine and develop systems for distributed simulations by providing an integrated environment housing the basic nostalgic communication protocols (i.e., Serial and Parallel COMs), the abstract networking interfaces, and a range of other electronic modules providing standards for controller interfaces, and sensor modules (e.g., the underdeveloped ShiftAvr, and Arduinos).
