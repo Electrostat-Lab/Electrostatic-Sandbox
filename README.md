@@ -21,7 +21,7 @@ An electronic monstrosity workstation designed to examine and develop systems fo
 - General Circuitry scheme layout.
 - Substantial Circuitry description (i.e., main board, peripherals, and modules).
 ### Software:
-- Basic Environment.
+- Basic Environment Setup.
 - Electrostatic-Sandbox Tools (i.e., development tools, frameworks, and APIs).
 ### Main Attachments:
 - GA-H61M-SP2V Rev-2.0
@@ -29,6 +29,9 @@ An electronic monstrosity workstation designed to examine and develop systems fo
 
 ## DIY Tutorial:
 Find the do-it-yourself tutorial at [diy-tutorial]().
+
+## Techdemos on YouTube:
+- [Serial4j, ShiftAvr, and jMonkeyEngine](https://youtu.be/4GFGsH4eyJs)
 
 ### Credits:
 Credits should go to these products for being open-source and widely available with no constraints, hooray to them:
