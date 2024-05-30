@@ -42,6 +42,7 @@ Find the do-it-yourself tutorial at [diy-tutorial]().
 - [Serial4j, ShiftAvr, and jMonkeyEngine](https://youtu.be/4GFGsH4eyJs)
 
 ## General progress:
+**API used:**
 - [x] Serial4j.
 - [x] Articular-ES.
 - [x] Automata4j.
@@ -50,6 +51,25 @@ Find the do-it-yourself tutorial at [diy-tutorial]().
 - [ ] Parallel4j.
 - [ ] Socket4j.
 - [ ] Electrostatic-sandbox-framework.
+
+**Environment Setup**:
+- [ ] `setup-tools` scripting.
+- [ ] `setup-framework` scripting.
+
+**Electrostatic-sandbox framework**:
+- [ ] Electroserial API: wraps Serial4j API providing a generic boundary to the Electrocomponent API.
+- [ ] Electroparallel API: wraps Parallel4j API providing a generic boundary to the Electrocomponent API.
+- [ ] Electrosocket API: wraps Socket4j API providing a generic boundary to the Electrocomponent API.
+- [ ] Electrocomponent API: provides the vertical HAL for interacting with devices through device managers based on the scientific model provided by the _Set Theory_.
+- [ ] Electrostatic-sandbox-examples: examples and techdemos utilizing the HAL API directly to interact with peripheral devices and/or use one of the above core APIs.
+- [ ] Deployment to Maven Central.
+- [ ] Build the framework into an SDK.
+
+**Circuitry Explanation**:
+- [ ] GA-H61M-S2P Rev-2.0 circuit connections details.
+- [ ] Scientific modelling to the circuitry and connection details.
+- [ ] ShiftAvr circuitry explanation.
+- [ ] Digital electronics and digital design.
 
 ### Credits:
 Credits should go to these products for being open-source and widely available with no constraints, hooray to them:
