@@ -34,3 +34,7 @@ The guide include the following:
 - [ ] BIOS/UEFI Configurations.
 - [ ] Selection of the appropriate operating system (commonly a GNU/Linux).
 - [ ] GNU/Linux glibc and tools.
+- [ ] Selection of means of programming the attached modular devices.
+- [ ] Selection of means of communication to the attached modular devices.
+- [ ] Selection of the appropriate frameworks for I/O control and data communications.
+- [ ] What the `Electrostatic-Sandbox Framework` offers.
