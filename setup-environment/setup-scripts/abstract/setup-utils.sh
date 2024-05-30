@@ -34,7 +34,7 @@ function download_package() {
 	package_url="${2}"
 	more_options="${3}"
 
-	wget --https-only --verbose --continue --server-response --show-progress --base="${package_url}" -P "${download_dir}"
+	wget --https-only --verbose --continue --server-response --show-progress "${package_url}" -P "${download_dir}"
 
 	error_handler "$?" "Downloading package ${package_url} has failed!"
 }
