@@ -63,4 +63,17 @@ function insert_package() {
 	error_handler "$?" "Extracting package ${package_path} has failed!"
 }	
 
+function create_sandbox_symbol() {
+	file_path="${1}"
+	symbolic_link="${2}"
+
+	sudo ln -s "${file_path}" "${symbolic_link}"
+
+	error_handler "$?" "Symbolic link for ${file_path} has failed!"
+}
+
+function delete_sandbox_symbol() {
+	symbolic_link="${1}"
+	sudo unlink "${symbolic_link}"
+}
 

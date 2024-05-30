@@ -21,6 +21,7 @@ function run_tests() {
 	test_preparation
 	test_downloader
 	test_extracting
+	test_creating_symbols
 	cleanup
 }
 
