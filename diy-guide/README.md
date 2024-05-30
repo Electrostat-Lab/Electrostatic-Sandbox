@@ -35,6 +35,6 @@ The guide include the following:
 - [ ] Selection of the appropriate operating system (commonly a GNU/Linux).
 - [ ] GNU/Linux glibc and tools.
 - [ ] Selection of means of programming the attached modular devices.
-- [ ] Selection of means of communication to the attached modular devices.
+- [ ] Selection of means of communication with the attached modular devices (SEE: the scientific model of the project using the _Set Theory_).
 - [ ] Selection of the appropriate frameworks for I/O control and data communications.
 - [ ] What the `Electrostatic-Sandbox Framework` offers.
