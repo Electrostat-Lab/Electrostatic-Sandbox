@@ -77,6 +77,7 @@ Credits should go to these products for being open-source and widely available w
 - The CMake Building Framework.
 - The jMonkeyEngine game engine.
 - The Gradle API.
+- The GraalVM team.
 - The Avrdude tool.
 - The Arduino Platform.
 - The Gigabyte Company (not open-source, but the main board depends on).
