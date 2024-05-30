@@ -26,8 +26,8 @@ The guide include the following:
 - [ ] HDD/SSD power and data connection.
 - [ ] Mounting the GFX card on the d-sub expansion connector.
 - [ ] Mounting the PCI-e expansion cards.
-- [ ] Mounting the extra cooling SYS_FANs.
-- [ ] Controlling the FRONT_PANEL connections.
+- [ ] Mounting the extra cooling `SYS_FAN`.
+- [ ] Controlling the `F_PANEL` connections.
 - [ ] Mounting the power circuit.
 
 **Software selection criteria**:
