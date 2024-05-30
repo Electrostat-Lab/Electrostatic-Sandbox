@@ -15,6 +15,10 @@ function test_extracting() {
 	extract_package "${test_file_provisional_path}" "${sandbox_path}"
 }
 
+function test_creating_symbols() {
+	create_sandbox_symbol "${sandbox_path}/${test_file_content}" "${test_file_symbol}"
+}
+
 function ping_package() {
 	cat "${sandbox_path}/${test_file_content}"
 }
