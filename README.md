@@ -82,6 +82,7 @@ Find the do-it-yourself tutorial at [diy-tutorial]().
 - [Linux Parallel IOCTL Magic Macros](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/include/uapi/linux/parport.h)
 - [Linux IOCTL CDROM Magic Macros](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/include/uapi/linux/cdrom.h)
 - [Linux IOCTL PCI-e Magic Macros](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/include/uapi/linux/pci.h)
+- [Linux IOCTL USB FS Magic Macros](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/include/uapi/linux/usbdevice_fs.h)
 - [Linux Kernel Test Hashing](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/lib/test_hash.c)
 
 ### Theoretical papers:
