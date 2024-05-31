@@ -71,6 +71,20 @@ Find the do-it-yourself tutorial at [diy-tutorial]().
 - [ ] ShiftAvr circuitry explanation.
 - [ ] Digital electronics and digital design.
 
+## References (Direct links to useful topics):
+### Operational:
+- [Linux Kernel Userspace APIs](https://docs.kernel.org/userspace-api/index.html#the-linux-kernel-user-space-api-guide)
+- [Linux Manual Page Generic IO using IOCTL]()
+- [Linux Manual Page Serial IOCTL](https://man7.org/linux/man-pages/man2/ioctl_tty.2.html)
+- [Linux Serial IOCTL Magic Macros]()
+- [Linux Parallel IOCTL Magic Macros](https://gist.github.com/Scrappers-glitch/352ca80aa6f7ce6c7ce156e55bccb3cc)
+- [Linux Manual Page CDROM IOCTL]()
+
+### Theoretical papers:
+- [TWOs Discrete Event Simulation]()
+- [VME TWOs Discrete Event Simulation]()
+- [NASA Distributed System simulation]()
+
 ### Credits:
 Credits should go to these products for being open-source and widely available with no constraints, hooray to them:
 - The Java Platform.
