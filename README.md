@@ -89,6 +89,7 @@ Credits should go to these products for being open-source and widely available w
 - IEEE for providing the standards of I/O Communication interfaces.
 - The NASA Technical Reports Server (NTRS) for providing open publications from their distributed simulation systems.
 - Maven Central, Sonatype and JIRA services for hosting open-source APIs.
+- Springer Nature for providing Mathematics books and publications on predicate calculus and logic analysis.
 - The ACM digital library for providing publications about distributed simulation systems.
 - The GitHub Platform and Git VCS for hosting this project.
 - The KiCad project.
