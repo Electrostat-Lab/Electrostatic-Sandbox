@@ -87,6 +87,8 @@ Credits should go to these products for being open-source and widely available w
 - The Linux Man Page & Micheal Kerrisk's Linux Interfacing Book.
 - The GNU/Linux glibc and the interfacing libraries.
 - IEEE for providing the standards of I/O Communication interfaces.
+- NASA Technical Reports Server (NTRS).
+- Maven Central, Sonatype and JIRA services for hosting open-source APIs.
 - The ACM digital library for providing publications about distributed simulation systems.
 - The GitHub Platform and Git VCS for hosting this project.
 - The KiCad project.
