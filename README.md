@@ -74,11 +74,13 @@ Find the do-it-yourself tutorial at [diy-tutorial]().
 ## References (Direct links to useful topics):
 ### Operational:
 - [Linux Kernel Userspace APIs](https://docs.kernel.org/userspace-api/index.html#the-linux-kernel-user-space-api-guide)
-- [Linux Manual Page Generic IO using IOCTL]()
+- [Linux Manual Page Generic IO using IOCTL](https://man7.org/linux/man-pages/man2/ioctl.2.html)
+- [Linux Generic IOCTL Functions to control data routing](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/include/uapi/asm-generic/ioctl.h)
 - [Linux Manual Page Serial IOCTL](https://man7.org/linux/man-pages/man2/ioctl_tty.2.html)
-- [Linux Serial IOCTL Magic Macros]()
-- [Linux Parallel IOCTL Magic Macros](https://gist.github.com/Scrappers-glitch/352ca80aa6f7ce6c7ce156e55bccb3cc)
-- [Linux Manual Page CDROM IOCTL]()
+- [Linux Serial IOCTL Magic Macros](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/include/uapi/asm-generic/termios.h)
+- [Linux Parallel IOCTL Magic Macros](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/include/uapi/linux/parport.h)
+- [Linux IOCTL CDROM Magic Macros](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/include/uapi/linux/cdrom.h)
+- [Linux IOCTL PCI-e Magic Macros](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/include/uapi/linux/pci.h)
 
 ### Theoretical papers:
 - [TWOs Discrete Event Simulation]()
@@ -92,6 +94,8 @@ Credits should go to these products for being open-source and widely available w
 - The jMonkeyEngine game engine.
 - The Gradle API.
 - The GraalVM team.
+- The Linux Kernel.
+- The GNU/Linux Operating Systems.
 - The Avrdude tool.
 - The Arduino Platform.
 - The Gigabyte Company (not open-source, but the main board depends on).
