@@ -100,9 +100,14 @@ Find the do-it-yourself tutorial at [diy-tutorial]().
 - [Ubuntu-bionic Internals]()
 
 ### Technical Books:
-- [Serial Port Programming]()
-- [Parallel Port Programming]()
-- [USB Programming]()
+- [Serial Port Complete by Jan Axelson's](http://janaxelson.com/spc.htm)
+- [Parallel Port Complete by Jan Axelson's](http://janaxelson.com/parprtib.htm)
+- [USB Complete by Jan Axelson's](http://janaxelson.com/usbc.htm)
+- [USB Embedded Hosts Complete by Jan Axelson's](http://janaxelson.com/usb_embedded_hosts.htm)
+- [USB Mass Storage Complete by Jan Axelson's](http://janaxelson.com/usbms.htm)
+- [Embedded Ethernet and Internet Complete by Jan Axelson's](http://janaxelson.com/eec.htm)
+- [The Microcontroller Idea Book](http://janaxelson.com/microcib.htm)
+- [Making Printed Circuit Boards](http://janaxelson.com/makpcbds.htm)
 - [PCI-e Programming]()
 - [AVR Microcontroller Programming]()
 - [In-serial Programmer software protocol]()
