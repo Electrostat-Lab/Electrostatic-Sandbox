@@ -73,7 +73,8 @@ Find the do-it-yourself tutorial at [diy-tutorial]().
 
 ## References (Direct links to useful topics):
 ### Operational:
-- [GNU/Linux glibc reference manual on terminal I/O]()
+- [GNU/Linux glibc reference manual on terminal I/O](https://sourceware.org/glibc/manual/latest/html_mono/libc.html#Low_002dLevel-Terminal-Interface)
+- [GNU/Linux glibc reference manual on low-level I/O](https://sourceware.org/glibc/manual/latest/html_mono/libc.html#Low_002dLevel-I_002fO)
 - [Linux Kernel Userspace APIs](https://docs.kernel.org/userspace-api/index.html#the-linux-kernel-user-space-api-guide)
 - [Linux Manual Page Generic IO using IOCTL](https://man7.org/linux/man-pages/man2/ioctl.2.html)
 - [Linux Generic IOCTL Functions to control data routing](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/include/uapi/asm-generic/ioctl.h)
