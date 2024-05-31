@@ -73,6 +73,7 @@ Find the do-it-yourself tutorial at [diy-tutorial]().
 
 ## References (Direct links to useful topics):
 ### Operational:
+- [GNU/Linux glibc reference manual on terminal I/O]()
 - [Linux Kernel Userspace APIs](https://docs.kernel.org/userspace-api/index.html#the-linux-kernel-user-space-api-guide)
 - [Linux Manual Page Generic IO using IOCTL](https://man7.org/linux/man-pages/man2/ioctl.2.html)
 - [Linux Generic IOCTL Functions to control data routing](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/include/uapi/asm-generic/ioctl.h)
@@ -87,10 +88,30 @@ Find the do-it-yourself tutorial at [diy-tutorial]().
 - [TWOs Discrete Event Simulation]()
 - [VME TWOs Discrete Event Simulation]()
 - [NASA Distributed System simulation]()
+- [C/C++ IBM Language Reference](https://www.ibm.com/docs/pt/i/7.5?topic=reference-pdf-file-ile-cc-language)
+- [GNU C Language Reference Manual]()
+- [GCC Compiler Reference Manual]()
+- [G++ Compiler Reference Manual]()
+- [C++ Language Manual]()
+- [Java-20 Documentation Oracle]()
+- [Java Language Reference Oracle]()
+- [NASA C/C++ Native Coding Style]()
+- [Java Google Coding Style]()
+- [Ubuntu-bionic Internals]()
+
+### Technical Books:
+- [Serial Port Programming]()
+- [Parallel Port Programming]()
+- [USB Programming]()
+- [PCI-e Programming]()
+- [AVR Microcontroller Programming]()
+- [In-serial Programmer software protocol]()
+- [Parallel Programmer software protocol]()
 
 ### Credits:
-Credits should go to these products for being open-source and widely available with no constraints, hooray to them:
+Credits should go to these products and platforms for being open-source and widely available with no constraints, hooray to them:
 - The Java Platform.
+- Oracle Corporation.
 - The CMake Building Framework.
 - The jMonkeyEngine game engine.
 - The Gradle API.
