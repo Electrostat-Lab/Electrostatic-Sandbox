@@ -136,6 +136,9 @@ Credits should go to these products and platforms for being open-source and wide
 - The Linux Man Page & Micheal Kerrisk's Linux Interfacing Book.
 - The GNU/Linux glibc and the interfacing libraries.
 - IEEE for providing the standards of I/O Communication interfaces.
+- The Universal Serial Bus (USB) Corporation.
+- The Microsoft Corp. for providing VsCode, an easy-to-use code editor.
+- The Jetbrains Corp. for providing Intellij-IDEA IDE.
 - The NASA Technical Reports Server (NTRS) for providing open publications from their distributed simulation systems.
 - Maven Central, Sonatype and JIRA services for hosting open-source APIs.
 - Springer Nature for providing Mathematics books and publications on predicate calculus and logic analysis.
