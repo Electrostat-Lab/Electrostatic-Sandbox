@@ -90,5 +90,5 @@ all_symbols_manual="============================== \n
 		    ${gradle_symbol} => `${gradle_symbol} --version` \n
 		    ${jetbrains_ide_symbol} `${jetbrains_ide_symbol} --version` \n
 		    ${cmake_symbol} => `${cmake_symbol} --version` \n
-		    ${arduino_ide_symbol} => `${arduino_ide_symbol} --version` \n
+		    ${arduinoide_symbol} => `${arduinoide_symbol} --version` \n
 		    =============================="
