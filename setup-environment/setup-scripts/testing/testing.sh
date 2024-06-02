@@ -12,7 +12,7 @@ function test_downloader() {
 }
 
 function test_extracting() {
-	extract_package "${test_file_provisional_path}" "${sandbox_path}"
+	tar_extract_package "${test_file_provisional_path}" "${sandbox_path}"
 }
 
 function test_creating_symbols() {

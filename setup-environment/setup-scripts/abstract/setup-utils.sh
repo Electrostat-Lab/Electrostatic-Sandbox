@@ -15,7 +15,7 @@ function error_handler() {
 }
 
 ##
-# Creates a dir at '/opt/electrostatic-sandbox/'
+# Creates a dir at '/opt/electrostatic-sandbox/'.
 ##
 function prepare_sandbox() {
 	sandbox_path="${1}"
@@ -42,7 +42,7 @@ function download_package() {
 ##
 # Extracts a package content into the sandbox.
 ##
-function extract_package() {
+function tar_extract_package() {
 	package_path="${1}"
 	destination_path="${2}"
 
@@ -61,8 +61,25 @@ function insert_package() {
 	sudo mv --verbose "${package_path}" "${destination_path}"
 	
 	error_handler "$?" "Extracting package ${package_path} has failed!"
+}
+
+##
+# Extracts a zip package content into the sandbox.
+##
+function zip_extract_package() {
+	package_path="${1}"
+	destination_path="${2}"
+
+	sudo unzip -v "${package_path}"
+
+	insert_package "${package_path}" "${destination_path}"
+
+	error_handler "$?" "Extracting package ${package_path} has failed!"
 }	
 
+##
+# Creates a symbolic link (shortcut) to the binary.
+##
 function create_sandbox_symbol() {
 	file_path="${1}"
 	symbolic_link="${2}"
@@ -72,8 +89,10 @@ function create_sandbox_symbol() {
 	error_handler "$?" "Symbolic link for ${file_path} has failed!"
 }
 
+##
+# Deletes a symbolic link.
+##
 function delete_sandbox_symbol() {
 	symbolic_link="${1}"
 	sudo unlink "${symbolic_link}"
 }
-
