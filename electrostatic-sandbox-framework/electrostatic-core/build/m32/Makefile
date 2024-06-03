@@ -142,6 +142,33 @@ electrostatic/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/electrostatic.dir/build.make CMakeFiles/electrostatic.dir/build
 .PHONY : electrostatic/fast
 
+src/libelectrostatic/comm/comm.o: src/libelectrostatic/comm/comm.c.o
+
+.PHONY : src/libelectrostatic/comm/comm.o
+
+# target to build an object file
+src/libelectrostatic/comm/comm.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/electrostatic.dir/build.make CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm.c.o
+.PHONY : src/libelectrostatic/comm/comm.c.o
+
+src/libelectrostatic/comm/comm.i: src/libelectrostatic/comm/comm.c.i
+
+.PHONY : src/libelectrostatic/comm/comm.i
+
+# target to preprocess a source file
+src/libelectrostatic/comm/comm.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/electrostatic.dir/build.make CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm.c.i
+.PHONY : src/libelectrostatic/comm/comm.c.i
+
+src/libelectrostatic/comm/comm.s: src/libelectrostatic/comm/comm.c.s
+
+.PHONY : src/libelectrostatic/comm/comm.s
+
+# target to generate assembly for a file
+src/libelectrostatic/comm/comm.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/electrostatic.dir/build.make CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm.c.s
+.PHONY : src/libelectrostatic/comm/comm.c.s
+
 src/libelectrostatic/comm/comm_close.o: src/libelectrostatic/comm/comm_close.c.o
 
 .PHONY : src/libelectrostatic/comm/comm_close.o
@@ -259,6 +286,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... electrostatic"
+	@echo "... src/libelectrostatic/comm/comm.o"
+	@echo "... src/libelectrostatic/comm/comm.i"
+	@echo "... src/libelectrostatic/comm/comm.s"
 	@echo "... src/libelectrostatic/comm/comm_close.o"
 	@echo "... src/libelectrostatic/comm/comm_close.i"
 	@echo "... src/libelectrostatic/comm/comm_close.s"

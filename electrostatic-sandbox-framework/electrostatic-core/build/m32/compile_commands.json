@@ -1,6 +1,11 @@
 [
 {
   "directory": "/home/electrostat-lab/Sandbox/Electrostatic-Sandbox/electrostatic-sandbox-framework/electrostatic-core/build/m32",
+  "command": "/usr/bin/gcc  -I/home/electrostat-lab/Sandbox/Electrostatic-Sandbox/electrostatic-sandbox-framework/electrostatic-core/src/include -m32 -O2 -o CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm.c.o -c /home/electrostat-lab/Sandbox/Electrostatic-Sandbox/electrostatic-sandbox-framework/electrostatic-core/src/libelectrostatic/comm/comm.c",
+  "file": "/home/electrostat-lab/Sandbox/Electrostatic-Sandbox/electrostatic-sandbox-framework/electrostatic-core/src/libelectrostatic/comm/comm.c"
+},
+{
+  "directory": "/home/electrostat-lab/Sandbox/Electrostatic-Sandbox/electrostatic-sandbox-framework/electrostatic-core/build/m32",
   "command": "/usr/bin/gcc  -I/home/electrostat-lab/Sandbox/Electrostatic-Sandbox/electrostatic-sandbox-framework/electrostatic-core/src/include -m32 -O2 -o CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm_open.c.o -c /home/electrostat-lab/Sandbox/Electrostatic-Sandbox/electrostatic-sandbox-framework/electrostatic-core/src/libelectrostatic/comm/comm_open.c",
   "file": "/home/electrostat-lab/Sandbox/Electrostatic-Sandbox/electrostatic-sandbox-framework/electrostatic-core/src/libelectrostatic/comm/comm_open.c"
 },

@@ -76,9 +76,22 @@ include CMakeFiles/electrostatic.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/electrostatic.dir/flags.make
 
+CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm.c.o: CMakeFiles/electrostatic.dir/flags.make
+CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm.c.o: ../../src/libelectrostatic/comm/comm.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/electrostat-lab/Sandbox/Electrostatic-Sandbox/electrostatic-sandbox-framework/electrostatic-core/build/m32/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm.c.o"
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm.c.o -c /home/electrostat-lab/Sandbox/Electrostatic-Sandbox/electrostatic-sandbox-framework/electrostatic-core/src/libelectrostatic/comm/comm.c
+
+CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm.c.i"
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/electrostat-lab/Sandbox/Electrostatic-Sandbox/electrostatic-sandbox-framework/electrostatic-core/src/libelectrostatic/comm/comm.c > CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm.c.i
+
+CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm.c.s"
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/electrostat-lab/Sandbox/Electrostatic-Sandbox/electrostatic-sandbox-framework/electrostatic-core/src/libelectrostatic/comm/comm.c -o CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm.c.s
+
 CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm_open.c.o: CMakeFiles/electrostatic.dir/flags.make
 CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm_open.c.o: ../../src/libelectrostatic/comm/comm_open.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/electrostat-lab/Sandbox/Electrostatic-Sandbox/electrostatic-sandbox-framework/electrostatic-core/build/m32/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm_open.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/electrostat-lab/Sandbox/Electrostatic-Sandbox/electrostatic-sandbox-framework/electrostatic-core/build/m32/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm_open.c.o"
 	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm_open.c.o -c /home/electrostat-lab/Sandbox/Electrostatic-Sandbox/electrostatic-sandbox-framework/electrostatic-core/src/libelectrostatic/comm/comm_open.c
 
 CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm_open.c.i: cmake_force
@@ -91,7 +104,7 @@ CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm_open.c.s: cmake_forc
 
 CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm_close.c.o: CMakeFiles/electrostatic.dir/flags.make
 CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm_close.c.o: ../../src/libelectrostatic/comm/comm_close.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/electrostat-lab/Sandbox/Electrostatic-Sandbox/electrostatic-sandbox-framework/electrostatic-core/build/m32/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm_close.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/electrostat-lab/Sandbox/Electrostatic-Sandbox/electrostatic-sandbox-framework/electrostatic-core/build/m32/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm_close.c.o"
 	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm_close.c.o -c /home/electrostat-lab/Sandbox/Electrostatic-Sandbox/electrostatic-sandbox-framework/electrostatic-core/src/libelectrostatic/comm/comm_close.c
 
 CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm_close.c.i: cmake_force
@@ -104,7 +117,7 @@ CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm_close.c.s: cmake_for
 
 CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm_finalize.c.o: CMakeFiles/electrostatic.dir/flags.make
 CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm_finalize.c.o: ../../src/libelectrostatic/comm/comm_finalize.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/electrostat-lab/Sandbox/Electrostatic-Sandbox/electrostatic-sandbox-framework/electrostatic-core/build/m32/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm_finalize.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/electrostat-lab/Sandbox/Electrostatic-Sandbox/electrostatic-sandbox-framework/electrostatic-core/build/m32/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm_finalize.c.o"
 	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm_finalize.c.o -c /home/electrostat-lab/Sandbox/Electrostatic-Sandbox/electrostatic-sandbox-framework/electrostatic-core/src/libelectrostatic/comm/comm_finalize.c
 
 CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm_finalize.c.i: cmake_force
@@ -117,7 +130,7 @@ CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm_finalize.c.s: cmake_
 
 CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm_init.c.o: CMakeFiles/electrostatic.dir/flags.make
 CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm_init.c.o: ../../src/libelectrostatic/comm/comm_init.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/electrostat-lab/Sandbox/Electrostatic-Sandbox/electrostatic-sandbox-framework/electrostatic-core/build/m32/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm_init.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/electrostat-lab/Sandbox/Electrostatic-Sandbox/electrostatic-sandbox-framework/electrostatic-core/build/m32/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm_init.c.o"
 	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm_init.c.o -c /home/electrostat-lab/Sandbox/Electrostatic-Sandbox/electrostatic-sandbox-framework/electrostatic-core/src/libelectrostatic/comm/comm_init.c
 
 CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm_init.c.i: cmake_force
@@ -130,6 +143,7 @@ CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm_init.c.s: cmake_forc
 
 # Object files for target electrostatic
 electrostatic_OBJECTS = \
+"CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm.c.o" \
 "CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm_open.c.o" \
 "CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm_close.c.o" \
 "CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm_finalize.c.o" \
@@ -138,13 +152,14 @@ electrostatic_OBJECTS = \
 # External object files for target electrostatic
 electrostatic_EXTERNAL_OBJECTS =
 
+libelectrostatic.a: CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm.c.o
 libelectrostatic.a: CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm_open.c.o
 libelectrostatic.a: CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm_close.c.o
 libelectrostatic.a: CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm_finalize.c.o
 libelectrostatic.a: CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm_init.c.o
 libelectrostatic.a: CMakeFiles/electrostatic.dir/build.make
 libelectrostatic.a: CMakeFiles/electrostatic.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/electrostat-lab/Sandbox/Electrostatic-Sandbox/electrostatic-sandbox-framework/electrostatic-core/build/m32/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking C static library libelectrostatic.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/electrostat-lab/Sandbox/Electrostatic-Sandbox/electrostatic-sandbox-framework/electrostatic-core/build/m32/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking C static library libelectrostatic.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/electrostatic.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/electrostatic.dir/link.txt --verbose=$(VERBOSE)
 

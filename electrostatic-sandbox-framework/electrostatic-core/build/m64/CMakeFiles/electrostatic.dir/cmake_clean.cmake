@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm.c.o"
   "CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm_close.c.o"
   "CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm_finalize.c.o"
   "CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm_init.c.o"

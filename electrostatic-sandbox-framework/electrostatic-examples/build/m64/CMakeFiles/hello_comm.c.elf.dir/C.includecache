@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/electrostat-lab/Sandbox/Electrostatic-Sandbox/electrostatic-sandbox-framework/electrostatic-core/src/include/electrostatic/comm/comm.h
+stdio.h
+-
+inttypes.h
+-
+
+/home/electrostat-lab/Sandbox/Electrostatic-Sandbox/electrostatic-sandbox-framework/electrostatic-examples/src/hello_comm.c
+stdio.h
+-
+electrostatic/comm/comm.h
+-
+
