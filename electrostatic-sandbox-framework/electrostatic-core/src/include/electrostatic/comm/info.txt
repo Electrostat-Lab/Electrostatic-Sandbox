@@ -1,0 +1,2 @@
+<comm> directory entry:
+contains the abstract prototype headers for the "comm" static object file to be linked with other core object files.
