@@ -9,6 +9,12 @@
 ../../src/include/electrostatic/comm/comm.h
 stdio.h
 -
+inttypes.h
+-
+
+/home/electrostat-lab/Sandbox/Electrostatic-Sandbox/electrostatic-sandbox-framework/electrostatic-core/src/libelectrostatic/comm/comm.c
+electrostatic/comm/comm.h
+-
 
 /home/electrostat-lab/Sandbox/Electrostatic-Sandbox/electrostatic-sandbox-framework/electrostatic-core/src/libelectrostatic/comm/comm_close.c
 electrostatic/comm/comm.h

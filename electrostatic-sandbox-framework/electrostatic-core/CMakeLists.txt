@@ -20,7 +20,8 @@ set(CMAKE_CXX_COMPILER "${GPP_BIN}")
 set(COMPILER_OPTIONS "${TARGET} ${INPUT_COMPILER_OPTIONS}")
 
 set(toolchain_headers "${TOOLCHAIN_INCLUDES}")
-set(libelectrostatic "${CMAKE_CURRENT_SOURCE_DIR}/src/libelectrostatic/comm/comm_open.c"
+set(libelectrostatic "${CMAKE_CURRENT_SOURCE_DIR}/src/libelectrostatic/comm/comm.c"
+              "${CMAKE_CURRENT_SOURCE_DIR}/src/libelectrostatic/comm/comm_open.c"
               "${CMAKE_CURRENT_SOURCE_DIR}/src/libelectrostatic/comm/comm_close.c"  
               "${CMAKE_CURRENT_SOURCE_DIR}/src/libelectrostatic/comm/comm_finalize.c"
               "${CMAKE_CURRENT_SOURCE_DIR}/src/libelectrostatic/comm/comm_init.c")

@@ -3,7 +3,9 @@
 source "./helper-scripts/abstract/abstract-compile-examples.sh"
 source "./helper-scripts/project-impl/variables.sh"
 
-target_mcu=${1}
-example=${2}
+TARGET_MACHINE="${1}"
+example="${2}"
 
-compile ${TOOLCHAIN_HOME} ${target_mcu} ${examples_dir} ${source_dir} ${example}
+compile "${GCC_BIN}" "${GPP_BIN}" "${INPUT_COMPILER_OPTIONS}" \
+        "${TARGET_MACHINE}" "${TOOLCHAIN_INCLUDES}" "${source_dir}" \
+        "${example}" "${examples_dir}"
