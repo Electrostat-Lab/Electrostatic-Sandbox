@@ -40,6 +40,7 @@ download_cmake
 extract_cmake
 cleanup_cmake
 create_cmake_symbol
+install_gcc_multilib
 
 ##
 # Setup AVRDude
