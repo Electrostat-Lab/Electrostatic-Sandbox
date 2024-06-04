@@ -1,8 +1,8 @@
 # <img src="https://github.com/Electrostat-Lab/Electrostatic-Sandbox/blob/master/assets/electrostatic-logo-2.png" height=60 width=80/> Electrostatic-Sandbox
+>###### <a href="https://youtu.be/4GFGsH4eyJs"> <img src="https://github.com/Electrostat-Lab/Electrostatic-Sandbox/assets/60224159/a9a22af5-f725-4c1b-b662-ccef867a6fc0" height=30 width=30/> </a>
 
 ## Preface:
 An electronic monstrosity workstation designed to examine and develop systems for distributed simulations by providing an integrated environment housing the basic nostalgic communication protocols (i.e., Serial and Parallel COMs), the abstract networking interfaces, and a range of other electronic modules providing standards for controller interfaces, and sensor modules (e.g., the underdeveloped ShiftAvr, and Arduinos). 
-
 
 ## Hardware-Software specification overview:
 
@@ -37,9 +37,6 @@ An electronic monstrosity workstation designed to examine and develop systems fo
 
 ## DIY Tutorial:
 Find the do-it-yourself tutorial at [diy-tutorial]().
-
-## Techdemos on YouTube:
-- [Serial4j, ShiftAvr, and jMonkeyEngine](https://youtu.be/4GFGsH4eyJs)
 
 ## General progress:
 **API used:**
