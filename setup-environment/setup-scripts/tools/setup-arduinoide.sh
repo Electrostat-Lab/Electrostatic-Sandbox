@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source "./Electrostatic-Sandbox/setup-environment/setup-scripts/variables.sh"
+source "./setup-environment/setup-scripts/variables.sh"
 source "${abstract_scripts}"
 
 function download_arduinoide() {
