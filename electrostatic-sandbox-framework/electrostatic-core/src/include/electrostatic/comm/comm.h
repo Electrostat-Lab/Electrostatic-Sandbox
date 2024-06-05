@@ -23,11 +23,6 @@ typedef struct {
     char* file_system;
 } device_metadata;
 
-extern device_metadata open(void**);
-extern int init(void*);
-extern int finalize(void*);
-extern int close(void*);
-
 typedef struct {
     device_metadata (*open)(void**);
     uint8_t (*init)(void**);
@@ -47,17 +42,8 @@ comm_protocol socket;
 comm_protocol pci;
 comm_protocol usbfs;
 
-/**
- * Initializes a comm protocol function table with
- * some callback functions.
- */
-extern uint8_t init_protocol(comm_protocol*, comm_protocol);
-
-/**
- * Initializes a comm protocol function table with
- * pre-defined some callback functions from their respective libraries.
- */
-extern uint8_t init_protocol_from_encoding(long);
+extern uint8_t init_protocol(comm_protocol*, const comm_protocol*);
+extern uint8_t init_protocols_default();
 
 #ifdef __cplusplus
 }
