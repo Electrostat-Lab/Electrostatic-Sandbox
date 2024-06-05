@@ -10,7 +10,7 @@ final String buildDirectory="${project.rootDir}/${rootProject.name}-native/build
 final String nativeObjects="${project.rootDir}/${rootProject.name}-native/build/lib"
 final String jarOutput="${project.rootDir}/${rootProject.name}-native/build/libs"
 final String examples="${project.rootDir}/${rootProject.name}-examples/libs"
-final String compileX86_script = "./helper-scripts/compile-x86.sh"
+final String compileX86_script = "./helper-scripts/compile.sh"
 final String compileAndroid_script = "./helper-scripts/compile-android.sh"
 
 tasks.register("copyBinaries", Copy) {
@@ -28,12 +28,12 @@ tasks.register("copyToExamples", Copy) {
 }
 
 tasks.register("compileX86_64", UnixScriptRunner) {
-   scriptArgs = new String[] { "${JAVA_HOME}", "x86-64" }
+   scriptArgs = new String[] { "${JAVA_HOME}", "x86-64", "${electrostaticHome}" }
    script = "${compileX86_script}"
 }
 
 tasks.register("compileX86", UnixScriptRunner) {
-   scriptArgs = new String[] { "${JAVA_HOME}", "x86" }
+   scriptArgs = new String[] { "${JAVA_HOME}", "x86", "${electrostaticHome}" }
    script = "${compileX86_script}"
 }
 
