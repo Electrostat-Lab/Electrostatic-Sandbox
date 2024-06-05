@@ -32,6 +32,9 @@ extract_gradle
 cleanup_gradle
 create_gradle_symbol
 
+ls -l "${download_dir}"
+
+
 
 ##
 # Setup CMake
@@ -42,6 +45,8 @@ cleanup_cmake
 create_cmake_symbol
 install_gcc_multilib
 
+ls -l "${download_dir}"
+
 ##
 # Setup AVRDude
 ##
@@ -50,6 +55,8 @@ extract_avrdude
 cleanup_avrdude
 create_avrdude_symbol
 
+ls -l "${download_dir}"
+
 ##
 # Setup arduino-ide
 ##
@@ -57,6 +64,8 @@ download_arduinoide
 extract_arduinoide
 cleanup_arduinoide
 create_arduinoide_symbol
+
+ls -l "${download_dir}"
 
 ##
 # Setup Jetbrains IDE
