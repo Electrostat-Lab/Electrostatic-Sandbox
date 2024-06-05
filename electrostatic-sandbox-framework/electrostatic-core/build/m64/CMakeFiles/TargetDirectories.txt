@@ -1,3 +1,0 @@
-/home/electrostat-lab/Sandbox/Electrostatic-Sandbox/electrostatic-sandbox-framework/electrostatic-core/build/m64/CMakeFiles/rebuild_cache.dir
-/home/electrostat-lab/Sandbox/Electrostatic-Sandbox/electrostatic-sandbox-framework/electrostatic-core/build/m64/CMakeFiles/edit_cache.dir
-/home/electrostat-lab/Sandbox/Electrostatic-Sandbox/electrostatic-sandbox-framework/electrostatic-core/build/m64/CMakeFiles/electrostatic.dir

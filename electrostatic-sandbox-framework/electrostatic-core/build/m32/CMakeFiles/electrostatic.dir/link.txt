@@ -1,2 +1,0 @@
-/usr/bin/ar qc libelectrostatic.a CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm.c.o CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm_open.c.o CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm_close.c.o CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm_finalize.c.o CMakeFiles/electrostatic.dir/src/libelectrostatic/comm/comm_init.c.o
-/usr/bin/ranlib libelectrostatic.a
