@@ -1,0 +1,43 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Build and Test Electrostatic-Sandbox Framework
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "master" branch
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+    build-electrostatic:
+      # runner images with architectures (variants)
+      runs-on: ${{ matrix.os }}
+      strategy:
+        matrix:
+          os: [ 'ubuntu-latest' ]
+      name: Build Electrostatic
+
+      # Steps represent a sequence of tasks that will be executed as part of the job
+      steps:
+        - name: Checkout Job
+          uses: actions/checkout@v3
+
+        - name: Setup Electrostatic-Sandbox Workstation
+          run: chmod +rwx ./setup-sandbox.sh && ./setup-sandbox.sh
+
+        - name: Compiling electrostatic-core Native Binaries
+          run: ./helper-scripts/ci-cd/compile-electrostatic.sh
+
+        - name: Testing electrostatic-core Native Binaries
+          run: ./helper-scripts/ci-cd/test-electrostatic.sh
+        
+        - name: Compiling electrostatic4j Java Binding API
+          run: ./helper-scripts/ci-cd/compile-e4j.sh "$(pwd)/electrostatic-core"
+          
+          name: Testing electrostatic4j Java Binding API
+          run: ./helper-scripts/ci-cd/test-e4j.sh
