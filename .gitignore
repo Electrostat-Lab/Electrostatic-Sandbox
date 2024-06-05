@@ -1,1 +1,12 @@
-*.buildconfig
+.buildconfig
+.Makefile
+# Ignore Gradle project-specific cache directory
+.gradle
+
+# Ignore Gradle/CMake build output directory
+build
+cmake-build
+.so
+.cache
+.idea
+.vscode
