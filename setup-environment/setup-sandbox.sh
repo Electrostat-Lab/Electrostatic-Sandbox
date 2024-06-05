@@ -66,5 +66,13 @@ create_arduinoide_symbol
 # cleanup_ide
 # create_ide_symbol
 
+all_symbols_manual="============================== \n
+        		    Sybmolic Links: \n
+                    ${java_symbol} => `${java_symbol} --version` \n
+                    ${gradle_symbol} => `${gradle_symbol} --version` \n
+                    ${jetbrains_ide_symbol} `${jetbrains_ide_symbol} --version` \n
+                    ${cmake_symbol} => `${cmake_symbol} --version` \n
+                    ${arduinoide_symbol} => `${arduinoide_symbol} --version` \n
+                    =============================="
 
 echo -e "${all_symbols_manual}"
