@@ -30,6 +30,7 @@ function moveFile() {
     local dest=$2
 
     if [[ ! -e ${dest} ]]; then
-        mkdir ${dest}
+        mkdir -p ${dest}
     fi
+    mv --verbose "${source}" "${dest}"
 }

@@ -1,6 +1,7 @@
 #!/bin/bash
 
 source "./helper-scripts/abstract/abstract-compile.sh"
+source "./helper-scripts/abstract/abstract-util.sh"
 source "./helper-scripts/project-impl/variables.sh"
 
 TARGET_MACHINE="${1}"
