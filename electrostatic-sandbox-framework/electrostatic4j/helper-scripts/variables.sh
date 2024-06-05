@@ -13,7 +13,4 @@ INPUT_COMPILER_OPTIONS="-fPIC -O2"
 x86="x86"
 x86_64="x86-64"
 
-# cmake build caches
-electrostatic_core="/home/electrostat-lab/Sandbox/Electrostatic-Sandbox/electrostatic-sandbox-framework/electrostatic-core"
-
 e4j_source="./electrostatic4j-native"
