@@ -16,7 +16,7 @@ function compile() {
           "-DGPP_BIN=${GPP_BIN}" \
           "-DINPUT_COMPILER_OPTIONS=${INPUT_COMPILER_OPTIONS}" \
           "-DTOOLCHAIN_INCLUDES=${TOOLCHAIN_INCLUDES}" \
-          "-DTARGET=-${TARGET}" \
+          "-DTARGET=${TARGET}" \
           -S . -B "./build/${TARGET}"
 
     cmake --build "./build/${TARGET}"
