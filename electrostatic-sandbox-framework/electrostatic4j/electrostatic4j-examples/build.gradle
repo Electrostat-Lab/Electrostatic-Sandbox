@@ -1,0 +1,15 @@
+plugins {
+    id 'application'
+}
+
+application {
+    // Define the main class for the application.
+    mainClass = "${rootProject.name}.examples.Launcher"
+}
+
+dependencies {
+    implementation files("../${rootProject.name}-core/build/libs/${rootProject.name}-core.jar")
+    implementation files("../${rootProject.name}-native/build/libs/${rootProject.name}-native-linux.jar")
+    
+    implementation "io.github.software-hardware-codesign:snaploader:1.0.0-alpha"
+}
