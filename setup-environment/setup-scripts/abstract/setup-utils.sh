@@ -34,7 +34,7 @@ function download_package() {
 	package_url="${2}"
 	more_options="${3}"
 
-	wget --https-only --verbose --continue --server-response --show-progress "${package_url}" -P "${download_dir}"
+	wget --https-only --continue --server-response --show-progress "${package_url}" -P "${download_dir}"
 
 	error_handler "$?" "Downloading package ${package_url} has failed!"
 }
@@ -46,7 +46,7 @@ function tar_extract_package() {
 	package_path="${1}"
 	destination_path="${2}"
 
-	sudo tar --verbose -xf "${package_path}" -C "${destination_path}"
+	sudo tar -xf "${package_path}" -C "${destination_path}"
 
 	error_handler "$?" "Extracting package ${package_path} has failed!"
 }
@@ -58,7 +58,7 @@ function insert_package() {
 	package_path="${1}"
 	destination_path="${2}"
 	
-	sudo mv --verbose "${package_path}" "${destination_path}"
+	sudo mv "${package_path}" "${destination_path}"
 	
 	error_handler "$?" "Extracting package ${package_path} has failed!"
 }
@@ -84,7 +84,7 @@ function create_sandbox_symbol() {
 	file_path="${1}"
 	symbolic_link="${2}"
 
-	sudo ln -s "${file_path}" "${symbolic_link}"
+	sudo ln --verbose -s "${file_path}" "${symbolic_link}"
 
 	error_handler "$?" "Symbolic link for ${file_path} has failed!"
 }
