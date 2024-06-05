@@ -83,12 +83,3 @@ jetbrains_idea_name="idea*.tar.gz"
 jetbrains_idea_content="idea*"
 jetbrains_idea_symbol="jetbrains-idea"
 jetbrains_idea_provisional_path="${download_dir}/${jetbrains_idea_name}"
-
-all_symbols_manual="============================== \n
-		    Sybmolic Links: \n
-		    ${java_symbol} => `${java_symbol} --version` \n
-		    ${gradle_symbol} => `${gradle_symbol} --version` \n
-		    ${jetbrains_ide_symbol} `${jetbrains_ide_symbol} --version` \n
-		    ${cmake_symbol} => `${cmake_symbol} --version` \n
-		    ${arduinoide_symbol} => `${arduinoide_symbol} --version` \n
-		    =============================="
