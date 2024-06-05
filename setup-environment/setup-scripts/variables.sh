@@ -1,6 +1,6 @@
 #!/bin/sh
-working_dir="`pwd`"
-root_path="${working_dir}/Electrostatic-Sandbox"
+working_dir=$(pwd)
+root_path="${working_dir}"
 sandbox_path="/opt/electrostatic-sandbox"
 local_bin="/usr/local/bin"
 
