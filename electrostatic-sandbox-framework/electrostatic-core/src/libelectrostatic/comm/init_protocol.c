@@ -22,7 +22,8 @@ const static comm_protocol parallel_table = {
     &test_parallel  
 };
 
-extern uint8_t init_protocol(comm_protocol* comm, const comm_protocol* from) {
+extern uint8_t init_protocol(comm_protocol* comm,
+                             const comm_protocol* from) {
     if (&from == NULL) {
         return -1;
     }
@@ -35,14 +36,10 @@ extern uint8_t init_protocol(comm_protocol* comm, const comm_protocol* from) {
     return 0;
 }
 
-extern uint8_t init_protocols_default() {
-    // initialize serial constructors
-    init_protocol(&serial, &serial_table);
-    
-    // initialize parallel constructors
-    init_protocol(&parallel, &parallel_table);
-    
-    // initialize your new protocol drivers here!
-    
-    return 0;
+extern uint8_t init_protocol_default(comm_protocol* comm, enum CommProtocol protocol) {
+    if (protocol == Serial) {
+        return init_protocol(comm, &serial_table);
+    } else if (protocol == Parallel) {
+        return init_protocol(comm, &parallel_table);
+    }
 }

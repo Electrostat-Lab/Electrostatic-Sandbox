@@ -36,14 +36,15 @@ typedef struct {
 /**
  * Defines function tables for communication protocols.
  */
-comm_protocol serial;
-comm_protocol parallel;
-comm_protocol socket;
-comm_protocol pci;
-comm_protocol usbfs;
+enum CommProtocol {
+    Serial = 0x00,
+    Parallel = 0x01,
+    Pci = 0x02,
+    Sockets = 0x03
+};
 
 extern uint8_t init_protocol(comm_protocol*, const comm_protocol*);
-extern uint8_t init_protocols_default();
+extern uint8_t init_protocol_default(comm_protocol*, enum CommProtocol);
 
 #ifdef __cplusplus
 }
