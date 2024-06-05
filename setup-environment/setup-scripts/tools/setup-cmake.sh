@@ -21,4 +21,5 @@ function create_cmake_symbol() {
 
 function install_gcc_multilib() {
 	sudo apt-get install gcc-multilib
+	sudo apt-get install g++-multilib
 }
