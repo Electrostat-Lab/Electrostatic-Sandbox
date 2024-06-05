@@ -36,7 +36,7 @@ jdk_provisional_path="${download_dir}/${jdk_tar_name}"
 ##
 # Gradle 8.3
 ##
-gradle_url="https://gradle.org/next-steps/?version=8.3&format=all"
+gradle_url="https://services.gradle.org/distributions/gradle-8.3-all.zip?_gl=1*c9boet*_ga*MTk3MDY5NDkyMy4xNzE3MTQ2NzAy*_ga_7W7NC6YNPT*MTcxNzU4MDg5NS41LjEuMTcxNzU4MDkzNi4xOS4wLjA."
 gradle_zip_name="gradle-8.3-all.zip"
 gradle_zip_content="*"
 gradle_symbol="gradle-8.3"
