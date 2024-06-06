@@ -39,5 +39,5 @@ jobs:
         - name: Compiling electrostatic4j Java Binding API
           run: ./helper-scripts/ci-cd/compile-e4j.sh "$(pwd)/electrostatic-core"
           
-          name: Testing electrostatic4j Java Binding API
+        - name: Testing electrostatic4j Java Binding API
           run: ./helper-scripts/ci-cd/test-e4j.sh
