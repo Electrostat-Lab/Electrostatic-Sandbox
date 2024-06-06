@@ -28,16 +28,16 @@ jobs:
           uses: actions/checkout@v3
 
         - name: Setup Electrostatic-Sandbox Workstation
-          run: chmod +rwx ./setup-sandbox.sh && ./setup-sandbox.sh
+          run: chmod +rwx ./setup-environment/setup-sandbox.sh && ./setup-environment/setup-sandbox.sh
 
         - name: Compiling electrostatic-core Native Binaries
-          run: ./helper-scripts/ci-cd/compile-electrostatic.sh
+          run: cd ./electrostatic-sandbox-framework && ./helper-scripts/ci-cd/compile-electrostatic.sh
 
         - name: Testing electrostatic-core Native Binaries
-          run: ./helper-scripts/ci-cd/test-electrostatic.sh
+          run: cd ./electrostatic-sandbox-framework && ./helper-scripts/ci-cd/test-electrostatic.sh
         
         - name: Compiling electrostatic4j Java Binding API
-          run: ./helper-scripts/ci-cd/compile-e4j.sh "$(pwd)/electrostatic-core"
+          run: cd ./electrostatic-sandbox-framework && ./helper-scripts/ci-cd/compile-e4j.sh "$(pwd)/electrostatic-core"
           
         - name: Testing electrostatic4j Java Binding API
-          run: ./helper-scripts/ci-cd/test-e4j.sh
+          run: cd ./electrostatic-sandbox-framework && ./helper-scripts/ci-cd/test-e4j.sh
