@@ -3,6 +3,7 @@ working_dir=$(pwd)
 root_path="${working_dir}"
 sandbox_path="/opt/electrostatic-sandbox"
 local_bin="/usr/local/bin"
+local_include="/usr/local/include"
 
 unit_tests="${root_path}/setup-environment/setup-scripts/testing/testing.sh"
 abstract_scripts="${root_path}/setup-environment/setup-scripts/abstract/setup-utils.sh"
@@ -12,6 +13,7 @@ setup_ide_script="${root_path}/setup-environment/setup-scripts/tools/setup-ide.s
 setup_gradle_script="${root_path}/setup-environment/setup-scripts/tools/setup-gradle.sh"
 setup_cmake_script="${root_path}/setup-environment/setup-scripts/tools/setup-cmake.sh"
 setup_avrdude_script="${root_path}/setup-environment/setup-scripts/tools/setup-avrdude.sh"
+setup_android_ndk_script="${root_path}/setup-environment/setup-scripts/tools/setup-android-ndk.sh"
 download_dir="${HOME}/Downloads"
 
 ##
@@ -30,6 +32,7 @@ jdk_url="https://download.oracle.com/java/20/archive/jdk-20.0.2_linux-x64_bin.ta
 jdk_tar_name="jdk-20.0.2_linux-x64_bin.tar.gz"
 jdk_tar_content="jdk-20.0.2"
 java_symbol="${local_bin}/java-20.0.2"
+java_headers="${local_include}/java-20.0.2-headers"
 jdk_provisional_path="${download_dir}/${jdk_tar_name}"
 
 
@@ -50,6 +53,18 @@ cmake_tar_name="cmake-3.19.6-Linux-x86_64.tar.gz"
 cmake_tar_content="cmake-3.19.6-Linux-x86_64"
 cmake_symbol="${local_bin}/cmake-3.19"
 cmake_provisional_path="${download_dir}/${cmake_tar_name}"
+posix_headers_symbol="${local_include}/posix-headers"
+
+##
+# Android NDK
+##
+ndk_url="https://dl.google.com/android/repository/android-ndk-r26d-linux.zip"
+ndk_zip_name="android-ndk-r26d-linux.zip"
+ndk_zip_content="*"
+clang_symbol="${local_bin}/android-clang"
+clangpp_symbol="${local_bin}/android-clang++"
+android_ndk_headers="${local_include}/android-ndk-headers"
+ndk_provisional_path="${download_dir}/${ndk_zip_name}"
 
 ##
 # AVRDude
