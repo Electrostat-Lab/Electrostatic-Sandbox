@@ -68,15 +68,17 @@ prepare_sandbox "${sandbox_path}" "+rwx" ""
 #ls -l "${download_dir}"
 
 download_ndk
-cd ${download_dir}
-unzip -q "${ndk_zip_name}"
+unzip -q "${download_dir}/${ndk_zip_name}"
 ls -l "${download_dir}"
 ls -l "${download_dir}/android-ndk-r26d"
 
-#cleanup_ndk
-#create_clang_symbols
-#create_ndk_headers_symbol
+cleanup_ndk
+create_clang_symbols
+create_ndk_headers_symbol
 
+
+android-clang --version
+android-clang++ --version
 
 ##
 # Setup Jetbrains IDE
