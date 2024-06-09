@@ -90,9 +90,9 @@ all_symbols_manual="============================== \n
                     ${jetbrains_ide_symbol} `${jetbrains_ide_symbol} --version` \n
                     ${cmake_symbol} => `${cmake_symbol} --version` \n
                     ${arduinoide_symbol} => `${arduinoide_symbol} --version` \n
-                    $(android-clang) \n
-                    $(android-clang++) \n
-                    $(android-ndk-headers) \n
+                    $(`android-clang`) \n
+                    $(`android-clang++`) \n
+                    $(`android-ndk-headers`) \n
                     =============================="
 
 echo -e "${all_symbols_manual}"

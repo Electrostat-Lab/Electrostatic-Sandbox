@@ -61,9 +61,9 @@ posix_headers_symbol="${local_include}/posix-headers"
 ndk_url="https://dl.google.com/android/repository/android-ndk-r26d-linux.zip"
 ndk_zip_name="android-ndk-r26d-linux.zip"
 ndk_zip_content="android-ndk-r26d"
-clang_symbol="${local_bin}/android-clang"
-clangpp_symbol="${local_bin}/android-clang++"
-android_ndk_headers="${local_include}/android-ndk-headers"
+clang_symbol="${sandbox_path}/${ndk_zip_content}/toolchains/llvm/prebuilt/linux-x86_64/bin/clang"
+clangpp_symbol="${sandbox_path}/${ndk_zip_content}/toolchains/llvm/prebuilt/linux-x86_64/bin/clang++"
+android_ndk_headers="${sandbox_path}/${ndk_zip_content}/prebuilts/ndk/headers"
 ndk_provisional_path="${download_dir}/${ndk_zip_name}"
 
 ##
