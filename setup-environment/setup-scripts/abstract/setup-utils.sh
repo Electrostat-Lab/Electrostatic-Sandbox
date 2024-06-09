@@ -70,7 +70,7 @@ function zip_extract_package() {
 	package_path="${1}"
 	destination_path="${2}"
 
-	sudo unzip "${package_path}"
+	sudo unzip -q "${package_path}"
 
 	insert_package "${package_path}" "${destination_path}"
 
