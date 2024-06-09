@@ -68,7 +68,8 @@ prepare_sandbox "${sandbox_path}" "+rwx" ""
 #ls -l "${download_dir}"
 
 download_ndk
-unzip -q "${download_dir}/${ndk_zip_name}"
+cd ${download_dir}
+unzip -q "${ndk_zip_name}"
 ls -l "${download_dir}"
 
 #cleanup_ndk
