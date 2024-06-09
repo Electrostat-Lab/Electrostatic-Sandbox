@@ -8,10 +8,11 @@ function compile() {
     local TOOLCHAIN_INCLUDES=${5}
     local ELECTROSTATIC_CORE=${6}
     local EXAMPLE=${7}
-    local source_dir=${8}
+    local BUILD_DIR=${8}
+    local SOURCE_DIR=${9}
     
-    local temp=$(pwd)
-    cd ${source_dir}
+    local TEMP=$(pwd)
+    cd ${SOURCE_DIR}
     
     cmake-3.19 "-DGCC_BIN=${GCC_BIN}" \
                "-DGPP_BIN=${GPP_BIN}" \
@@ -20,9 +21,10 @@ function compile() {
                "-DTOOLCHAIN_INCLUDES=${TOOLCHAIN_INCLUDES}" \
                "-DELECTROSTATIC_CORE=${ELECTROSTATIC_CORE}" \
                "-DEXAMPLE=${EXAMPLE}" \
-               -S . -B "./build/${TARGET}"
+               "-DBUILD_DIR=${BUILD_DIR}" \
+               -S . -B "./build/${BUILD_DIR}"
           
-    cmake --build "./build/${TARGET}"
-    cd ${temp}
+    cmake --build "./build/${BUILD_DIR}"
+    cd ${TEMP}
 }
 

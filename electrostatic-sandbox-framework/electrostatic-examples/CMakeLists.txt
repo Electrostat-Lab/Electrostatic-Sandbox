@@ -10,21 +10,8 @@ message(STATUS "GPP: ${GPP_BIN}")
 message(STATUS "Compiler Options: ${INPUT_COMPILER_OPTIONS}")
 message(STATUS "Target architecture: ${TARGET}")
 message(STATUS "Toolchain Includes: ${TOOLCHAIN_INCLUDES}")
-message(STATUS "Included-library: ${ELECTROSTATIC_CORE}")
 message(STATUS "Runnable-example: ${EXAMPLE}")
-
-# assign the target architecture arguments from the pre-determined directory
-if("${TARGET}" STREQUAL "x86")
-    set(ARCH_OPTIONS "-m32")
-    message(STATUS "Compiling for 32-bit Intel Chipset")
-elseif("${TARGET}" STREQUAL "x86-64")
-    set(ARCH_OPTIONS "-m64")
-    message(STATUS "Compiling for 64-bit Intel Chipset")
-# elseif(${TARGET} STREQUAL "android-x86")
-else()
-    set(${TARGET} "x86-64")
-    set(ARCH_OPTIONS "-m64")
-endif()
+message(STATUS "Building the binaries to: ${BUILD_DIR}")
 
 # Cmake variables
 set(executable_a "${EXAMPLE}-a.elf") # target for archive-linked binary
@@ -32,9 +19,9 @@ set(executable_so "${EXAMPLE}.elf") # target for shared-linked binary
 
 set(CMAKE_C_COMPILER "${GCC_BIN}")
 set(CMAKE_CXX_COMPILER "${GPP_BIN}")
-set(COMPILER_OPTIONS "${ARCH_OPTIONS} ${INPUT_COMPILER_OPTIONS}")
+set(COMPILER_OPTIONS "${TARGET} ${INPUT_COMPILER_OPTIONS}")
 
-set(lib_headers "${ELECTROSTATIC_CORE}/src/include")
+set(lib_headers "${CMAKE_CURRENT_SOURCE_DIR}/dependencies/include")
 set(headers "${TOOLCHAIN_INCLUDES}")
 
 # C sources
@@ -52,8 +39,8 @@ set_target_properties(${executable_so} PROPERTIES COMPILE_FLAGS "${COMPILER_OPTI
 target_include_directories(${executable_a} PUBLIC ${lib_headers} ${headers})
 target_include_directories(${executable_so} PUBLIC ${lib_headers} ${headers})
 
-target_link_libraries(${executable_a} "${ELECTROSTATIC_CORE}/build/${TARGET}/libelectrostatic-a.a")
-target_link_libraries(${executable_so} "${ELECTROSTATIC_CORE}/build/${TARGET}/libelectrostatic.so")
+target_link_libraries(${executable_a} "${CMAKE_CURRENT_SOURCE_DIR}/dependencies/libs/${BUILD_DIR}/libelectrostatic-a.a")
+target_link_libraries(${executable_so} "${CMAKE_CURRENT_SOURCE_DIR}/dependencies/libs/${BUILD_DIR}/libelectrostatic.so")
 
 # Start building the target
 target_sources(${executable_a} PUBLIC ${sources})

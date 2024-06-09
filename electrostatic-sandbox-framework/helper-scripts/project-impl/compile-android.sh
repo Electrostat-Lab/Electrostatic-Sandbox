@@ -5,6 +5,7 @@ source "./helper-scripts/abstract/abstract-util.sh"
 source "./helper-scripts/project-impl/variables.sh"
 
 TARGET_MACHINE="${1}"
+BUILD_DIR="${TARGET_MACHINE}"
 
-compile "${GCC_BIN}" "${GPP_BIN}" "${INPUT_COMPILER_OPTIONS}" \
-        "${TOOLCHAIN_INCLUDES}" "${TARGET_MACHINE}" "${source_dir}"
+compile "" "${CLANG_BIN}" "${CLANGPP_BIN}" "${INPUT_COMPILER_OPTIONS}" \
+"${NDK_TOOLCHAIN_INCLUDES}" "${TARGET_MACHINE}" "${BUILD_DIR}" "${source_dir}"
