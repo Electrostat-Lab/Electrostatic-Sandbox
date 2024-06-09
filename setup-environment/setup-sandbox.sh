@@ -15,57 +15,57 @@ source "${setup_android_ndk_script}"
 ##
 prepare_sandbox "${sandbox_path}" "+rwx" ""
 
-###
-## Setup JDK
-###
-#download_jdk
-#extract_jdk
-#cleanup_jdk
-#create_java_symbol
-#setup_java_home
-#
-###
-## Setup Gradle
-###
-#download_gradle
-#extract_gradle
-#cleanup_gradle
-#create_gradle_symbol
-#
-#ls -l "${download_dir}"
-#
-#
-###
-## Setup CMake
-###
-#download_cmake
-#extract_cmake
-#cleanup_cmake
-#create_cmake_symbol
-#create_posix_headers_symbol
-#install_gcc_multilib
-#
-#ls -l "${download_dir}"
-#
-###
-## Setup AVRDude
-###
-#download_avrdude
-#extract_avrdude
-#cleanup_avrdude
-#create_avrdude_symbol
-#
-#ls -l "${download_dir}"
-#
-###
-## Setup arduino-ide
-###
-#download_arduinoide
-#extract_arduinoide
-#cleanup_arduinoide
-#create_arduinoide_symbol
-#
-#ls -l "${download_dir}"
+##
+# Setup JDK
+##
+download_jdk
+extract_jdk
+cleanup_jdk
+create_java_symbol
+setup_java_home
+
+##
+# Setup Gradle
+##
+download_gradle
+extract_gradle
+cleanup_gradle
+create_gradle_symbol
+
+ls -l "${download_dir}"
+
+
+##
+# Setup CMake
+##
+download_cmake
+extract_cmake
+cleanup_cmake
+create_cmake_symbol
+create_posix_headers_symbol
+install_gcc_multilib
+
+ls -l "${download_dir}"
+
+##
+# Setup AVRDude
+##
+download_avrdude
+extract_avrdude
+cleanup_avrdude
+create_avrdude_symbol
+
+ls -l "${download_dir}"
+
+##
+# Setup arduino-ide
+##
+download_arduinoide
+extract_arduinoide
+cleanup_arduinoide
+create_arduinoide_symbol
+
+ls -l "${download_dir}"
 
 download_ndk
 extract_ndk
