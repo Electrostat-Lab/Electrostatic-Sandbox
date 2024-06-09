@@ -19,6 +19,10 @@ function create_cmake_symbol() {
 	create_sandbox_symbol "${sandbox_path}/${cmake_tar_content}/bin/cmake" "${cmake_symbol}"
 }
 
+function create_posix_headers_symbol() {
+	create_sandbox_symbol "/usr/include" "${posix_headers_symbol}"
+}
+
 function install_gcc_multilib() {
 	sudo apt-get install gcc-multilib
 	sudo apt-get install g++-multilib

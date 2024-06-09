@@ -8,12 +8,12 @@ source "${setup_gradle_script}"
 source "${setup_cmake_script}"
 source "${setup_avrdude_script}"
 source "${setup_arduinoide_script}"
+source "${setup_android_ndk_script}"
 
 ##
 # Prepare the sandbox workspace
 ##
 prepare_sandbox "${sandbox_path}" "+rwx" ""
-
 
 ##
 # Setup JDK
@@ -35,7 +35,6 @@ create_gradle_symbol
 ls -l "${download_dir}"
 
 
-
 ##
 # Setup CMake
 ##
@@ -43,6 +42,7 @@ download_cmake
 extract_cmake
 cleanup_cmake
 create_cmake_symbol
+create_posix_headers_symbol
 install_gcc_multilib
 
 ls -l "${download_dir}"
@@ -67,6 +67,14 @@ create_arduinoide_symbol
 
 ls -l "${download_dir}"
 
+download_ndk
+extract_ndk
+cleanup_ndk
+create_clang_symbols
+create_ndk_headers_symbol
+
+ls -l "${download_dir}"
+
 ##
 # Setup Jetbrains IDE
 ##
@@ -82,6 +90,9 @@ all_symbols_manual="============================== \n
                     ${jetbrains_ide_symbol} `${jetbrains_ide_symbol} --version` \n
                     ${cmake_symbol} => `${cmake_symbol} --version` \n
                     ${arduinoide_symbol} => `${arduinoide_symbol} --version` \n
+                    $(android-clang) \n
+                    $(android-clang++) \n
+                    $(android-ndk-headers) \n
                     =============================="
 
 echo -e "${all_symbols_manual}"

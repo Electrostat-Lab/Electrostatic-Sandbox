@@ -17,6 +17,7 @@ function cleanup_jdk() {
 
 function create_java_symbol() {
 	create_sandbox_symbol "${sandbox_path}/${jdk_tar_content}/bin/java" "${java_symbol}"
+	create_sandbox_symbol "${sandbox_path}/${jdk_tar_content}/include" "${java_headers}"
 }
 
 function setup_java_home() {
