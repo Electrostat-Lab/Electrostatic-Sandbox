@@ -32,7 +32,13 @@ cp -v "$(pwd)/${source_dir}/cmake-build/${BUILD_DIR}/lib${COMMISSION_LIB_AR}.a" 
     "$(pwd)/${source_dir}/build/${BUILD_DIR}/"
 
 cp -rv "$(pwd)/${source_dir}/build/${BUILD_DIR}/" \
-    "$(pwd)/${e4j_dir}/dependencies/libs/" "$(pwd)/${examples_dir}/dependencies/libs/"
+    "$(pwd)/${e4j_dir}/dependencies/libs/"
+
+cp -rv "$(pwd)/${source_dir}/build/${BUILD_DIR}/" \
+    "$(pwd)/${examples_dir}/dependencies/libs/"
 
 cp -rv "$(pwd)/${source_dir}/src/include/" \
-    "$(pwd)/${e4j_dir}/dependencies/" "$(pwd)/${examples_dir}/dependencies/"
+    "$(pwd)/${e4j_dir}/dependencies/"
+
+cp -rv "$(pwd)/${source_dir}/src/include/" \
+    "$(pwd)/${examples_dir}/dependencies/"
