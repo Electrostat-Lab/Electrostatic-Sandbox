@@ -68,7 +68,7 @@ prepare_sandbox "${sandbox_path}" "+rwx" ""
 #ls -l "${download_dir}"
 
 download_ndk
-unzip -q "${download_dir}/${ndk_zip_name}"
+extract_ndk
 ls -l "${download_dir}"
 ls -l "${download_dir}/android-ndk-r26d"
 

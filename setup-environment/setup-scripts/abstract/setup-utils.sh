@@ -70,9 +70,9 @@ function zip_extract_package() {
 	package_path="${1}"
 	destination_path="${2}"
 
-	sudo unzip -q "${package_path}"
+	cd "${destination_path}"
 
-	insert_package "${package_path}" "${destination_path}"
+	sudo unzip -q "${package_path}"
 
 	error_handler "$?" "Extracting package ${package_path} has failed!"
 }	
