@@ -71,6 +71,7 @@ download_ndk
 cd ${download_dir}
 unzip -q "${ndk_zip_name}"
 ls -l "${download_dir}"
+ls -l "${download_dir}/android-ndk-r26d"
 
 #cleanup_ndk
 #create_clang_symbols
