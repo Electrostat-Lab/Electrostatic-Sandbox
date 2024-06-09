@@ -37,7 +37,7 @@ jobs:
           run: cd ./electrostatic-sandbox-framework && ./helper-scripts/ci-cd/test-electrostatic.sh
         
         - name: Compiling electrostatic4j Java Binding API
-          run: cd ./electrostatic-sandbox-framework && ./helper-scripts/ci-cd/compile-e4j.sh "$(pwd)/electrostatic-core"
+          run: cd ./electrostatic-sandbox-framework && ./helper-scripts/ci-cd/compile-e4j.sh
           
         - name: Testing electrostatic4j Java Binding API
           run: cd ./electrostatic-sandbox-framework && ./helper-scripts/ci-cd/test-e4j.sh

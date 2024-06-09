@@ -6,6 +6,8 @@
 # Ignore Gradle/CMake build output directory
 build
 cmake-build
+dependencies
+electrostatic4j-examples/libs
 .so
 .cache
 .idea
