@@ -18,45 +18,41 @@ prepare_sandbox "${sandbox_path}" "+rwx" ""
 ###
 ## Setup JDK
 ###
-#download_jdk
-#extract_jdk
-#cleanup_jdk
-#create_java_symbol
-#setup_java_home
-#
+download_jdk
+extract_jdk
+cleanup_jdk
+create_java_symbol
+setup_java_home
+
+
 ###
 ## Setup Gradle
 ###
-#download_gradle
-#extract_gradle
-#cleanup_gradle
-#create_gradle_symbol
-#
-#ls -l "${download_dir}"
-#
+download_gradle
+extract_gradle
+cleanup_gradle
+create_gradle_symbol
+
 #
 ###
 ## Setup CMake
 ###
-#download_cmake
-#extract_cmake
-#cleanup_cmake
-#create_cmake_symbol
-#create_posix_headers_symbol
-#install_gcc_multilib
-#
-#ls -l "${download_dir}"
-#
+download_cmake
+extract_cmake
+cleanup_cmake
+create_cmake_symbol
+create_posix_headers_symbol
+install_gcc_multilib
+
+
 ###
 ## Setup AVRDude
 ###
-#download_avrdude
-#extract_avrdude
-#cleanup_avrdude
-#create_avrdude_symbol
-#
-#ls -l "${download_dir}"
-#
+download_avrdude
+extract_avrdude
+cleanup_avrdude
+create_avrdude_symbol
+
 ###
 ## Setup arduino-ide
 ###
@@ -69,16 +65,9 @@ prepare_sandbox "${sandbox_path}" "+rwx" ""
 
 download_ndk
 extract_ndk
-ls -l "${download_dir}"
-ls -l "${download_dir}/android-ndk-r26d"
-
 cleanup_ndk
 create_clang_symbols
 create_ndk_headers_symbol
-
-
-android-clang --version
-android-clang++ --version
 
 ##
 # Setup Jetbrains IDE
@@ -87,17 +76,17 @@ android-clang++ --version
 # extract_ide
 # cleanup_ide
 # create_ide_symbol
-#
-#all_symbols_manual="============================== \n
-#        		    Sybmolic Links: \n
-#                    ${java_symbol} => `${java_symbol} --version` \n
-#                    ${gradle_symbol} => `${gradle_symbol} --version` \n
-#                    ${jetbrains_ide_symbol} `${jetbrains_ide_symbol} --version` \n
-#                    ${cmake_symbol} => `${cmake_symbol} --version` \n
-#                    ${arduinoide_symbol} => `${arduinoide_symbol} --version` \n
-#                    $(`android-clang`) \n
-#                    $(`android-clang++`) \n
-#                    $(`android-ndk-headers`) \n
-#                    =============================="
-#
-#echo -e "${all_symbols_manual}"
+
+all_symbols_manual="============================== \n
+        		    Sybmolic Links: \n
+                    ${java_symbol} => `${java_symbol} --version` \n
+                    ${gradle_symbol} => `${gradle_symbol} --version` \n
+                    ${jetbrains_ide_symbol} `${jetbrains_ide_symbol} --version` \n
+                    ${cmake_symbol} => `${cmake_symbol} --version` \n
+                    ${arduinoide_symbol} => `${arduinoide_symbol} --version` \n
+                    $(`android-clang`) \n
+                    $(`android-clang++`) \n
+                    $(`android-ndk-headers`) \n
+                    =============================="
+
+echo -e "${all_symbols_manual}"
