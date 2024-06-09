@@ -3,6 +3,13 @@
 system="NULL"
 ext="NULL"
 
+function findFiles() {
+    local dir="${1}"
+    local args="${2}"
+    # args=(-name *.c -o -name *.cpp -o -name *.cxx)
+    return $(find "${dir}" "${args}")
+}
+
 function getCurrentSystem() {
     if [[ `uname` == "Darwin" ]]; then 
         system="macos"
