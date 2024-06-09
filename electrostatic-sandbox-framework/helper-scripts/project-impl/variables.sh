@@ -21,10 +21,10 @@ ARM_32="armv7a-linux-androideabi${minSDKVersion}"
 ANDROID_x86="i686-linux-android${minSDKVersion}"
 ANDROID_x86_64="x86_64-linux-android${minSDKVersion}"
 
-# specify home for android llvm
-CLANG_BIN="${sandbox_path}/android-ndk-r26d/toolchains/llvm/prebuilt/linux-x86_64/bin/clang"
-CLANGPP_BIN="${sandbox_path}/android-ndk-r26d/toolchains/llvm/prebuilt/linux-x86_64/bin/clang++"
-NDK_TOOLCHAIN_INCLUDES="${sandbox_path}/android-ndk-r26d/prebuilts/ndk/headers"
+# specify symbolic binaries for android llvm
+CLANG_BIN="android-clang"
+CLANGPP_BIN="android-clang++"
+NDK_TOOLCHAIN_INCLUDES="android-ndk-headers"
 
 # supported targets for intel chipsets
 x86="x86"
