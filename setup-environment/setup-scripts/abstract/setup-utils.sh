@@ -70,11 +70,15 @@ function zip_extract_package() {
 	package_path="${1}"
 	destination_path="${2}"
 
+	temp=$(pwd)
+
 	cd "${destination_path}"
 
 	sudo unzip -q "${package_path}"
 
 	error_handler "$?" "Extracting package ${package_path} has failed!"
+
+	cd ${temp}
 }	
 
 ##
