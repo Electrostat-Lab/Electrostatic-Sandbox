@@ -68,12 +68,13 @@ prepare_sandbox "${sandbox_path}" "+rwx" ""
 #ls -l "${download_dir}"
 
 download_ndk
-extract_ndk
-cleanup_ndk
-create_clang_symbols
-create_ndk_headers_symbol
+unzip -q "${ndk_zip_name}"
+ls -l "${download_dir}"
 
-sudo ls -l "${sandbox_path}"
+#cleanup_ndk
+#create_clang_symbols
+#create_ndk_headers_symbol
+
 
 ##
 # Setup Jetbrains IDE
@@ -82,17 +83,17 @@ sudo ls -l "${sandbox_path}"
 # extract_ide
 # cleanup_ide
 # create_ide_symbol
-
-all_symbols_manual="============================== \n
-        		    Sybmolic Links: \n
-                    ${java_symbol} => `${java_symbol} --version` \n
-                    ${gradle_symbol} => `${gradle_symbol} --version` \n
-                    ${jetbrains_ide_symbol} `${jetbrains_ide_symbol} --version` \n
-                    ${cmake_symbol} => `${cmake_symbol} --version` \n
-                    ${arduinoide_symbol} => `${arduinoide_symbol} --version` \n
-                    $(`android-clang`) \n
-                    $(`android-clang++`) \n
-                    $(`android-ndk-headers`) \n
-                    =============================="
-
-echo -e "${all_symbols_manual}"
+#
+#all_symbols_manual="============================== \n
+#        		    Sybmolic Links: \n
+#                    ${java_symbol} => `${java_symbol} --version` \n
+#                    ${gradle_symbol} => `${gradle_symbol} --version` \n
+#                    ${jetbrains_ide_symbol} `${jetbrains_ide_symbol} --version` \n
+#                    ${cmake_symbol} => `${cmake_symbol} --version` \n
+#                    ${arduinoide_symbol} => `${arduinoide_symbol} --version` \n
+#                    $(`android-clang`) \n
+#                    $(`android-clang++`) \n
+#                    $(`android-ndk-headers`) \n
+#                    =============================="
+#
+#echo -e "${all_symbols_manual}"
