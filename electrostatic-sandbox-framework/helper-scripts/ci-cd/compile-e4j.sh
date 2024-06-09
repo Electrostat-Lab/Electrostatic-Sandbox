@@ -11,8 +11,14 @@ echo -e "${ORANGE_C} Compiling and Assembling e4j-core"
 
 cd ..
 echo -e "${ORANGE_C} Compiling e4j-native"
-./helper-scripts/project-impl/compile-electrostatic4j.sh "${JAVA_HOME}" "${TARGET_x86_64}" "${x86_64}"
-./helper-scripts/project-impl/compile-electrostatic4j.sh "${JAVA_HOME}" "${TARGET_x86}" "${x86}"
+
+./helper-scripts/project-impl/compile-electrostatic4j.sh \
+        "${GCC_BIN_x86}" "${GPP_BIN_x86}" "${TOOLCHAIN_INCLUDES_x86}" \
+        "${JAVA_HOME}" "${TARGET_x86_64}" "linux" "${x86_64}"
+
+./helper-scripts/project-impl/compile-electrostatic4j.sh \
+        "${GCC_BIN_x86}" "${GPP_BIN_x86}" "${TOOLCHAIN_INCLUDES_x86}" \
+        "${JAVA_HOME}" "${TARGET_x86}" "linux" "${x86}"
 
 cd ./electrostatic4j
 echo -e "${ORANGE_C} Bundling e4j-native"
