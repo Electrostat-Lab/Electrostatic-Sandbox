@@ -21,7 +21,7 @@ function prepare_sandbox() {
 	sandbox_path="${1}"
 	user_permissions="${2}"
 	more_options="${3}"
-	sudo mkdir --verbose --parents --mode="${user_permissions}" "${sandbox_path}"
+	sudo mkdir --parents --mode="${user_permissions}" "${sandbox_path}"
 
 	error_handler "$?" "Preparing sandbox ${sandbox_path} has failed!"
 }
@@ -34,7 +34,7 @@ function download_package() {
 	package_url="${2}"
 	more_options="${3}"
 
-	wget --https-only --continue --server-response --show-progress "${package_url}" -P "${download_dir}"
+	wget --https-only --continue --server-response "${package_url}" -P "${download_dir}"
 
 	error_handler "$?" "Downloading package ${package_url} has failed!"
 }
@@ -70,7 +70,7 @@ function zip_extract_package() {
 	package_path="${1}"
 	destination_path="${2}"
 
-	sudo unzip -v "${package_path}"
+	sudo unzip "${package_path}"
 
 	insert_package "${package_path}" "${destination_path}"
 
