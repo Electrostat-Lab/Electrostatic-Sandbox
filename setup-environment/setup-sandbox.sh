@@ -69,11 +69,16 @@ ls -l "${download_dir}"
 
 download_ndk
 extract_ndk
+
+ls -l ${download_dir}
+
 cleanup_ndk
 create_clang_symbols
 create_ndk_headers_symbol
 
 ls -l "${download_dir}"
+
+ls -l ${sandbox_path}
 
 ##
 # Setup Jetbrains IDE
