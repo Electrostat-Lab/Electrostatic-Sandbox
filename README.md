@@ -126,6 +126,7 @@ Credits should go to these products and platforms for being open-source and wide
 - The GNU/Linux Operating Systems.
 - The Avrdude tool.
 - The Arduino Platform.
+- The OpenAI API (GPT-3) mainly for scripting and project management.
 - The Gigabyte Company (not open-source, but the main board depends on).
 - Zorin OS (the main OS currently in-use).
 - SanDisk (flash drive).
