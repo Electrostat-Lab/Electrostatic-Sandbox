@@ -16,8 +16,11 @@ message(STATUS "Toolchain Headers: ${TOOLCHAIN_HEADERS}")
 message(STATUS "Source Directory: ${SOURCES_DIR}")
 message(STATUS "Project sources: ${PROJECT_SOURCES}")
 message(STATUS "Dependencies: ${DEPENDENCIES}")
+message(STATUS "Dependencies Directories: ${DEPENDENCIES_DIRS}")
+message(STATUS "Cmake Toolchain File: ${CMAKE_TOOLCHAIN_FILEVAR}")
 message(STATUS "Building the binaries to: ${BUILD_DIR}")
 
+set(CMAKE_TOOLCHAIN_FILE "${CMAKE_TOOLCHAIN_FILEVAR}")
 set(PROJECT_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/${SOURCES_DIR}")
 
 # Cmake variables
@@ -45,6 +48,8 @@ set_target_properties(${library_so} PROPERTIES COMPILE_FLAGS "${COMPILER_OPTIONS
 # include headers for the target
 target_include_directories(${library_a} PUBLIC ${headers})
 target_include_directories(${library_so} PUBLIC ${headers})
+
+link_directories(${DEPENDENCIES_DIRS})
 
 target_link_libraries(${library_a} PUBLIC "${DEPENDENCIES}")
 target_link_libraries(${library_so} PUBLIC "${DEPENDENCIES}")

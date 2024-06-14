@@ -15,6 +15,11 @@ function cleanup_ndk() {
     rm --verbose "${download_dir}/${ndk_zip_name}"
 }
 
+function create_ndk_home_symbol() {
+    create_sandbox_symbol "${sandbox_path}/${ndk_zip_content}" \
+    "${android_ndk_home}"
+}
+
 function create_clang_symbols() {
     create_sandbox_symbol "${sandbox_path}/${ndk_zip_content}/toolchains/llvm/prebuilt/linux-x86_64/bin/clang" \
     "${clang_symbol}"
@@ -26,4 +31,17 @@ function create_clang_symbols() {
 function create_ndk_headers_symbol() {
     create_sandbox_symbol "${sandbox_path}/${ndk_zip_content}/prebuilts/ndk/headers" \
     "${android_ndk_headers}"
+}
+
+function log_ndk_files() {
+#    # depends on:
+#    create_ndk_home_symbol
+#    create_ndk_headers_symbol
+
+    ls -l "/opt/electrostatic-sandbox/android-ndk-r26d"
+    ls -l "/opt/electrostatic-sandbox/android-ndk-r26d/sysroot/usr/lib"
+    ls -l "/opt/electrostatic-sandbox/android-ndk-r26d/prebuilt"
+    ls -l "/opt/electrostatic-sandbox/android-ndk-r26d/ndk-build"
+    ls -l "/opt/electrostatic-sandbox/android-ndk-r26d/prebuilt/headers"
+    ls -l "/opt/electrostatic-sandbox/android-ndk-r26d/prebuilt/lib"
 }
