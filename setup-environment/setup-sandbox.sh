@@ -66,6 +66,7 @@ create_avrdude_symbol
 download_ndk
 extract_ndk
 cleanup_ndk
+create_ndk_home_symbol
 create_clang_symbols
 create_ndk_headers_symbol
 

@@ -63,6 +63,7 @@ ndk_zip_name="android-ndk-r26d-linux.zip"
 ndk_zip_content="android-ndk-r26d"
 clang_symbol="${local_bin}/android-clang"
 clangpp_symbol="${local_bin}/android-clang++"
+android_ndk_home="${local_include}/android-ndk-home"
 android_ndk_headers="${local_include}/android-ndk-headers"
 ndk_provisional_path="${download_dir}/${ndk_zip_name}"
 
