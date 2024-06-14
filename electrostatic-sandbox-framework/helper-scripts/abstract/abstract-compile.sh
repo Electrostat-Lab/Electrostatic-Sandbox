@@ -13,6 +13,7 @@ function compile() {
     local PROJECT_SOURCES=${10}
     local DEPENDENCIES_DIRS=${11}
     local DEPENDENCIES=${12}
+    local CMAKE_TOOLCHAIN_FILEVAR=${13}
     
     local TEMP=$(pwd)
 
@@ -29,6 +30,7 @@ function compile() {
           "-DPROJECT_SOURCES=${PROJECT_SOURCES}" \
           "-DDEPENDENCIES_DIRS=${DEPENDENCIES_DIRS}" \
           "-DDEPENDENCIES=${DEPENDENCIES}" \
+          "-DCMAKE_TOOLCHAIN_FILEVAR=${CMAKE_TOOLCHAIN_FILEVAR}" \
           -S . -B "./${SOURCES_DIR}/cmake-build/${BUILD_DIR}"
 
     cmake --build "./${SOURCES_DIR}/cmake-build/${BUILD_DIR}"

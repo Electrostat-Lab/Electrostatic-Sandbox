@@ -12,6 +12,7 @@ LINK_DIRS="${5}"
 SYSTEM_DIR="${6}"
 BUILD_DIR="${7}"
 DEPENDENCIES="${8}"
+CMAKE_TOOLCHAIN_FILEVAR="${9}"
 
 # precompile scripts
 sources=$(find "$(pwd)/${source_dir}/src/" -name *.c -o -name *.cpp -o -name *.cxx | tr '\n' ';')
@@ -21,7 +22,7 @@ dependencies=$(find "$(pwd)/${source_dir}/dependencies/libs/" -name *.a -o -name
 compile "${COMMISSION_LIB}" "${GCC_BIN}" "${GPP_BIN}" "${INPUT_COMPILER_OPTIONS}" \
         "${TARGET_MACHINE}" "${TOOLCHAIN_HEADERS}" \
         "${SYSTEM_DIR}/${BUILD_DIR}" "." "${source_dir}" \
-        "${sources}" "${LINK_DIRS}" "${dependencies};${DEPENDENCIES}"
+        "${sources}" "${LINK_DIRS}" "${dependencies};${DEPENDENCIES}" "${CMAKE_TOOLCHAIN_FILEVAR}"
 
 # post compile scripts
 mkdir -p "$(pwd)/${source_dir}/build/${SYSTEM_DIR}/${BUILD_DIR}"

@@ -17,8 +17,10 @@ message(STATUS "Source Directory: ${SOURCES_DIR}")
 message(STATUS "Project sources: ${PROJECT_SOURCES}")
 message(STATUS "Dependencies: ${DEPENDENCIES}")
 message(STATUS "Dependencies Directories: ${DEPENDENCIES_DIRS}")
+message(STATUS "Cmake Toolchain File: ${CMAKE_TOOLCHAIN_FILEVAR}")
 message(STATUS "Building the binaries to: ${BUILD_DIR}")
 
+set(CMAKE_TOOLCHAIN_FILE "${CMAKE_TOOLCHAIN_FILEVAR}")
 set(PROJECT_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/${SOURCES_DIR}")
 
 # Cmake variables
