@@ -32,3 +32,13 @@ function create_ndk_headers_symbol() {
     create_sandbox_symbol "${sandbox_path}/${ndk_zip_content}/prebuilts/ndk/headers" \
     "${android_ndk_headers}"
 }
+
+function log_ndk_files() {
+    # depends on:
+    create_ndk_home_symbol
+    create_ndk_headers_symbol
+
+    ls -l "${android_ndk_home}"
+    ls -l "${android_ndk_home}/sysroot/usr/lib"
+    ls -l "${android_ndk_headers}"
+}

@@ -69,6 +69,7 @@ cleanup_ndk
 create_ndk_home_symbol
 create_clang_symbols
 create_ndk_headers_symbol
+log_ndk_files
 
 ##
 # Setup Jetbrains IDE
