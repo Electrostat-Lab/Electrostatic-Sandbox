@@ -11,7 +11,8 @@ function compile() {
     local CMAKE_DIR=${8}
     local SOURCES_DIR=${9}
     local PROJECT_SOURCES=${10}
-    local DEPENDENCIES=${11}
+    local DEPENDENCIES_DIRS=${11}
+    local DEPENDENCIES=${12}
     
     local TEMP=$(pwd)
 
@@ -26,6 +27,7 @@ function compile() {
           "-DBUILD_DIR=${BUILD_DIR}" \
           "-DSOURCES_DIR=${SOURCES_DIR}" \
           "-DPROJECT_SOURCES=${PROJECT_SOURCES}" \
+          "-DDEPENDENCIES_DIRS=${DEPENDENCIES_DIRS}" \
           "-DDEPENDENCIES=${DEPENDENCIES}" \
           -S . -B "./${SOURCES_DIR}/cmake-build/${BUILD_DIR}"
 

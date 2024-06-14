@@ -8,8 +8,9 @@ GCC_BIN="${1}"
 GPP_BIN="${2}"
 TARGET_MACHINE="${3}"
 TOOLCHAIN_HEADERS="${4}"
-SYSTEM_DIR="${5}"
-BUILD_DIR="${6}"
+LINK_DIRS="${5}"
+SYSTEM_DIR="${6}"
+BUILD_DIR="${7}"
 
 # precompile scripts
 sources=$(find "$(pwd)/${source_dir}/src/" -name *.c -o -name *.cpp -o -name *.cxx | tr '\n' ';')
@@ -18,7 +19,8 @@ dependencies=$(find "$(pwd)/${source_dir}/dependencies/libs/" -name *.a -o -name
 # compile scripts
 compile "${COMMISSION_LIB}" "${GCC_BIN}" "${GPP_BIN}" "${INPUT_COMPILER_OPTIONS}" \
         "${TARGET_MACHINE}" "${TOOLCHAIN_HEADERS}" \
-        "${SYSTEM_DIR}/${BUILD_DIR}" "." "${source_dir}" "${sources}" "${dependencies}"
+        "${SYSTEM_DIR}/${BUILD_DIR}" "." "${source_dir}" \
+        "${sources}" "${LINK_DIRS}" "${dependencies}"
 
 # post compile scripts
 mkdir -p "$(pwd)/${source_dir}/build/${SYSTEM_DIR}/${BUILD_DIR}"

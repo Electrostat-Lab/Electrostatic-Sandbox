@@ -10,9 +10,10 @@ GCC_BIN="${1}"
 GPP_BIN="${2}"
 TOOLCHAIN_HEADERS="${3}"
 java_home="${4}"
-target="${5}"
-system_dir="${6}"
-build_dir="${7}"
+LINK_DIRS="${5}"
+target="${6}"
+system_dir="${7}"
+build_dir="${8}"
 
 echo "${build_dir}"
 
@@ -26,7 +27,7 @@ JNI_HEADERS_SYSTEM="${JNI_HEADERS}/${system}"
 
 compile "${COMMISSION_LIB_4j}" "${GCC_BIN}" "${GPP_BIN}" "${INPUT_COMPILER_OPTIONS}" \
         "${target}" "${TOOLCHAIN_HEADERS};${JNI_HEADERS};${JNI_HEADERS_SYSTEM}" "${system_dir}/${build_dir}"  \
-        "." "${e4j_dir}" "${sources}" "${dependencies}"
+        "." "${e4j_dir}" "${sources}" "${LINK_DIRS}" "${dependencies}"
 
 moveFile "${e4j_dir}/cmake-build/${system_dir}/${build_dir}/lib${COMMISSION_LIB_4j}.so" \
          "${e4j_dir}/build/lib/${system_dir}/${build_dir}/"
