@@ -40,5 +40,8 @@ function log_ndk_files() {
 
     ls -l "/opt/electrostatic-sandbox/android-ndk-r26d"
     ls -l "/opt/electrostatic-sandbox/android-ndk-r26d/sysroot/usr/lib"
-    ls -l "/opt/electrostatic-sandbox/android-ndk-r26d/prebuilts/ndk/headers"
+    ls -l "/opt/electrostatic-sandbox/android-ndk-r26d/prebuilt"
+    ls -l "/opt/electrostatic-sandbox/android-ndk-r26d/ndk-build"
+    ls -l "/opt/electrostatic-sandbox/android-ndk-r26d/prebuilt/headers"
+    ls -l "/opt/electrostatic-sandbox/android-ndk-r26d/prebuilt/lib"
 }
