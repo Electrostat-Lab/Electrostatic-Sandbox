@@ -1,7 +1,7 @@
 #!/bin/bash
 source "./helper-scripts/project-impl/variables.sh"
 
-LINK_DIR="android_ndk_home/sysroot/usr/lib"
+LINK_DIR="android_ndk_home/sysroot/usr/lib/aarch64-linux-android/"
 
 ./helper-scripts/project-impl/compile-electrostatic.sh \
         "${CLANG_BIN}" "${CLANGPP_BIN}" \
