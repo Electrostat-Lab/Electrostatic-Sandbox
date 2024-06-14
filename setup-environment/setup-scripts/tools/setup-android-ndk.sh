@@ -34,11 +34,11 @@ function create_ndk_headers_symbol() {
 }
 
 function log_ndk_files() {
-    # depends on:
-    create_ndk_home_symbol
-    create_ndk_headers_symbol
+#    # depends on:
+#    create_ndk_home_symbol
+#    create_ndk_headers_symbol
 
-    ls -l "${android_ndk_home}"
-    ls -l "${android_ndk_home}/sysroot/usr/lib"
-    ls -l "${android_ndk_headers}"
+    ls -l "/opt/electrostatic-sandbox/android-ndk-r26d"
+    ls -l "/opt/electrostatic-sandbox/android-ndk-r26d/sysroot/usr/lib"
+    ls -l "/opt/electrostatic-sandbox/android-ndk-r26d/prebuilts/ndk/headers"
 }
