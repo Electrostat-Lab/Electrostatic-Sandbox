@@ -1,6 +1,5 @@
-title: Mathematics I
-description: Houses useful re-usable formulas, which create the base for life management, electrical engineering, medicine, and computer science.
+title: Electrostatic-Sandbox Framework
+description: An advanced embedded runtime infrastructure (RTI) featuring powers from Serial4j and ShiftAvr for distributed simulation systems, and based on the NASA DSES in structure and the IEEE-1516 HLA in specification for the exposed runtime federates API.
 show_downloads: false
 google_analytics: false
-theme: jekyll-theme-slate
 markdown: kramdown
