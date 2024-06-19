@@ -13,6 +13,25 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="robots" content="follow, index" />
         <script src="./website/polyfills-c67a75d1b6f99dc8.js" nomodule=""></script>
+        <style>
+            main {
+              padding: 50px;
+              display: flex;
+            }
+            .post {
+              flex: 3;
+              margin-bottom: 20px;
+              border-bottom: 1px solid #ccc;
+              padding-bottom: 10px;
+            }
+            .post h2 {
+              margin-top: 0;
+              font-size: 1.2rem;
+            }
+            .post p {
+              margin: 10px;
+            }  
+        </style>
         <script>
           MathJax = {
             tex: {
@@ -111,9 +130,9 @@
 
                     </div>
                     <div class="container">
-                        <section class="max-w-screen-2xl items-center">
+                        <article class="post max-w-screen-2xl items-center">
                             {{content}}
-                        </section>
+                        </article>
                     </div>
                     <div>
                         <div id="features-5cBbDv" class="px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto font-energetic bg-white">
