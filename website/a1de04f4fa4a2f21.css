@@ -1145,6 +1145,9 @@ video {
 .overflow-y-scroll {
     overflow-y: scroll;
 }
+.overflow-x-scroll {
+    overflow-x: scroll;
+}
 .rounded {
     border-radius: 0.25rem;
 }
