@@ -58,7 +58,7 @@
 }
 table {
   border-collapse: collapse;  /* Remove gaps between cells */
-  margin: 5px auto;         /* Add margin for spacing */
+  margin: 5px;         /* Add margin for spacing */
 }
 
 th, td {
@@ -130,11 +130,6 @@ sub {
 }
 sup {
     top: -0.5em;
-}
-table {
-    text-indent: 0;
-    border-color: inherit;
-    border-collapse: collapse;
 }
 button,
 input,
