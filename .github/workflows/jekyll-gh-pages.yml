@@ -21,6 +21,9 @@ concurrency:
   group: "pages"
   cancel-in-progress: false
 
+env:
+  URL: https://electrostat-lab.github.io/Electrostatic-Sandbox
+
 jobs:
   # Build job
   build:
