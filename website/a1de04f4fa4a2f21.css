@@ -63,7 +63,7 @@ table {
 }
 
 th, td {
-  padding: 2px;  
+  padding: 5px;  
   text-align: left;          /* Align text to the left */
   border: 1px solid;    /* Add border to cells */
 }
