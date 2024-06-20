@@ -110,7 +110,6 @@ strong {
     font-weight: bolder;
 }
 kbd,
-pre,
 samp {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
     font-feature-settings: normal;
@@ -188,8 +187,7 @@ summary {
 blockquote,
 figure,
 hr,
-p,
-pre {
+p {
     margin: 0;
 }
 fieldset {
