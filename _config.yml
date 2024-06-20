@@ -3,5 +3,6 @@ description: An advanced embedded runtime infrastructure (RTI) featuring powers 
 show_downloads: false
 google_analytics: false
 theme: jekyll-theme-slate
-markdown: redcarpet
-extensions: [fenced_code_blocks]
+markdown: kramdown
+kramdown:
+  syntax_highlighter: rouge
