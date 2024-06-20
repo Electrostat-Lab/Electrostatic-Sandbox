@@ -2090,26 +2090,7 @@ video {
 .ease-out {
     transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
 }
-*,
-:after,
-:before,
-html {
-    box-sizing: border-box;
-}
-html {
-    height: 100%;
-    touch-action: manipulation;
-    font-feature-settings: "case" 1, "rlig" 1, "calt" 0;
-}
-body,
-html {
-    font-family: -apple-system, system-ui, BlinkMacSystemFont, Helvetica Neue, Helvetica, sans-serif;
-    text-rendering: optimizeLegibility;
-    --tw-text-opacity: 1;
-    color: rgb(0 0 0 / var(--tw-text-opacity));
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
+
 body {
     position: relative;
     min-height: 100%;
