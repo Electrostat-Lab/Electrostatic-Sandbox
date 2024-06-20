@@ -22,7 +22,6 @@
 .font-safari {
     font-family: Nunito, sans-serif !important;
 }
-
 .post {
   flex: 3;
   margin-bottom: 20px;
@@ -31,7 +30,24 @@
 }
 .post h2 {
   margin-top: 0;
-  font-size: 1.2rem;
+  font-size: 2.2rem;
+}
+/* Link styles */
+.post a {
+  color: blue; /* Default blue color for links */
+  text-decoration: none; /* Remove underline */
+  font-family: Arial, sans-serif; /* Fallback font for Arial */
+}
+.post a:hover {
+  color: #007bff; /* Change color to blue (#007bff) on hover */
+}
+/* H3 styles */
+.post h3 {
+  color: #333; /* Dark gray color */
+  font-family: Helvetica, sans-serif; /* Fallback font for Helvetica */
+  font-size: 1.2em; /* Increase font size slightly */
+  font-weight: bold; /* Bold text */
+  margin-bottom: 15px; /* Add some space below the h3 */
 }
 .post p {
   margin: 10px;
