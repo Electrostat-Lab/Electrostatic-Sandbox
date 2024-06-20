@@ -64,6 +64,7 @@ table {
 
 th, td {
   padding: 5px;  
+  margin: 5x;  
   text-align: left;          /* Align text to the left */
   border: 1px solid;    /* Add border to cells */
 }
