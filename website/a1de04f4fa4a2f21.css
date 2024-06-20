@@ -58,7 +58,8 @@
 }
 table {
   border-collapse: collapse;  /* Remove gaps between cells */
-  margin: 5px;         /* Add margin for spacing */
+  width: 100%;  
+  margin: 10px;         /* Add margin for spacing */
 }
 
 th, td {
