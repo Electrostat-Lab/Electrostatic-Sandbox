@@ -23,6 +23,20 @@
     font-family: Nunito, sans-serif !important;
 }
 
+.post {
+  flex: 3;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+}
+.post h2 {
+  margin-top: 0;
+  font-size: 1.2rem;
+}
+.post p {
+  margin: 10px;
+}
+
 /*
 ! tailwindcss v3.4.1 | MIT License | https://tailwindcss.com
 */
