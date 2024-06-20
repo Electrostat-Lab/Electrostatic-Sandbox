@@ -56,6 +56,17 @@
 .post p {
   margin: 10px;
 }
+table {
+  border-collapse: collapse;  /* Remove gaps between cells */
+  width: 600px;              /* Set table width */
+  margin: 20px auto;         /* Add margin for spacing */
+}
+
+th, td {
+  padding: 10px;             /* Add padding to cells */
+  text-align: left;          /* Align text to the left */
+  border: 1px solid;    /* Add border to cells */
+}
 
 /*
 ! tailwindcss v3.4.1 | MIT License | https://tailwindcss.com
