@@ -93,15 +93,10 @@ abbr:where([title]) {
     -webkit-text-decoration: underline dotted;
     text-decoration: underline dotted;
 }
-a {
-    color: inherit;
-    text-decoration: inherit;
-}
 b,
 strong {
     font-weight: bolder;
 }
-code,
 kbd,
 pre,
 samp {
