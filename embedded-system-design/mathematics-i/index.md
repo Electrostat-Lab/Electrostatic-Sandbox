@@ -26,7 +26,7 @@ This repository houses re-usable equations and formulas for the following:
 > * Appendix-B: Derivation of the trigonometric identities.
 > * Appendix-C: Derivation of the fundamental theorem part-01 & part-02.
 > * Appendix-D: Derivation of the vector normalization formula.
-> * Appendix-E: [Derivation of the dot product and the projection vectors.](https://electrostat-lab.github.io/Mathematics-I/calculus/appendix-e)
+> * Appendix-E: [Derivation of the dot product and the projection vectors.](https://electrostat-lab.github.io/Electrostatic-Sandbox/embedded-system-design/mathematics-i/calculus/appendix-e)
 > * Appendix-F: Derivation of the cross product.
 > * Appendix-G: Derivation of the triple product.
 > * Appendix-H: Derivation of the vectorial polar coordinates from the rectangular coordinates.
@@ -48,9 +48,9 @@ This repository houses re-usable equations and formulas for the following:
 > * The fundamental theorem of calculus in FSA-based algorithms.
 > * Appendices
 > * =============================
-> * Appendix-A: [Symbolic Designation of mathematical analysis](https://electrostat-lab.github.io/Mathematics-I/discrete-maths/appendix-a)
-> * Appendix-B: [Algorithm Analysis](https://electrostat-lab.github.io/Mathematics-I/discrete-maths/appendix-b)
-> * Appendix-C: [Analysis by example](https://electrostat-lab.github.io/Mathematics-I/discrete-maths/appendix-c)
+> * Appendix-A: [Symbolic Designation of mathematical analysis](https://electrostat-lab.github.io/Electrostatic-Sandbox/embedded-system-design/mathematics-i/discrete-maths/appendix-a)
+> * Appendix-B: [Algorithm Analysis](https://electrostat-lab.github.io/Electrostatic-Sandbox/embedded-system-design/mathematics-i/discrete-maths/appendix-b)
+> * Appendix-C: [Analysis by example](https://electrostat-lab.github.io/Electrostatic-Sandbox/embedded-system-design/mathematics-i/discrete-maths/appendix-c)
 > * Appendix-D: FSA Analysis.
 > * Appendix-F: Time-warp states and FSA.
 > * Appendix-E: Implementation using [Automata4j](https://github.com/Software-Hardware-Codesign/Automata4j).
