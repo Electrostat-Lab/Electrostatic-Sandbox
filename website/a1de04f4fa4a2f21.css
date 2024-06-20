@@ -63,8 +63,8 @@ table {
 }
 
 th, td {
-  padding: 5px;  
-  margin: 5px;  
+  padding: 10px;  
+  margin: 10px;  
   text-align: left;          /* Align text to the left */
   border: 1px solid;    /* Add border to cells */
 }
