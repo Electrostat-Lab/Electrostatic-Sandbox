@@ -63,7 +63,6 @@ table {
 }
 
 th, td {
-  padding: 10px;             /* Add padding to cells */
   text-align: left;          /* Align text to the left */
   border: 1px solid;    /* Add border to cells */
 }
@@ -132,8 +131,6 @@ sub {
 sup {
     top: -0.5em;
 }
-button,
-input,
 optgroup,
 select,
 textarea {
