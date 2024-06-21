@@ -20,4 +20,7 @@ The following page lists the documentation manuals provided by the _Electrostati
 
 - [Mathematics-I](https://electrostat-lab.github.io/Electrostatic-Sandbox/embedded-system-design/mathematics-i/index): Housing useful resusable equations and formulas in calculus, discrete mathematics, and linear algebra.
 
+## Scientific Modelling and Systems Engineering: 
+
+- [Preface on Scientific Modelling](https://electrostat-lab.github.io/Electrostatic-Sandbox/embedded-system-design/scientific-modelling/preface): Signifying the essentiality of using scientific modelling in various applied science fields including medicine and system engineering with some insights on models construction using the _System-Entity-Structure Framework Pawletta Model (SES)_ and the _Tricotyledon Theory of System Design Model by Wymore (T3SD)_.
 
