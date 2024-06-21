@@ -20,9 +20,10 @@ Scientific Models: are miniaturized structures that idealize specific phenomenol
 
 > House of scientific models:
 
-| The House of models | Description |
-|-----------|----------|
-| ![](https://electrostat-lab.github.io/Electrostatic-Sandbox/embedded-system-design/scientific-modelling/resources/models-house.jpg) | ![](https://electrostat-lab.github.io/Electrostatic-Sandbox/embedded-system-design/scientific-modelling/resources/models-house-description.jpg) | 
+| The House of models | 
+|-----------|
+| ![](https://electrostat-lab.github.io/Electrostatic-Sandbox/embedded-system-design/scientific-modelling/resources/models-house.jpg) | 
+| ![](https://electrostat-lab.github.io/Electrostatic-Sandbox/embedded-system-design/scientific-modelling/resources/models-house-description.jpg) | 
 
 This illustrative diagram depicts a full image to the different types of scientific modelling together with their specific level-of-details (LoD), and the variable indifference in the essence of two highly applicable sciences nowadays, Internal Medicine V.S. Computational Systems (disclaimer: it's not really a Versus relationship, it's just for applying some humor to the topic!). The diagram of concern is represented as a house of models to specify the essentiality of abstraction levels (aka. LoD or level of details), in which the most accurate models lie in the basement; as where the infrastructure resigns, the strong building parts are aligned. 
 
@@ -42,9 +43,10 @@ The Medical Analyzer Model on the left side: provides a layered approach to inte
 
 There are several maneuvers for bringing a scientific model into life for a specific system, for instance, the System Entity Structure Framework (SES) aka. the Entity-Component System in software design, and the Tricotyledon System Design (T3D) introduced by Wymore which utilizies the set theory and ports automata to the design of the system behavior. One way is introduced here is the System-Entity-Structure Framework (SES) according to _Pawletta T, Durak U, Schmidt A_ together with some insights from _Wymore's T3D_ (Fig-1.7).
 
-| Constructional Usage | Description |
-|-----------|----------|
-| ![](https://electrostat-lab.github.io/Electrostatic-Sandbox/embedded-system-design/scientific-modelling/resources/constructional-use.jpg) | ![](https://electrostat-lab.github.io/Electrostatic-Sandbox/embedded-system-design/scientific-modelling/resources/constructional-use-2.jpg) | 
+| Constructional Usage |
+|----------------------|
+| ![](https://electrostat-lab.github.io/Electrostatic-Sandbox/embedded-system-design/scientific-modelling/resources/constructional-use.jpg) | 
+| ![](https://electrostat-lab.github.io/Electrostatic-Sandbox/embedded-system-design/scientific-modelling/resources/constructional-use-2.jpg) | 
 
 | System-Entity Structure Framework (SES) |
 |---------------------|
