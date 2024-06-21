@@ -51,19 +51,33 @@ There are several maneuvers for bringing a scientific model into life for a spec
 | ![](https://electrostat-lab.github.io/Electrostatic-Sandbox/embedded-system-design/scientific-modelling/resources/system-entity-framework.jpg) |
 
 **Practical Steps in building a model (iconic, conceptual, and symbolic parts) and validating it:**
+
 1) Examining the phenomena of interest.
+
 2) Finding or deriving the theories underlying this specific phenomena.
+
 3) Recognition of the system infrastructure in which this phenomena occurs.
+
 4) Decomposing the system of interest into primitive components (Set Theory Applied).
+
 5) Finding and deriving relations between the decomposed components using the underlying theory.
+
 6) Finding and deriving conditional relations between components (Propositional Calculus Applied).
+
 7) Grouping the decomposed components into modules (modularization, Group Theory Applied). 
+
 8) Apply Step.05 and Step.06 on modules derived from Step.07.
+
 9) Surpass modules into Entities.
+
 10) Specialize entities objects into simulation environments.
+
 11) Data collection and processing from the simulation environments.
+
 12) Feed the data back into a comparing interface.
+
 13) Validate the model based on Steps.10-11-12 with Steps.04-05-06.
+
 14) Re-iterate and improve the model and the understanding of the underlying theory.
 
 > Notice, how (Fig-1.7) references the steps in this text, and those steps are coincident with (Fig-3) which conveys the structure and the relation between the various components in scientific modelling and not the process steps per se. 
