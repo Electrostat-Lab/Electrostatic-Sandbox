@@ -23,7 +23,7 @@
     font-family: Nunito, sans-serif !important;
 }
 .post {
-  display: flex;
+  display: flex-row;
   border-bottom: 1px solid #ccc;
   padding-bottom: 5px;
 }
