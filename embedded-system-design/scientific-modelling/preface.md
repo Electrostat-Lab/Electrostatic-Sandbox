@@ -1,7 +1,7 @@
 # Scientific Modelling: Prologue
 > Created by [Pavl_G](https://github.com/Scrappers-glitch)
 
-_Scientific Modelling_ is a robust rocket-science way of miniaturizing real systems in order to examine, predict, and/or enhance a specific phenomena, and based on the underlying theory, one can derive the relations and the way the internal components interact together in a scientific space. 
+_Scientific Modelling_ is a robust rocket-science way of miniaturizing real systems in order to examine, predict, and/or enhance specific phenomena, and based on the underlying theory, one can derive the relations and the way the internal components interact together in a scientific space. 
 
 _Scientific Modelling_ is utilized in almost all human sciences including biomedical, engineering, and research fields.
 
