@@ -51,7 +51,7 @@ enum CommProtocol {
     IEEE_1284 = 0x01,
     PCI = 0x02,
     NET_SOCKETS = 0x03,
-    SERIAL_UART = 0x04
+    SERIAL_UART = 0x04,
     SERIAL_SPI = 0x05,
     SERIAL_TWI = 0x06,
     SERIAL_CUSTOM_01 = 0x07,
