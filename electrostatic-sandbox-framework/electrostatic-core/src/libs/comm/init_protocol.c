@@ -22,8 +22,8 @@ const static comm_protocol parallel_table = {
     &test_parallel  
 };
 
-extern uint8_t init_protocol(comm_protocol* comm,
-                             const comm_protocol* from) {
+extern uint8_t init_protocol(comm_protocol *comm,
+                             const comm_protocol *from) {
     if (&from == NULL) {
         return -1;
     }
@@ -33,13 +33,14 @@ extern uint8_t init_protocol(comm_protocol* comm,
     comm->read = from->read;
     comm->write = from->write;
     comm->close = from->close;
+    comm->callbacks = NULL;
     return 0;
 }
 
-extern uint8_t init_protocol_default(comm_protocol* comm, enum CommProtocol protocol) {
-    if (protocol == Serial) {
+extern uint8_t init_protocol_default(comm_protocol *comm, enum CommProtocol protocol, const comm_callbacks *callbacks) {
+    if (protocol == SERIAL_RS232) {
         return init_protocol(comm, &serial_table);
-    } else if (protocol == Parallel) {
+    } else if (protocol == IEEE_1284) {
         return init_protocol(comm, &parallel_table);
     }
 }
