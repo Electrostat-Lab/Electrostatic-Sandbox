@@ -1,4 +1,6 @@
 #!/bin/bash
 
-./helper-scripts/project-impl/compile-all.sh
-./helper-scripts/project-impl/compile-all-android.sh
+PRIMER="${1}"
+
+./helper-scripts/project-impl/compile-all.sh "${PRIMER}"
+./helper-scripts/project-impl/compile-all-android.sh "${PRIMER}"

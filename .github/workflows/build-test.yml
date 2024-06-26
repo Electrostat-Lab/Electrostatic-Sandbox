@@ -34,7 +34,7 @@ jobs:
           run: cd ./electrostatic-sandbox-framework && chmod +rwx ./helper-scripts/project-impl/*.sh
         
         - name: Compiling electrostatic-core Native Binaries
-          run: cd ./electrostatic-sandbox-framework && ./helper-scripts/ci-cd/compile-electrostatic.sh
+          run: cd ./electrostatic-sandbox-framework && ./helper-scripts/ci-cd/compile-electrostatic.sh "-primer"
 
         - name: Testing electrostatic-core Native Binaries
           run: cd ./electrostatic-sandbox-framework && ./helper-scripts/ci-cd/test-electrostatic.sh
