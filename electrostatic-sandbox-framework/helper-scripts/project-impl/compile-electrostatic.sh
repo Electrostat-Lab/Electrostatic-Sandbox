@@ -11,9 +11,17 @@ TOOLCHAIN_HEADERS="${4}"
 SYSTEM_DIR="${5}"
 BUILD_DIR="${6}"
 
+##
+# define source modules
+##
+platform_module="$(pwd)/${source_dir}/dependencies/libs/platform/${SYSTEM_DIR}/"
+comm_module="$(pwd)/${source_dir}/dependencies/libs/comm/"
+algorithm_module="$(pwd)/${source_dir}/dependencies/libs/algorithm/"
+util_module="$(pwd)/${source_dir}/dependencies/libs/util/"
+
 # precompile scripts
 sources=$(find "$(pwd)/${source_dir}/src/" -name *.c -o -name *.cpp -o -name *.cxx | tr '\n' ';')
-dependencies=$(find "$(pwd)/${source_dir}/dependencies/libs/" -name *.a -o -name *.so -o -name *.ar | tr '\n' ';')
+dependencies=$(find "${platform_module}" "${comm_module}" "${algorithm_module}" "${util_module}" -name *.a -o -name *.so -o -name *.ar | tr '\n' ';')
 
 # compile scripts
 compile "${COMMISSION_LIB}" "${GCC_BIN}" "${GPP_BIN}" "${INPUT_COMPILER_OPTIONS}" \
