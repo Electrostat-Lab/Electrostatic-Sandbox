@@ -40,9 +40,9 @@ extern uint8_t init_protocol(comm_protocol *comm,
 extern uint8_t init_protocol_default(comm_protocol *comm, enum CommProtocol protocol, const comm_callbacks *callbacks) {
     if (protocol == SERIAL_RS232) {
 	serial_table.callbacks = (comm_callbacks*) callbacks;
-        return init_protocol(comm, &((const comm_protocol) serial_table));
+        return init_protocol(comm, &serial_table);
     } else if (protocol == IEEE_1284) {
 	parallel_table.callbacks = callbacks;
-        return init_protocol(comm, &((const comm_protocol) parallel_table));
+        return init_protocol(comm, &parallel_table);
     }
 }
