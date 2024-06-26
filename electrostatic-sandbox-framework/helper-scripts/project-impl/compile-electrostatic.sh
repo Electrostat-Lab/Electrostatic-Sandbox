@@ -17,14 +17,14 @@ PRIMER_SUFFIX="${7}"
 # The suffix 'primer' swaps binaries with 
 # the original project for testing purposes!
 ##
-platform_module="$(pwd)/${source_dir}/dependencies/libs/electrostatic${PRIMER_SUFFIX}/platform/${SYSTEM_DIR}/"
-comm_module="$(pwd)/${source_dir}/dependencies/libs/electrostatic${PRIMER_SUFFIX}/comm/"
-algorithm_module="$(pwd)/${source_dir}/dependencies/libs/electrostatic${PRIMER_SUFFIX}/algorithm/"
-util_module="$(pwd)/${source_dir}/dependencies/libs/electrostatic${PRIMER_SUFFIX}/util/"
+platform_module="$(pwd)/${source_dir}/src/libs/electrostatic${PRIMER_SUFFIX}/platform/${SYSTEM_DIR}/"
+comm_module="$(pwd)/${source_dir}/src/libs/electrostatic${PRIMER_SUFFIX}/comm/"
+algorithm_module="$(pwd)/${source_dir}/src/libs/electrostatic${PRIMER_SUFFIX}/algorithm/"
+util_module="$(pwd)/${source_dir}/src/libs/electrostatic${PRIMER_SUFFIX}/util/"
 
 # precompile scripts
-sources=$(find "$(pwd)/${source_dir}/src/" -name *.c -o -name *.cpp -o -name *.cxx | tr '\n' ';')
-dependencies=$(find "${platform_module}" "${comm_module}" "${algorithm_module}" "${util_module}" -name *.a -o -name *.so -o -name *.ar | tr '\n' ';')
+sources=$(find "${platform_module}" "${comm_module}" "${algorithm_module}" "${util_module}" -name *.c -o -name *.cpp -o -name *.cxx | tr '\n' ';')
+dependencies=$(find "$(pwd)/${source_dir}/dependencies/libs/" -name *.a -o -name *.so -o -name *.ar | tr '\n' ';')
 
 # compile scripts
 compile "${COMMISSION_LIB}" "${GCC_BIN}" "${GPP_BIN}" "${INPUT_COMPILER_OPTIONS}" \
