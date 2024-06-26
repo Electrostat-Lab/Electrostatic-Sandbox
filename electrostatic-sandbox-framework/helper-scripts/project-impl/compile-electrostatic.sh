@@ -10,14 +10,17 @@ TARGET_MACHINE="${3}"
 TOOLCHAIN_HEADERS="${4}"
 SYSTEM_DIR="${5}"
 BUILD_DIR="${6}"
+PRIMER_SUFFIX="${7}"
 
 ##
 # define source modules
+# The suffix 'primer' swaps binaries with 
+# the original project for testing purposes!
 ##
-platform_module="$(pwd)/${source_dir}/dependencies/libs/platform/${SYSTEM_DIR}/"
-comm_module="$(pwd)/${source_dir}/dependencies/libs/comm/"
-algorithm_module="$(pwd)/${source_dir}/dependencies/libs/algorithm/"
-util_module="$(pwd)/${source_dir}/dependencies/libs/util/"
+platform_module="$(pwd)/${source_dir}/dependencies/libs/electrostatic${PRIMER_SUFFIX}/platform/${SYSTEM_DIR}/"
+comm_module="$(pwd)/${source_dir}/dependencies/libs/electrostatic${PRIMER_SUFFIX}/comm/"
+algorithm_module="$(pwd)/${source_dir}/dependencies/libs/electrostatic${PRIMER_SUFFIX}/algorithm/"
+util_module="$(pwd)/${source_dir}/dependencies/libs/electrostatic${PRIMER_SUFFIX}/util/"
 
 # precompile scripts
 sources=$(find "$(pwd)/${source_dir}/src/" -name *.c -o -name *.cpp -o -name *.cxx | tr '\n' ';')
