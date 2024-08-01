@@ -46,4 +46,4 @@ This file signifies a roadmap guide to quick-start the _Electrostatic-Sandbox_ p
   - [UNIX Operating System: The Development Tutorial via UNIX Kernel Services Springer](https://link.springer.com/book/10.1007/978-3-642-20432-6)
   - [Systems Programming in Unix/Linux Springer](https://link.springer.com/book/10.1007/978-3-319-92429-8)
   - [Reflections on Programming Systems Springer](https://link.springer.com/book/10.1007/978-3-319-97226-8)
-  - 
+  - [Distributed Computer and Communication Networks](https://link.springer.com/book/10.1007/978-3-031-61835-2)
