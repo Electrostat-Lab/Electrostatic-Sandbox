@@ -5,6 +5,8 @@
 ## Preface:
 An electronic monstrosity workstation designed to examine and develop systems for distributed simulations by providing an integrated environment housing the basic nostalgic communication protocols (i.e., Serial and Parallel COMs), the abstract networking interfaces, and a range of other electronic modules providing standards for controller interfaces, and sensor modules (e.g., the underdeveloped ShiftAvr, and Arduinos). 
 
+This electronic monstrosity features and leverages a powerful system-engineering infrastructure framework, the _Electrostatic-Sandbox Framework_ for distributed simulation systems, a complete SDK suite written purely in C programming language with a JNI binding based on the IEEE-1516 HLA Spec. and NASA DSES.
+
 ## Hardware-Software specification overview:
 
 | Item | Explanation |
