@@ -3,6 +3,32 @@
 This document attains a tight schedule to the project roadmap.
 
 ## Provisional Networking and Software infrastructure training: 
+### Book: Advanced Programming in Unix Environment:
+* Chapter.01 - Unix System Overview:
+  - **Number of days to complete: 3 days**
+  - **Additional days for testing and review: 2 days**
+  - **Add-ons: Ch.02 Fundamentals in _The Linux programming Interface by M. Kerrisk_**
+
+* Chapter.02 - Unix Standardization and implementations:
+  - **Number of days to complete: 2 days**
+  - **Additional days for testing and review: 1 days**
+  - **Add-ons: Ch.01 History & Standardizations in _The Linux programming Interface by M. Kerrisk_**
+
+* Chapter.07 - Process Environment:
+  - **Number of days to complete: 3 days**
+  - **Additional days for testing, review, and building examples: 2 days**
+  - **Add-ons: GNU/Linux libc documentation**
+  - **Review: **
+
+* Chapter.08:
+* Chapter.09:
+* Chapter.10:
+* Chapter.11:
+* Chapter.12:
+* Chapter.15:
+* Chapter.16:
+
+
 
 ## Provisional System infrastructure training: 
 
