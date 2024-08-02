@@ -39,6 +39,7 @@ This file signifies a roadmap guide to quick-start the _Electrostatic-Sandbox_ p
 ## Resources: 
 * Programming and Operating System Engineering:
   - Advanced Programming in the Unix Environment by Richard S. & Stephan Rago.
+  - Unix Network programming IPC by Richard Stevens.
   - Linux Interface Programming by M. Kerrisk.
   - GNU/Linux Application programming.
   - TCP/IP Socket Programming in C.
