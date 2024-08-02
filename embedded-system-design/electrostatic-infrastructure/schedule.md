@@ -5,29 +5,43 @@ This document attains a tight schedule to the project roadmap.
 ## Provisional Networking and Software infrastructure training: 
 ### Book: Advanced Programming in Unix Environment:
 * Chapter.01 - Unix System Overview:
-  - **Number of days to complete: 3 days**
+  - **Estimated number of days to complete: 3 days**
   - **Additional days for testing and review: 2 days**
   - **Add-ons: Ch.02 Fundamentals in _The Linux programming Interface by M. Kerrisk_**
 
 * Chapter.02 - Unix Standardization and implementations:
-  - **Number of days to complete: 2 days**
+  - **Estimated number of days to complete: 2 days**
   - **Additional days for testing and review: 1 days**
   - **Add-ons: Ch.01 History & Standardizations in _The Linux programming Interface by M. Kerrisk_**
 
 * Chapter.07 - Process Environment:
-  - **Number of days to complete: 3 days**
+  - **Estimated number of days to complete: 3 days**
   - **Additional days for testing, review, and building examples: 2 days**
   - **Add-ons: GNU/Linux libc documentation**
-  - **Review: **
+  - **Review: Ch.06 Processes and Ch.09 Process Credentials in _The Linux programming Interface by M. Kerrisk_**
 
-* Chapter.08:
-* Chapter.09:
+* Chapter.08 - Process Control: 
+  - **Estimated number of days to complete: 4 days**
+  - **Additional days for testing, review, and building examples: 2 days**
+  - **Add-ons: GNU/Linux libc documentation**
+  - **Review: Ch.20 Signals: Fundamentals and Ch.21 Signals: Signal Handlers in _The Linux programming Interface by M. Kerrisk_**
+
+* Chapter.09 - Process Relationships: 
+  - **Estimated number of days to complete: 4 days**
+  - **Additional days for testing, review, and building examples: 2 days**
+  - **Add-ons: GNU/Linux libc documentation**
+  - **Review: Ch.20 Signals: Fundamentals and Ch.21 Signals: Signal Handlers in _The Linux programming Interface by M. Kerrisk_**
+
 * Chapter.10:
 * Chapter.11:
 * Chapter.12:
 * Chapter.15:
 * Chapter.16:
 
+### Debugging: Realtime Memory Profiling:
+* [Valgrind Realtime Memory profiling Framework]()
+* [Dynamic Allocation Memory Tracing API by glibc]()
+* [Custom Memory Tracing Interfaces]()
 
 
 ## Provisional System infrastructure training: 
