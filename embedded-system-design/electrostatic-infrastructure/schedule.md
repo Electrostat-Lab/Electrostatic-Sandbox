@@ -25,6 +25,7 @@ This document attains a tight schedule to the project roadmap.
   - **Additional days for testing, review, and building examples: 2 days**
   - **Add-ons: GNU/Linux libc documentation**
   - **Review: Ch.20 Signals: Fundamentals and Ch.21 Signals: Signal Handlers in _The Linux programming Interface by M. Kerrisk_**
+  - **Add-ons-2 (essentials): Ch.24-25-26-27-28 _The Linux programming Interface by M. Kerrisk_**
 
 * Chapter.09 - Process Relationships: 
   - **Estimated number of days to complete: 4 days**
