@@ -1,0 +1,39 @@
+plugins {
+    id 'java-library'
+}
+
+tasks.register('generateJavadocJar', Jar) {
+    from javadoc
+}
+
+tasks.register('generateSourcesJar', Jar) {
+    from sourceSets.main.allSource
+}
+
+tasks.withType(JavaCompile).configureEach { // compile-time options [javac <options> <sources>]
+    //options.compilerArgs << '-Xlint:deprecation' // to show deprecation warnings
+    options.compilerArgs << '-Xlint:unchecked'
+    options.compilerArgs += ["-h", "${project.rootDir}/serial4j-native/src/include/jni/"]
+    options.encoding = 'UTF-8'
+}
+
+jar { // assemble jar options [java -jar]
+    final String dependencies =
+        "serial4j-native-linux.jar" + " " +
+        "serial4j-native-windows.jar" + " " +
+        "serial4j-native-darwin.jar" + " " +
+        "serial4j-native-android.jar"
+
+    archiveFileName = "${project.name}.jar"
+    manifest {
+        attributes 'Project': "${project.name}",
+                   'Implementation-Version': "${version}",
+                   'Class-Path': "${dependencies}",
+                   'Automatic-Module-Name': "${project.name.replace("-", ".")}",
+                   'Compiled-by': JavaVersion.current()
+    }
+}
+
+dependencies {
+    implementation "io.github.electrostat-lab:snaploader:1.0.0-beta"
+}

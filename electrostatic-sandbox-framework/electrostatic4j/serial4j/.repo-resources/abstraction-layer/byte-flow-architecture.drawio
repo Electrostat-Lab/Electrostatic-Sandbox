@@ -1,0 +1,193 @@
+<mxfile host="app.diagrams.net" modified="2024-01-21T20:28:15.693Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36" etag="NSBJvox8dXt5YHRbhOs0" version="22.1.21" type="github">
+  <diagram name="Page-1" id="5f0bae14-7c28-e335-631c-24af17079c00">
+    <mxGraphModel dx="1720" dy="985" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" background="none" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="39150e848f15840c-1" value="" style="verticalAlign=top;align=left;spacingTop=8;spacingLeft=2;spacingRight=12;shape=cube;size=10;direction=south;fontStyle=4;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12" parent="1" vertex="1">
+          <mxGeometry x="40" y="50" width="460" height="450" as="geometry" />
+        </mxCell>
+        <mxCell id="39150e848f15840c-2" value="" style="verticalAlign=top;align=left;spacingTop=8;spacingLeft=2;spacingRight=12;shape=cube;size=10;direction=south;fontStyle=4;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12" parent="1" vertex="1">
+          <mxGeometry x="660" y="70" width="640" height="490" as="geometry" />
+        </mxCell>
+        <mxCell id="39150e848f15840c-3" value="" style="verticalAlign=top;align=left;spacingTop=8;spacingLeft=2;spacingRight=12;shape=cube;size=10;direction=south;fontStyle=4;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12" parent="1" vertex="1">
+          <mxGeometry x="70" y="638" width="430" height="340" as="geometry" />
+        </mxCell>
+        <mxCell id="39150e848f15840c-5" value="serial4j" style="shape=component;align=left;spacingLeft=36;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;html=1;" parent="1" vertex="1">
+          <mxGeometry x="354" y="150" width="130" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="39150e848f15840c-7" value="serial4j-native" style="shape=component;align=left;spacingLeft=36;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;html=1;" parent="1" vertex="1">
+          <mxGeometry x="690" y="95" width="140" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="39150e848f15840c-9" value="" style="ellipse;whiteSpace=wrap;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;" parent="1" vertex="1">
+          <mxGeometry x="750" y="190" width="10" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="39150e848f15840c-10" value="serial4j-examples" style="shape=component;align=left;spacingLeft=36;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;html=1;" parent="1" vertex="1">
+          <mxGeometry x="320" y="668" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="39150e848f15840c-13" value="&lt;font style=&quot;font-size: 6px;&quot;&gt;Provides a native serial interface&lt;/font&gt;" style="edgeStyle=elbowEdgeStyle;rounded=0;html=1;labelBackgroundColor=none;startArrow=none;startFill=0;startSize=8;endArrow=none;endFill=0;endSize=16;fontFamily=Verdana;fontSize=12;" parent="1" source="39150e848f15840c-9" target="39150e848f15840c-7" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4l-lxIXdtN1crYGhOOL7-1" value="com.serial4j.example.exception" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=40;tabHeight=14;tabPosition=left;html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="90" y="658" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="4l-lxIXdtN1crYGhOOL7-2" value="com.serial4j.example.jme" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=40;tabHeight=14;tabPosition=left;html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="90" y="718" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="4l-lxIXdtN1crYGhOOL7-3" value="com.serial4j.example.modem" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=40;tabHeight=14;tabPosition=left;html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="90" y="778" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="4l-lxIXdtN1crYGhOOL7-4" value="com.serial4j.example.monitor" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=40;tabHeight=14;tabPosition=left;html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="90" y="838" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="4l-lxIXdtN1crYGhOOL7-5" value="com.serial4j.example.serial4j" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=40;tabHeight=14;tabPosition=left;html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="90" y="908" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="4l-lxIXdtN1crYGhOOL7-11" value="CMakeLists.txt" style="label;fontStyle=0;strokeColor=none;fillColor=none;align=left;verticalAlign=top;overflow=hidden;spacingLeft=28;spacingRight=4;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;imageWidth=16;imageHeight=16;whiteSpace=wrap;html=1;image=img/clipart/Gear_128x128.png" vertex="1" parent="1">
+          <mxGeometry x="700" y="230" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="4l-lxIXdtN1crYGhOOL7-12" value="build.gradle" style="label;fontStyle=0;strokeColor=none;fillColor=none;align=left;verticalAlign=top;overflow=hidden;spacingLeft=28;spacingRight=4;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;imageWidth=16;imageHeight=16;whiteSpace=wrap;html=1;image=img/clipart/Gear_128x128.png" vertex="1" parent="1">
+          <mxGeometry x="700" y="260" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="4l-lxIXdtN1crYGhOOL7-13" value="&lt;p style=&quot;margin:0px;margin-top:6px;text-align:center;&quot;&gt;&lt;b&gt;posix&lt;/b&gt;&lt;/p&gt;&lt;hr&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;+ ModemController&lt;br&gt;+ SerialUtils&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;+ TerminalDevice&lt;/p&gt;" style="align=left;overflow=fill;html=1;dropTarget=0;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="881" y="320" width="329" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="4l-lxIXdtN1crYGhOOL7-14" value="" style="shape=component;jettyWidth=8;jettyHeight=4;" vertex="1" parent="4l-lxIXdtN1crYGhOOL7-13">
+          <mxGeometry x="1" width="20" height="20" relative="1" as="geometry">
+            <mxPoint x="-24" y="4" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4l-lxIXdtN1crYGhOOL7-15" value="&lt;p style=&quot;margin:0px;margin-top:6px;text-align:center;&quot;&gt;&lt;b&gt;jni&lt;/b&gt;&lt;/p&gt;&lt;hr&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;+ _NativeErrno&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;+ _NativeModemBits&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;+ _NativeFileAccessPermissions&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;+ _NativeFilePermissions&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;+ _NativeTerminalDevice&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;+ _NativeTerminalDevice_FileSeekCriterion&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;+ _NativeTerminalFlags_ControlFlags&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;+ _NativeTerminalFlags_ControlFlags_MaskBits&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;+ _NativeTerminalFlags_InputFlags&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;+ _NativeTerminalFlags_LocalFlags&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;+ _NativeTerminalFlags_OutputFlags&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;+ _NativeTerminalFlags_OutputFlags_MaskBits&lt;/p&gt;" style="align=left;overflow=fill;html=1;dropTarget=0;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="881" y="90" width="329" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="4l-lxIXdtN1crYGhOOL7-16" value="" style="shape=component;jettyWidth=8;jettyHeight=4;" vertex="1" parent="4l-lxIXdtN1crYGhOOL7-15">
+          <mxGeometry x="1" width="20" height="20" relative="1" as="geometry">
+            <mxPoint x="-24" y="4" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4l-lxIXdtN1crYGhOOL7-20" value="" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=halfCircle;endFill=0;endSize=6;strokeWidth=1;sketch=0;fontSize=12;curved=1;exitX=1;exitY=0.75;exitDx=0;exitDy=0;" edge="1" target="39150e848f15840c-9" parent="1" source="39150e848f15840c-5">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="450" y="240" as="sourcePoint" />
+            <mxPoint x="750" y="241" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4l-lxIXdtN1crYGhOOL7-33" value="&lt;font style=&quot;font-size: 6px;&quot;&gt;Requires a native serial interface&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="4l-lxIXdtN1crYGhOOL7-20">
+          <mxGeometry x="0.1123" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4l-lxIXdtN1crYGhOOL7-21" value="" style="ellipse;whiteSpace=wrap;html=1;align=center;aspect=fixed;fillColor=none;strokeColor=none;resizable=0;perimeter=centerPerimeter;rotatable=0;allowArrows=0;points=[];outlineConnect=1;" vertex="1" parent="1">
+          <mxGeometry x="410" y="290" width="10" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="4l-lxIXdtN1crYGhOOL7-29" value="build.gradle" style="label;fontStyle=0;strokeColor=none;fillColor=none;align=left;verticalAlign=top;overflow=hidden;spacingLeft=28;spacingRight=4;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;imageWidth=16;imageHeight=16;whiteSpace=wrap;html=1;image=img/clipart/Gear_128x128.png" vertex="1" parent="1">
+          <mxGeometry x="370" y="220" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="4l-lxIXdtN1crYGhOOL7-30" value="build.gradle" style="label;fontStyle=0;strokeColor=none;fillColor=none;align=left;verticalAlign=top;overflow=hidden;spacingLeft=28;spacingRight=4;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;imageWidth=16;imageHeight=16;whiteSpace=wrap;html=1;image=img/clipart/Gear_128x128.png" vertex="1" parent="1">
+          <mxGeometry x="330" y="748" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="4l-lxIXdtN1crYGhOOL7-31" value="" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=data:image/svg+xml,PHN2ZyB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWw6c3BhY2U9InByZXNlcnZlIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiIgaWQ9IkxheWVyXzEiIHZlcnNpb249IjEuMSIgd2lkdGg9IjgwMHB4IiBoZWlnaHQ9IjgwMHB4Ij4mI3hhOzxwYXRoIGQ9Ik0xMDYuMzI0LDguMDE3Yy05LjQ0NiwwLTE3LjEwMiw3LjY1Ni0xNy4xMDIsMTcuMTAydjQ2MS43NjJjMCw5LjQ0Niw3LjY1NiwxNy4xMDIsMTcuMTAyLDE3LjEwMiYjMTA7JiM5O2gzNzYuMjUxYzkuNDQ2LDAsMTcuMTAyLTcuNjU2LDE3LjEwMi0xNy4xMDJWODQuOTc3bC03Ni45Ni03Ni45NkgxMDYuMzI0eiIgc3R5bGU9ImZpbGw6I0VDRURFRjsiLz4mI3hhOzxwYXRoIGQ9Ik00MzkuODE5LDg0Ljk3N2g1OS44NThsLTc2Ljk2LTc2Ljk2djU5Ljg1OEM0MjIuNzE2LDc3LjMxOSw0MzAuMzczLDg0Ljk3Nyw0MzkuODE5LDg0Ljk3N3oiIHN0eWxlPSJmaWxsOiNEOURDREY7Ii8+JiN4YTs8cGF0aCBkPSJNMzk3LjA2MywxOTYuMTQySDg5LjIyMlY0Mi4yMjFoMzA3Ljg0MWM0LjcyMiwwLDguNTUxLDMuODI5LDguNTUxLDguNTUxdjEzNi44MTgmIzEwOyYjOTtDNDA1LjYxNCwxOTIuMzEzLDQwMS43ODUsMTk2LjE0MiwzOTcuMDYzLDE5Ni4xNDJ6IiBzdHlsZT0iZmlsbDojQzZDQUNGOyIvPiYjeGE7PHBvbHlnb24gcG9pbnRzPSIzODguNTEyLDE3OS4wNCAxMi4yNjEsMTc5LjA0IDgwLjY3LDExMC42MyAxMi4yNjEsNDIuMjIxIDM4OC41MTIsNDIuMjIxIiBzdHlsZT0iZmlsbDojRkZDNDRGOyIvPiYjeGE7PGc+JiN4YTsJPHBvbHlnb24gcG9pbnRzPSIzMjAuMTAzLDI2NC41NTEgMjY4Ljc5NiwyNjQuNTUxIDI3Ny4zNDcsMjIxLjc5NSAzMTEuNTUxLDIyMS43OTUiIHN0eWxlPSJmaWxsOiNBMUE3QUY7Ii8+JiN4YTsJPHBvbHlnb24gcG9pbnRzPSIyNTguMTcsMjY4Ljk1MyAyMjEuODksMzA1LjIzMiAxOTcuNzA0LDI2OC45NTMgMjIxLjg5LDI0NC43NjYiIHN0eWxlPSJmaWxsOiNBMUE3QUY7Ii8+JiN4YTsJPHBvbHlnb24gcG9pbnRzPSIyMTcuNDg5LDMxNS44NTggMjE3LjQ4OSwzNjcuMTY1IDE3NC43MzMsMzU4LjYxNCAxNzQuNzMzLDMyNC40MDkiIHN0eWxlPSJmaWxsOiNBMUE3QUY7Ii8+JiN4YTsJPHBvbHlnb24gcG9pbnRzPSIyMjEuODksMzc3Ljc5MSAyNTguMTcsNDE0LjA3IDIyMS44OSw0MzguMjU3IDE5Ny43MDQsNDE0LjA3IiBzdHlsZT0iZmlsbDojQTFBN0FGOyIvPiYjeGE7CTxwb2x5Z29uIHBvaW50cz0iMjY4Ljc5Niw0MTguNDcyIDMyMC4xMDMsNDE4LjQ3MiAzMTEuNTUxLDQ2MS4yMjggMjc3LjM0Nyw0NjEuMjI4IiBzdHlsZT0iZmlsbDojQTFBN0FGOyIvPiYjeGE7CTxwb2x5Z29uIHBvaW50cz0iMzMwLjcyOCw0MTQuMDcgMzY3LjAwOCwzNzcuNzkxIDM5MS4xOTUsNDE0LjA3IDM2Ny4wMDgsNDM4LjI1NyIgc3R5bGU9ImZpbGw6I0ExQTdBRjsiLz4mI3hhOwk8cG9seWdvbiBwb2ludHM9IjM3MS40MDksMzY3LjE2NSAzNzEuNDA5LDMxNS44NTggNDE0LjE2NSwzMjQuNDA5IDQxNC4xNjUsMzU4LjYxNCIgc3R5bGU9ImZpbGw6I0ExQTdBRjsiLz4mI3hhOwk8cG9seWdvbiBwb2ludHM9IjM2Ny4wMDgsMzA1LjIzMiAzMzAuNzI4LDI2OC45NTMgMzY3LjAwOCwyNDQuNzY2IDM5MS4xOTUsMjY4Ljk1MyIgc3R5bGU9ImZpbGw6I0ExQTdBRjsiLz4mI3hhOzwvZz4mI3hhOzxwYXRoIGQ9Ik0yOTQuNDQ5LDI1NmMtNDcuMjI3LDAtODUuNTExLDM4LjI4NS04NS41MTEsODUuNTExczM4LjI4NSw4NS41MTIsODUuNTExLDg1LjUxMiYjMTA7JiM5O3M4NS41MTEtMzguMjg1LDg1LjUxMS04NS41MTJTMzQxLjY3NiwyNTYsMjk0LjQ0OSwyNTZ6IE0yOTQuNDQ5LDM4NC4yNjdjLTIzLjYxMywwLTQyLjc1Ni0xOS4xNDMtNDIuNzU2LTQyLjc1NiYjMTA7JiM5O2MwLTIzLjYxMywxOS4xNDMtNDIuNzU2LDQyLjc1Ni00Mi43NTZjMjMuNjEzLDAsNDIuNzU2LDE5LjE0Myw0Mi43NTYsNDIuNzU2QzMzNy4yMDUsMzY1LjEyNCwzMTguMDYyLDM4NC4yNjcsMjk0LjQ0OSwzODQuMjY3eiIgc3R5bGU9ImZpbGw6IzdCODQ4RjsiLz4mI3hhOzxwYXRoIGQ9Ik0yOTQuNDQ5LDI4MS42NTNjLTMzLjA1OSwwLTU5Ljg1OCwyNi43OTktNTkuODU4LDU5Ljg1OHMyNi43OTksNTkuODU4LDU5Ljg1OCw1OS44NTgmIzEwOyYjOTtzNTkuODU4LTI2Ljc5OSw1OS44NTgtNTkuODU4UzMyNy41MDgsMjgxLjY1MywyOTQuNDQ5LDI4MS42NTN6IE0yOTQuNDQ5LDM4NC4yNjdjLTIzLjYxMywwLTQyLjc1Ni0xOS4xNDMtNDIuNzU2LTQyLjc1NiYjMTA7JiM5O2MwLTIzLjYxMywxOS4xNDMtNDIuNzU2LDQyLjc1Ni00Mi43NTZjMjMuNjEzLDAsNDIuNzU2LDE5LjE0Myw0Mi43NTYsNDIuNzU2QzMzNy4yMDUsMzY1LjEyNCwzMTguMDYyLDM4NC4yNjcsMjk0LjQ0OSwzODQuMjY3eiIgc3R5bGU9ImZpbGw6I0ExQTdBRjsiLz4mI3hhOzxwYXRoIGQ9Ik00OTkuNjc3LDQyNi40ODljNC40MjgsMCw4LjAxNy0zLjU4OSw4LjAxNy04LjAxN1Y4NC45NzdjMC0yLjEtMC44NjItNC4xODMtMi4zNDctNS42NjhsLTc2Ljk2LTc2Ljk2JiMxMDsmIzk7QzQyNi44OTksMC44NjMsNDI0LjgxOCwwLDQyMi43MTYsMEgxMDYuMzI0QzkyLjQ3MywwLDgxLjIwNSwxMS4yNjgsODEuMjA1LDI1LjExOXY5LjA4NkgxMi4yNjFjLTYuOTg3LDAtMTAuNjE2LDguNzM4LTUuNjY4LDEzLjY4NSYjMTA7JiM5O2w2Mi43NCw2Mi43NDFsLTYyLjc0LDYyLjc0MWMtNC45NDcsNC45NDctMS4zMiwxMy42ODUsNS42NjgsMTMuNjg1aDY4Ljk0NHYyOTkuODI1YzAsMTMuODUxLDExLjI2OCwyNS4xMTksMjUuMTE5LDI1LjExOWgzNzYuMjUxJiMxMDsmIzk7YzEzLjg1MSwwLDI1LjExOS0xMS4yNjgsMjUuMTE5LTI1LjExOXYtMzQuMjA1YzAtNC40MjctMy41ODgtOC4wMTctOC4wMTctOC4wMTdjLTQuNDI4LDAtOC4wMTcsMy41ODktOC4wMTcsOC4wMTd2MzQuMjA1JiMxMDsmIzk7YzAsNS4wMS00LjA3Niw5LjA4Ni05LjA4Niw5LjA4NkgxMDYuMzI0Yy01LjAxLDAtOS4wODYtNC4wNzYtOS4wODYtOS4wODZWMTg3LjA1Nmg1MS44NDFjNC40MjcsMCw4LjAxNy0zLjU4OSw4LjAxNy04LjAxNyYjMTA7JiM5O3MtMy41ODktOC4wMTctOC4wMTctOC4wMTdIMzEuNjE1bDU0LjcyNC01NC43MjRjMy4xMzEtMy4xMzEsMy4xMzEtOC4yMDcsMC0xMS4zMzdMMzEuNjE1LDUwLjIzOGgzNDguODh2MTIwLjc4NUgxODMuMjg0JiMxMDsmIzk7Yy00LjQyNywwLTguMDE3LDMuNTg5LTguMDE3LDguMDE3czMuNTg5LDguMDE3LDguMDE3LDguMDE3aDIwNS4yMjhjNC40MjgsMCw4LjAxNy0zLjU4OSw4LjAxNy04LjAxN1Y0Mi4yMjEmIzEwOyYjOTtjMC00LjQyNy0zLjU4OC04LjAxNy04LjAxNy04LjAxN0g5Ny4yMzh2LTkuMDg2YzAtNS4wMSw0LjA3Ni05LjA4Niw5LjA4Ni05LjA4Nkg0MTQuN3Y1MS44NDFjMCwxMy44NTEsMTEuMjY4LDI1LjExOSwyNS4xMTksMjUuMTE5JiMxMDsmIzk7aDUxLjg0MXYzMjUuNDc4QzQ5MS42Niw0MjIuOSw0OTUuMjQ4LDQyNi40ODksNDk5LjY3Nyw0MjYuNDg5eiBNNDM5LjgxOSw3Ni45NmMtNS4wMSwwLTkuMDg2LTQuMDc2LTkuMDg2LTkuMDg2VjI3LjM3bDQ5LjU4OSw0OS41OSYjMTA7JiM5O0g0MzkuODE5eiIvPiYjeGE7PHBhdGggZD0iTTE3NC43MzMsMTQ0LjMwMWgzNC4yMDVjNC40MjcsMCw4LjAxNy0zLjU4OSw4LjAxNy04LjAxN3YtMzQuMjA1YzAtMTMuODUxLTExLjI2OC0yNS4xMTktMjUuMTE5LTI1LjExOWgtMTcuMTAyJiMxMDsmIzk7Yy00LjQyNywwLTguMDE3LDMuNTg5LTguMDE3LDguMDE3djUxLjMwN0MxNjYuNzE2LDE0MC43MTEsMTcwLjMwNiwxNDQuMzAxLDE3NC43MzMsMTQ0LjMwMXogTTE4Mi43NSw5Mi45OTRoOS4wODYmIzEwOyYjOTtjNS4wMSwwLDkuMDg2LDQuMDc2LDkuMDg2LDkuMDg2djI2LjE4OEgxODIuNzVWOTIuOTk0eiIvPiYjeGE7PHBhdGggZD0iTTIzNC41OTEsNzYuOTZjLTQuNDI3LDAtOC4wMTcsMy41ODktOC4wMTcsOC4wMTd2NTEuMzA3YzAsNC40MjcsMy41ODksOC4wMTcsOC4wMTcsOC4wMTdoMjUuNjUzJiMxMDsmIzk7YzQuNDI4LDAsOC4wMTctMy41ODksOC4wMTctOC4wMTdjMC00LjQyNy0zLjU4OC04LjAxNy04LjAxNy04LjAxN2gtMTcuNjM3di00My4yOUMyNDIuNjA4LDgwLjU1LDIzOS4wMTgsNzYuOTYsMjM0LjU5MSw3Ni45NnoiLz4mI3hhOzxwYXRoIGQ9Ik0yODUuODk4LDc2Ljk2Yy00LjQyOCwwLTguMDE3LDMuNTg5LTguMDE3LDguMDE3djUxLjMwN2MwLDQuNDI3LDMuNTg4LDguMDE3LDguMDE3LDguMDE3aDI1LjY1MyYjMTA7JiM5O2M0LjQyOCwwLDguMDE3LTMuNTg5LDguMDE3LTguMDE3YzAtNC40MjctMy41ODgtOC4wMTctOC4wMTctOC4wMTdoLTE3LjYzN3YtNDMuMjlDMjkzLjkxNSw4MC41NSwyOTAuMzI1LDc2Ljk2LDI4NS44OTgsNzYuOTZ6Ii8+JiN4YTs8cGF0aCBkPSJNNDE1LjczNywzNjYuNDc0YzMuNzQ4LTAuNzQ5LDYuNDQ0LTQuMDM5LDYuNDQ0LTcuODYxdi0zNC4yMDVjMC0zLjgyMS0yLjY5Ny03LjExMS02LjQ0NC03Ljg2MWwtMzMuMjY1LTYuNjUzJiMxMDsmIzk7Yy0xLjAxNS0yLjgxOC0yLjE2Mi01LjU3Mi0zLjQzMy04LjI1OGwxOC44MjUtMjguMjM4YzIuMTItMy4xOCwxLjcwMS03LjQxNC0xLjAwMi0xMC4xMTVsLTI0LjE4Ny0yNC4xODYmIzEwOyYjOTtjLTIuNzAzLTIuNzAyLTYuOTM3LTMuMTItMTAuMTE2LTEuMDAybC0yOC4yMzgsMTguODI1Yy0yLjY4NS0xLjI3MS01LjQ0LTIuNDE4LTguMjU3LTMuNDMzbC02LjY1My0zMy4yNjUmIzEwOyYjOTtjLTAuNzQ5LTMuNzQ4LTQuMDM5LTYuNDQ0LTcuODYxLTYuNDQ0aC0zNC4yMDVjLTMuODIxLDAtNy4xMTEsMi42OTctNy44NjEsNi40NDRsLTYuNjUzLDMzLjI2NSYjMTA7JiM5O2MtMi44MTgsMS4wMTUtNS41NzIsMi4xNjItOC4yNTcsMy40MzNsLTI4LjIzOC0xOC44MjVjLTMuMTc5LTIuMTE5LTcuNDE0LTEuNzAxLTEwLjExNSwxLjAwMmwtMjQuMTg2LDI0LjE4NiYjMTA7JiM5O2MtMi43MDIsMi43MDItMy4xMjEsNi45MzYtMS4wMDIsMTAuMTE1bDE4LjgyNSwyOC4yMzhjLTEuMjcxLDIuNjg1LTIuNDE4LDUuNDQtMy40MzMsOC4yNTdsLTMzLjI2Nyw2LjY1NCYjMTA7JiM5O2MtMy43NDgsMC43NDktNi40NDQsNC4wMzktNi40NDQsNy44NjF2MzQuMjA1YzAsMy44MjEsMi42OTcsNy4xMTEsNi40NDQsNy44NjFsMzMuMjY1LDYuNjUzYzEuMDE1LDIuODE4LDIuMTYyLDUuNTcyLDMuNDMzLDguMjU3JiMxMDsmIzk7bC0xOC44MjUsMjguMjM4Yy0yLjEyLDMuMTgtMS43MDEsNy40MTQsMS4wMDIsMTAuMTE1bDI0LjE4NiwyNC4xODZjMi42NjksMi42NjksNi45NzIsMy4wOTgsMTAuMTE1LDEuMDAybDI4LjIzOC0xOC44MjUmIzEwOyYjOTtjMi42ODUsMS4yNzEsNS40NCwyLjQxOCw4LjI1NywzLjQzM2w2LjY1MywzMy4yNjVjMC43NDksMy43NDgsNC4wMzksNi40NDQsNy44NjEsNi40NDRoMzQuMjA1YzMuODIxLDAsNy4xMTEtMi42OTcsNy44NjEtNi40NDQmIzEwOyYjOTtsNi42NTMtMzMuMjY1YzIuODE4LTEuMDE1LDUuNTcyLTIuMTYyLDguMjU3LTMuNDMzbDI4LjIzOCwxOC44MjVjMy4xNDMsMi4wOTYsNy40NDYsMS42NjcsMTAuMTE2LTEuMDAybDI0LjE4Ny0yNC4xODYmIzEwOyYjOTtjMi43MDEtMi43MDIsMy4xMjEtNi45MzYsMS4wMDItMTAuMTE1bC0xOC44MjUtMjguMjM4YzEuMjcxLTIuNjg1LDIuNDE4LTUuNDQsMy40MzMtOC4yNTdMNDE1LjczNywzNjYuNDc0eiBNNDA2LjE0OCwzMzAuOTgxdjIxLjA2JiMxMDsmIzk7bC0xOS4yNzcsMy44NTVjMS40NzUtOS41MTQsMS40NzUtMTkuMjU2LDAtMjguNzcxTDQwNi4xNDgsMzMwLjk4MXogTTI5NC40NDksNDE5LjAwNmMtNDIuNzMxLDAtNzcuNDk1LTM0Ljc2NC03Ny40OTUtNzcuNDk1JiMxMDsmIzk7czM0Ljc2NC03Ny40OTUsNzcuNDk1LTc3LjQ5NXM3Ny40OTUsMzQuNzY0LDc3LjQ5NSw3Ny40OTVTMzM3LjE3OSw0MTkuMDA2LDI5NC40NDksNDE5LjAwNnogTTM2NS45ODcsMjU1LjA4MmwxNC44OTIsMTQuODkyJiMxMDsmIzk7bC0xMC45MzMsMTYuMzk5Yy01LjctNy43ODUtMTIuNTczLTE0LjY1OC0yMC4zNTgtMjAuMzU4TDM2NS45ODcsMjU1LjA4MnogTTI4My45MTgsMjI5LjgxMmgyMS4wNmwzLjg1NSwxOS4yNzcmIzEwOyYjOTtjLTkuNTE1LTEuNDc1LTE5LjI1Ni0xLjQ3NS0yOC43NzEsMEwyODMuOTE4LDIyOS44MTJ6IE0yMDguMDE5LDI2OS45NzRsMTQuODkyLTE0Ljg5MmwxNi4zOTksMTAuOTMzJiMxMDsmIzk7Yy03Ljc4NSw1LjctMTQuNjU4LDEyLjU3NC0yMC4zNTgsMjAuMzU4TDIwOC4wMTksMjY5Ljk3NHogTTE4Mi43NSwzNTIuMDQydi0yMS4wNmwxOS4yNzgtMy44NTVjLTEuNDc1LDkuNTE1LTEuNDc1LDE5LjI1NiwwLDI4Ljc3MSYjMTA7JiM5O0wxODIuNzUsMzUyLjA0MnogTTIyMi45MTEsNDI3Ljk0MWwtMTQuODkyLTE0Ljg5MmwxMC45MzMtMTYuMzk5YzUuNyw3Ljc4NSwxMi41NzQsMTQuNjU4LDIwLjM1OCwyMC4zNThMMjIyLjkxMSw0MjcuOTQxeiYjMTA7JiM5OyBNMzA0Ljk3OSw0NTMuMjExaC0yMS4wNmwtMy44NTUtMTkuMjc3YzkuNTE1LDEuNDc1LDE5LjI1NiwxLjQ3NSwyOC43NzEsMEwzMDQuOTc5LDQ1My4yMTF6IE0zODAuODc4LDQxMy4wNDlsLTE0Ljg5MiwxNC44OTImIzEwOyYjOTtsLTE2LjM5OS0xMC45MzNjNy43ODUtNS43LDE0LjY1OC0xMi41NzMsMjAuMzU4LTIwLjM1OEwzODAuODc4LDQxMy4wNDl6Ii8+JiN4YTs8cGF0aCBkPSJNMjk0LjQ0OSwyOTAuNzM5Yy0yNy45OTUsMC01MC43NzIsMjIuNzc3LTUwLjc3Miw1MC43NzJjMCwyNy45OTUsMjIuNzc3LDUwLjc3Miw1MC43NzIsNTAuNzcyJiMxMDsmIzk7YzI3Ljk5NSwwLDUwLjc3Mi0yMi43NzcsNTAuNzcyLTUwLjc3MkMzNDUuMjIyLDMxMy41MTYsMzIyLjQ0NCwyOTAuNzM5LDI5NC40NDksMjkwLjczOXogTTI5NC40NDksMzc2LjI1MSYjMTA7JiM5O2MtMTkuMTU2LDAtMzQuNzM5LTE1LjU4NC0zNC43MzktMzQuNzM5YzAtMTkuMTU1LDE1LjU4My0zNC43MzksMzQuNzM5LTM0LjczOXMzNC43MzksMTUuNTg0LDM0LjczOSwzNC43MzkmIzEwOyYjOTtDMzI5LjE4OCwzNjAuNjY2LDMxMy42MDUsMzc2LjI1MSwyOTQuNDQ5LDM3Ni4yNTF6Ii8+JiN4YTs8L3N2Zz4=;" vertex="1" parent="1">
+          <mxGeometry x="337" y="781" width="17" height="17" as="geometry" />
+        </mxCell>
+        <mxCell id="4l-lxIXdtN1crYGhOOL7-32" value="libserial4j.so" style="rounded=0;whiteSpace=wrap;html=1;align=left;labelBorderColor=none;fillColor=none;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="361" y="781" width="114" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="4l-lxIXdtN1crYGhOOL7-35" value="settings.gradle" style="label;fontStyle=0;strokeColor=none;fillColor=none;align=left;verticalAlign=top;overflow=hidden;spacingLeft=28;spacingRight=4;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;imageWidth=16;imageHeight=16;whiteSpace=wrap;html=1;image=img/clipart/Gear_128x128.png" vertex="1" parent="1">
+          <mxGeometry x="600" y="660" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="4l-lxIXdtN1crYGhOOL7-36" value="build.gradle" style="label;fontStyle=0;strokeColor=none;fillColor=none;align=left;verticalAlign=top;overflow=hidden;spacingLeft=28;spacingRight=4;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;imageWidth=16;imageHeight=16;whiteSpace=wrap;html=1;image=img/clipart/Gear_128x128.png" vertex="1" parent="1">
+          <mxGeometry x="600" y="690" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="4l-lxIXdtN1crYGhOOL7-37" value="gradlew" style="label;fontStyle=0;strokeColor=none;fillColor=none;align=left;verticalAlign=top;overflow=hidden;spacingLeft=28;spacingRight=4;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;imageWidth=16;imageHeight=16;whiteSpace=wrap;html=1;image=img/clipart/Gear_128x128.png" vertex="1" parent="1">
+          <mxGeometry x="600" y="720" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="4l-lxIXdtN1crYGhOOL7-38" value="gradle-wrapper.jar" style="label;fontStyle=0;strokeColor=none;fillColor=none;align=left;verticalAlign=top;overflow=hidden;spacingLeft=28;spacingRight=4;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;imageWidth=16;imageHeight=16;whiteSpace=wrap;html=1;image=img/clipart/Gear_128x128.png" vertex="1" parent="1">
+          <mxGeometry x="600" y="750" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="4l-lxIXdtN1crYGhOOL7-39" value="&lt;p style=&quot;margin:0px;margin-top:6px;text-align:center;&quot;&gt;&lt;b&gt;.&lt;/b&gt;&lt;/p&gt;&lt;hr&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;+ AddressesBuffer&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;+ BufferUtils&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;+ ErrnoUtils&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;+ JniUtils&lt;/p&gt;" style="align=left;overflow=fill;html=1;dropTarget=0;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="881" y="410" width="329" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="4l-lxIXdtN1crYGhOOL7-40" value="" style="shape=component;jettyWidth=8;jettyHeight=4;" vertex="1" parent="4l-lxIXdtN1crYGhOOL7-39">
+          <mxGeometry x="1" width="20" height="20" relative="1" as="geometry">
+            <mxPoint x="-24" y="4" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4l-lxIXdtN1crYGhOOL7-42" value="&lt;font style=&quot;font-size: 7px;&quot;&gt;com.serial4j.core.terminal (Binding API)&lt;/font&gt;" style="shape=umlFrame;whiteSpace=wrap;html=1;pointerEvents=0;width=175;height=15;" vertex="1" parent="1">
+          <mxGeometry x="85" y="70" width="210" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="4l-lxIXdtN1crYGhOOL7-43" value="&lt;font style=&quot;&quot;&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;Terminal Device&amp;nbsp;&lt;/span&gt;&lt;br&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; (Data Source)&lt;/font&gt;&lt;br&gt;&lt;/font&gt;" style="html=1;dropTarget=0;whiteSpace=wrap;align=left;" vertex="1" parent="1">
+          <mxGeometry x="140" y="149" width="120" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="4l-lxIXdtN1crYGhOOL7-44" value="" style="shape=module;jettyWidth=8;jettyHeight=4;" vertex="1" parent="4l-lxIXdtN1crYGhOOL7-43">
+          <mxGeometry x="1" width="20" height="20" relative="1" as="geometry">
+            <mxPoint x="-27" y="7" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4l-lxIXdtN1crYGhOOL7-47" value="&lt;font style=&quot;font-size: 11px;&quot;&gt;Terminal Controls&lt;br&gt;&lt;/font&gt;" style="html=1;dropTarget=0;whiteSpace=wrap;align=left;" vertex="1" parent="1">
+          <mxGeometry x="140" y="92" width="120" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="4l-lxIXdtN1crYGhOOL7-48" value="" style="shape=module;jettyWidth=8;jettyHeight=4;" vertex="1" parent="4l-lxIXdtN1crYGhOOL7-47">
+          <mxGeometry x="1" width="20" height="20" relative="1" as="geometry">
+            <mxPoint x="-27" y="7" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4l-lxIXdtN1crYGhOOL7-55" value="" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=halfCircle;endFill=0;endSize=6;strokeWidth=1;sketch=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" target="4l-lxIXdtN1crYGhOOL7-57" parent="1" source="4l-lxIXdtN1crYGhOOL7-43">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="240" y="145" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="200" y="140" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4l-lxIXdtN1crYGhOOL7-56" value="" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=oval;endFill=0;sketch=0;sourcePerimeterSpacing=0;targetPerimeterSpacing=0;endSize=10;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" target="4l-lxIXdtN1crYGhOOL7-57" parent="1" source="4l-lxIXdtN1crYGhOOL7-47">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="200" y="146" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4l-lxIXdtN1crYGhOOL7-57" value="" style="ellipse;whiteSpace=wrap;html=1;align=center;aspect=fixed;fillColor=none;strokeColor=none;resizable=0;perimeter=centerPerimeter;rotatable=0;allowArrows=0;points=[];outlineConnect=1;" vertex="1" parent="1">
+          <mxGeometry x="195" y="131" width="10" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="4l-lxIXdtN1crYGhOOL7-59" value="&lt;font style=&quot;font-size: 7px;&quot;&gt;Terminal Control API&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;labelBorderColor=none;fillColor=none;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="209" y="125" width="84" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="4l-lxIXdtN1crYGhOOL7-62" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="4l-lxIXdtN1crYGhOOL7-61" target="39150e848f15840c-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4l-lxIXdtN1crYGhOOL7-70" value="&lt;font style=&quot;font-size: 6px;&quot;&gt;Requires serial4j.jar and libserial4j.so&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="4l-lxIXdtN1crYGhOOL7-62">
+          <mxGeometry x="-0.2087" relative="1" as="geometry">
+            <mxPoint y="-4" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4l-lxIXdtN1crYGhOOL7-63" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.322;exitY=0.824;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="388.36" y="344.82" as="sourcePoint" />
+            <mxPoint x="369.99812382739213" y="206.00000000000003" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="370" y="465" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4l-lxIXdtN1crYGhOOL7-69" value="&lt;font style=&quot;font-size: 6px;&quot;&gt;Provides a static Java library&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];rotation=90;" vertex="1" connectable="0" parent="4l-lxIXdtN1crYGhOOL7-63">
+          <mxGeometry x="0.2371" y="-1" relative="1" as="geometry">
+            <mxPoint y="9" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4l-lxIXdtN1crYGhOOL7-67" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0.332;exitY=0.125;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="4l-lxIXdtN1crYGhOOL7-61" target="39150e848f15840c-7">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="410" y="340" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4l-lxIXdtN1crYGhOOL7-68" value="&lt;font style=&quot;font-size: 6px;&quot;&gt;Provides a native dynamic library&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=7;" vertex="1" connectable="0" parent="4l-lxIXdtN1crYGhOOL7-67">
+          <mxGeometry x="-0.3982" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4l-lxIXdtN1crYGhOOL7-61" value="" style="shape=providedRequiredInterface;html=1;verticalLabelPosition=bottom;sketch=0;direction=south;" vertex="1" parent="1">
+          <mxGeometry x="386" y="459" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="4l-lxIXdtN1crYGhOOL7-72" value="&lt;font style=&quot;font-size: 33px;&quot;&gt;Byte Flow Serial Interface Architecture&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=#007FFF;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;rotation=0;fontColor=#ffffff;gradientColor=none;" vertex="1" parent="1">
+          <mxGeometry x="800" y="640" width="460" height="120" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
