@@ -1,0 +1,29 @@
+plugins {
+    id 'java-library'
+}
+
+final String JAVA_HOME = System.getProperty("java.home")
+final String buildDirectory="${project.rootDir}/${rootProject.name}-native/build/classes/java/main/lib"
+final String nativeObjects="${project.rootDir}/${rootProject.name}-native/build/lib"
+final String jarOutput="${project.rootDir}/${rootProject.name}-native/build/libs"
+final String examples="${project.rootDir}/${rootProject.name}-examples/libs"
+
+tasks.register("copyBinaries", Copy) {
+    from "${nativeObjects}"
+    into "${buildDirectory}"
+}
+
+tasks.register("copyToExamples", Copy) {
+    from "${jarOutput}"
+    into "${examples}"
+}
+
+jar { // assemble jar options [java -jar]
+    archiveFileName = "${project.name}-${system}.jar"
+    manifest {
+        attributes 'Project': "${project.name}-${system}",
+                'Implementation-Version': "${version}",
+                'Automatic-Module-Name': "${project.name.replace("-", ".")}",
+                'Created-by': JavaVersion.current()
+    }
+}

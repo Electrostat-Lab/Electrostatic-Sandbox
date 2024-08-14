@@ -1,0 +1,22 @@
+plugins {
+    id 'application'
+}
+
+application {
+    // Define the main class for the application.
+    mainClass = 'com.serial4j.example.Launcher'
+}
+
+dependencies {
+    implementation files("../serial4j-core/build/libs/serial4j-core.jar")
+    implementation files("../serial4j-native/build/libs/serial4j-native-linux.jar")
+
+    implementation "io.github.electrostat-lab:snaploader:1.0.0-beta"
+    implementation "org.jmonkeyengine:jme3-core:3.6.0-stable"
+    implementation "org.jmonkeyengine:jme3-effects:3.6.0-stable"
+    implementation "org.jmonkeyengine:jme3-plugins:3.6.0-stable"
+    implementation "org.jmonkeyengine:jme3-desktop:3.6.0-stable"
+    implementation "org.jmonkeyengine:jme3-lwjgl3:3.6.0-stable"
+
+    implementation 'com.github.stephengold:Minie:7.4.0+big3'
+}

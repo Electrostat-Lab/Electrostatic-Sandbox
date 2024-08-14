@@ -12,7 +12,7 @@ public class Launcher {
         NativeImageLoader.setExtractionPathFromUserDir("libs", "bin");
     }
     
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         NativeLibrary.open("/dev/ttyS0");
     }
 }

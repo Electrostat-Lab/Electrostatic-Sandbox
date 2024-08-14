@@ -1,0 +1,39 @@
+plugins {
+    id 'java-library'
+}
+
+tasks.register('generateJavadocJar', Jar) {
+    from javadoc
+}
+
+tasks.register('generateSourcesJar', Jar) {
+    from sourceSets.main.allSource
+}
+
+tasks.withType(JavaCompile).configureEach { // compile-time options [javac <options> <sources>]
+    //options.compilerArgs << '-Xlint:deprecation' // to show deprecation warnings
+    options.compilerArgs << '-Xlint:unchecked'
+    options.compilerArgs += ["-h", "${rootProject.rootDir}/${rootProject.name}-native/src/include/jni/"]
+    options.encoding = 'UTF-8'
+}
+
+jar { // assemble jar options [java -jar]
+    final String dependencies =
+        "${project.name}-native-linux.jar" + " " +
+        "${project.name}-native-windows.jar" + " " +
+        "${project.name}-native-darwin.jar" + " " +
+        "${project.name}-native-android.jar"
+
+    archiveFileName = "${project.name}.jar"
+    manifest {
+        attributes 'Project': "${rootProject.name}",
+                'Implementation-Version': "${version}",
+                'Class-Path': "${dependencies}",
+                'Automatic-Module-Name': "${project.name.replace("-", ".")}",
+                'Compiled-by': JavaVersion.current()
+    }
+}
+
+dependencies {
+    implementation "io.github.software-hardware-codesign:snaploader:1.0.0-alpha"
+}
