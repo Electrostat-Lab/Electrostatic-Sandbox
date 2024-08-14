@@ -31,7 +31,7 @@ jobs:
           run: chmod +rwx ./setup-environment/setup-sandbox.sh && ./setup-environment/setup-sandbox.sh
 
         - name: User's Permissions Granting
-          run: cd ./electrostatic-sandbox-framework && chmod +rwx ./helper-scripts/project-impl/*.sh
+          run: cd ./electrostatic-sandbox-framework && chmod +rwx ./helper-scripts/project-impl/*.sh && chmod +rwx ./helper-scripts/ci-cd/*.sh
         
         - name: Compiling electrostatic-core Native Binaries
           run: cd ./electrostatic-sandbox-framework && ./helper-scripts/ci-cd/compile-electrostatic.sh ""
