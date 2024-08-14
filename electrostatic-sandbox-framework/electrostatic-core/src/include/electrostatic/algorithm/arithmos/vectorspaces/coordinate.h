@@ -5,6 +5,7 @@
 #ifndef _COORDINATE_H_
 #define _COORDINATE_H_
 
+#include <math.h>
 #include <inttypes.h>
 
 #if defined (_VECTOR2D_USE_UINT8_)
