@@ -29,7 +29,7 @@ dependencies=$(find "$(pwd)/${source_dir}/dependencies/libs/" -name *.a -o -name
 # compile scripts
 compile "${COMMISSION_LIB}" "${GCC_BIN}" "${GPP_BIN}" "${INPUT_COMPILER_OPTIONS}" \
         "${TARGET_MACHINE}" "${TOOLCHAIN_HEADERS}" \
-        "${SYSTEM_DIR}/${BUILD_DIR}" "." "${source_dir}" "${sources}" "${dependencies}"
+        "${SYSTEM_DIR}/${BUILD_DIR}" "." "${source_dir}" "${sources}" "${dependencies};m;pthread"
 
 # post compile scripts
 mkdir -p "$(pwd)/${source_dir}/build/${SYSTEM_DIR}/${BUILD_DIR}"
