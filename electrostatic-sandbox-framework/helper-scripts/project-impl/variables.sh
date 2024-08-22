@@ -37,3 +37,4 @@ source_dir="electrostatic-core"
 examples_dir="electrostatic-examples"
 
 e4j_dir="electrostatic4j/electrostatic4j-native"
+serial4j_dir="electrostatic4j/serial4j/serial4j-native"
