@@ -8,7 +8,6 @@
 #define _vector2d_H_
 
 #include <math.h>
-#define _VECTOR2D_USE_FLOAT_
 #include <electrostatic/algorithm/arithmos/vectorspaces/coordinate.h>
 
 #ifdef __cplusplus
