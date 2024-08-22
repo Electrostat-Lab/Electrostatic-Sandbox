@@ -1,0 +1,35 @@
+{
+    "lsp.clangd.compilation.databases": ["/media/pavl-machine/pavl-g/Projects/Electrostatic-Sandbox/electrostatic-sandbox-framework/electrostatic-core/cmake-build/linux/x86/compile_commands.json"],
+    "lsp.use.clangd.indexer": true,
+    "plugins": [
+        {
+            "type": "add",
+            "pluginName": "gradle.daemon.services"
+        },
+        {
+            "type": "add",
+            "pluginName": "fleet.gradle"
+        },
+        {
+            "type": "add",
+            "pluginName": "fleet.yaml"
+        },
+        {
+            "type": "add",
+            "pluginName": "fleet.groovy"
+        },
+        {
+            "type": "add",
+            "pluginName": "fleet.language.cpp"
+        },
+        {
+            "type": "add",
+            "pluginName": "fleet.textmate"
+        },
+        {
+            "type": "add",
+            "pluginName": "fleet.markdown"
+        }
+    ],
+    "toolchains": []
+}
