@@ -62,7 +62,8 @@
 #   define vector2d_pow(v, p) ((double) powl(v, p)) 
 #   define vector2d_atan2(y, x) ((double) atan2l(y, x)) 
 #   define vector2d_acos(v) ((double) acosl(v)) 
-#elif defined (_VECTOR2D_USE_FLOAT_)
+#else
+// default program flow
 typedef float coordinate;
 typedef int32_t mod_coordinate;
 #   define vector2d_pow(v, p) ((float) pow(v, p)) 

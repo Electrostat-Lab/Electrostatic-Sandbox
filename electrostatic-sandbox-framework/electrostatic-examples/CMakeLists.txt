@@ -10,6 +10,7 @@ message(STATUS "GPP: ${GPP_BIN}")
 message(STATUS "Compiler Options: ${INPUT_COMPILER_OPTIONS}")
 message(STATUS "Target architecture: ${TARGET}")
 message(STATUS "Toolchain Includes: ${TOOLCHAIN_INCLUDES}")
+message(STATUS "Dependencies: ${DEPENDENCIES}")
 message(STATUS "Runnable-example: ${EXAMPLE}")
 message(STATUS "Building the binaries to: ${BUILD_DIR}")
 
@@ -39,8 +40,8 @@ set_target_properties(${executable_so} PROPERTIES COMPILE_FLAGS "${COMPILER_OPTI
 target_include_directories(${executable_a} PUBLIC ${lib_headers} ${headers})
 target_include_directories(${executable_so} PUBLIC ${lib_headers} ${headers})
 
-target_link_libraries(${executable_a} "${CMAKE_CURRENT_SOURCE_DIR}/dependencies/libs/${BUILD_DIR}/libelectrostatic-a.a")
-target_link_libraries(${executable_so} "${CMAKE_CURRENT_SOURCE_DIR}/dependencies/libs/${BUILD_DIR}/libelectrostatic.so")
+target_link_libraries(${executable_a} "${CMAKE_CURRENT_SOURCE_DIR}/dependencies/libs/${BUILD_DIR}/libelectrostatic-a.a" "m" "pthread")
+target_link_libraries(${executable_so} "${CMAKE_CURRENT_SOURCE_DIR}/dependencies/libs/${BUILD_DIR}/libelectrostatic.so" "m" "pthread")
 
 # Start building the target
 target_sources(${executable_a} PUBLIC ${sources})

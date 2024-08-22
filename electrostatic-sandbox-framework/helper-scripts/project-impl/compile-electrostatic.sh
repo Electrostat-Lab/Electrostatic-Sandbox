@@ -33,12 +33,17 @@ compile "${COMMISSION_LIB}" "${GCC_BIN}" "${GPP_BIN}" "${INPUT_COMPILER_OPTIONS}
 
 # post compile scripts
 mkdir -p "$(pwd)/${source_dir}/build/${SYSTEM_DIR}/${BUILD_DIR}"
+
 mkdir -p "$(pwd)/${e4j_dir}/dependencies/"
 mkdir -p "$(pwd)/${e4j_dir}/dependencies/libs/"
+
+mkdir -p "$(pwd)/${serial4j_dir}/dependencies/"
+mkdir -p "$(pwd)/${serial4j_dir}/dependencies/libs/"
 
 mkdir -p "$(pwd)/${examples_dir}/dependencies/"
 mkdir -p "$(pwd)/${examples_dir}/dependencies/libs/"
 
+# copying dependencies
 cp -v "$(pwd)/${source_dir}/cmake-build/${SYSTEM_DIR}/${BUILD_DIR}/lib${COMMISSION_LIB}.so" \
     "$(pwd)/${source_dir}/build/${SYSTEM_DIR}/${BUILD_DIR}/"
 
@@ -49,10 +54,16 @@ cp -rv "$(pwd)/${source_dir}/build/${SYSTEM_DIR}" \
     "$(pwd)/${e4j_dir}/dependencies/libs/"
 
 cp -rv "$(pwd)/${source_dir}/build/${SYSTEM_DIR}" \
+    "$(pwd)/${serial4j_dir}/dependencies/libs/"
+
+cp -rv "$(pwd)/${source_dir}/build/${SYSTEM_DIR}" \
     "$(pwd)/${examples_dir}/dependencies/libs/"
 
 cp -rv "$(pwd)/${source_dir}/src/include/" \
     "$(pwd)/${e4j_dir}/dependencies/"
+
+cp -rv "$(pwd)/${source_dir}/src/include/" \
+    "$(pwd)/${serial4j_dir}/dependencies/"
 
 cp -rv "$(pwd)/${source_dir}/src/include/" \
     "$(pwd)/${examples_dir}/dependencies/"

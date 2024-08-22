@@ -1,0 +1,10 @@
+{
+    "configurations": [
+        {
+            "name": "Setup Sandbox (Warning: High-data usage may incur!)",
+            "type": "command",
+            "program": "$PROJECT_DIR$/setup-environment/setup-sandbox.sh",
+            "args": [""]
+        },
+    ]
+}
