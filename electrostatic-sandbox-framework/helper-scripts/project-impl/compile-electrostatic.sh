@@ -29,7 +29,8 @@ dependencies=$(find "$(pwd)/${source_dir}/dependencies/libs/" -name *.a -o -name
 # compile scripts
 compile "${COMMISSION_LIB}" "${GCC_BIN}" "${GPP_BIN}" "${INPUT_COMPILER_OPTIONS}" \
         "${TARGET_MACHINE}" "${TOOLCHAIN_HEADERS}" \
-        "${SYSTEM_DIR}/${BUILD_DIR}" "." "${source_dir}" "${sources}" "${dependencies};m;pthread"
+        "${SYSTEM_DIR}/${BUILD_DIR}" "." "${source_dir}" "${sources}" "${dependencies};m;pthread;dl"
+
 
 # post compile scripts
 mkdir -p "$(pwd)/${source_dir}/build/${SYSTEM_DIR}/${BUILD_DIR}"
@@ -37,8 +38,11 @@ mkdir -p "$(pwd)/${source_dir}/build/${SYSTEM_DIR}/${BUILD_DIR}"
 mkdir -p "$(pwd)/${e4j_dir}/dependencies/"
 mkdir -p "$(pwd)/${e4j_dir}/dependencies/libs/"
 
-mkdir -p "$(pwd)/${serial4j_dir}/dependencies/"
-mkdir -p "$(pwd)/${serial4j_dir}/dependencies/libs/"
+mkdir -p "$(pwd)/${serial4j_dir}/serial4j-native/dependencies/"
+mkdir -p "$(pwd)/${serial4j_dir}/serial4j-native/dependencies/libs/"
+
+mkdir -p "$(pwd)/${serial4j_dir}/serial4j-native-examples/dependencies/"
+mkdir -p "$(pwd)/${serial4j_dir}/serial4j-native-examples/dependencies/libs/"
 
 mkdir -p "$(pwd)/${examples_dir}/dependencies/"
 mkdir -p "$(pwd)/${examples_dir}/dependencies/libs/"
@@ -54,7 +58,10 @@ cp -rv "$(pwd)/${source_dir}/build/${SYSTEM_DIR}" \
     "$(pwd)/${e4j_dir}/dependencies/libs/"
 
 cp -rv "$(pwd)/${source_dir}/build/${SYSTEM_DIR}" \
-    "$(pwd)/${serial4j_dir}/dependencies/libs/"
+    "$(pwd)/${serial4j_dir}/serial4j-native/dependencies/libs/"
+
+cp -rv "$(pwd)/${source_dir}/build/${SYSTEM_DIR}" \
+"$(pwd)/${serial4j_dir}/serial4j-native-examples/dependencies/libs/"
 
 cp -rv "$(pwd)/${source_dir}/build/${SYSTEM_DIR}" \
     "$(pwd)/${examples_dir}/dependencies/libs/"
@@ -63,7 +70,10 @@ cp -rv "$(pwd)/${source_dir}/src/include/" \
     "$(pwd)/${e4j_dir}/dependencies/"
 
 cp -rv "$(pwd)/${source_dir}/src/include/" \
-    "$(pwd)/${serial4j_dir}/dependencies/"
+    "$(pwd)/${serial4j_dir}/serial4j-native/dependencies/"
+
+cp -rv "$(pwd)/${source_dir}/src/include/" \
+"$(pwd)/${serial4j_dir}/serial4j-native-examples/dependencies/"
 
 cp -rv "$(pwd)/${source_dir}/src/include/" \
     "$(pwd)/${examples_dir}/dependencies/"
