@@ -51,6 +51,24 @@ The Java Native Interface API is a private API, and subjected to breaking change
 discouraged to utilize it via the Java Reflection API, you are very welcome to open an issue and explain the library defects that forced 
 you to utilize the native API.
 
+### Adding your operative active users to the serial devices groups:
+> [!NOTE]
+> Linux Groups are sets of permissions and regulations imposed on speicfic file systems; such that a user can acquire those regulations if and only if the user is added to that group of concern. Among those are serial comm and modem control groups.
+>
+
+* Run these in your terminal to add the current active user to these groups to control serial lines and modems via terminal and File IO:
+```bash
+# add the user to the unix-unix communication protocol group
+sudo usermod -a -G uucp $(whoami)
+# add the user to the modem dialing group
+sudo usermod -a -G dialout $(whoami)
+# add the user to the process-device locking group for concurrency purposes
+sudo usermod -a -G lock $(whoami)
+# add the user to the tty group
+sudo usermod -a -G tty $(whoami)
+```
+* Alternatively, you can run the shipped script using Fleet runtime.
+
 ### Compiling, building and testing examples:
 ```bash
 # building and assembling
