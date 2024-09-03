@@ -1,9 +1,15 @@
 {
     "configurations": [
         {
-            "name": "Setup Sandbox (Warning: High-data usage may incur!)",
+            "name": "Setup Sandbox: Setup Full Environment (Warning: High-data usage may incur!)",
             "type": "command",
             "program": "$PROJECT_DIR$/setup-environment/setup-sandbox.sh",
+            "args": [""]
+        },
+        {
+            "name": "Setup Sandbox: Set Binaries Symbols and Environmental Variables",
+            "type": "command",
+            "program": "$PROJECT_DIR$/setup-environment/create-symbols.sh",
             "args": [""]
         },
     ]
