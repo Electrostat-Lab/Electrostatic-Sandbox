@@ -41,8 +41,8 @@ jdk_provisional_path="${download_dir}/${jdk_tar_name}"
 ##
 gradle_url="https://services.gradle.org/distributions/gradle-8.3-all.zip"
 gradle_zip_name="gradle-8.3-all.zip"
-gradle_zip_content="*"
-gradle_symbol="gradle-8.3"
+gradle_zip_content="gradle-8.3"
+gradle_symbol="${local_bin}/gradle"
 gradle_provisional_path="${download_dir}/${gradle_zip_name}"
 
 ##
@@ -58,9 +58,9 @@ posix_headers_symbol="${local_include}/posix-headers"
 ##
 # Android NDK
 ##
-ndk_url="https://dl.google.com/android/repository/android-ndk-r26d-linux.zip"
-ndk_zip_name="android-ndk-r26d-linux.zip"
-ndk_zip_content="android-ndk-r26d"
+ndk_url="https://dl.google.com/android/repository/android-ndk-r21e-linux-x86_64.zip"
+ndk_zip_name="android-ndk-r21e-linux-x86_64.zip"
+ndk_zip_content="android-ndk-r21e"
 clang_symbol="${local_bin}/android-clang"
 clangpp_symbol="${local_bin}/android-clang++"
 android_ndk_headers="${local_include}/android-ndk-headers"

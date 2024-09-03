@@ -29,7 +29,19 @@
         {
             "type": "add",
             "pluginName": "fleet.markdown"
+        },
+        {
+            "type": "add",
+            "pluginName": "fleet.java.ai"
+        },
+        {
+            "type": "add",
+            "pluginName": "fleet.shell"
         }
     ],
-    "toolchains": []
+    "toolchains": [{
+            "name": "Clang",
+            "path": "/usr/lib/gcc/x86_64-linux-gnu/7/",
+        },
+    ]
 }

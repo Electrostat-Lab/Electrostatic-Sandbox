@@ -17,6 +17,7 @@ message(STATUS "Building the binaries to: ${BUILD_DIR}")
 # Cmake variables
 set(executable_a "${EXAMPLE}-a.elf") # target for archive-linked binary
 set(executable_so "${EXAMPLE}.elf") # target for shared-linked binary
+set(library_so "${EXAMPLE}")
 
 set(CMAKE_C_COMPILER "${GCC_BIN}")
 set(CMAKE_CXX_COMPILER "${GPP_BIN}")
@@ -31,6 +32,7 @@ set(sources "${CMAKE_CURRENT_SOURCE_DIR}/src/${EXAMPLE}")
 # add a library target
 add_executable(${executable_a}) # executable based on the static archive
 add_executable(${executable_so}) # executable based on the dynamic library
+add_library(${library_so} SHARED ${sources})
 
 # set both COMPILE_FLAGS and LINK_FLAGS to the specified binary architecture
 set_target_properties(${executable_a} PROPERTIES COMPILE_FLAGS "${COMPILER_OPTIONS}" LINK_FLAGS "${COMPILER_OPTIONS}")
@@ -39,10 +41,13 @@ set_target_properties(${executable_so} PROPERTIES COMPILE_FLAGS "${COMPILER_OPTI
 # include headers for the target
 target_include_directories(${executable_a} PUBLIC ${lib_headers} ${headers})
 target_include_directories(${executable_so} PUBLIC ${lib_headers} ${headers})
+target_include_directories(${library_so} PUBLIC ${lib_headers} ${headers})
 
-target_link_libraries(${executable_a} "${CMAKE_CURRENT_SOURCE_DIR}/dependencies/libs/${BUILD_DIR}/libelectrostatic-a.a" "m" "pthread")
+target_link_libraries(${executable_a} "${CMAKE_CURRENT_SOURCE_DIR}/dependencies/libs/${BUILD_DIR}/libelectrostatic-a.a" "m" "pthread" "dl")
 target_link_libraries(${executable_so} "${CMAKE_CURRENT_SOURCE_DIR}/dependencies/libs/${BUILD_DIR}/libelectrostatic.so" "m" "pthread")
+target_link_libraries(${library_so} "${CMAKE_CURRENT_SOURCE_DIR}/dependencies/libs/${BUILD_DIR}/libelectrostatic-a.a" "m" "pthread" "dl")
 
 # Start building the target
 target_sources(${executable_a} PUBLIC ${sources})
 target_sources(${executable_so} PUBLIC ${sources})
+target_sources(${library_so} PUBLIC ${sources})

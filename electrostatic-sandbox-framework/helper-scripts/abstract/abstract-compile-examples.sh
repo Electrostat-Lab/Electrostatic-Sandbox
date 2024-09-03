@@ -22,9 +22,9 @@ function compile() {
                "-DELECTROSTATIC_CORE=${ELECTROSTATIC_CORE}" \
                "-DEXAMPLE=${EXAMPLE}" \
                "-DBUILD_DIR=${BUILD_DIR}" \
-               -S . -B "./build/${BUILD_DIR}"
+               -S . -B "$(pwd)/build/${BUILD_DIR}"
           
-    cmake --build "./build/${BUILD_DIR}"
+    cmake-3.19 --build "$(pwd)/build/${BUILD_DIR}"
     cd ${TEMP}
 }
 

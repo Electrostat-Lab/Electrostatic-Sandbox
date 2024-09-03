@@ -22,6 +22,20 @@
             "allowParallelRun": true
         },
         {
+            "name": "Compile ELF Service DLL",
+            "type": "command",
+            "program": "$PROJECT_DIR$/helper-scripts/ci-cd/test-electrostatic.sh",
+            "args": ["hello_dll_service.c"],
+            "allowParallelRun": true
+        },
+        {
+            "name": "Compile ELF Substrate Manager",
+            "type": "command",
+            "program": "$PROJECT_DIR$/helper-scripts/ci-cd/test-electrostatic.sh",
+            "args": ["hello_dll_substrate.c"],
+            "allowParallelRun": true
+        },
+        {
             "name": "Test Arithmos ADTs: Contiguous Buffers",
             "type": "command",
             "program": "$PROJECT_DIR$/helper-scripts/ci-cd/test-electrostatic.sh",
