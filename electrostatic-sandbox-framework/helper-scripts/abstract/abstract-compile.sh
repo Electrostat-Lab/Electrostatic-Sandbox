@@ -27,9 +27,9 @@ function compile() {
           "-DSOURCES_DIR=${SOURCES_DIR}" \
           "-DPROJECT_SOURCES=${PROJECT_SOURCES}" \
           "-DDEPENDENCIES=${DEPENDENCIES}" \
-          -S . -B "./${SOURCES_DIR}/cmake-build/${BUILD_DIR}"
+          -S . -B "$(pwd)/${SOURCES_DIR}/cmake-build/${BUILD_DIR}"
 
-    cmake --build "./${SOURCES_DIR}/cmake-build/${BUILD_DIR}"
+    cmake-3.19 --build "$(pwd)/${SOURCES_DIR}/cmake-build/${BUILD_DIR}"
     cd ${TEMP}
 }
 
