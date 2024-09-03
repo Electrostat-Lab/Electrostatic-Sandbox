@@ -21,8 +21,6 @@ prepare_sandbox "${sandbox_path}" "+rwx" ""
 download_jdk
 extract_jdk
 cleanup_jdk
-create_java_symbol
-setup_java_home
 
 
 ###
@@ -31,7 +29,6 @@ setup_java_home
 download_gradle
 extract_gradle
 cleanup_gradle
-create_gradle_symbol
 
 #
 ###
@@ -40,18 +37,14 @@ create_gradle_symbol
 download_cmake
 extract_cmake
 cleanup_cmake
-create_cmake_symbol
-create_posix_headers_symbol
-install_gcc_multilib
 
 
 ###
 ## Setup AVRDude
-###
+####
 download_avrdude
 extract_avrdude
 cleanup_avrdude
-create_avrdude_symbol
 
 ###
 ## Setup arduino-ide
@@ -66,8 +59,6 @@ create_avrdude_symbol
 download_ndk
 extract_ndk
 cleanup_ndk
-create_clang_symbols
-create_ndk_headers_symbol
 
 ##
 # Setup Jetbrains IDE
@@ -77,16 +68,5 @@ create_ndk_headers_symbol
 # cleanup_ide
 # create_ide_symbol
 
-all_symbols_manual="============================== \n
-        		    Sybmolic Links: \n
-                    ${java_symbol} => `${java_symbol} --version` \n
-                    ${gradle_symbol} => `${gradle_symbol} --version` \n
-                    ${jetbrains_ide_symbol} `${jetbrains_ide_symbol} --version` \n
-                    ${cmake_symbol} => `${cmake_symbol} --version` \n
-                    ${arduinoide_symbol} => `${arduinoide_symbol} --version` \n
-                    $(`android-clang`) \n
-                    $(`android-clang++`) \n
-                    $(`android-ndk-headers`) \n
-                    =============================="
-
-echo -e "${all_symbols_manual}"
+source "$(pwd)/setup-environment/create-symbols.sh"
+source "$(pwd)/setup-environment/add-user-to-serial-groups.sh"
