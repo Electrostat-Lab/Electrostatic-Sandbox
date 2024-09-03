@@ -21,5 +21,8 @@ function create_java_symbol() {
 }
 
 function setup_java_home() {
-	export ${JAVA_HOME}="${sandbox_path}/${jdk_tar_content}/bin"
+	sudo echo -e "export JAVA_HOME=${sandbox_path}/${jdk_tar_content}\n" \
+                 "export PATH=\$JAVA_HOME/bin:$PATH\n" >> "${HOME}/.bashrc"
+
+	source "${HOME}/.bashrc"
 }
