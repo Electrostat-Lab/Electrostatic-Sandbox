@@ -73,3 +73,231 @@ stateDiagram
     Source_code_operations --> Deployments :Assembling_input
     Deployments --> [*]
 ```
+## The project filesystem tree: 
+The project is essentially a native project (C/C++) with a Java binding module (electrostatic4j):
+* The Native modules are:
+    - `electrostatic-core`
+    - `electrostatic-examples`
+* The Java modules inside the `electrostatic4j` are subprojects:
+    - `electrostatic4j-core`
+    - `electrostatic4j-native`
+    - `serial4j`
+    - `arithmos`
+
+> [!NOTE]
+> The idea of using `electrostatic` primer sources has emerged as a result of the lackness of the functional requirements and system-wide vision. It basically acts as a testing preliminary container before merging into the main source library.
+
+The following are the user-active filesystem tree generated for the `electrostatic-core` module: 
+```bash
+├── src
+│   ├── include
+│   │   └── electrostatic
+│   │       ├── algorithm
+│   │       │   ├── arithmos
+│   │       │   │   ├── adt
+│   │       │   │   │   ├── list.h
+│   │       │   │   │   ├── map.h
+│   │       │   │   │   ├── queue.h
+│   │       │   │   │   └── stack.h
+│   │       │   │   ├── algebra
+│   │       │   │   │   └── switching.h
+│   │       │   │   ├── list
+│   │       │   │   │   ├── contiguous_buffer.h
+│   │       │   │   │   └── linked_buffer.h
+│   │       │   │   ├── memory
+│   │       │   │   │   └── patcher.h
+│   │       │   │   ├── queue
+│   │       │   │   │   ├── concurrent_linked_queue.h
+│   │       │   │   │   └── linked_queue.h
+│   │       │   │   ├── README.md
+│   │       │   │   └── vectorspaces
+│   │       │   │       ├── coordinate.h
+│   │       │   │       └── vector2d
+│   │       │   │           └── vector2d.h
+│   │       │   ├── automata
+│   │       │   │   └── info.txt
+│   │       │   ├── di
+│   │       │   │   └── info.txt
+│   │       │   └── ecs
+│   │       │       └── info.txt
+│   │       ├── comm
+│   │       │   ├── comm.h
+│   │       │   └── info.txt
+│   │       ├── sys
+│   │       │   ├── electrofs
+│   │       │   │   └── info.txt
+│   │       │   ├── electrohid
+│   │       │   │   └── info.txt
+│   │       │   ├── electromemory
+│   │       │   │   └── info.txt
+│   │       │   ├── electroparallel
+│   │       │   │   └── info.txt
+│   │       │   ├── electropci
+│   │       │   │   └── info.txt
+│   │       │   ├── electroserial
+│   │       │   │   ├── info.txt
+│   │       │   │   └── linux
+│   │       │   │       └── info.md
+│   │       │   ├── electrosockets
+│   │       │   │   └── info.txt
+│   │       │   └── electrousbfs
+│   │       │       └── info.txt
+│   │       └── util
+│   │           ├── console
+│   │           │   └── colors.h
+│   │           ├── errno
+│   │           │   └── errno.h
+│   │           ├── loader
+│   │           │   └── dll_loader.h
+│   │           └── unit-testing
+│   │               └── unit_test.h
+│   └── libs
+│       ├── electrostatic
+│       │   ├── algorithm
+│       │   │   ├── arithmos
+│       │   │   │   └── info.txt
+│       │   │   ├── automata
+│       │   │   │   └── info.txt
+│       │   │   ├── di
+│       │   │   │   └── info.txt
+│       │   │   └── ecs
+│       │   │       └── info.txt
+│       │   ├── comm
+│       │   │   ├── info.txt
+│       │   │   └── init_protocol.c
+│       │   ├── platform
+│       │   │   ├── android
+│       │   │   │   └── sys
+│       │   │   │       ├── electrofs
+│       │   │   │       │   └── info.txt
+│       │   │   │       ├── electrohid
+│       │   │   │       │   └── info.txt
+│       │   │   │       ├── electromemory
+│       │   │   │       │   └── info.txt
+│       │   │   │       ├── electroparallel
+│       │   │   │       │   └── info.txt
+│       │   │   │       ├── electropci
+│       │   │   │       │   └── info.txt
+│       │   │   │       ├── electroserial
+│       │   │   │       │   └── info.txt
+│       │   │   │       ├── electrosockets
+│       │   │   │       │   └── info.txt
+│       │   │   │       └── electrousbfs
+│       │   │   │           └── info.txt
+│       │   │   ├── linux
+│       │   │   │   └── sys
+│       │   │   │       ├── electrofs
+│       │   │   │       │   └── info.txt
+│       │   │   │       ├── electrohid
+│       │   │   │       │   └── info.txt
+│       │   │   │       ├── electromemory
+│       │   │   │       │   └── info.txt
+│       │   │   │       ├── electroparallel
+│       │   │   │       │   └── info.txt
+│       │   │   │       ├── electropci
+│       │   │   │       │   └── info.txt
+│       │   │   │       ├── electroserial
+│       │   │   │       │   └── info.txt
+│       │   │   │       ├── electrosockets
+│       │   │   │       │   └── info.txt
+│       │   │   │       └── electrousbfs
+│       │   │   │           └── info.txt
+│       │   │   └── mcu
+│       │   │       └── info.txt
+│       │   └── util
+│       │       └── info.txt
+│       └── electrostatic-primer
+│           ├── algorithm
+│           │   ├── arithmos
+│           │   │   ├── algebra
+│           │   │   │   └── switching
+│           │   │   │       ├── switching_and.c
+│           │   │   │       ├── switching_not.c
+│           │   │   │       ├── switching_or.c
+│           │   │   │       └── switching_xor.c
+│           │   │   ├── info.txt
+│           │   │   ├── list
+│           │   │   │   ├── contiguous_buffer.c
+│           │   │   │   ├── linked_buffer.c
+│           │   │   │   └── list.c
+│           │   │   ├── queue
+│           │   │   │   ├── linked_queue.c
+│           │   │   │   └── queue.c
+│           │   │   └── vector2d
+│           │   │       ├── vector2d_add.c
+│           │   │       ├── vector2d_angle.c
+│           │   │       ├── vector2d_are_dependent.c
+│           │   │       ├── vector2d_are_parallel.c
+│           │   │       ├── vector2d_are_perpendicular.c
+│           │   │       ├── vector2d_cross_product.c
+│           │   │       ├── vector2d_distance.c
+│           │   │       ├── vector2d_divide.c
+│           │   │       ├── vector2d_dot_product.c
+│           │   │       ├── vector2d_extrapolate.c
+│           │   │       ├── vector2d_interpolate.c
+│           │   │       ├── vector2d_length.c
+│           │   │       ├── vector2d_normalize.c
+│           │   │       ├── vector2d_polar.c
+│           │   │       ├── vector2d_product.c
+│           │   │       ├── vector2d_scalar_add.c
+│           │   │       ├── vector2d_scalar_divide.c
+│           │   │       ├── vector2d_scalar_moduluo.c
+│           │   │       ├── vector2d_scalar_multiply.c
+│           │   │       ├── vector2d_scalar_subtract.c
+│           │   │       └── vector2d_subtract.c
+│           │   ├── automata
+│           │   │   └── info.txt
+│           │   ├── di
+│           │   │   └── info.txt
+│           │   └── ecs
+│           │       └── info.txt
+│           ├── comm
+│           │   ├── info.txt
+│           │   └── init_protocol.c
+│           ├── platform
+│           │   ├── android
+│           │   │   └── sys
+│           │   │       ├── electrofs
+│           │   │       │   └── info.txt
+│           │   │       ├── electrohid
+│           │   │       │   └── info.txt
+│           │   │       ├── electromemory
+│           │   │       │   └── info.txt
+│           │   │       ├── electroparallel
+│           │   │       │   └── info.txt
+│           │   │       ├── electropci
+│           │   │       │   └── info.txt
+│           │   │       ├── electroserial
+│           │   │       │   └── info.txt
+│           │   │       ├── electrosockets
+│           │   │       │   └── info.txt
+│           │   │       └── electrousbfs
+│           │   │           └── info.txt
+│           │   ├── linux
+│           │   │   └── sys
+│           │   │       ├── electrofs
+│           │   │       │   └── info.txt
+│           │   │       ├── electrohid
+│           │   │       │   └── info.txt
+│           │   │       ├── electromemory
+│           │   │       │   └── info.txt
+│           │   │       ├── electroparallel
+│           │   │       │   └── info.txt
+│           │   │       ├── electropci
+│           │   │       │   └── info.txt
+│           │   │       ├── electroserial
+│           │   │       │   └── info.txt
+│           │   │       ├── electrosockets
+│           │   │       │   └── info.txt
+│           │   │       └── electrousbfs
+│           │   │           └── info.txt
+│           │   └── mcu
+│           │       └── info.txt
+│           └── util
+│               ├── info.txt
+│               ├── loader
+│               │   └── dll_loader.c
+│               ├── logging
+│               └── unit-testing
+│                   └── unit_test.c
+```
