@@ -2,12 +2,14 @@
 
 > <a href="https://youtu.be/4GFGsH4eyJs"> <img src="https://github.com/Electrostat-Lab/Electrostatic-Sandbox/assets/60224159/a9a22af5-f725-4c1b-b662-ccef867a6fc0" height=30 width=30/> </a>
 
-## Preface:
-An electronic monstrosity workstation designed to examine and develop systems for distributed simulations by providing an integrated environment housing the basic nostalgic communication protocols (i.e., Serial and Parallel COMs), the abstract networking interfaces, and a range of other electronic modules providing standards for controller interfaces, and sensor modules (e.g., the underdeveloped ShiftAvr, and Arduinos). 
+## Preface and terminology:
+_Electrobox_ is an electronic monstrosity workstation designed to examine and develop systems for distributed simulations by providing an integrated environment housing the basic nostalgic communication protocols (i.e., Serial and Parallel COMs), the abstract networking interfaces, and a range of other electronic modules providing standards for controller interfaces, and sensor modules (e.g., the underdeveloped ShiftAvr, and Arduinos). 
 
 This electronic monstrosity features and leverages a powerful system-engineering infrastructure framework, the _Electrostatic-Sandbox Framework_ for distributed simulation systems, a complete SDK suite written purely in C programming language with a JNI binding based on the IEEE-1516 HLA Spec. and NASA DSES.
 
-## Hardware-Software specification overview:
+This file and the presenting files here are entailed to provide a coverage specification for the _Electrobox_ workstation, while other specifications for the _Electrostatic-Sandbox_ framework could be found within their respective filesystems.
+
+## Hardware-Software specification overview for _Electrobox_:
 
 | Item | Explanation |
 |-------|-------------|
