@@ -309,7 +309,323 @@ The project is essentially a native project (C/C++) with a Java binding module (
   <summary>The following are the user-active filesystem tree generated for the electrostatic4j module:</summary>
   
 ```shell
-   │   ├── dependencies
+├── arithmos4j
+│   ├── arithmos4j-core
+│   │   ├── build.gradle
+│   │   └── java
+│   │       └── electrostatic4j
+│   │           └── arithmos
+│   │               └── HelloWorld.java
+│   ├── arithmos4j-examples
+│   │   ├── build.gradle
+│   │   └── java
+│   │       └── electrostatic4j
+│   │           └── arithmos
+│   │               └── HelloWorld.java
+│   └── arithmos4j-native
+│       ├── build.gradle
+│       └── src
+│           ├── include
+│           │   └── jni
+│           └── lib
+│               └── jni
+├── electrostatic4j-core
+│   ├── build.gradle
+│   └── src
+│       └── main
+│           └── java
+│               └── electrostatic4j
+│                   ├── NativeLibrary.java
+│                   └── util
+│                       └── loader
+│                           ├── NativeImageLoader.java
+│                           └── package-info.java
+├── electrostatic4j-examples
+│   ├── build.gradle
+│   └── src
+│       └── main
+│           └── java
+│               └── electrostatic4j
+│                   └── examples
+│                       └── Launcher.java
+├── electrostatic4j-native
+│   ├── build.gradle
+│   ├── dependencies
+│   │   ├── include
+│   │   │   └── electrostatic
+│   │   │       ├── algorithm
+│   │   │       │   ├── arithmos
+│   │   │       │   │   ├── adt
+│   │   │       │   │   │   ├── list.h
+│   │   │       │   │   │   ├── map.h
+│   │   │       │   │   │   ├── queue.h
+│   │   │       │   │   │   └── stack.h
+│   │   │       │   │   ├── algebra
+│   │   │       │   │   │   └── switching.h
+│   │   │       │   │   ├── list
+│   │   │       │   │   │   ├── contiguous_buffer.h
+│   │   │       │   │   │   └── linked_buffer.h
+│   │   │       │   │   ├── memory
+│   │   │       │   │   │   └── patcher.h
+│   │   │       │   │   ├── queue
+│   │   │       │   │   │   ├── concurrent_linked_queue.h
+│   │   │       │   │   │   └── linked_queue.h
+│   │   │       │   │   ├── README.md
+│   │   │       │   │   └── vectorspaces
+│   │   │       │   │       ├── coordinate.h
+│   │   │       │   │       └── vector2d
+│   │   │       │   │           └── vector2d.h
+│   │   │       │   ├── automata
+│   │   │       │   │   └── info.txt
+│   │   │       │   ├── di
+│   │   │       │   │   └── info.txt
+│   │   │       │   └── ecs
+│   │   │       │       └── info.txt
+│   │   │       ├── comm
+│   │   │       │   ├── comm.h
+│   │   │       │   └── info.txt
+│   │   │       ├── sys
+│   │   │       │   ├── electrofs
+│   │   │       │   │   └── info.txt
+│   │   │       │   ├── electrohid
+│   │   │       │   │   └── info.txt
+│   │   │       │   ├── electromemory
+│   │   │       │   │   └── info.txt
+│   │   │       │   ├── electroparallel
+│   │   │       │   │   └── info.txt
+│   │   │       │   ├── electropci
+│   │   │       │   │   └── info.txt
+│   │   │       │   ├── electroserial
+│   │   │       │   │   ├── info.txt
+│   │   │       │   │   └── linux
+│   │   │       │   │       └── info.md
+│   │   │       │   ├── electrosockets
+│   │   │       │   │   └── info.txt
+│   │   │       │   └── electrousbfs
+│   │   │       │       └── info.txt
+│   │   │       └── util
+│   │   │           ├── console
+│   │   │           │   └── colors.h
+│   │   │           ├── errno
+│   │   │           │   └── errno.h
+│   │   │           ├── loader
+│   │   │           │   └── dll_loader.h
+│   │   │           └── unit-testing
+│   │   │               └── unit_test.h
+│   │   └── libs
+│   │       ├── android
+│   │       │   ├── aarch64-linux-android21
+│   │       │   ├── armv7a-linux-androideabi21
+│   │       │   ├── i686-linux-android21
+│   │       │   └── x86_64-linux-android21
+│   │       └── linux
+│   │           ├── x86
+│   │           │   ├── libelectrostatic-a.a
+│   │           │   └── libelectrostatic.so
+│   │           └── x86-64
+│   │               ├── libelectrostatic-a.a
+│   │               └── libelectrostatic.so
+│   └── src
+│       ├── include
+│       │   └── jni
+│       │       └── electrostatic4j_NativeLibrary.h
+│       └── lib
+│           └── jni
+│               └── electrostatic4j_NativeLibrary.c
+├── gradle
+│   └── wrapper
+│       ├── gradle-wrapper.jar
+│       └── gradle-wrapper.properties
+├── gradle.properties
+├── gradlew
+├── gradlew.bat
+├── README.md
+├── serial4j
+│   ├── LICENSE
+│   ├── README.md
+│   ├── serial4j-core
+│   │   ├── build.gradle
+│   │   └── src
+│   │       └── main
+│   │           └── java
+│   │               └── com
+│   │                   └── serial4j
+│   │                       ├── core
+│   │                       │   ├── errno
+│   │                       │   │   ├── Errno.java
+│   │                       │   │   ├── ErrnoToException.java
+│   │                       │   │   ├── NativeErrno.java
+│   │                       │   │   └── package-info.java
+│   │                       │   ├── flag
+│   │                       │   │   ├── AppendableFlag.java
+│   │                       │   │   ├── FlagConst.java
+│   │                       │   │   └── package-info.java
+│   │                       │   ├── hid
+│   │                       │   │   ├── device
+│   │                       │   │   │   ├── dataframe
+│   │                       │   │   │   │   ├── DataFrameDevice.java
+│   │                       │   │   │   │   ├── NotDataFrameDeviceException.java
+│   │                       │   │   │   │   ├── package-info.java
+│   │                       │   │   │   │   └── registry
+│   │                       │   │   │   │       ├── JoystickRegistry.java
+│   │                       │   │   │   │       └── package-info.java
+│   │                       │   │   │   └── standard
+│   │                       │   │   │       ├── component
+│   │                       │   │   │       │   ├── analog
+│   │                       │   │   │       │   │   ├── AnalogModuleDevice.java
+│   │                       │   │   │       │   │   ├── AnalogRegistry.java
+│   │                       │   │   │       │   │   ├── InvalidResolutionException.java
+│   │                       │   │   │       │   │   └── package-info.java
+│   │                       │   │   │       │   ├── digital
+│   │                       │   │   │       │   │   ├── Gpio8ModuleDevice.java
+│   │                       │   │   │       │   │   ├── GpioModule.java
+│   │                       │   │   │       │   │   ├── GpioRegistry.java
+│   │                       │   │   │       │   │   └── package-info.java
+│   │                       │   │   │       │   └── package-info.java
+│   │                       │   │   │       ├── mouse
+│   │                       │   │   │       │   ├── MouseRegistry.java
+│   │                       │   │   │       │   ├── package-info.java
+│   │                       │   │   │       │   └── StandardMouseDevice.java
+│   │                       │   │   │       └── package-info.java
+│   │                       │   │   ├── HumanInterfaceDevice.java
+│   │                       │   │   ├── package-info.java
+│   │                       │   │   └── StandardSerialDevice.java
+│   │                       │   ├── modem
+│   │                       │   │   ├── ModemControllerFlag.java
+│   │                       │   │   ├── NativeModemBits.java
+│   │                       │   │   └── package-info.java
+│   │                       │   ├── package-info.java
+│   │                       │   ├── serial
+│   │                       │   │   ├── entity
+│   │                       │   │   │   ├── EntityStatus.java
+│   │                       │   │   │   ├── impl
+│   │                       │   │   │   │   ├── package-info.java
+│   │                       │   │   │   │   ├── SerialReadEntity.java
+│   │                       │   │   │   │   ├── SerialWriteEntity.java
+│   │                       │   │   │   │   └── WritableCapsule.java
+│   │                       │   │   │   ├── package-info.java
+│   │                       │   │   │   └── SerialMonitorEntity.java
+│   │                       │   │   ├── monitor
+│   │                       │   │   │   ├── package-info.java
+│   │                       │   │   │   ├── SerialDataListener.java
+│   │                       │   │   │   ├── SerialMonitorException.java
+│   │                       │   │   │   ├── SerialMonitor.java
+│   │                       │   │   │   └── VirtualMonitor.java
+│   │                       │   │   ├── package-info.java
+│   │                       │   │   ├── SerialPort.java
+│   │                       │   │   └── throwable
+│   │                       │   │       ├── BadFileDescriptorException.java
+│   │                       │   │       ├── BadFileNumberException.java
+│   │                       │   │       ├── BrokenPipeException.java
+│   │                       │   │       ├── FileAlreadyOpenedException.java
+│   │                       │   │       ├── FileIsDirectoryException.java
+│   │                       │   │       ├── FileTableOverflowException.java
+│   │                       │   │       ├── FileTooLargeException.java
+│   │                       │   │       ├── IllegalSeekException.java
+│   │                       │   │       ├── InputOutputException.java
+│   │                       │   │       ├── InterruptedSystemCallException.java
+│   │                       │   │       ├── InvalidArgumentException.java
+│   │                       │   │       ├── InvalidPortException.java
+│   │                       │   │       ├── NoAvailableTtyDevicesException.java
+│   │                       │   │       ├── NoSpaceLeftException.java
+│   │                       │   │       ├── NoSuchDeviceException.java
+│   │                       │   │       ├── NoSuchFileException.java
+│   │                       │   │       ├── NotInterpretableErrnoError.java
+│   │                       │   │       ├── NotTtyDeviceException.java
+│   │                       │   │       ├── OperationFailedException.java
+│   │                       │   │       ├── package-info.java
+│   │                       │   │       ├── PermissionDeniedException.java
+│   │                       │   │       ├── ReadOnlyFileSystemException.java
+│   │                       │   │       ├── SerialThrowable.java
+│   │                       │   │       ├── TooManyOpenedFilesException.java
+│   │                       │   │       └── TryAgainException.java
+│   │                       │   └── terminal
+│   │                       │       ├── control
+│   │                       │       │   ├── BaudRate.java
+│   │                       │       │   ├── NativeTerminalFlags.java
+│   │                       │       │   ├── package-info.java
+│   │                       │       │   ├── TerminalControlFlag.java
+│   │                       │       │   ├── TerminalFlag.java
+│   │                       │       │   ├── TerminalInputFlag.java
+│   │                       │       │   ├── TerminalLocalFlag.java
+│   │                       │       │   └── TerminalOutputFlag.java
+│   │                       │       ├── FilePermissions.java
+│   │                       │       ├── NativeBufferInputStream.java
+│   │                       │       ├── NativeBufferOutputStream.java
+│   │                       │       ├── NativeFileAccessPermissions.java
+│   │                       │       ├── NativeFilePermissions.java
+│   │                       │       ├── NativeTerminalDevice.java
+│   │                       │       ├── package-info.java
+│   │                       │       ├── ReadConfiguration.java
+│   │                       │       └── TerminalDevice.java
+│   │                       └── util
+│   │                           ├── Constants.java
+│   │                           ├── loader
+│   │                           │   ├── NativeImageLoader.java
+│   │                           │   └── package-info.java
+│   │                           └── package-info.java
+│   ├── serial4j-examples
+│   │   ├── build.gradle
+│   │   ├── embedded
+│   │   │   └── signal-transduction
+│   │   │       └── README.md
+│   │   ├── libs
+│   │   │   ├── bin
+│   │   │   └── serial4j-native-linux.jar
+│   │   └── src
+│   │       └── main
+│   │           ├── java
+│   │           │   └── com
+│   │           │       └── serial4j
+│   │           │           └── example
+│   │           │               ├── exception
+│   │           │               │   ├── TestBadFileNumberException.java
+│   │           │               │   ├── TestIllegalSeekException.java
+│   │           │               │   ├── TestInvalidPortException.java
+│   │           │               │   ├── TestIssue30.java
+│   │           │               │   ├── TestNoSuchFileException.java
+│   │           │               │   ├── TestNotInterpretableErrnoError.java
+│   │           │               │   ├── TestNotTtyDeviceException.java
+│   │           │               │   ├── TestTooManyOpenedFilesException.java
+│   │           │               │   └── TestTryAgainException.java
+│   │           │               ├── jme
+│   │           │               │   ├── JoystickCarExample.java
+│   │           │               │   └── RollingTheMonkey.java
+│   │           │               ├── Launcher.java
+│   │           │               ├── modem
+│   │           │               │   └── TestModemControl.java
+│   │           │               ├── monitor
+│   │           │               │   ├── HelloSerialMonitor.java
+│   │           │               │   ├── TestRawVirtualMonitor.java
+│   │           │               │   └── TestVirtualMonitor.java
+│   │           │               └── serial4j
+│   │           │                   ├── HelloNativeSerial4J.java
+│   │           │                   ├── HelloSerial4jIO.java
+│   │           │                   ├── TestNativeInputStream.java
+│   │           │                   └── TestWriteableCapsuleClones.java
+│   │           └── resources
+│   │               └── RocketLeauge
+│   │                   └── assets
+│   │                       ├── Models
+│   │                       │   ├── camaro.gltf
+│   │                       │   └── camaro-tyre.gltf
+│   │                       ├── Scenes
+│   │                       │   ├── grassTexted231.j3o
+│   │                       │   ├── LondonTerrain.j3o
+│   │                       │   └── SoccerPlayGround.j3o
+│   │                       └── Textures
+│   │                           ├── bronzeCopperTex.jpg
+│   │                           ├── carLightTex.jpg
+│   │                           ├── carTex.jpg
+│   │                           ├── Dirt_Bottom-3072.jpg
+│   │                           ├── Fire.png
+│   │                           ├── metalBareTex.jpg
+│   │                           ├── sky.jpg
+│   │                           ├── soccer.jpg
+│   │                           └── soccerTex.jpg
+│   ├── serial4j-native
+│   │   ├── build.gradle
+│   │   ├── dependencies
 │   │   │   ├── include
 │   │   │   │   └── electrostatic
 │   │   │   │       ├── algorithm
