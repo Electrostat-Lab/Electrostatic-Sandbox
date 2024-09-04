@@ -29,5 +29,39 @@ Exceptional automatas arise in a variety of conditions, examples are a _disjunct
 >
 
 ```mermaid
-
+---
+title: Informal Model using T3SD Automata 
+---
+stateDiagram
+    direction LR
+    state Front_end_API {
+      direction LR
+      Native_Build
+      Java_Build
+    }
+    state Platform_build_script {
+      direction LR
+      CMake_GCC
+      Gradle_OpenJDK
+    }
+    state System_dependent_build {
+      direction LR
+      Makefile
+      OpenJDK
+    }
+    state Exceptional_Automata {
+      direction LR
+      Bad_Tokens
+      Unsupported_Systems
+      Write_Errors
+      Out_of_Memory_Errors
+    }
+    Deployments
+    [*] --> Front_end_API :Build_Instructions
+    Front_end_API --> Platform_build_script :Build_Instructions
+    Front_end_API --> Exceptional_Automata :Faulty_Instructions
+    
+    Platform_build_script --> System_dependent_build :Build_script_Instructions
+    System_dependent_build --> Deployments :Compiler_linker_input
+    Deployments --> [*]
 ```
