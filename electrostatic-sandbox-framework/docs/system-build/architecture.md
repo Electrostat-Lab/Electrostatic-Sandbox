@@ -87,7 +87,9 @@ The project is essentially a native project (C/C++) with a Java binding module (
 > [!NOTE]
 > The idea of using `electrostatic` primer sources has emerged as a result of the lackness of the functional requirements and system-wide vision. It basically acts as a testing preliminary container before merging into the main source library.
 
-The following are the user-active filesystem tree generated for the `electrostatic-core` module: 
+<details>
+  <summary>The following are the user-active filesystem tree generated for the electrostatic-core module:</summary>
+    
 ```bash
 ├── src
 │   ├── include
@@ -301,3 +303,218 @@ The following are the user-active filesystem tree generated for the `electrostat
 │               └── unit-testing
 │                   └── unit_test.c
 ```
+</details>
+
+<details>
+  <summary>The following are the user-active filesystem tree generated for the electrostatic4j module:</summary>
+  
+```shell
+   │   ├── dependencies
+│   │   │   ├── include
+│   │   │   │   └── electrostatic
+│   │   │   │       ├── algorithm
+│   │   │   │       │   ├── arithmos
+│   │   │   │       │   │   ├── adt
+│   │   │   │       │   │   │   ├── list.h
+│   │   │   │       │   │   │   ├── map.h
+│   │   │   │       │   │   │   ├── queue.h
+│   │   │   │       │   │   │   └── stack.h
+│   │   │   │       │   │   ├── algebra
+│   │   │   │       │   │   │   └── switching.h
+│   │   │   │       │   │   ├── list
+│   │   │   │       │   │   │   ├── contiguous_buffer.h
+│   │   │   │       │   │   │   └── linked_buffer.h
+│   │   │   │       │   │   ├── memory
+│   │   │   │       │   │   │   └── patcher.h
+│   │   │   │       │   │   ├── queue
+│   │   │   │       │   │   │   ├── concurrent_linked_queue.h
+│   │   │   │       │   │   │   └── linked_queue.h
+│   │   │   │       │   │   ├── README.md
+│   │   │   │       │   │   └── vectorspaces
+│   │   │   │       │   │       ├── coordinate.h
+│   │   │   │       │   │       └── vector2d
+│   │   │   │       │   │           └── vector2d.h
+│   │   │   │       │   ├── automata
+│   │   │   │       │   │   └── info.txt
+│   │   │   │       │   ├── di
+│   │   │   │       │   │   └── info.txt
+│   │   │   │       │   └── ecs
+│   │   │   │       │       └── info.txt
+│   │   │   │       ├── comm
+│   │   │   │       │   ├── comm.h
+│   │   │   │       │   └── info.txt
+│   │   │   │       ├── sys
+│   │   │   │       │   ├── electrofs
+│   │   │   │       │   │   └── info.txt
+│   │   │   │       │   ├── electrohid
+│   │   │   │       │   │   └── info.txt
+│   │   │   │       │   ├── electromemory
+│   │   │   │       │   │   └── info.txt
+│   │   │   │       │   ├── electroparallel
+│   │   │   │       │   │   └── info.txt
+│   │   │   │       │   ├── electropci
+│   │   │   │       │   │   └── info.txt
+│   │   │   │       │   ├── electroserial
+│   │   │   │       │   │   ├── info.txt
+│   │   │   │       │   │   └── linux
+│   │   │   │       │   │       └── info.md
+│   │   │   │       │   ├── electrosockets
+│   │   │   │       │   │   └── info.txt
+│   │   │   │       │   └── electrousbfs
+│   │   │   │       │       └── info.txt
+│   │   │   │       └── util
+│   │   │   │           ├── console
+│   │   │   │           │   └── colors.h
+│   │   │   │           ├── errno
+│   │   │   │           │   └── errno.h
+│   │   │   │           ├── loader
+│   │   │   │           │   └── dll_loader.h
+│   │   │   │           └── unit-testing
+│   │   │   │               └── unit_test.h
+│   │   │   └── libs
+│   │   │       ├── android
+│   │   │       │   ├── aarch64-linux-android21
+│   │   │       │   ├── armv7a-linux-androideabi21
+│   │   │       │   ├── i686-linux-android21
+│   │   │       │   └── x86_64-linux-android21
+│   │   │       └── linux
+│   │   │           ├── x86
+│   │   │           │   ├── libelectrostatic-a.a
+│   │   │           │   └── libelectrostatic.so
+│   │   │           └── x86-64
+│   │   │               ├── libelectrostatic-a.a
+│   │   │               └── libelectrostatic.so
+│   │   └── src
+│   │       ├── include
+│   │       │   ├── AddressesBuffer.h
+│   │       │   ├── BufferUtils.h
+│   │       │   ├── ErrnoUtils.h
+│   │       │   ├── info.md
+│   │       │   ├── jni
+│   │       │   │   ├── com_serial4j_core_errno_NativeErrno.h
+│   │       │   │   ├── com_serial4j_core_modem_NativeModemBits.h
+│   │       │   │   ├── com_serial4j_core_terminal_control_NativeTerminalFlags_ControlFlags.h
+│   │       │   │   ├── com_serial4j_core_terminal_control_NativeTerminalFlags_ControlFlags_MaskBits.h
+│   │       │   │   ├── com_serial4j_core_terminal_control_NativeTerminalFlags_InputFlags.h
+│   │       │   │   ├── com_serial4j_core_terminal_control_NativeTerminalFlags_LocalFlags.h
+│   │       │   │   ├── com_serial4j_core_terminal_control_NativeTerminalFlags_OutputFlags.h
+│   │       │   │   ├── com_serial4j_core_terminal_control_NativeTerminalFlags_OutputFlags_MaskBits.h
+│   │       │   │   ├── com_serial4j_core_terminal_NativeFileAccessPermissions.h
+│   │       │   │   ├── com_serial4j_core_terminal_NativeFilePermissions.h
+│   │       │   │   ├── com_serial4j_core_terminal_NativeTerminalDevice_FileSeekCriterion.h
+│   │       │   │   ├── com_serial4j_core_terminal_NativeTerminalDevice.h
+│   │       │   │   └── info.md
+│   │       │   ├── JniUtils.h
+│   │       │   ├── linux
+│   │       │   │   ├── info.md
+│   │       │   │   ├── ModemController.h
+│   │       │   │   ├── SerialUtils.h
+│   │       │   │   ├── TerminalDevice.h
+│   │       │   │   └── Thread.h
+│   │       │   └── windows
+│   │       │       └── info.md
+│   │       └── lib
+│   │           ├── AddressesBuffer.cpp
+│   │           ├── info.md
+│   │           ├── jni
+│   │           │   ├── com_serial4j_core_errno_NativeErrno.cpp
+│   │           │   ├── com_serial4j_core_modem_NativeModemBits.cpp
+│   │           │   ├── com_serial4j_core_terminal_control_NativeTerminalFlags_ControlFlags.cpp
+│   │           │   ├── com_serial4j_core_terminal_control_NativeTerminalFlags_ControlFlags_MaskBits.cpp
+│   │           │   ├── com_serial4j_core_terminal_control_NativeTerminalFlags_InputFlags.cpp
+│   │           │   ├── com_serial4j_core_terminal_control_NativeTerminalFlags_LocalFlags.cpp
+│   │           │   ├── com_serial4j_core_terminal_control_NativeTerminalFlags_OutputFlags.cpp
+│   │           │   ├── com_serial4j_core_terminal_control_NativeTerminalFlags_OutputFlags_MaskBits.cpp
+│   │           │   ├── com_serial4j_core_terminal_NativeFileAccessPermissions.cpp
+│   │           │   ├── com_serial4j_core_terminal_NativeFilePermissions.cpp
+│   │           │   ├── com_serial4j_core_terminal_NativeTerminalDevice.cpp
+│   │           │   └── com_serial4j_core_terminal_NativeTerminalDevice_FileSeekCriterion.cpp
+│   │           └── linux
+│   │               ├── ModemController.cpp
+│   │               ├── TerminalDevice.cpp
+│   │               └── Thread.c
+│   └── serial4j-native-examples
+│       ├── dependencies
+│       │   ├── include
+│       │   │   └── electrostatic
+│       │   │       ├── algorithm
+│       │   │       │   ├── arithmos
+│       │   │       │   │   ├── adt
+│       │   │       │   │   │   ├── list.h
+│       │   │       │   │   │   ├── map.h
+│       │   │       │   │   │   ├── queue.h
+│       │   │       │   │   │   └── stack.h
+│       │   │       │   │   ├── algebra
+│       │   │       │   │   │   └── switching.h
+│       │   │       │   │   ├── list
+│       │   │       │   │   │   ├── contiguous_buffer.h
+│       │   │       │   │   │   └── linked_buffer.h
+│       │   │       │   │   ├── memory
+│       │   │       │   │   │   └── patcher.h
+│       │   │       │   │   ├── queue
+│       │   │       │   │   │   ├── concurrent_linked_queue.h
+│       │   │       │   │   │   └── linked_queue.h
+│       │   │       │   │   ├── README.md
+│       │   │       │   │   └── vectorspaces
+│       │   │       │   │       ├── coordinate.h
+│       │   │       │   │       └── vector2d
+│       │   │       │   │           └── vector2d.h
+│       │   │       │   ├── automata
+│       │   │       │   │   └── info.txt
+│       │   │       │   ├── di
+│       │   │       │   │   └── info.txt
+│       │   │       │   └── ecs
+│       │   │       │       └── info.txt
+│       │   │       ├── comm
+│       │   │       │   ├── comm.h
+│       │   │       │   └── info.txt
+│       │   │       ├── sys
+│       │   │       │   ├── electrofs
+│       │   │       │   │   └── info.txt
+│       │   │       │   ├── electrohid
+│       │   │       │   │   └── info.txt
+│       │   │       │   ├── electromemory
+│       │   │       │   │   └── info.txt
+│       │   │       │   ├── electroparallel
+│       │   │       │   │   └── info.txt
+│       │   │       │   ├── electropci
+│       │   │       │   │   └── info.txt
+│       │   │       │   ├── electroserial
+│       │   │       │   │   ├── info.txt
+│       │   │       │   │   └── linux
+│       │   │       │   │       └── info.md
+│       │   │       │   ├── electrosockets
+│       │   │       │   │   └── info.txt
+│       │   │       │   └── electrousbfs
+│       │   │       │       └── info.txt
+│       │   │       └── util
+│       │   │           ├── console
+│       │   │           │   └── colors.h
+│       │   │           ├── errno
+│       │   │           │   └── errno.h
+│       │   │           ├── loader
+│       │   │           │   └── dll_loader.h
+│       │   │           └── unit-testing
+│       │   │               └── unit_test.h
+│       │   └── libs
+│       │       ├── android
+│       │       │   ├── aarch64-linux-android21
+│       │       │   ├── armv7a-linux-androideabi21
+│       │       │   ├── i686-linux-android21
+│       │       │   └── x86_64-linux-android21
+│       │       └── linux
+│       │           ├── x86
+│       │           │   ├── libelectrostatic-a.a
+│       │           │   └── libelectrostatic.so
+│       │           └── x86-64
+│       │               ├── libelectrostatic-a.a
+│       │               └── libelectrostatic.so
+│       └── src
+│           ├── hello_plainio.cpp
+│           ├── hello_serial4jio.cpp
+│           └── hello_serialmonitor.cpp
+└── settings.gradle
+
+
+```
+</details>
