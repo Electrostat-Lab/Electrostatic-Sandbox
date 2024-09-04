@@ -49,6 +49,13 @@ stateDiagram
       Makefile
       OpenJDK
     }
+    state Source_code_operations {
+      direction LR
+      Native_code_resolve
+      Java_code_resolve
+      Libraries_operations
+      Executable_operations
+    }
     state Exceptional_Automata {
       direction LR
       Bad_Tokens
@@ -62,6 +69,7 @@ stateDiagram
     Front_end_API --> Exceptional_Automata :Faulty_Instructions
     
     Platform_build_script --> System_dependent_build :Build_script_Instructions
-    System_dependent_build --> Deployments :Compiler_linker_input
+    System_dependent_build --> Source_code_operations :Compiler_linker_input
+    Source_code_operations --> Deployments :Assembling_input
     Deployments --> [*]
 ```
