@@ -831,6 +831,56 @@ The project is essentially a native project (C/C++) with a Java binding module (
 │           └── hello_serialmonitor.cpp
 └── settings.gradle
 
-
 ```
 </details>
+
+## Hands-on the Electrostatic-Sandbox SDK on GNU/Linux Distributions:
+
+1) Create directories, clone, and navigate to the root project: 
+> ```bash
+> $ mkdir --parents $HOME/Projects/
+> $ cd $HOME/Projects
+> $ git clone https://github.com/Electrostat-Lab/Electrostatic-Sandbox.git
+> $ cd ./Electrostatic-Sandbox/electrostatic-sandbox-framework/
+> ```
+
+2) Build the Electrostatic-Sandbox `electrostatic-core` native sources:
+
+There are 2 native source codebases on the Electrostatic-Sandbox electrostatic-core module, the `libs/electrostatic` and the `libs/electrostatic-primer`
+packages, while the `libs/electrostatic` is entailed to provide the project sources, the `libs/electrostatic-primer` provides a way to release early-access sources into the cycle without touching the main sources, however, you get to the downside, the duplication of source codes and the maintainability burden.
+> ```bash
+> $ ./helper-scripts/ci-cd/compile-electrostatic.sh "-primer" # build the primer sources into the libraries archives
+> # OR build the true sources
+> $ ./helper-scripts/ci-cd/compile-electrostatic.sh "" # build the true sources into the archives
+
+3) Build and Run an Electrostatic-Sandbox example from the `electrostatic-examples` native sources:
+
+The `electrostatic-examples` module provides a super-easy-to-use environment for testing the libraries on the electrostatic-core without external integration.
+Examples are typically executable application files (outputted as executable-linkable-formats and shared object files). To run an example, you can just pass its full name (with the extension) as an argument to the `test-electrostatic.sh` script, and then it will compile and link your example with `libelectrostatic-a.a` library, and then assemble the object code in an elf object format.
+
+> ```bash
+> $ ./helper-scripts/ci-cd/test-electrostatic.sh "hello_comm.c"
+> # OR even specify the system
+> $ ./helper-scripts/project-impl/compile-examples.sh "-m64" "hello_comm.c" "linux" "x86-64"
+
+4) Build and Assemble the Java Binding APIs:
+
+The Java modules have the `libelectrostatic-a.a` as a dependency for its native modules. They can operate as pure Java APIs or as JVM bindings to the electrostatic-sandbox-framework. Serial4j is an example of a standalone subproject that has been migrated here to be dependent partly on the `libelectrostatic-a.a` to get benefits from the system.
+
+> ```bash
+> $ ./helper-scripts/ci-cd/compile-e4j.sh
+> $ ./helper-scripts/ci-cd/test-e4j.sh
+> # compile, link, and assemble serial4j
+> $ ./helper-scripts/ci-cd/compile-serial4j.sh
+> # run a serial4j jMonkeyEngine example
+> $ ./helper-scripts/project-impl/run-serial4j-demo.sh "com.serial4j.example.jme.JoystickCarExample  /dev/ttyUSB0"
+> ```
+
+5) Use Fleet configurations built in the SDK:
+
+Alternatively, you can use the Fleet runtime configurations and even create your own: 
+
+![Screenshot from 2024-09-05 03-20-39](https://github.com/user-attachments/assets/809e2e09-f02a-491e-b3dc-826f439720ce)
+
+
+## Hands-on the Electrostatic-Sandbox SDK on WSL: [WIP]
