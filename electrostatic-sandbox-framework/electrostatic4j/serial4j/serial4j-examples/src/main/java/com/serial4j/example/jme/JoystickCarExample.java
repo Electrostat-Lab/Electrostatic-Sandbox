@@ -34,6 +34,7 @@ import com.jme3.util.SkyFactory;
 import com.serial4j.core.hid.device.dataframe.DataFrameDevice;
 import com.serial4j.core.hid.device.dataframe.registry.JoystickRegistry;
 import com.serial4j.core.serial.SerialPort;
+import com.serial4j.core.serial.throwable.InvalidPortException;
 import com.serial4j.core.terminal.FilePermissions;
 import com.serial4j.core.terminal.TerminalDevice;
 import com.serial4j.core.terminal.control.BaudRate;
@@ -96,7 +97,12 @@ public class JoystickCarExample extends SimpleApplication implements DataFrameDe
 
         new Thread(() -> {
             while (!isTerminated) {
-                dataFrameDevice.receive();
+                try {
+                    dataFrameDevice.receive();
+                } catch (InvalidPortException ex) {
+                    ex.printStackTrace();
+                    System.exit(ex.getCausingErrno().getValue());
+                }
             }
         }).start();
     }
