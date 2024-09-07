@@ -67,6 +67,15 @@ namespace JniUtils {
     static jint version;
     static struct JavaVMAttachArgs* jvmArgs;
 
+    static inline const char* getBufferFromString(JNIEnv* env, jstring string) {
+        const char* chars = env->GetStringUTFChars(string, 0);
+        return chars;
+    }
+
+    static inline jstring getStringFromBuffer(JNIEnv* env, const char* buffer) {
+        return env->NewStringUTF(buffer);
+    }
+
     /**
      * @brief Sets the Jni Env pointer for jni functions.
      * 
@@ -257,21 +266,59 @@ namespace JniUtils {
         return getIntFieldFromClass(env, &serialPortObject, "fd", "I");
     }
 
+    static inline int updateNativeSerialPortFrom(JNIEnv* env, jweak *object, SerialPort *port) {
+        // unmarshalling Java Objects into a native object
+        if (env == NULL || object == NULL || port == NULL) {
+            return -1;
+        }
+
+        jweak serialPortObject = getSerialPortFromTerminalDevice(env, object);
+        int fd = getIntFieldFromClass(env, &serialPortObject, "fd", "I");
+        int isPortOpened = getIntFieldFromClass(env, &serialPortObject, "portOpened", "I");
+        int ioFlag = getIntFieldFromClass(env, &serialPortObject, "ioFlag", "I");
+        jstring _path = (jstring) getObjectFieldFromClass(env, &serialPortObject, "path", "Ljava/lang/String;");
+        const char *path = getBufferFromString(env, _path);
+
+        port->fd = fd;
+        port->portOpened = isPortOpened;
+        port->ioFlag = ioFlag;
+        port->path = (char*) path;
+        port->jstringPath = _path;
+
+        // don't forget to dispatch "env->ReleaseStringUTFChars(port.jstringPath, port.path);"
+        // after finishing from the SerialPort instance, so that the native memory
+        // of the buffer path would be released back to the system
+
+        return 0;
+    }
+
+    static inline jweak updateJVMSerialPortFrom(JNIEnv* env, jweak *object, SerialPort *port) {
+        if (env == NULL || object == NULL || port == NULL) {
+            return NULL;
+        }
+
+        // marshalling Native Objects into a Java object
+        int fd = port->fd;
+        int isPortOpened = port->portOpened;
+        int ioFlag = port->ioFlag;
+        const char *path = port->path;
+        jstring pathValue = (jstring) getStringFromBuffer(env, path);
+        jweak serialPortObject = getSerialPortFromTerminalDevice(env, object);
+
+        setIntField(env, &serialPortObject, "fd", "I", fd);
+        setIntField(env, &serialPortObject, "portOpened", "I", isPortOpened);
+        setIntField(env, &serialPortObject, "ioFlag", "I", ioFlag);
+        setObjectField(env, &serialPortObject, "path", "Ljava/lang/String;", pathValue);
+
+        return serialPortObject;
+    }
+
     static inline jobjectArray createNewArrayFromBuffer(JNIEnv* env, const char* clazzName, jsize length) {
         jstring initialElement = env->NewStringUTF("");
 
         jclass clazz = JniUtils::getClassFromString(env, clazzName);
 
         return env->NewObjectArray(length, clazz, initialElement);
-    }
-
-    static inline const char* getBufferFromString(JNIEnv* env, jstring string) {
-        const char* chars = env->GetStringUTFChars(string, 0);
-        return chars;
-    }
-
-    static inline jstring getStringFromBuffer(JNIEnv* env, const char* buffer) {
-        return env->NewStringUTF(buffer);
     }
 
     static inline jobjectArray getStringArrayFromBuffer(JNIEnv* env, const char** buffer, int length) {

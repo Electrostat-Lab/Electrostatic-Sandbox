@@ -17,6 +17,22 @@ JNIEXPORT jint JNICALL Java_com_serial4j_core_terminal_NativeTerminalDevice_setu
 
 /*
  * Class:     com_serial4j_core_terminal_NativeTerminalDevice
+ * Method:    isExistential
+ * Signature: (Ljava/lang/String;)I
+ */
+JNIEXPORT jint JNICALL Java_com_serial4j_core_terminal_NativeTerminalDevice_isExistential__Ljava_lang_String_2
+  (JNIEnv *, jclass, jstring);
+
+/*
+ * Class:     com_serial4j_core_terminal_NativeTerminalDevice
+ * Method:    isExistential
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_com_serial4j_core_terminal_NativeTerminalDevice_isExistential__
+  (JNIEnv *, jobject);
+
+/*
+ * Class:     com_serial4j_core_terminal_NativeTerminalDevice
  * Method:    setTerminalControlFlag
  * Signature: (I)I
  */
@@ -170,10 +186,10 @@ JNIEXPORT jlong JNICALL Java_com_serial4j_core_terminal_NativeTerminalDevice_see
 /*
  * Class:     com_serial4j_core_terminal_NativeTerminalDevice
  * Method:    openPort
- * Signature: (Ljava/lang/String;I)I
+ * Signature: ()I
  */
 JNIEXPORT jint JNICALL Java_com_serial4j_core_terminal_NativeTerminalDevice_openPort
-  (JNIEnv *, jobject, jstring, jint);
+  (JNIEnv *, jobject);
 
 /*
  * Class:     com_serial4j_core_terminal_NativeTerminalDevice
