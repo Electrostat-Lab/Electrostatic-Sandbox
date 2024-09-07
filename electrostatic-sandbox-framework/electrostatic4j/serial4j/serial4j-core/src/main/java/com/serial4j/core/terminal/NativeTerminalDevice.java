@@ -78,6 +78,14 @@ public final class NativeTerminalDevice {
     static native int setupJniEnvironment();
 
     /**
+     * Tests whether a port filesystem exists.
+     *
+     * @param port the port to test.
+     * @return (1) if the device on this port exists, (0) otherwise.
+     */
+    public static native int isExistential(String port);
+
+    /**
      * Retrieves the serial port associated with this terminal device.
      *
      * @return the serial port object associated with this terminal device.
@@ -127,6 +135,14 @@ public final class NativeTerminalDevice {
     public char[] getBuffer() {
         return buffer;
     }
+
+    /**
+     * Tests whether the current device on this serial port
+     * exists.
+     *
+     * @return (1) if the device on this port still exists, (0) otherwise.
+     */
+    native int isExistential();
 
     /**
      * Adjusts the native terminal control [c_cflag] of the [termios] structure variable for this terminal device.
@@ -352,11 +368,9 @@ public final class NativeTerminalDevice {
     /**
      * Opens this terminal device using the path to the port [port] in strings and the port permissions [flag] in integers.
      *
-     * @param port the port path in strings.
-     * @param flag the flag for the base file control native api [fcntl].
      * @return (- 1) for failure, (1) for success.
      */
-    native int openPort(final String port, final int flag);
+    native int openPort();
 
     /**
      * Reassigns the modem bits status, used to enable/disable
