@@ -15,6 +15,13 @@
             "allowParallelRun": true
         },
         {
+            "name": "Test Electrostatic-Sandbox File Status",
+            "type": "command",
+            "program": "$PROJECT_DIR$/helper-scripts/ci-cd/test-electrostatic.sh",
+            "args": ["hello_file_verify.c"],
+            "allowParallelRun": true
+        },
+        {
             "name": "Test Electrostatic-Sandbox Unit Testing API",
             "type": "command",
             "program": "$PROJECT_DIR$/helper-scripts/ci-cd/test-electrostatic.sh",

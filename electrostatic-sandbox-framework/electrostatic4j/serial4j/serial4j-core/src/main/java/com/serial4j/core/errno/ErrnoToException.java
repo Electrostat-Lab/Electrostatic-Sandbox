@@ -51,7 +51,7 @@ public final class ErrnoToException {
      * @param errno the native error code to which the exception will be thrown against.
      * @see SerialThrowable
      */
-    public static void throwFromErrno(final int errno) {
+    public static void throwFromErrno(final int errno, final String msg) {
         /* linearly matches the native errno with the pre-defined exceptions */
         for (Errno errnoObj : Errno.class.getEnumConstants()) {
             SerialThrowable throwable;
@@ -61,8 +61,21 @@ public final class ErrnoToException {
             if ((throwable = errnoObj.getAssociatedThrowable()) == null) {
                 return;
             }
+            if (msg != null) {
+                throwable.setMessage(String.format("%s: %s", throwable.getMessage(), msg));
+            }
             throw throwable;
         }
         throw new NotInterpretableErrnoError(errno);
+    }
+
+    /**
+     * Throws a Java exception from a native errno.
+     *
+     * @param errno the native error code to which the exception will be thrown against.
+     * @see SerialThrowable
+     */
+    public static void throwFromErrno(final int errno) {
+        ErrnoToException.throwFromErrno(errno, null);
     }
 }

@@ -88,9 +88,10 @@ public final class TerminalDevice {
             LOGGER.log(Level.INFO, "Opening serial device " + serialPort.getPath());
         }
         this.nativeTerminalDevice.setSerialPort(serialPort);
-        final int returnValue = nativeTerminalDevice.openPort(serialPort.getPath(), filePermissions.getValue());
+        final int returnValue = nativeTerminalDevice.openPort();
         if (isOperationFailed(returnValue)) {
-            ErrnoToException.throwFromErrno(nativeTerminalDevice.getErrno());
+            ErrnoToException.throwFromErrno(nativeTerminalDevice.getErrno(),
+                                            String.format("%s:%s", "Device Port is ", serialPort.getPath()));
         }
         /* update port data natively */
         /* ... */
@@ -334,7 +335,9 @@ public final class TerminalDevice {
             throw new InvalidPortException("Bad serial port!");
         }
         long bytes = nativeTerminalDevice.sread();
-        if (bytes == Errno.ERR_OPERATION_FAILED.getValue()) {
+        if (bytes == Errno.ERR_INVALID_PORT.getValue()) {
+            ErrnoToException.throwFromErrno(Errno.ERR_INVALID_PORT.getValue());
+        } else if (bytes <= 0) {
             ErrnoToException.throwFromErrno(nativeTerminalDevice.getErrno());
         }
 
@@ -346,8 +349,10 @@ public final class TerminalDevice {
             throw new InvalidPortException("Bad serial port!");
         }
         long bytes = nativeTerminalDevice.sread(length);
-        if (bytes == Errno.ERR_OPERATION_FAILED.getValue()) {
-            ErrnoToException.throwFromErrno(nativeTerminalDevice.getErrno());
+        if (bytes == Errno.ERR_INVALID_PORT.getValue()) {
+            ErrnoToException.throwFromErrno(Errno.ERR_INVALID_PORT.getValue(), String.format("%s:%s", "Device Port is ", nativeTerminalDevice.getSerialPort().getPath()));
+        } else if (bytes <= 0) {
+            ErrnoToException.throwFromErrno(nativeTerminalDevice.getErrno(), String.format("%s:%s", "Device Port is ", nativeTerminalDevice.getSerialPort().getPath()));
         }
 
         return bytes;
@@ -358,8 +363,10 @@ public final class TerminalDevice {
             throw new InvalidPortException("Bad serial port!");
         }
         long bytes = nativeTerminalDevice.iread(length);
-        if (bytes == Errno.ERR_OPERATION_FAILED.getValue()) {
-            ErrnoToException.throwFromErrno(nativeTerminalDevice.getErrno());
+        if (bytes == Errno.ERR_INVALID_PORT.getValue()) {
+            ErrnoToException.throwFromErrno(Errno.ERR_INVALID_PORT.getValue(), String.format("%s:%s", "Device Port is ", nativeTerminalDevice.getSerialPort().getPath()));
+        } else if (bytes <= 0) {
+            ErrnoToException.throwFromErrno(nativeTerminalDevice.getErrno(), String.format("%s:%s", "Device Port is ", nativeTerminalDevice.getSerialPort().getPath()));
         }
 
         return bytes;
@@ -378,9 +385,12 @@ public final class TerminalDevice {
             throw new InvalidPortException("Bad or not initialized serial port!");
         }
         long bytes = nativeTerminalDevice.seek(offset, criterion.getWhence());
-        if (bytes == Errno.ERR_OPERATION_FAILED.getValue()) {
+        if (bytes == Errno.ERR_INVALID_PORT.getValue()) {
+            ErrnoToException.throwFromErrno(Errno.ERR_INVALID_PORT.getValue());
+        } else if (bytes <= 0) {
             ErrnoToException.throwFromErrno(nativeTerminalDevice.getErrno());
         }
+
         return bytes;
     }
 

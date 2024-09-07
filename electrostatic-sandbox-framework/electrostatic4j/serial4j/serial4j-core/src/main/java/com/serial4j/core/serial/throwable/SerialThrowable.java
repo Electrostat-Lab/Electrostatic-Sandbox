@@ -39,6 +39,7 @@ import com.serial4j.core.errno.Errno;
  * @author pavl_g.
  */
 public abstract class SerialThrowable extends RuntimeException {
+    protected String message;
 
     /**
      * Provides the abstract runtime throwable exception,
@@ -48,6 +49,7 @@ public abstract class SerialThrowable extends RuntimeException {
      */
     public SerialThrowable(String message) {
         super(message);
+        this.message = message;
     }
 
     /**
@@ -56,4 +58,13 @@ public abstract class SerialThrowable extends RuntimeException {
      * @return the error code causing this exception.
      */
     public abstract Errno getCausingErrno();
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    @Override
+    public String getMessage() {
+        return this.message;
+    }
 }
