@@ -56,7 +56,10 @@ public final class HelloSerial4jIO implements Runnable {
      */
     private final TerminalDevice ttyDevice = new TerminalDevice();
 
+    private static String[] args;
+
     public static void main(String[] args) {
+        HelloSerial4jIO.args = args;
         new HelloSerial4jIO().run();
     }
 
@@ -111,7 +114,7 @@ public final class HelloSerial4jIO implements Runnable {
             /* disable native logger */
             /* enable java logger */
             ttyDevice.setSerial4jLoggingEnabled(true);
-            ttyDevice.openPort(new SerialPort(ttyDevice.getSerialPorts()[0]));
+            ttyDevice.openPort(new SerialPort(HelloSerial4jIO.args[0]));
             if (ttyDevice.getSerialPort().getFd() > 0) {
                 System.out.println("Port Opened with " + ttyDevice.getSerialPort().getFd());
             } else {
