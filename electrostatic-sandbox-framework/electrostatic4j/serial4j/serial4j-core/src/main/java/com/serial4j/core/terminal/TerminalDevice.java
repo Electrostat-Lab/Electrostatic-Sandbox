@@ -38,6 +38,7 @@ import com.serial4j.core.serial.SerialPort;
 import com.serial4j.core.serial.throwable.InvalidPortException;
 import com.serial4j.core.terminal.control.BaudRate;
 import com.serial4j.core.terminal.control.TerminalFlag;
+import java.lang.reflect.Field;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -87,6 +88,15 @@ public final class TerminalDevice {
         if (isSerial4jLoggingEnabled()) {
             LOGGER.log(Level.INFO, "Opening serial device " + serialPort.getPath());
         }
+        try {
+            // set the Java ioFlag from the FilePermissions utilities to be passed to the native routines
+            final Field ioFlagField = serialPort.getClass().getDeclaredField("ioFlag");
+            ioFlagField.setAccessible(true);
+            ioFlagField.setInt(serialPort, filePermissions.getValue());
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            LOGGER.log(Level.SEVERE, e.getMessage(), e);
+        }
+
         this.nativeTerminalDevice.setSerialPort(serialPort);
         final int returnValue = nativeTerminalDevice.openPort();
         if (isOperationFailed(returnValue)) {

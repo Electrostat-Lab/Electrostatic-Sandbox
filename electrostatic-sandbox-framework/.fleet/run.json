@@ -92,10 +92,24 @@
             "allowParallelRun": true
         },
         {
-            "name": "Start continous Serial Monitor",
+            "name": "Run HelloNativeSerial4J",
             "type": "command",
             "program": "$PROJECT_DIR$/helper-scripts/project-impl/run-serial4j-demo.sh",
-            "args": ["com.serial4j.example.jme.JoystickCarExample  /dev/ttyUSB0"],
+            "args": ["com.serial4j.example.serial4j.HelloNativeSerial4J  /dev/ttyUSB0"],
+            "allowParallelRun": true
+        },
+        {
+            "name": "Run HelloSerial4JIO",
+            "type": "command",
+            "program": "$PROJECT_DIR$/helper-scripts/project-impl/run-serial4j-demo.sh",
+            "args": ["com.serial4j.example.serial4j.HelloSerial4jIO  /dev/ttyUSB0"],
+            "allowParallelRun": true
+        },
+        {
+            "name": "Run Serial4j Monitor Example",
+            "type": "command",
+            "program": "$PROJECT_DIR$/helper-scripts/project-impl/run-serial4j-demo.sh",
+            "args": ["com.serial4j.example.monitor.HelloSerialMonitor  /dev/ttyUSB0"],
             "allowParallelRun": true
         },
     ]

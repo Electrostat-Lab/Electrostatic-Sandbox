@@ -344,7 +344,7 @@ JNIEXPORT jint JNICALL Java_com_serial4j_core_terminal_NativeTerminalDevice_open
 
     env->ReleaseStringUTFChars(port.jstringPath, port.path);
 
-    return (jint) fd;
+    return fd;
 }
 
 JNIEXPORT jint JNICALL Java_com_serial4j_core_terminal_NativeTerminalDevice_setModemBitsStatus
@@ -362,6 +362,7 @@ JNIEXPORT jint JNICALL Java_com_serial4j_core_terminal_NativeTerminalDevice_getM
     return state;
 }
 
+
 JNIEXPORT jint JNICALL Java_com_serial4j_core_terminal_NativeTerminalDevice_closePort
   (JNIEnv* env, jobject object) {
     
@@ -369,11 +370,11 @@ JNIEXPORT jint JNICALL Java_com_serial4j_core_terminal_NativeTerminalDevice_clos
     JniUtils::updateNativeSerialPortFrom(env, &object, &port);
     TerminalDevice device(&port);
 
-    jobject serialPortObject = JniUtils::getSerialPortFromTerminalDevice(env, &object);
-    JniUtils::setIntField(env, &serialPortObject, "portOpened", "I", 0);
-    JniUtils::setIntField(env, &serialPortObject, "fd", "I", 0);
-    JniUtils::setObjectField(env, &serialPortObject, "path", "Ljava/lang/String;", env->NewStringUTF(""));
     int state = device.closePort();
+
+    // update the Java port
+    JniUtils::updateJVMSerialPortFrom(env, &object, &port);
+
     env->ReleaseStringUTFChars(port.jstringPath, port.path);
 
     return state;
