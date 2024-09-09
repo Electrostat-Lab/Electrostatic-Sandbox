@@ -12,9 +12,17 @@ class SerialPort {
           int fd;
           int ioFlag;
        public:
-          SerialPort() {
+          SerialPort(): path(NULL),
+                         jstringPath(NULL),
+                         portOpened(0),
+                         fd(-1),
+                         ioFlag(-1) {
           }
-          SerialPort(const char *path, int ioFlag): path((char *) "/dev/null"), ioFlag(-1) {
+          SerialPort(const char *path, int ioFlag): path(NULL),
+                                                     jstringPath(NULL),
+                                                     portOpened(0),
+                                                     fd(-1),
+                                                     ioFlag(-1) {
               this->path = (char *) path;
               this->ioFlag = ioFlag;
           }
