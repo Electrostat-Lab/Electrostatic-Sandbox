@@ -69,14 +69,33 @@ const cc_t READ_WITH_TIMEOUT[READ_CONFIG_SIZE] = {1, 0};
 const cc_t READ_WITH_INTERBYTE_TIMEOUT[READ_CONFIG_SIZE] = {1, 1};
 
 class TerminalDevice {
+    class Callbacks {
+        public:
+           void (*onDevicePortOpened)(TerminalDevice *);
+           void (*onOperationFailure)(TerminalDevice *);
+           void (*onOperationSuccess)(TerminalDevice *);
+           void (*onTerminalInit)(TerminalDevice *);
+           void (*onDataRead)(TerminalDevice *, void **);
+           void (*onDataWrite)(TerminalDevice *, void **);
+           void (*onDevicePortClosure)(TerminalDevice *);
+    };
     public:
        SerialPort *serialPort;
+       TerminalDevice::Callbacks *callbacks;
 
-       TerminalDevice(SerialPort *serialPort): serialPort(NULL) {
+       TerminalDevice(SerialPort *serialPort): serialPort(NULL), callbacks(NULL) {
             this->serialPort = serialPort;
        }
 
+       TerminalDevice(SerialPort *serialPort, TerminalDevice::Callbacks *callbacks):
+                                              serialPort(NULL), callbacks(NULL) {
+        this->serialPort = serialPort;
+        this->callbacks = callbacks;
+       }
+
        ~TerminalDevice() {
+         this->serialPort = NULL;
+         this->callbacks = NULL;
        }
 
        /**
