@@ -36,7 +36,7 @@ int TerminalDevice::fetchSerialPorts(AddressesBuffer* serialPorts) {
 
         /* allocates a tty device, must be heap allocation, as this
            device will be shared with the Java code */
-        char* device = (char*) calloc(strlen(dp->d_name) + strlen(DEVICES_DIR), sizeof(char));
+        char* device = (char*) calloc(strlen(dp->d_name) + strlen(DEVICES_DIR) + 1, sizeof(char));
         device = SerialUtils::concatIntoDevice(device, dp->d_name, DEVICES_DIR);
         
         /* delete the device buffer if it's not a serial port */
@@ -276,5 +276,15 @@ int TerminalDevice::closePort() {
         || !is_existential(this->serialPort->path)) {
         return ERR_INVALID_PORT;
     }
-    return close(this->serialPort->fd);
+    int state = close(this->serialPort->fd);
+
+    if (state != 0) {
+        return state;
+    }
+
+    this->serialPort->fd = -1;
+    this->serialPort->ioFlag = -1;
+    this->serialPort->portOpened = 0;
+
+    return state;
 } 
