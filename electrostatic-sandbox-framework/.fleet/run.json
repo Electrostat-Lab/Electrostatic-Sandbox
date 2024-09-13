@@ -8,6 +8,13 @@
             "allowParallelRun": true
         },
         {
+            "name": "Test Electrostatic-Sandbox Switching MUX",
+            "type": "command",
+            "program": "$PROJECT_DIR$/helper-scripts/ci-cd/test-electrostatic.sh",
+            "args": ["hello_switching_mux.c"],
+            "allowParallelRun": true
+        },
+        {
             "name": "Test Electrostatic-Sandbox Hello Comm",
             "type": "command",
             "program": "$PROJECT_DIR$/helper-scripts/ci-cd/test-electrostatic.sh",
