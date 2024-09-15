@@ -8,6 +8,11 @@ build
 cmake-build
 dependencies
 electrostatic4j-examples/libs
+electrostatic-sandbox-framework/electrostatic4j/electrostatic4j-examples/libelectrostatic4j.so
+electrostatic-sandbox-framework/electrostatic4j/electrostatic4j-examples/libs/
+electrostatic-sandbox-framework/electrostatic4j/serial4j/serial4j-examples/libbulletjme.so
+electrostatic-sandbox-framework/electrostatic4j/serial4j/serial4j-examples/libs/
+electrostatic-sandbox-framework/electrostatic4j/serial4j/serial4j-examples/libserial4j.so
 .so
 .cache
 .idea
