@@ -8,6 +8,8 @@ serial4j_examples=":electrostatic-sandbox-framework:electrostatic4j:serial4j:ser
 
 echo -e "${ORANGE_C} Compiling and Assembling serial4j-core"
 
+chmod +rwx ./gradlew
+
 ./gradlew \
 "${serial4j_core}":build \
 "${serial4j_core}":generateSourcesJar
