@@ -129,6 +129,8 @@ Credits should go to these products and platforms for being open-source and wide
 - The CMake Building Framework.
 - The jMonkeyEngine game engine.
 - The Gradle API.
+- The Android Studio IDE.
+- The Jetbrains Fleet Code Editor.
 - The GraalVM team.
 - The Linux Kernel.
 - The GNU/Linux Operating Systems.
