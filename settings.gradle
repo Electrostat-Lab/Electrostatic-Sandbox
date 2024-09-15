@@ -13,13 +13,13 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = 'electrostatic4j'
-include('arithmos4j:arithmos4j-core')
-include('arithmos4j:arithmos4j-native')
-include('arithmos4j:arithmos4j-examples')
-include('serial4j:serial4j-core')
-include('serial4j:serial4j-native')
-include('serial4j:serial4j-examples')
-include('electrostatic4j-core')
-include('electrostatic4j-examples')
-include('electrostatic4j-native')
+rootProject.name = 'Electrostatic-Sandbox'
+include('electrostatic-sandbox-framework:electrostatic4j:arithmos4j:arithmos4j-core')
+include('electrostatic-sandbox-framework:electrostatic4j:arithmos4j:arithmos4j-native')
+include('electrostatic-sandbox-framework:electrostatic4j:arithmos4j:arithmos4j-examples')
+include('electrostatic-sandbox-framework:electrostatic4j:serial4j:serial4j-core')
+include('electrostatic-sandbox-framework:electrostatic4j:serial4j:serial4j-native')
+include('electrostatic-sandbox-framework:electrostatic4j:serial4j:serial4j-examples')
+include('electrostatic-sandbox-framework:electrostatic4j:electrostatic4j-core')
+include('electrostatic-sandbox-framework:electrostatic4j:electrostatic4j-examples')
+include('electrostatic-sandbox-framework:electrostatic4j:electrostatic4j-native')

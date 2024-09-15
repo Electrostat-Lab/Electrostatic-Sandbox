@@ -1,6 +1,5 @@
 #include <electrostatic/util/loader/dll_loader.h>
 #include <electrostatic/util/console/colors.h>
-#include <stdlib.h>
 #include <stdio.h>
 
 void *dll_conventional_routine(routine_data *data);

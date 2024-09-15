@@ -8,6 +8,10 @@ EXAMPLE="${2}"
 SYSTEM_DIR="${3}"
 BUILD_DIR="${4}"
 
+cd "${project_root}/${electrostatic_sandbox}" || exit
+
 compile "${GCC_BIN_x86}" "${GPP_BIN_x86}" "${INPUT_COMPILER_OPTIONS}" \
         "${TARGET_MACHINE}" "${TOOLCHAIN_INCLUDES_x86}" "${source_dir}" \
         "${EXAMPLE}" "${SYSTEM_DIR}/${BUILD_DIR}" "${examples_dir}"
+
+cd "${project_root}" || exit

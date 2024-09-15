@@ -1,15 +1,17 @@
 #!/bin/bash
-source "./common-variables.sh"
+source "./helper-scripts/common-variables.sh"
 source "./helper-scripts/project-impl/variables.sh"
 
-cd ./electrostatic4j
+arithmos4j_core=":electrostatic-sandbox-framework:electrostatic4j:arithmos4j:arithmos4j-core"
+arithmos4j_native=":electrostatic-sandbox-framework:electrostatic4j:arithmos4j:arithmos4j-native"
+arithmos4j_examples=":electrostatic-sandbox-framework:electrostatic4j:arithmos4j:arithmos4j-examples"
 
 echo -e "${ORANGE_C} Compiling and Assembling serial4j-core"
-./gradlew :arithmos4j:arithmos4j-core:build \
-          :arithmos4j:arithmos4j-core:generateSourcesJar 
+
+./gradlew ${arithmos4j_core}:build \
+          ${arithmos4j_core}:generateSourcesJar
         # :serial4j:serial4j-core:generateJavadocJar 
 
-cd ..
 echo -e "${ORANGE_C} Compiling arithmos4j-native"
 
 ./helper-scripts/project-impl/compile-electrostatic4j.sh \
@@ -20,12 +22,12 @@ echo -e "${ORANGE_C} Compiling arithmos4j-native"
        "electrostatic4j/arithmos4j/arithmos4j-native" "arithmos4j" "${GCC_BIN_x86}" "${GPP_BIN_x86}" "${TOOLCHAIN_INCLUDES_x86}" \
         "${JAVA_HOME}" "${TARGET_x86}" "linux" "${x86}"
 
-cd ./electrostatic4j
 echo -e "${ORANGE_C} Bundling arithmos4j-native"
-./gradlew :arithmos4j:arithmos4j-native:copyBinaries && \
-./gradlew :arithmos4j:arithmos4j-native:build && \
-./gradlew :arithmos4j:arithmos4j-native:copyToExamples
+
+./gradlew ${arithmos4j_native}:copyBinaries && \
+./gradlew ${arithmos4j_native}:build && \
+./gradlew ${arithmos4j_native}:copyToExamples
 
 echo -e "${ORANGE_C} Building Examples"
-./gradlew :arithmos4j:arithmos4j-examples:build
+./gradlew ${arithmos4j_native}:build
 

@@ -1,15 +1,18 @@
 #!/bin/bash
-source "./common-variables.sh"
+source "./helper-scripts/common-variables.sh"
 source "./helper-scripts/project-impl/variables.sh"
 
-cd ./electrostatic4j
+serial4j_core=":electrostatic-sandbox-framework:electrostatic4j:serial4j:serial4j-core"
+serial4j_native=":electrostatic-sandbox-framework:electrostatic4j:serial4j:serial4j-native"
+serial4j_examples=":electrostatic-sandbox-framework:electrostatic4j:serial4j:serial4j-examples"
 
 echo -e "${ORANGE_C} Compiling and Assembling serial4j-core"
-./gradlew :serial4j:serial4j-core:build \
-          :serial4j:serial4j-core:generateSourcesJar 
-        # :serial4j:serial4j-core:generateJavadocJar 
 
-cd ..
+./gradlew \
+"${serial4j_core}":build \
+"${serial4j_core}":generateSourcesJar
+#"${serial4j_core}":generateJavadocJar
+
 echo -e "${ORANGE_C} Compiling serial4j-native"
 
 ./helper-scripts/project-impl/compile-electrostatic4j.sh \
@@ -20,12 +23,12 @@ echo -e "${ORANGE_C} Compiling serial4j-native"
        "electrostatic4j/serial4j/serial4j-native" "serial4j" "${GCC_BIN_x86}" "${GPP_BIN_x86}" "${TOOLCHAIN_INCLUDES_x86}" \
         "${JAVA_HOME}" "${TARGET_x86}" "linux" "${x86}"
 
-cd ./electrostatic4j
 echo -e "${ORANGE_C} Bundling serial4j-native"
-./gradlew :serial4j:serial4j-native:copyBinaries && \
-./gradlew :serial4j:serial4j-native:build && \
-./gradlew :serial4j:serial4j-native:copyToExamples
 
-echo -e "${ORANGE_C} Building Examples"
-./gradlew :serial4j:serial4j-examples:build
+./gradlew "${serial4j_native}":copyBinaries && \
+./gradlew "${serial4j_native}":build && \
+./gradlew "${serial4j_native}":copyToExamples
+
+#echo -e "${ORANGE_C} Building Examples"
+./gradlew "${serial4j_examples}":build
 

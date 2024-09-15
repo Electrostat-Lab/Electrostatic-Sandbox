@@ -1,8 +1,8 @@
 package electrostatic4j.examples;
 
-import com.avrsandbox.snaploader.LoadingCriterion;
-import electrostatic4j.util.loader.NativeImageLoader;
+import electrostatic.snaploader.LoadingCriterion;
 import electrostatic4j.NativeLibrary;
+import electrostatic4j.util.loader.NativeImageLoader;
 
 public class Launcher {
     

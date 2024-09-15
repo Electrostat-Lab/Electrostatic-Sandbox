@@ -1,6 +1,6 @@
 #!/bin/sh
 working_dir=$(pwd)
-root_path="${working_dir}"
+root_path="${working_dir}/helper-scripts"
 sandbox_path="/opt/electrostatic-sandbox"
 local_bin="/usr/local/bin"
 local_include="/usr/local/include"

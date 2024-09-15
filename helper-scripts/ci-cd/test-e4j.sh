@@ -1,5 +1,5 @@
 #!/bin/bash
 
-cd ./electrostatic4j
+e4j_examples=":electrostatic-sandbox-framework:electrostatic4j:electrostatic4j-examples"
 
-./gradlew :electrostatic4j-examples:run
+./gradlew ${e4j_examples}:run

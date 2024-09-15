@@ -1,7 +1,7 @@
 /*
  * BSD 3-Clause License
  *
- * Copyright (c) 2022-2024, Scrappers Team, The AVR-Sandbox Project, Serial4j API.
+ * Copyright (c) 2022, Scrappers Team, The AVR-Sandbox Project, Serial4j API.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -32,11 +32,13 @@
 
 package electrostatic4j.util.loader;
 
-import com.avrsandbox.snaploader.LibraryInfo;
-import com.avrsandbox.snaploader.LoadingCriterion;
-import com.avrsandbox.snaploader.NativeBinaryLoader;
-import com.avrsandbox.snaploader.platform.NativeVariant;
-import com.avrsandbox.snaploader.platform.PropertiesProvider;
+import electrostatic.snaploader.LibraryInfo;
+import electrostatic.snaploader.LoadingCriterion;
+import electrostatic.snaploader.NativeBinaryLoader;
+import electrostatic.snaploader.platform.NativeDynamicLibrary;
+import electrostatic.snaploader.platform.util.DefaultDynamicLibraries;
+import electrostatic.snaploader.platform.util.NativeVariant;
+import electrostatic.snaploader.platform.util.PropertiesProvider;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -58,7 +60,7 @@ public class NativeImageLoader {
     }
 
     /**
-     * Incrementally extracts and loads the platform-specific native image.
+     * Incrementally extracts and loads the platform-specific serial4j native image.
      */
     public static void loadLibrary() {
         /* sanity check the existence of the extraction path */
@@ -72,17 +74,18 @@ public class NativeImageLoader {
         }
 
         final LibraryInfo libraryInfo =
-                new LibraryInfo(getJarPath(), null, getLibraryBaseName(), getExtractionPath());
+                new LibraryInfo(getJarPath(), null, getLibraryBaseName(), null);
 
-        final NativeBinaryLoader loader = new NativeBinaryLoader(libraryInfo)
-                .initPlatformLibrary();
+        final NativeBinaryLoader loader = new NativeBinaryLoader(libraryInfo);
+        loader.registerNativeLibraries(new NativeDynamicLibrary[] { DefaultDynamicLibraries.LINUX_X86,
+                DefaultDynamicLibraries.LINUX_X86_64 }).initPlatformLibrary();
         loader.setLoggingEnabled(true);
         loader.setRetryWithCleanExtraction(true);
         try {
             loader.loadLibrary(defaultLoadingCriterion);
         } catch (IOException e) {
             Logger.getLogger(NativeBinaryLoader.class.getName())
-                    .log(Level.SEVERE, "Loading the native image has failed!", e);
+                    .log(Level.SEVERE, "Loading Serial4j loader failed!", e);
         }
     }
 
@@ -92,7 +95,7 @@ public class NativeImageLoader {
 
     /**
      * Sets the jar path from the current user directory.
-     *                                                                                                                                                                                                                                                                                                                                                                                                              
+     *
      * @param parts the path parts in string format without file separators
      */
     public static void setJarPathFromUserDir(String... parts) {
@@ -205,7 +208,7 @@ public class NativeImageLoader {
      * the native dynamic libraries to extract and load
      */
     public static String getJarFile() {
-        return "electrostatic4j-native-" + NativeVariant.NAME.getProperty().toLowerCase() + ".jar";
+        return "electrostatic4j-native-" + NativeVariant.OS_NAME.getProperty().toLowerCase() + ".jar";
     }
 
     /**

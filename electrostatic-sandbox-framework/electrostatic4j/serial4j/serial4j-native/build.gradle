@@ -2,11 +2,13 @@ plugins {
     id 'java-library'
 }
 
-final String projectName = "${project.rootDir}/${project.parent.name}/${project.name}"
-final String buildDirectory="${projectName}/build/classes/java/main/lib"
-final String nativeObjects="${projectName}/build/lib"
-final String jarOutput="${projectName}/build/libs"
-final String examples="${project.rootDir}/${project.parent.name}/${project.parent.name}-examples/libs"
+final String projectDir = "${project.rootDir}/${project.parent.parent.parent.name}/" + \
+        "${project.parent.parent.name}/" + \
+        "${project.parent.name}"
+final String buildDirectory="${projectDir}/${project.name}/build/classes/java/main/lib"
+final String nativeObjects="${projectDir}/${project.name}/build/lib"
+final String jarOutput="${projectDir}/${project.name}/build/libs"
+final String examples="${projectDir}/${project.parent.name}-examples/libs"
 
 tasks.register("copyBinaries", Copy) {
     from "${nativeObjects}"

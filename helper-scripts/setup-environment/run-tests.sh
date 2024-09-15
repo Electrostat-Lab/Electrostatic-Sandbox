@@ -1,17 +1,8 @@
 #!/bin/bash
 
-former_working_dir="`pwd`"
+working_dir="$(pwd)"
 
-##
-# The root directory specified as a command parameter.
-##
-root="${1}"
-
-cd "${root}"
-
-working_dir="`pwd`"
-
-source "${working_dir}/Electrostatic-Sandbox/setup-environment/setup-scripts/variables.sh"
+source "${working_dir}/Electrostatic-Sandbox/helper-scripts/setup-environment/setup-scripts/variables.sh"
 source "${unit_tests}"
 
 ##
@@ -27,8 +18,3 @@ function run_tests() {
 
 run_tests
 ping_package
-
-##
-# exit
-##
-cd "${former_working_dir}"

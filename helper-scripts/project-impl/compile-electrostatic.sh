@@ -4,6 +4,8 @@ source "./helper-scripts/abstract/abstract-compile.sh"
 source "./helper-scripts/abstract/abstract-util.sh"
 source "./helper-scripts/project-impl/variables.sh"
 
+cd "${project_root}/${electrostatic_sandbox}" || exit
+
 GCC_BIN="${1}"
 GPP_BIN="${2}"
 TARGET_MACHINE="${3}"
@@ -77,3 +79,5 @@ cp -rv "$(pwd)/${source_dir}/src/include/" \
 
 cp -rv "$(pwd)/${source_dir}/src/include/" \
     "$(pwd)/${examples_dir}/dependencies/"
+
+cd ${project_root} || exit

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source "$(pwd)/setup-environment/setup-scripts/variables.sh"
+source "$(pwd)/helper-scripts/setup-environment/setup-scripts/variables.sh"
 source "${abstract_scripts}"
 source "${setup_jdk_script}"
 source "${setup_ide_script}"

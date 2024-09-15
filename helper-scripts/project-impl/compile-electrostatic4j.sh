@@ -6,6 +6,8 @@ source "./helper-scripts/abstract/abstract-compile.sh"
 source "./helper-scripts/abstract/abstract-util.sh"
 source "./helper-scripts/project-impl/variables.sh"
 
+cd "${project_root}/${electrostatic_sandbox}" || exit
+
 project_dir="${1}"
 commission_lib="${2}"
 GCC_BIN="${3}"
@@ -32,3 +34,5 @@ compile "${commission_lib}" "${GCC_BIN}" "${GPP_BIN}" "${INPUT_COMPILER_OPTIONS}
 
 moveFile "${project_dir}/cmake-build/${system_dir}/${build_dir}/lib${commission_lib}.so" \
          "${project_dir}/build/lib/${system_dir}/${build_dir}/"
+
+cd ${project_root} || exit

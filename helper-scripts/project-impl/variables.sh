@@ -1,6 +1,7 @@
 #!/bin/bash
 
 project_root=$(pwd)
+electrostatic_sandbox="electrostatic-sandbox-framework"
 
 sandbox_path="/opt/electrostatic-sandbox"
 COMMISSION_LIB="electrostatic"

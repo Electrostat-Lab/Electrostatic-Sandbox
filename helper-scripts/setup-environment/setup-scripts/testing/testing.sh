@@ -1,6 +1,6 @@
 #!/bin/sh
 
-source "./Electrostatic-Sandbox/setup-environment/setup-scripts/variables.sh"
+source "$(pwd)/helper-scripts/setup-environment/setup-scripts/variables.sh"
 source "${abstract_scripts}"
 
 function test_preparation() {

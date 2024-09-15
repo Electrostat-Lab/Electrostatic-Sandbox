@@ -1,11 +1,9 @@
 #!/bin/bash
+source "./helper-scripts/common-variables.sh"
+source "./helper-scripts/project-impl/variables.sh"
+
+serial4j_examples=":electrostatic-sandbox-framework:electrostatic4j:serial4j:serial4j-examples"
 
 demo="${1}"
 
-temp=$(pwd)
-
-cd ./electrostatic4j/
-
-./gradlew :serial4j:serial4j-examples:run --args="${demo}"
-
-cd $temp
+./gradlew "${serial4j_examples}":run --args="${demo}"
