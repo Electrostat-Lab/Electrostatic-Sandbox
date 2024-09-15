@@ -68,5 +68,5 @@ cleanup_ndk
 # cleanup_ide
 # create_ide_symbol
 
-source "$(pwd)/setup-environment/create-symbols.sh"
-source "$(pwd)/setup-environment/add-user-to-serial-groups.sh"
+source "$(pwd)/helper-scripts/setup-environment/create-symbols.sh"
+source "$(pwd)/helper-scripts/setup-environment/add-user-to-serial-groups.sh"
