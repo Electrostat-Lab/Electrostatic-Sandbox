@@ -7,6 +7,9 @@ e4j_native=":electrostatic-sandbox-framework:electrostatic4j:electrostatic4j-nat
 e4j_examples=":electrostatic-sandbox-framework:electrostatic4j:electrostatic4j-examples"
 
 echo -e "${ORANGE_C} Compiling and Assembling e4j-core"
+
+chmod +rwx ./gradlew
+
 ./gradlew ${e4j_core}:build \
           ${e4j_core}:generateSourcesJar \
           ${e4j_core}:generateJavadocJar
