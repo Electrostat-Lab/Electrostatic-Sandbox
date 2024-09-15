@@ -90,3 +90,6 @@ jobs:
           
         - name: Testing electrostatic4j Java Binding API
           run: sudo ./helper-scripts/ci-cd/test-e4j.sh
+
+        - name: Building Serial4j Framework
+          run: sudo ./helper-scripts/ci-cd/compile-serial4j.sh
