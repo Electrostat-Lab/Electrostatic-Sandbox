@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source "./setup-environment/setup-scripts/variables.sh"
+source "./helper-scripts/setup-environment/setup-scripts/variables.sh"
 source "${abstract_scripts}"
 
 function download_jdk() {
