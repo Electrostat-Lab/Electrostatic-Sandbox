@@ -53,14 +53,6 @@ JNIEXPORT jint JNICALL Java_com_serial4j_core_terminal_NativeTerminalDevice_setu
     return JniUtils::setupJavaEnvironment(env, JNI_VERSION_1_8);
 }
 
-JNIEXPORT jint JNICALL Java_com_serial4j_core_terminal_NativeTerminalDevice_isExistential__Ljava_lang_String_2
-  (JNIEnv *env, jclass clazz, jstring port) {
-    const char* buffer = JniUtils::getBufferFromString(env, port);
-    jint state = is_existential(buffer);
-    env->ReleaseStringUTFChars(port, buffer);
-    return state;
-}
-
 JNIEXPORT jint JNICALL Java_com_serial4j_core_terminal_NativeTerminalDevice_isExistential
   (JNIEnv *env, jobject object) {
     jint fd = JniUtils::getPortDescriptorFromSerialPort(env, &object);

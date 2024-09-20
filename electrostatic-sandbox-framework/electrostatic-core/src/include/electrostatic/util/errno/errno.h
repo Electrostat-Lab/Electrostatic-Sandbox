@@ -8,13 +8,13 @@
 #ifndef _ELECTROSTATIC_ERRNO_H_
 #define _ELECTROSTATIC_ERRNO_H_
 
-
 #include <stdlib.h>
 
 typedef struct errno(errno);
 
 struct errno {
     int value;
+    char *message;
 };
 
 #define EUNDEFINEDBUFFER (0x01)                 // value = 2^0 = 1.
@@ -32,7 +32,8 @@ static inline void init_errno(errno *error) {
     }
     
     *error = (errno){
-        .value = 0x00};
+        .value = 0x00,
+        .message = NULL};
 }
 
 #endif

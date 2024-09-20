@@ -78,14 +78,6 @@ public final class NativeTerminalDevice {
     static native int setupJniEnvironment();
 
     /**
-     * Tests whether a port filesystem exists.
-     *
-     * @param port the port to test.
-     * @return (1) if the device on this port exists, (0) otherwise.
-     */
-    public static native int isExistential(String port);
-
-    /**
      * Retrieves the serial port associated with this terminal device.
      *
      * @return the serial port object associated with this terminal device.
