@@ -32,13 +32,35 @@
 
 package com.serial4j.core.errno;
 
-import com.serial4j.core.serial.throwable.*;
+import com.serial4j.core.serial.throwable.BadFileDescriptorException;
+import com.serial4j.core.serial.throwable.BadFileNumberException;
+import com.serial4j.core.serial.throwable.BrokenPipeException;
+import com.serial4j.core.serial.throwable.FileAlreadyOpenedException;
+import com.serial4j.core.serial.throwable.FileIsDirectoryException;
+import com.serial4j.core.serial.throwable.FileTableOverflowException;
+import com.serial4j.core.serial.throwable.FileTooLargeException;
+import com.serial4j.core.serial.throwable.IllegalSeekException;
+import com.serial4j.core.serial.throwable.InputOutputException;
+import com.serial4j.core.serial.throwable.InterruptedSystemCallException;
+import com.serial4j.core.serial.throwable.InvalidArgumentException;
+import com.serial4j.core.serial.throwable.InvalidPortException;
+import com.serial4j.core.serial.throwable.NoAvailableTtyDevicesException;
+import com.serial4j.core.serial.throwable.NoSpaceLeftException;
+import com.serial4j.core.serial.throwable.NoSuchDeviceException;
+import com.serial4j.core.serial.throwable.NoSuchFileException;
+import com.serial4j.core.serial.throwable.NotTtyDeviceException;
+import com.serial4j.core.serial.throwable.OperationFailedException;
+import com.serial4j.core.serial.throwable.PermissionDeniedException;
+import com.serial4j.core.serial.throwable.ReadOnlyFileSystemException;
+import com.serial4j.core.serial.throwable.SerialThrowable;
+import com.serial4j.core.serial.throwable.TooManyOpenedFilesException;
+import com.serial4j.core.serial.throwable.TryAgainException;
 
 /**
  * Interprets the native methods bad return values into error codes,
- * used by the java {@link com.serial4j.core.errno.ErrnoToException} 
+ * used by the java {@link com.serial4j.core.errno.ErrnoToException}
  * to throw exceptions against the JRE.
- * 
+ *
  * @author pavl_g.
  */
 public enum Errno {
@@ -47,72 +69,108 @@ public enum Errno {
     /**
      * Signifies an invalid serial port in an attempt to initialize a non-serial device.
      */
-    ERR_INVALID_PORT(NativeErrno.getInvalidPortErrno(), new InvalidPortException("Invalid Port")),
+    ERR_INVALID_PORT(NativeErrno.getInvalidPortErrno(),
+            new InvalidPortException(NativeErrno.ErrnoMessage.getMessageFromStdErrno(NativeErrno.getInvalidPortErrno()))),
 
     /**
      * Signifies an operation failure.
      */
-    ERR_OPERATION_FAILED(NativeErrno.getOperationFailedErrno(), new OperationFailedException("Operation Failed")),
+    ERR_OPERATION_FAILED(NativeErrno.getOperationFailedErrno(),
+            new OperationFailedException(NativeErrno.ErrnoMessage.getMessageFromStdErrno(NativeErrno.getOperationFailedErrno()))),
 
     /**
      * Signifies an operation succession, has no associated throwable, ignored by ErrnoToException.
      */
-    OPERATION_SUCCEEDED(NativeErrno.getOperationSucceededCode(),null),
+    OPERATION_SUCCEEDED(NativeErrno.getOperationSucceededCode(), null),
 
     /**
      * Signifies that there are no available typewriter devices in an attempt to fetch available serial devices.
      */
-    ERR_NO_AVAILABLE_TTY_DEVICES(NativeErrno.getNoAvailableTtyDevicesErrno(), new NoAvailableTtyDevicesException("No available teletype devices")),
+    ERR_NO_AVAILABLE_TTY_DEVICES(NativeErrno.getNoAvailableTtyDevicesErrno(),
+            new NoAvailableTtyDevicesException(NativeErrno.ErrnoMessage.getMessageFromStdErrno(NativeErrno.getNoAvailableTtyDevicesErrno()))),
 
     /* Error codes for open(const char*, int), file names and IO. */
 
     /**
      * Signifies a permission denial error in an attempt to especially trying to write to a non-writable device.
      */
-    EACCES(NativeErrno.getPermissionDeniedErrno(), new PermissionDeniedException("Permission denied")),
-    EEXIST(NativeErrno.getFileAlreadyOpenedErrno(), new FileAlreadyOpenedException("File exists")),
-    EINTR(NativeErrno.getInterruptedSystemCallErrno(), new InterruptedSystemCallException("Interrupted system call")),
-    EISDIR(NativeErrno.getFileIsDirectoryErrno(), new FileIsDirectoryException("Is a directory")),
-    EMFILE(NativeErrno.getTooManyOpenedFilesErrno(), new TooManyOpenedFilesException("Too many open files")),
-    ENFILE(NativeErrno.getFileTableOverflowErrno(), new FileTableOverflowException("File table overflow")),
-    ENOENT(NativeErrno.getNoSuchFileErrno(), new NoSuchFileException("No Such file or directory")),
-    ENOSPC(NativeErrno.getNoSpaceLeftErrno(), new NoSpaceLeftException("No space left on device")),
-    ENXIO(NativeErrno.getNoSuchDeviceErrno(), new NoSuchDeviceException("No such device or address")),
-    EROFS(NativeErrno.getReadOnlyFileSystemErrno(), new ReadOnlyFileSystemException("Read-only file system")),
-    EPIPE(NativeErrno.getBrokenPipeErrno(), new BrokenPipeException("Broken pipe")),
-    ESPIPE(NativeErrno.getIllegalSeekErrno(), new IllegalSeekException("Illegal File Seeking operation")),
+
+    EACCES(NativeErrno.getPermissionDeniedErrno(),
+            new PermissionDeniedException(NativeErrno.ErrnoMessage.getMessageFromStdErrno(NativeErrno.getPermissionDeniedErrno()))),
+
+    EEXIST(NativeErrno.getFileAlreadyOpenedErrno(),
+            new FileAlreadyOpenedException(NativeErrno.ErrnoMessage.getMessageFromStdErrno(NativeErrno.getFileAlreadyOpenedErrno()))),
+
+    EINTR(NativeErrno.getInterruptedSystemCallErrno(),
+            new InterruptedSystemCallException(NativeErrno.ErrnoMessage.getMessageFromStdErrno(NativeErrno.getInterruptedSystemCallErrno()))),
+
+    EISDIR(NativeErrno.getFileIsDirectoryErrno(),
+            new FileIsDirectoryException(NativeErrno.ErrnoMessage.getMessageFromStdErrno(NativeErrno.getFileIsDirectoryErrno()))),
+
+    EMFILE(NativeErrno.getTooManyOpenedFilesErrno(),
+            new TooManyOpenedFilesException(NativeErrno.ErrnoMessage.getMessageFromStdErrno(NativeErrno.getTooManyOpenedFilesErrno()))),
+
+    ENFILE(NativeErrno.getFileTableOverflowErrno(),
+            new FileTableOverflowException(NativeErrno.ErrnoMessage.getMessageFromStdErrno(NativeErrno.getFileTableOverflowErrno()))),
+
+    ENOENT(NativeErrno.getNoSuchFileErrno(),
+            new NoSuchFileException(NativeErrno.ErrnoMessage.getMessageFromStdErrno(NativeErrno.getNoSuchFileErrno()))),
+
+    ENOSPC(NativeErrno.getNoSpaceLeftErrno(),
+            new NoSpaceLeftException(NativeErrno.ErrnoMessage.getMessageFromStdErrno(NativeErrno.getNoSpaceLeftErrno()))),
+
+    ENXIO(NativeErrno.getNoSuchDeviceErrno(),
+            new NoSuchDeviceException(NativeErrno.ErrnoMessage.getMessageFromStdErrno(NativeErrno.getNoSuchDeviceErrno()))),
+
+    EROFS(NativeErrno.getReadOnlyFileSystemErrno(),
+            new ReadOnlyFileSystemException(NativeErrno.ErrnoMessage.getMessageFromStdErrno(NativeErrno.getReadOnlyFileSystemErrno()))),
+
+    EPIPE(NativeErrno.getBrokenPipeErrno(),
+            new BrokenPipeException(NativeErrno.ErrnoMessage.getMessageFromStdErrno(NativeErrno.getBrokenPipeErrno()))),
+
+    ESPIPE(NativeErrno.getIllegalSeekErrno(),
+            new IllegalSeekException(NativeErrno.ErrnoMessage.getMessageFromStdErrno(NativeErrno.getIllegalSeekErrno()))),
 
     /**
      * Error codes for tcgetattr(int, struct termios*) and tcsetattr(int, struct termios*).
      */
-    EBADFD(NativeErrno.getBadFileDescriptorErrno(), new BadFileDescriptorException("File descriptor in bad state")),
+    EBADFD(NativeErrno.getBadFileDescriptorErrno(),
+            new BadFileDescriptorException(NativeErrno.ErrnoMessage.getMessageFromStdErrno(NativeErrno.getBadFileDescriptorErrno()))),
 
-    EBADF(NativeErrno.getBadFileNumberErrno(), new BadFileNumberException("Bad file number")),
-    ENOTTY(NativeErrno.getNotTtyDeviceErrno(), new NotTtyDeviceException("Not a typewriter device")),
+    EBADF(NativeErrno.getBadFileNumberErrno(),
+            new BadFileNumberException(NativeErrno.ErrnoMessage.getMessageFromStdErrno(NativeErrno.getBadFileNumberErrno()))),
+
+    ENOTTY(NativeErrno.getNotTtyDeviceErrno(),
+            new NotTtyDeviceException(NativeErrno.ErrnoMessage.getMessageFromStdErrno(NativeErrno.getNotTtyDeviceErrno()))),
 
     /**
      * tcsetattr(int, struct termios*) only.
      */
-    EINVAL(NativeErrno.getInvalidArgumentErrno(), new InvalidArgumentException("Invalid argument")),
+    EINVAL(NativeErrno.getInvalidArgumentErrno(),
+            new InvalidArgumentException(NativeErrno.ErrnoMessage.getMessageFromStdErrno(NativeErrno.getInvalidArgumentErrno()))),
 
     /**
      * Additional error codes for basic R/W from <fcntl.h>
      */
-    EAGAIN(NativeErrno.getTryAgainErrno(), new TryAgainException("Try again")),
-    EIO(NativeErrno.getInputOutputErrno(), new InputOutputException("I/O Error")),
+    EAGAIN(NativeErrno.getTryAgainErrno(),
+            new TryAgainException(NativeErrno.ErrnoMessage.getMessageFromStdErrno(NativeErrno.getTryAgainErrno()))),
+
+    EIO(NativeErrno.getInputOutputErrno(),
+            new InputOutputException(NativeErrno.ErrnoMessage.getMessageFromStdErrno(NativeErrno.getInputOutputErrno()))),
 
     /**
      * For write(int, void*, int); only.
      */
-    EFBIG(NativeErrno.getFileTooLargeErrno(), new FileTooLargeException("File too large"));
+    EFBIG(NativeErrno.getFileTooLargeErrno(),
+            new FileTooLargeException(NativeErrno.ErrnoMessage.getMessageFromStdErrno(NativeErrno.getFileTooLargeErrno())));
 
     private final int value;
     private final SerialThrowable associatedThrowable;
 
     /**
      * Creates an error code constant with a value and a description.
-     * 
-     * @param value the errno value.
+     *
+     * @param value               the errno value.
      * @param associatedThrowable the associated throwable.
      */
     Errno(final int value, final SerialThrowable associatedThrowable) {

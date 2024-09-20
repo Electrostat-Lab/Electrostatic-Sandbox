@@ -36,12 +36,12 @@ package com.serial4j.core.errno;
  * Provides the native error code that can be
  * utilized by the API.
  *
+ * @author pavl_g
  * @see Errno
  * @see ErrnoToException
- * @author pavl_g
  */
 public final class NativeErrno {
-    
+
     private NativeErrno() {
     }
 
@@ -90,4 +90,11 @@ public final class NativeErrno {
     static native int getTryAgainErrno();
 
     static native int getIllegalSeekErrno();
+
+    public static final class ErrnoMessage {
+        private ErrnoMessage() {
+        }
+
+        static native String getMessageFromStdErrno(int errno);
+    }
 }

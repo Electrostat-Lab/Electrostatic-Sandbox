@@ -1,5 +1,14 @@
 #include<jni/com_serial4j_core_errno_NativeErrno.h>
 #include<ErrnoUtils.h>
+#include <JniUtils.h>
+#include <string.h>
+
+JNIEXPORT jstring JNICALL Java_com_serial4j_core_errno_NativeErrno_getMessageFromStdErrno
+    (JNIEnv* env, jclass clazz, jint errno) {
+    const char *message = (const char *) strerror(errno);
+    jstring msgString = JniUtils::getStringFromBuffer(env, message);
+    return msgString;
+}
 
 JNIEXPORT jint JNICALL Java_com_serial4j_core_errno_NativeErrno_getBadFileDescriptorErrno
   (JNIEnv* env, jclass clazz) {
