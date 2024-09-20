@@ -2,6 +2,10 @@ plugins {
     id 'java-library'
 }
 
+final String projectDir = "${project.rootDir}/${project.parent.parent.parent.name}/" + \
+        "${project.parent.parent.name}/" + \
+        "${project.parent.name}"
+
 tasks.register('generateJavadocJar', Jar) {
     from javadoc
 }
@@ -13,7 +17,7 @@ tasks.register('generateSourcesJar', Jar) {
 tasks.withType(JavaCompile).configureEach { // compile-time options [javac <options> <sources>]
     //options.compilerArgs << '-Xlint:deprecation' // to show deprecation warnings
     options.compilerArgs << '-Xlint:unchecked'
-    options.compilerArgs += ["-h", "${rootProject.rootDir}/serial4j/serial4j-native/src/include/jni/"]
+    options.compilerArgs += ["-h", "${projectDir}/serial4j-native/src/include/jni/"]
     options.encoding = 'UTF-8'
 }
 
