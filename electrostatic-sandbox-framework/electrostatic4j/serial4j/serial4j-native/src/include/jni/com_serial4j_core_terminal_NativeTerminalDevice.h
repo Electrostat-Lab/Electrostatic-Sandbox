@@ -18,17 +18,9 @@ JNIEXPORT jint JNICALL Java_com_serial4j_core_terminal_NativeTerminalDevice_setu
 /*
  * Class:     com_serial4j_core_terminal_NativeTerminalDevice
  * Method:    isExistential
- * Signature: (Ljava/lang/String;)I
- */
-JNIEXPORT jint JNICALL Java_com_serial4j_core_terminal_NativeTerminalDevice_isExistential__Ljava_lang_String_2
-  (JNIEnv *, jclass, jstring);
-
-/*
- * Class:     com_serial4j_core_terminal_NativeTerminalDevice
- * Method:    isExistential
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_com_serial4j_core_terminal_NativeTerminalDevice_isExistential__
+JNIEXPORT jint JNICALL Java_com_serial4j_core_terminal_NativeTerminalDevice_isExistential
   (JNIEnv *, jobject);
 
 /*
