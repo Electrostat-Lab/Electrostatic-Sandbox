@@ -135,26 +135,20 @@ title The Electrostatic-Sandbox SDK Milestones
 - [ ] ShiftAvr.
 - [ ] Parallel4j.
 - [ ] Socket4j.
-- [ ] Electrostatic-sandbox-framework.
+- [x] Electrostatic-sandbox-framework.
 
 **Environment Setup**:
-- [ ] `setup-tools` scripting.
-- [ ] `setup-framework` scripting.
+- [x] `setup-tools` scripting.
+- [x] `setup-framework` scripting.
 
 **Electrostatic-sandbox framework**:
 - [ ] Electroserial API: wraps Serial4j API providing a generic boundary to the Electrocomponent API.
 - [ ] Electroparallel API: wraps Parallel4j API providing a generic boundary to the Electrocomponent API.
 - [ ] Electrosocket API: wraps Socket4j API providing a generic boundary to the Electrocomponent API.
 - [ ] Electrocomponent API: provides the vertical HAL for interacting with devices through device managers based on the scientific model provided by the _Set Theory_.
-- [ ] Electrostatic-sandbox-examples: examples and techdemos utilizing the HAL API directly to interact with peripheral devices and/or use one of the above core APIs.
+- [x] Electrostatic-sandbox-examples: examples and techdemos utilizing the HAL API directly to interact with peripheral devices and/or use one of the above core APIs.
 - [ ] Deployment to Maven Central.
 - [ ] Build the framework into an SDK.
-
-**Circuitry Explanation**:
-- [ ] GA-H61M-S2P Rev-2.0 circuit connections details.
-- [ ] Scientific modelling to the circuitry and connection details.
-- [ ] ShiftAvr circuitry explanation.
-- [ ] Digital electronics and digital design.
 
 ## References (Direct links to useful topics):
 ### Operational:
