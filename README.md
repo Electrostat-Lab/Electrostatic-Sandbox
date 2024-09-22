@@ -10,7 +10,7 @@
 
 This electronic monstrosity features and leverages a powerful system-engineering infrastructure framework, the _Electrostatic-Sandbox Framework_ for distributed simulation systems, a complete SDK suite written purely in C programming language with a JNI binding based on the IEEE-1516 HLA Spec. and NASA DSES.
 
-_[Jump to the Electrobox Specification]()_
+_[Jump to the Electrobox Specification](https://github.com/Electrostat-Lab/Electrostatic-Sandbox/blob/master/embedded-system-design/electrobox/README.md)_
 
 ## Provisional Software/Hardware Specification: 
 
