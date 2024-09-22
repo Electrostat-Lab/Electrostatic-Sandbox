@@ -19,8 +19,20 @@ _[Jump to the Electrobox Specification]()_
 ```mermaid
 block-beta
 columns 1
-  IEEE["IEEE-1516 HLA"]
-  OS_Res["Base OS Resources and Std Libraries APIs"]
+  block:IEEE
+    _IEEE["IEEE-1516 HLA (Simulation Infrastructure)"]
+  end
+  block:MIG
+    _MIG["Migrated APIs and Frameworks"]
+  end
+  block:MIG_APIs
+      SERIAL["Serial4j"]
+      JECTOR["Jector"]
+      ART["Articular-ES"]
+      JME["Jme-alloc"]
+      AUTO["Automata4j"]
+  end
+  OS_Res["Base OS Resources and Std Libraries APIs (Networking and Software Infrastructure)"]
   block:TITLE
     block:STD
       Std["Std Libs"]
@@ -40,10 +52,17 @@ columns 1
       TH["Thread Control Utilities"]
       SCT["Sockets Control Utilities"]
       PC["Processes Control Utilities"]
+      LOG["Logging Utilities"]
+      MEM["Memory Allocation Utilities"]
+      MEM_INS["Memory Inspection Utilities"]
+      MEM_CTRL["Memory Control Utilities"]
       CRY["Cryptographic Utilities"]
     end
   end
   MCU["Microcontroller Interfacing APIs"]
+
+  style MIG fill:#999,stroke:#999
+  style MIG_APIs fill:#999,stroke:#999
 
   style OS fill:#969,stroke:#333
   style STD fill:#999,stroke:#333
