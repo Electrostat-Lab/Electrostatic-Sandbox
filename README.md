@@ -16,6 +16,41 @@ _[Jump to the Electrobox Specification]()_
 
 ### Provisional Hardware/Software Abstraction Layer (HAL):
 
+```mermaid
+block-beta
+columns 1
+  IEEE["IEEE-1516 HLA"]
+  OS_Res["Base OS Resources and Std Libraries APIs"]
+  block:TITLE
+    block:STD
+      Std["Std Libs"]
+    end
+    block:OS
+      OSRES["Base OS Resources"]
+    end
+  end
+  block:HAL
+    block:_STD
+      ADT["ADTs"]
+      ALG["Algebra"]
+      ALGO["Algorithms"]
+    end
+    block:_OS
+      FS["Abstract Filesystems"]
+      TH["Thread Control Utilities"]
+      SCT["Sockets Control Utilities"]
+      PC["Processes Control Utilities"]
+      CRY["Cryptographic Utilities"]
+    end
+  end
+  MCU["Microcontroller Interfacing APIs"]
+
+  style OS fill:#969,stroke:#333
+  style STD fill:#999,stroke:#333
+  style _OS fill:#969,stroke:#333
+  style _STD fill:#999,stroke:#333
+```
+
 ### Current progress:
 
 ### Project Milestones:
