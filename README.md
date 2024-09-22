@@ -32,6 +32,7 @@ columns 1
       JECTOR["Jector"]
       ART["Articular-ES"]
       JME["Jme-alloc"]
+      JSNAP["jSnapLoader"]
       AUTO["Automata4j"]
   end
   OS_Res["Base OS Resources and Std Libraries APIs (Networking and Software Infrastructure)"]
@@ -59,6 +60,7 @@ columns 1
       MEM_INS["Memory Inspection Utilities"]
       MEM_CTRL["Memory Control Utilities"]
       CRY["Cryptographic Utilities"]
+      DB["Base Databases"]
     end
   end
   MCU["Microcontroller Interfacing APIs"]
@@ -100,6 +102,10 @@ title The Electrostatic-Sandbox SDK Milestones
 > - [ ] Thread control utilities and interface.
 > - [ ] Sockets control utilities and interface.
 > - [ ] Process control utilities and interface.
+> - [ ] Logging Utilities.
+> - [ ] Memory Allocation Utilities.
+> - [ ] Memory Inspection Utilities.
+> - [ ] Memory Control Utilities.
 > - [ ] Crytographic utilities and interfaces.
 > - [ ] Base System Databases utilities and interfaces.
 
