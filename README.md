@@ -12,6 +12,61 @@ This electronic monstrosity features and leverages a powerful system-engineering
 
 _[Jump to the Electrobox Specification]()_
 
+## Provisional Software/Hardware Specification: 
+
+### Provisional Hardware/Software Abstraction Layer (HAL):
+
+### Current progress:
+
+### Project Milestones:
+
+```mermaid
+timeline
+    title The Electrostatic-Sandbox SDK Milestones
+    2024-2025 (Tight Period): Primer version 1.0.0 (v1.0.0-p1): Migration of supportive projects: Std Libraries: OS Resources Control
+    2025-2026 (Proof-of-concept Period): Intermediary period for testing and prototyping simulation projects
+    2025-2026 (Production Period): Stable version v1.0.0: Base IEEE-1516 HLA API and RTI integration for distributed simulation building
+    2026-.... (Open Period): Open period for: testing,: prototyping simulation projects,: communicating with contemplated teams,: and publications on JOSS
+```
+> [!IMPORTANT]
+> **Migration Milestones:**
+> - [x] Migrating Serial4j to the project.
+> - [ ] Migrating ShiftAvr to the project.
+> - [ ] Migrating jSnapLoader to the project.
+> - [ ] Migrating Automata4j to the project.
+> - [ ] Migrating Jector to the project.
+
+> [!IMPORTANT]
+> **Primer version 1.0.0 (v1.0.0-p1) _"The Base OS Resources Control APIs"_:**
+> - [ ] Low-level Abstract Data types (ADTs).
+> - [ ] Low-level popular text-manipulation algorithms.
+> - [ ] Low-level popular switching algebra algorithms.
+> - [ ] Low-level popular elementary algebra algorithms.
+> - [ ] Low-level popular transcendental algebra algorithms.
+> - [ ] Abstract filesystem utilities.
+> - [ ] Thread control utilities and interface.
+> - [ ] Sockets control utilities and interface.
+> - [ ] Process control utilities and interface.
+> - [ ] Crytographic utilities and interfaces.
+> - [ ] Base System Databases utilities and interfaces.
+
+**Stable version v1.0.0 _"The Base OS Resources Control APIs"_.**
+> ...
+
+**Stable version v2.0.0 _"The Base IEEE-1516 HLA API and RTI integration"_.**
+
+### Challenges:
+- Building the appropriate HAL on top of the low-level OS resources and communication protocols.
+- Handling security and network firewall dilemmas.
+- Recruiting developers for open-source sofware engineering.
+- Working in a multi-disciplinary environment of both software, hardware engineering perspectives and managing the interactions between them.
+
+### Major End-goals:
+- The capability to build a complete distributed system on top of a GNU/Linux in a sandboxed environment bearing in mind all the perspective of truely performant software (e.g., concurrency, security, reliability, failure handlers, ...etc).
+- Connecting to peripheral digital/analog devices via simulation interfaces in a sandboxed environment (Hardware/Software Co-design).
+- Simulating large Space Missions into small finite simulations (e.g., Rocket Launch, Rocket separation stages, Nose separation, Rocket Launch Abort, and Rocket Engine Failure).
+- Building in-home, office, and outdoor distributed IoT projects (e.g., Smart Homes, Smart Hospitals, Switch Control Military and Traffic control systems).
+
 ## General progress:
 **API used:**
 - [x] Serial4j.
