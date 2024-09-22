@@ -80,8 +80,9 @@ timeline
 title The Electrostatic-Sandbox SDK Milestones
 2024-2025 (Tight Period): Primer version 1.0.0 (v1.0.0-p1): Migration of supportive projects: Std Libraries: OS Resources Control
 2025-2026 (Proof-of-concept Period): Intermediary period for testing and prototyping simulation projects
-2025-2026 (Production Period): Stable version v1.0.0: Base IEEE-1516 HLA API and RTI integration for distributed simulation building
-2026-.... (Open Period): Open period for: testing,: prototyping simulation projects,: communicating with contemplated teams,: and publications on JOSS
+2025-2026 (Production Period): Software & Networking Infrastructure: Stable version v1.0.0
+2026-2028 (Production Period): Simulation Infrastructure: Base IEEE-1516 HLA API and RTI integration for distributed simulation building: Stable version v2.0.0
+2028-.... (Open Period): Open period for: testing,: prototyping simulation projects,: communicating with contemplated teams,: and publications on JOSS
 ```
 > [!IMPORTANT]
 > **Migration Milestones:**
