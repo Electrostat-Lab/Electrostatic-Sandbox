@@ -56,10 +56,14 @@ columns 1
       _OS_CONT["..."]
     end
   end
-  MCU["Microcontroller Interfacing APIs"]
+  block:ELECTROIO
+      _ELECTROIO["ElectroIO (formerly ShiftAvr)"]
+  end
+  MCU["Microcontrollers Toolchains Binaries"]
 
   style MIG fill:#999,stroke:#999
   style MIG_APIs fill:#999,stroke:#999
+  style ELECTROIO fill:#000,stroke:#999
 
   style OS fill:#969,stroke:#333
   style STD fill:#999,stroke:#333
@@ -115,10 +119,14 @@ columns 1
       DB["Base Databases"]
     end
   end
-  MCU["Microcontroller Interfacing APIs"]
+  block:ELECTROIO
+      _ELECTROIO["ElectroIO (formerly ShiftAvr)"]
+  end
+  MCU["Microcontrollers Toolchains Binaries"]
 
   style MIG fill:#999,stroke:#999
   style MIG_APIs fill:#999,stroke:#999
+  style ELECTROIO fill:#999,stroke:#999
 
   style OS fill:#969,stroke:#333
   style STD fill:#999,stroke:#333
@@ -130,8 +138,8 @@ columns 1
 ```mermaid
 timeline
 title The Electrostatic-Sandbox SDK Milestones
-2024-2025 (Tight Period): Primer version 1.0.0 (v1.0.0-p1): Migration of supportive projects: Std Libraries: OS Resources Control
-2025-2026 (Proof-of-concept Period): Intermediary period for testing and prototyping simulation projects
+2024-2025 (Tight Period): Primer version 1.0.0 (v1.0.0-p1): Migration of supportive projects: Std Libraries: OS Resources Control: ElectroIO (AVR)
+2025-2026 (Proof-of-concept Period): Intermediary period for testing and prototyping simulation projects: ElectroIO (PIC)
 2025-2026 (Production Period): Software & Networking Infrastructure: Stable version v1.0.0
 2026-2028 (Production Period): Simulation Infrastructure: Base IEEE-1516 HLA API and RTI integration for distributed simulation building: Stable version v2.0.0
 2028-.... (Open Period): Open period for: testing,: prototyping simulation projects,: communicating with contemplated teams,: and publications on JOSS
