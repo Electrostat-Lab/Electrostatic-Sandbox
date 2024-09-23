@@ -15,16 +15,19 @@
         <meta name="robots" content="follow, index" />
         <script src="{{ site.baseurl }}/website/polyfills-c67a75d1b6f99dc8.js" nomodule=""></script>
         <script src="{{ site.baseurl }}/website/web-controls.js" nomodule=""></script>
+        <script
+          type="text/javascript" id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3.0.0/es5/tex-mml-chtml.js">
+        </script>
+        <script type="module">
+          import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+        </script>
         <script>
           MathJax = {
             tex: {
               inlineMath: [['$', '$'], ['\\(', '\\)']]
             }
           };
-        </script>
-        <script
-          type="text/javascript" id="MathJax-script" async
-          src="https://cdn.jsdelivr.net/npm/mathjax@3.0.0/es5/tex-mml-chtml.js">
         </script>
     </head>
     <body class="loading">
