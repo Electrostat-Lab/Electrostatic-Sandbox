@@ -18,6 +18,58 @@ _[Jump to the Electrobox Specification](https://github.com/Electrostat-Lab/Elect
 
 The _HAL_ is a type of software hierarchial architectural design that provides generic Application Programming Interfaces for the system as abstractions with replaceable infrastructure. The _Infrastructure_ is decomposed into major bulky parts _Networking Infrastructure_, _Software Infrastructure_, and _Simulation Infrastructure (aka. IEEE-1516 HLA RTI)_. Each infrastructure is further decomposed into finer components that operate on a specific resource. _System Resources_ are either OS Resources, Hardware Resources, or Simulation Resources. Development phases are created by introducing a milestone, the milestone operates on one or more of the major bulky _infrastructures_ and brings decomposed features to the SDK gradually until the milestone is achieved.
 
+* Simplified Paradigm:
+
+```mermaid
+block-beta
+columns 1
+  block:IEEE
+    _IEEE["IEEE-1516 HLA (Simulation Infrastructure)"]
+  end
+  block:MIG
+    _MIG["Migrated APIs and Frameworks"]
+  end
+  block:MIG_APIs
+      SERIAL["Serial4j"]
+      JECTOR["Jector"]
+      ART["Articular-ES"]
+      JME["Jme-alloc"]
+      JSNAP["jSnapLoader"]
+      AUTO["Automata4j"]
+  end
+  OS_Res["Base OS Resources and Std Libraries APIs (Networking and Software Infrastructure)"]
+  block:TITLE
+    block:STD
+      Std["Std Libs"]
+    end
+    block:OS
+      OSRES["Base OS Resources"]
+    end
+  end
+  block:HAL
+    block:_STD
+      ADT["ADTs"]
+      _STD_CONT["..."]
+    end
+    block:_OS
+      FS["Abstract Filesystems"]
+      _OS_CONT["..."]
+    end
+  end
+  MCU["Microcontroller Interfacing APIs"]
+
+  style MIG fill:#999,stroke:#999
+  style MIG_APIs fill:#999,stroke:#999
+
+  style OS fill:#969,stroke:#333
+  style STD fill:#999,stroke:#333
+  style _OS fill:#969,stroke:#333
+  style _STD fill:#999,stroke:#333
+```
+
+
+* Detailed Architecture:
+
 ```mermaid
 block-beta
 columns 1
