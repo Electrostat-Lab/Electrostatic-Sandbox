@@ -138,8 +138,8 @@ columns 1
 ```mermaid
 timeline
 title The Electrostatic-Sandbox SDK Milestones
-2024-2025 (Tight Period): Primer version 1.0.0 (v1.0.0-p1): Migration of supportive projects: Std Libraries: OS Resources Control: ElectroIO (AVR)
-2025-2026 (Proof-of-concept Period): Intermediary period for testing and prototyping simulation projects: ElectroIO (PIC)
+2024-2025 (Tight Period): Primer version 1.0.0 (v1.0.0-p1): Migration of supportive projects: Std Libraries: OS Resources Control: ElectroIO (AVR Only)
+2025-2026 (Proof-of-concept Period): Intermediary period for testing and prototyping simulation projects: ElectroIO (PIC MCU. Integrations)
 2025-2026 (Production Period): Software & Networking Infrastructure: Stable version v1.0.0
 2026-2028 (Production Period): Simulation Infrastructure: Base IEEE-1516 HLA API and RTI integration for distributed simulation building: Stable version v2.0.0
 2028-.... (Open Period): Open period for: testing,: prototyping simulation projects,: communicating with contemplated teams,: and publications on JOSS
@@ -169,6 +169,7 @@ title The Electrostatic-Sandbox SDK Milestones
 > - [ ] Memory Control Utilities.
 > - [ ] Crytographic utilities and interfaces.
 > - [ ] Base System Databases utilities and interfaces.
+> - [ ] ElectroIO for AVR MCUs (formerly ShiftAvr).
 
 **Stable version v1.0.0 _"The Base OS Resources Control APIs"_.**
 > ...
