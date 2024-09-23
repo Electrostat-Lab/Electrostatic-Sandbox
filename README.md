@@ -26,6 +26,11 @@ columns 1
   block:IEEE
     _IEEE["IEEE-1516 HLA (Simulation Infrastructure)"]
   end
+  block:__IEEE
+    RTI_IEEE["IEEE-1516 RTI"]
+    FED_IEEE["RTI Federates"]
+    FOM_IEEE["FOM"]
+  end
   block:MIG
     _MIG["Migrated APIs and Frameworks"]
   end
@@ -37,7 +42,8 @@ columns 1
       JSNAP["jSnapLoader"]
       AUTO["Automata4j"]
   end
-  OS_Res["Base OS Resources and Std Libraries APIs (Networking and Software Infrastructure)"]
+  NETSOFT_INFRA["Networking and Software Infrastructure"]
+  OS_RES["Base OS Resources and Std Libraries APIs"]
   block:TITLE
     block:STD
       Std["Std Libs"]
@@ -56,14 +62,31 @@ columns 1
       _OS_CONT["..."]
     end
   end
+
+  block:INFRA
+      _INFRA["Hardware Infrastructure"]
+  end
   block:ELECTROIO
       _ELECTROIO["ElectroIO (formerly ShiftAvr)"]
   end
+  block:__ELECTROIO
+      GPIO["GPIO"]
+      UART["USART"]
+      ADC["ADC"]
+      CONT["..."]
+  end
   MCU["Microcontrollers Toolchains Binaries"]
+
+  style INFRA fill:#000,stroke:#999
+  style ELECTROIO fill:#000,stroke:#999
+  style __ELECTROIO fill:#000,stroke:#999
+  style MCU fill:#000,stroke:#999
 
   style MIG fill:#999,stroke:#999
   style MIG_APIs fill:#999,stroke:#999
-  style ELECTROIO fill:#000,stroke:#999
+
+  style NETSOFT_INFRA stroke:#333
+  style OS_RES stroke:#333
 
   style OS fill:#969,stroke:#333
   style STD fill:#999,stroke:#333
