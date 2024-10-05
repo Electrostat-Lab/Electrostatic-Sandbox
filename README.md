@@ -100,61 +100,98 @@ columns 1
 ```mermaid
 block-beta
 columns 1
-  block:IEEE
+block:IEEE
     _IEEE["IEEE-1516 HLA (Simulation Infrastructure)"]
-  end
-  block:MIG
-    _MIG["Migrated APIs and Frameworks"]
-  end
-  block:MIG_APIs
-      SERIAL["Serial4j"]
-      JECTOR["Jector"]
-      ART["Articular-ES"]
-      JME["Jme-alloc"]
-      JSNAP["jSnapLoader"]
-      AUTO["Automata4j"]
-  end
-  OS_Res["Base OS Resources and Std Libraries APIs (Networking and Software Infrastructure)"]
-  block:TITLE
-    block:STD
-      Std["Std Libs"]
-    end
-    block:OS
-      OSRES["Base OS Resources"]
-    end
-  end
-  block:HAL
-    block:_STD
-      ADT["ADTs"]
-      ALG["Algebra"]
-      ALGO["Algorithms"]
-    end
-    block:_OS
-      FS["Abstract Filesystems"]
-      TH["Thread Control Utilities"]
-      SCT["Sockets Control Utilities"]
-      PC["Processes Control Utilities"]
-      LOG["Logging Utilities"]
-      MEM["Memory Allocation Utilities"]
-      MEM_INS["Memory Inspection Utilities"]
-      MEM_CTRL["Memory Control Utilities"]
-      CRY["Cryptographic Utilities"]
-      DB["Base Databases"]
-    end
-  end
-  block:ELECTROIO
-      _ELECTROIO["ElectroIO (formerly ShiftAvr)"]
-  end
-  MCU["Microcontrollers Toolchains Binaries"]
+end
+block:__IEEE
+  RTI_IEEE["IEEE-1516 RTI"]
+  FED_IEEE["RTI Federates"]
+  FOM_IEEE["FOM"]
+end
+```
 
-  style MIG fill:#999,stroke:#999
-  style MIG_APIs fill:#999,stroke:#999
-  style ELECTROIO fill:#999,stroke:#999
+>...
 
-  style OS fill:#969,stroke:#333
-  style STD fill:#999,stroke:#333
-  style _OS fill:#969,stroke:#333
-  style _STD fill:#999,stroke:#333
+```mermaid
+block-beta
+columns 1
+block:MIG
+  _MIG["Migrated APIs and Frameworks"]
+end
+block:MIG_APIs
+    SERIAL["Serial4j"]
+    JECTOR["Jector"]
+    ART["Articular-ES"]
+    JME["Jme-alloc"]
+    JSNAP["jSnapLoader"]
+    AUTO["Automata4j"]
+end
+style MIG fill:#999,stroke:#999
+style MIG_APIs fill:#999,stroke:#999
+```
+
+> ...
+
+```mermaid
+block-beta
+columns 1
+NETSOFT_INFRA["Networking and Software Infrastructure"]
+OS_RES["Base OS Resources and Std Libraries APIs"]
+block:TITLE
+  block:STD
+    Std["Std Libs"]
+  end
+  block:OS
+    OSRES["Base OS Resources"]
+  end
+end
+block:HAL
+  block:_STD
+    ADT["ADTs"]
+    ELECTROMATHS["ElectroMaths"]
+    ELECTROAUTO["ElectroAuto"]
+    ELECTROJECTOR["ElectroJector"]
+    ELECTROART["ElectroArticular-ES"]
+    LOG["ElectroLogger"]
+  end
+  block:_OS
+    FS["Abstract Filesystems"]
+    SOCK["Sockets"]
+    PROC["Process Control"]
+    THR["Thread Control"]
+    MEM["Memory Control"]
+  end
+end
+style NETSOFT_INFRA stroke:#333
+style OS_RES stroke:#333
+```
+
+> ...
+
+```mermaid
+block-beta
+columns 1
+block:INFRA
+    _INFRA["Hardware Infrastructure"]
+end
+block:ELECTROIO
+    _ELECTROIO["ElectroIO (formerly ShiftAvr)"]
+end
+block:__ELECTROIO
+    GPIO["GPIO"]
+    UART["USART"]
+    ADC["ADC"]
+    EEPROM["EEPROM"]
+    TWI["TWI"]
+    SPI["SPI"]
+    SOCKET["WiFi-Sockets"]
+end
+MCU["Microcontrollers Toolchains Binaries"]
+
+style INFRA fill:#000,stroke:#999
+style ELECTROIO fill:#000,stroke:#999
+style __ELECTROIO fill:#000,stroke:#999
+style MCU fill:#000,stroke:#999
 ```
 ### Project Milestones:
 
