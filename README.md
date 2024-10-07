@@ -265,10 +265,10 @@ title The Electrostatic-Sandbox SDK Milestones
 > - [ ] Base System Databases utilities and interfaces.
 > - [ ] ElectroIO for AVR MCUs (formerly ShiftAvr).
 
-**Stable version v1.0.0 _"The Base OS Resources Control APIs"_.**
+**Stable version v1.0.0 _"The Base OS Resources Control APIs (The Mature ElectroNetSoft Project)"_.**
 > ...
 
-**Stable version v2.0.0 _"The Base IEEE-1516 HLA API and RTI integration"_.**
+**Stable version v2.0.0 _"The Base IEEE-1516 HLA API and RTI integration (Project ElectroSim)"_.**
 
 ### Challenges:
 - Building the appropriate HAL on top of the low-level OS resources and communication protocols.
