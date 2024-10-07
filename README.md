@@ -16,7 +16,7 @@ _[Jump to the Electrobox Specification](https://github.com/Electrostat-Lab/Elect
 
 ### Provisional Hardware/Software Abstraction Layer (HAL):
 
-The _HAL_ is a type of software hierarchial architectural design that provides generic Application Programming Interfaces for the system as abstractions with replaceable infrastructure. The _Infrastructure_ is decomposed into major bulky parts _Networking Infrastructure_, _Software Infrastructure_, and _Simulation Infrastructure (aka. IEEE-1516 HLA RTI)_. Each infrastructure is further decomposed into finer components that operate on a specific resource. _System Resources_ are either OS Resources, Hardware Resources, or Simulation Resources. Development phases are created by introducing a milestone, the milestone operates on one or more of the major bulky _infrastructures_ and brings decomposed features to the SDK gradually until the milestone is achieved.
+The _HAL_ is a type of software hierarchial architectural design that provides generic Application Programming Interfaces for the system as abstractions with replaceable infrastructure. The _Infrastructure_ is decomposed into major bulky parts _Networking Infrastructure_, _Software Infrastructure_, and _Simulation Infrastructure (aka. IEEE-1516 HLA RTI)_. Each infrastructure is further decomposed into finer components that operate on specific resources. _System Resources_ are either OS Resources, Hardware Resources, or Simulation Resources. Development phases are created by introducing a milestone, the milestone operates on one or more of the major bulky _infrastructures_ and brings decomposed features to the SDK gradually until the milestone is achieved.
 
 * Simplified Paradigm:
 
