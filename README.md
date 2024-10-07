@@ -24,7 +24,7 @@ The _HAL_ is a type of software hierarchial architectural design that provides g
 block-beta
 columns 1
   block:IEEE
-    _IEEE["IEEE-1516 HLA (Simulation Infrastructure)"]
+    _IEEE["Simulation Infrastructure (ElectroSim Project)"]
   end
   block:__IEEE
     RTI_IEEE["IEEE-1516 RTI"]
@@ -42,7 +42,7 @@ columns 1
       JSNAP["jSnapLoader"]
       AUTO["Automata4j"]
   end
-  NETSOFT_INFRA["Networking and Software Infrastructure"]
+  NETSOFT_INFRA["Networking and Software Infrastructure (ElectroNetSoft Project)"]
   OS_RES["Base OS Resources and Std Libraries APIs"]
   block:TITLE
     block:STD
@@ -64,23 +64,39 @@ columns 1
   end
 
   block:INFRA
-      _INFRA["Hardware Infrastructure"]
+      _INFRA["Hardware Infrastructure (ElectroIO Project)"]
   end
-  block:ELECTROIO
-      _ELECTROIO["ElectroIO (formerly ShiftAvr)"]
+  block:ELECTROMIO
+      _ELECTROMIO["ElectroMIO (formerly ShiftAvr)"]
   end
-  block:__ELECTROIO
+  block:__ELECTROMIO
       GPIO["GPIO"]
       UART["USART"]
       ADC["ADC"]
-      CONT["..."]
+      MCONT["..."]
   end
   MCU["Microcontrollers Toolchains Binaries"]
 
+  block:ELECTROKIO
+      _ELECTROKIO["ElectroKIO"]
+  end
+
+  block:__ELECTROKIO
+      USB["USB-FS"]
+      RS232["RS232"]
+      PARA["IEEE-1284"]
+      KCONT["..."]
+  end
+  KIO["Linux Kernel userspace APIs"]
+
   style INFRA fill:#000,stroke:#999
-  style ELECTROIO fill:#000,stroke:#999
-  style __ELECTROIO fill:#000,stroke:#999
+  style ELECTROMIO fill:#000,stroke:#999
+  style __ELECTROMIO fill:#000,stroke:#999
   style MCU fill:#000,stroke:#999
+
+  style ELECTROKIO fill:#000,stroke:#999
+  style __ELECTROKIO fill:#000,stroke:#999
+  style KIO fill:#000,stroke:#999
 
   style MIG fill:#999,stroke:#999
   style MIG_APIs fill:#999,stroke:#999
@@ -101,7 +117,7 @@ columns 1
 block-beta
 columns 1
 block:IEEE
-    _IEEE["IEEE-1516 HLA (Simulation Infrastructure)"]
+    _IEEE["Simulation Infrastructure (ElectroSim Project)"]
 end
 block:__IEEE
   RTI_IEEE["IEEE-1516 RTI"]
@@ -135,7 +151,7 @@ style MIG_APIs fill:#999,stroke:#999
 ```mermaid
 block-beta
 columns 1
-NETSOFT_INFRA["Networking and Software Infrastructure"]
+NETSOFT_INFRA["Networking and Software Infrastructure (ElectroNetSoft Project)"]
 OS_RES["Base OS Resources and Std Libraries APIs"]
 block:TITLE
   block:STD
@@ -172,36 +188,53 @@ style OS_RES stroke:#333
 block-beta
 columns 1
 block:INFRA
-    _INFRA["Hardware Infrastructure"]
+    _INFRA["Hardware Infrastructure (ElectroIO Project)"]
 end
-block:ELECTROIO
-    _ELECTROIO["ElectroIO (formerly ShiftAvr)"]
+block:ELECTROMIO
+    _ELECTROMIO["ElectroMIO (formerly ShiftAvr)"]
 end
-block:__ELECTROIO
-    GPIO["GPIO"]
-    UART["USART"]
-    ADC["ADC"]
-    EEPROM["EEPROM"]
-    TWI["TWI"]
-    SPI["SPI"]
-    SOCKET["WiFi-Sockets"]
+block:__ELECTROMIO
+  GPIO["GPIO"]
+  UART["USART"]
+  ADC["ADC"]
+  EEPROM["EEPROM"]
+  TWI["TWI"]
+  SPI["SPI"]
+  SOCKET["WiFi-Sockets"]
 end
 MCU["Microcontrollers Toolchains Binaries"]
 
+block:ELECTROKIO
+    _ELECTROKIO["ElectroKIO"]
+end
+
+block:__ELECTROKIO
+    USB["USB-FS"]
+    RS232["RS232"]
+    PARA["IEEE-1284"]
+    CD["DVD-CDROM"]
+    PCI["PCI-e"]
+end
+KIO["Linux Kernel userspace APIs"]
+
 style INFRA fill:#000,stroke:#999
-style ELECTROIO fill:#000,stroke:#999
-style __ELECTROIO fill:#000,stroke:#999
+style ELECTROMIO fill:#000,stroke:#999
+style __ELECTROMIO fill:#000,stroke:#999
 style MCU fill:#000,stroke:#999
+
+style ELECTROKIO fill:#000,stroke:#999
+style __ELECTROKIO fill:#000,stroke:#999
+style KIO fill:#000,stroke:#999
 ```
 ### Project Milestones:
 
 ```mermaid
 timeline
 title The Electrostatic-Sandbox SDK Milestones
-2024-2025 (Tight Period): Primer version 1.0.0 (v1.0.0-p1): Migration of supportive projects: Std Libraries: OS Resources Control: ElectroIO (AVR Only)
+2024-2025 (Tight Period): Primer version 1.0.0 (v1.0.0-p1): Migration of the supportive projects: ElectroNetSoft (Std Libraries - OS Resources Control): ElectroIO (AVR Only)
 2025-2026 (Proof-of-concept Period): Intermediary period for testing and prototyping simulation projects: ElectroIO (PIC MCU. Integrations)
-2025-2026 (Production Period): Software & Networking Infrastructure: Stable version v1.0.0
-2026-2028 (Production Period): Simulation Infrastructure: Base IEEE-1516 HLA API and RTI integration for distributed simulation building: Stable version v2.0.0
+2025-2026 (Production Period): Software & Networking Infrastructure (Mature ElectroNetSoft): Stable version v1.0.0
+2026-2028 (Production Period): Simulation Infrastructure: Base IEEE-1516 HLA API and RTI integration for distributed simulation building (ElectroSim Project): Stable version v2.0.0
 2028-.... (Open Period): Open period for: testing,: prototyping simulation projects,: communicating with contemplated teams,: and publications on JOSS
 ```
 > [!IMPORTANT]
@@ -213,7 +246,7 @@ title The Electrostatic-Sandbox SDK Milestones
 > - [ ] Migrating Jector to the project.
 
 > [!IMPORTANT]
-> **Primer version 1.0.0 (v1.0.0-p1) _"The Base OS Resources Control APIs"_:**
+> **Primer version 1.0.0 (v1.0.0-p1) _"ElectroNetSoft Project & ElectroIO Project"_:**
 > - [ ] Low-level Abstract Data types (ADTs).
 > - [ ] Low-level popular text-manipulation algorithms.
 > - [ ] Low-level popular switching algebra algorithms.
