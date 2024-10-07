@@ -282,6 +282,9 @@ title The Electrostatic-Sandbox SDK Milestones
 - Simulating large Space Missions into small finite simulations (e.g., Rocket Launch, Rocket separation stages, Nose separation, Rocket Launch Abort, and Rocket Engine Failure).
 - Building in-home, office, and outdoor distributed IoT projects (e.g., Smart Homes, Smart Hospitals, Switch Control Military and Traffic control systems).
 
+### Board Overview (Migrated Projects Dismissed):
+![HAL-Electrostatic](https://github.com/Electrostat-Lab/Electrostatic-Sandbox/blob/master/assets/HAL-Electrostatic.jpeg)
+
 ## General progress:
 **API used:**
 - [x] Serial4j.
