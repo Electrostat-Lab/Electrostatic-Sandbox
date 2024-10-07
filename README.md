@@ -212,6 +212,7 @@ block:__ELECTROKIO
     USB["USB-FS"]
     RS232["RS232"]
     PARA["IEEE-1284"]
+    ETH["IEEE-802.3"]
     CD["DVD-CDROM"]
     PCI["PCI-e"]
 end
