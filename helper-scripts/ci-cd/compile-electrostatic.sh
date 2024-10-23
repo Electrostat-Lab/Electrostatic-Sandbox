@@ -4,3 +4,5 @@ PRIMER="${1}"
 
 ./helper-scripts/project-impl/compile-all.sh "${PRIMER}"
 ./helper-scripts/project-impl/compile-all-android.sh "${PRIMER}"
+
+./helper-scripts/project-impl/compile-all-mcu.sh "${PRIMER}"
