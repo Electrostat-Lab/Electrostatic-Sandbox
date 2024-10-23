@@ -14,6 +14,7 @@ setup_gradle_script="${root_path}/setup-environment/setup-scripts/tools/setup-gr
 setup_cmake_script="${root_path}/setup-environment/setup-scripts/tools/setup-cmake.sh"
 setup_avrdude_script="${root_path}/setup-environment/setup-scripts/tools/setup-avrdude.sh"
 setup_android_ndk_script="${root_path}/setup-environment/setup-scripts/tools/setup-android-ndk.sh"
+setup_avr_toolchains_script="${root_path}/setup-environment/setup-scripts/tools/setup-avr-toolchains.sh"
 download_dir="${HOME}/Downloads"
 
 ##
@@ -65,6 +66,18 @@ clang_symbol="${local_bin}/android-clang"
 clangpp_symbol="${local_bin}/android-clang++"
 android_ndk_headers="${local_include}/android-ndk-headers"
 ndk_provisional_path="${download_dir}/${ndk_zip_name}"
+
+##
+# Avr toolchains
+##
+avr_url="https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SoftwareTools/avr8-gnu-toolchain-3.7.0.1796-linux.any.x86_64.tar.gz"
+avr_zip_name="avr8-gnu-toolchain-3.7.0.1796-linux.any.x86_64.tar.gz"
+avr_zip_content="avr8-gnu-toolchain-linux_x86_64"
+avrgcc_symbol="${local_bin}/avr-gcc"
+avrgpp_symbol="${local_bin}/avr-g++"
+avrobjcopy_symbol="${local_bin}/avr-objcopy"
+avrheaders_symbol="${local_bin}/avr-headers"
+avr_provisional_path="${download_dir}/${avr_zip_name}"
 
 ##
 # AVRDude
