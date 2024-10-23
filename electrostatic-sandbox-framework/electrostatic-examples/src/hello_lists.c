@@ -1,9 +1,9 @@
-#include <electrostatic/util/errno/errno.h>
+#include <electrostatic/electronetsoft/util/errno/errno.h>
 #include <alloca.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <electrostatic/algorithm/arithmos/adt/list.h>
+#include <electrostatic/electronetsoft/algorithm/arithmos/adt/list.h>
 
 void iterator(list *buffer, list_element *element) {
     uint64_t index = 0;

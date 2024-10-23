@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <electrostatic/comm/comm.h>
+#include <electrostatic/electronetsoft/comm/comm.h>
 
 comm_protocol serial;
 comm_protocol parallel;

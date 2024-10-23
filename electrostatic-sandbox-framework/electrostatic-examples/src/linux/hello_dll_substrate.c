@@ -1,5 +1,5 @@
-#include <electrostatic/util/loader/dll_loader.h>
-#include <electrostatic/util/console/colors.h>
+#include <electrostatic/electronetsoft/util/loader/dll_loader.h>
+#include <electrostatic/electronetsoft/util/console/colors.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <gnu/lib-names.h>

@@ -1,6 +1,6 @@
-#include <electrostatic/algorithm/arithmos/adt/list.h>
-#include <electrostatic/util/unit-testing/unit_test.h>
-#include <electrostatic/util/console/colors.h>
+#include <electrostatic/electronetsoft/algorithm/arithmos/adt/list.h>
+#include <electrostatic/electronetsoft/util/unit-testing/unit_test.h>
+#include <electrostatic/electronetsoft/util/console/colors.h>
 #include <errno.h>
 #include <stdio.h>
 
@@ -34,7 +34,7 @@ int main() {
     .type = CONTIGUOUS_BUFFER,
     .function_table = &table,
     .limit = 8 << 2
-};
+    };
     
     // dynamically heap-allocate block for pointers
     list_element **elements = calloc(buffer.limit, sizeof(list_element**));
