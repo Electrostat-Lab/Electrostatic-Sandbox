@@ -9,9 +9,5 @@ executable_suffix="${2}"
     "${example}" "${executable_suffix}" "linux" "${x86_64}" "OFF"
 #./helper-scripts/project-impl/compile-examples.sh "${TARGET_x86}" "${example}" "linux" "${x86}"
 
-cd "${project_root}/${electrostatic_sandbox}" || exit
-
-./electrostatic-examples/build/linux/x86-64/techdemo-${executable_suffix}.elf
+./electrostatic-sandbox-framework/electrostatic-examples/build/linux/x86-64/techdemo-${executable_suffix}-a.elf
 #./electrostatic-examples/build/linux/x86/${example}.elf
-
-cd "${project_root}" || exit
