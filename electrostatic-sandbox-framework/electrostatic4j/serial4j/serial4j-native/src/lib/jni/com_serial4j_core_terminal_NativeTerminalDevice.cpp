@@ -36,7 +36,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include<jni/com_serial4j_core_terminal_NativeTerminalDevice.h>
-#include<electrostatic/util/filesystem/file_verify.h>
+#include<electrostatic/electronetsoft/util/filesystem/file_verify.h>
 #include<errno.h>
 #include<linux/TerminalDevice.h>
 #include<linux/ModemController.h>

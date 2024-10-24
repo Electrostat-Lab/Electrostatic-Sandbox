@@ -18,11 +18,11 @@ chmod +rwx ./gradlew
 echo -e "${ORANGE_C} Compiling serial4j-native"
 
 ./helper-scripts/project-impl/compile-electrostatic4j.sh \
-       "electrostatic4j/serial4j/serial4j-native" "serial4j" "${GCC_BIN_x86}" "${GPP_BIN_x86}" "${TOOLCHAIN_INCLUDES_x86}" \
+       "electrostatic4j/serial4j/serial4j-native" "serial4j" "${GCC_BIN_x86}" "${GPP_BIN_x86}" "ON" "${TOOLCHAIN_INCLUDES_x86}" \
         "${JAVA_HOME}" "${TARGET_x86_64}" "linux" "${x86_64}"
 
 ./helper-scripts/project-impl/compile-electrostatic4j.sh \
-       "electrostatic4j/serial4j/serial4j-native" "serial4j" "${GCC_BIN_x86}" "${GPP_BIN_x86}" "${TOOLCHAIN_INCLUDES_x86}" \
+       "electrostatic4j/serial4j/serial4j-native" "serial4j" "${GCC_BIN_x86}" "${GPP_BIN_x86}" "ON" "${TOOLCHAIN_INCLUDES_x86}" \
         "${JAVA_HOME}" "${TARGET_x86}" "linux" "${x86}"
 
 echo -e "${ORANGE_C} Bundling serial4j-native"

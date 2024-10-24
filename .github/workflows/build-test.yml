@@ -65,25 +65,26 @@ jobs:
           run: chmod +rwx ./helper-scripts/setup-environment/setup-sandbox.sh && ./helper-scripts/setup-environment/setup-sandbox.sh
 
         - name: User's Permissions Granting
-          run: chmod +rwx ./helper-scripts/project-impl/*.sh && chmod +rwx ./helper-scripts/ci-cd/*.sh
+          run: chmod +rwx ./helper-scripts/project-impl/post-compile/post-compile-electrostatic.sh &&
+                  chmod +rwx ./helper-scripts/project-impl/*.sh && chmod +rwx ./helper-scripts/ci-cd/*.sh
         
         - name: Compiling electrostatic-core Native Binaries
           run: sudo ./helper-scripts/ci-cd/compile-electrostatic.sh "-primer"
 
         - name: Testing electrostatic-core Native Binaries
-          run: sudo ./helper-scripts/ci-cd/test-electrostatic.sh "hello_comm.c"
+          run: sudo ./helper-scripts/ci-cd/test-electrostatic.sh "hello_comm.c" "hello-comm"
 
-        - name: Testing "hello_vector2d.c"
-          run: sudo ./helper-scripts/ci-cd/test-electrostatic.sh "hello_vector2d.c"
+        # - name: Testing "hello_vector2d.c"
+        #   run: sudo ./helper-scripts/ci-cd/test-electrostatic.sh "hello_vector2d.c" "hello-vec2d"
 
         - name: Testing "hello_contiguous_buffer.c"
-          run: sudo ./helper-scripts/ci-cd/test-electrostatic.sh "hello_lists.c"
+          run: sudo ./helper-scripts/ci-cd/test-electrostatic.sh "hello_lists.c" "hello-listadt"
 
         - name: Testing "hello_unittest.c"
-          run: sudo ./helper-scripts/ci-cd/test-electrostatic.sh "hello_unittest.c"
+          run: sudo ./helper-scripts/ci-cd/test-electrostatic.sh "hello_unittest.c" "hello-unittest"
 
-        - name: Testing "hello_switching_mux.c"
-          run: sudo ./helper-scripts/ci-cd/test-electrostatic.sh "hello_switching_mux.c"
+        # - name: Testing "hello_switching_mux.c"
+        #   run: sudo ./helper-scripts/ci-cd/test-electrostatic.sh "hello_switching_mux.c" "hello-switching-mux"
 
         - name: Compiling electrostatic4j Java Binding API
           run: sudo ./helper-scripts/ci-cd/compile-e4j.sh

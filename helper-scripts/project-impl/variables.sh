@@ -13,7 +13,7 @@ GPP_BIN_x86="g++"
 TOOLCHAIN_INCLUDES_x86="/usr/local/include/posix-headers"
 JAVA_HOME="/opt/electrostatic-sandbox/jdk-20.0.2"
 JNI_HEADERS="${JAVA_HOME}/include"
-INPUT_COMPILER_OPTIONS="-fPIC -O2"
+INPUT_COMPILER_OPTIONS="-O2"
 
 # specify android triples
 minSDKVersion="21"
@@ -27,6 +27,10 @@ CLANG_BIN="android-clang"
 CLANGPP_BIN="android-clang++"
 NDK_TOOLCHAIN_INCLUDES="android-ndk-headers"
 
+AVR_GCC_BIN="avr-gcc"
+AVR_GPP_BIN="avr-g++"
+AVR_TOOLCHAIN_INCLUDES="avr-headers"
+
 # supported targets for intel chipsets
 x86="x86"
 x86_64="x86-64"
@@ -39,3 +43,9 @@ examples_dir="electrostatic-examples"
 
 e4j_dir="electrostatic4j/electrostatic4j-native"
 serial4j_dir="electrostatic4j/serial4j"
+
+# AVR-DUDE properties
+BAUD_RATE='57600'
+PORT='/dev/ttyUSB0'
+CHIP_ALIAS='m328p'
+PROGRAMMER='arduino'

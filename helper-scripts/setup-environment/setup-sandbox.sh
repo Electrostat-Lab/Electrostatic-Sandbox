@@ -9,6 +9,7 @@ source "${setup_cmake_script}"
 source "${setup_avrdude_script}"
 source "${setup_arduinoide_script}"
 source "${setup_android_ndk_script}"
+source "${setup_avr_toolchains_script}"
 
 ##
 # Prepare the sandbox workspace
@@ -45,6 +46,13 @@ cleanup_cmake
 download_avrdude
 extract_avrdude
 cleanup_avrdude
+
+##
+# Setup AVRDude
+###
+download_avr
+extract_avr
+cleanup_avr
 
 ###
 ## Setup arduino-ide

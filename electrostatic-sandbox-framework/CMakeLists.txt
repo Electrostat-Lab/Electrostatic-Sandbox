@@ -10,6 +10,7 @@ message(STATUS "Project: electrostatic-sandbox")
 message(STATUS "Current Library in-comission: ${COMMISSION_LIB}")
 message(STATUS "GCC: ${GCC_BIN}")
 message(STATUS "GPP: ${GPP_BIN}")
+message(STATUS "Build Shared Library: ${BUILD_SHARED}")
 message(STATUS "Compiler Options: ${INPUT_COMPILER_OPTIONS}")
 message(STATUS "Target architecture: ${TARGET}")
 message(STATUS "Toolchain Headers: ${TOOLCHAIN_HEADERS}")
@@ -36,19 +37,23 @@ set(libelectrostatic "${PROJECT_SOURCES}")
 
 # add a library target
 add_library(${library_a} STATIC ${libelectrostatic})
-add_library(${library_so} SHARED ${libelectrostatic})
 
 # set both COMPILE_FLAGS and LINK_FLAGS to the specified binary architecture
 set_target_properties(${library_a} PROPERTIES COMPILE_FLAGS "${COMPILER_OPTIONS}" LINK_FLAGS "${COMPILER_OPTIONS}")
-set_target_properties(${library_so} PROPERTIES COMPILE_FLAGS "${COMPILER_OPTIONS}" LINK_FLAGS "${COMPILER_OPTIONS}")
 
 # include headers for the target
 target_include_directories(${library_a} PUBLIC ${headers})
-target_include_directories(${library_so} PUBLIC ${headers})
 
 target_link_libraries(${library_a} PUBLIC "${DEPENDENCIES}")
-target_link_libraries(${library_so} PUBLIC "${DEPENDENCIES}")
 
 # Start building the target
 target_sources(${library_a} PUBLIC ${libelectrostatic})
-target_sources(${library_so} PUBLIC ${libelectrostatic})
+
+# build a shared library version
+if (BUILD_SHARED)
+    add_library(${library_so} SHARED ${libelectrostatic})
+    set_target_properties(${library_so} PROPERTIES COMPILE_FLAGS "${COMPILER_OPTIONS}" LINK_FLAGS "${COMPILER_OPTIONS}")
+    target_include_directories(${library_so} PUBLIC ${headers})
+    target_link_libraries(${library_so} PUBLIC "${DEPENDENCIES}")
+    target_sources(${library_so} PUBLIC ${libelectrostatic})
+endif()

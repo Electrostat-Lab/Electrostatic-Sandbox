@@ -4,7 +4,7 @@
  * @copyright BSD-3 Clause Arithmos, The Electrostatic-Sandbox Distributed Simulation Framework.
  */
 #include <stdio.h>
-#include <electrostatic/algorithm/arithmos/vectorspaces/vector2d/vector2d.h>
+#include <electrostatic/electronetsoft/algorithm/arithmos/vectorspaces/vector2d/vector2d.h>
 
 vector2d vec0 = {
     4,

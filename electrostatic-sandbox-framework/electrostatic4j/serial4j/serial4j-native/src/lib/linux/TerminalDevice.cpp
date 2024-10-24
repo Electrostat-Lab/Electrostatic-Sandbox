@@ -1,5 +1,5 @@
 #include <linux/TerminalDevice.h>
-#include <electrostatic/util/filesystem/file_verify.h>
+#include <electrostatic/electronetsoft/util/filesystem/file_verify.h>
 
 void TerminalDevice::getTermiosFromFd(struct termios* tty) {
     if (this->serialPort == NULL || this->serialPort->fd <= 0
