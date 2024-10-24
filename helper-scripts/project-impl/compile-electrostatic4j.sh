@@ -12,11 +12,12 @@ project_dir="${1}"
 commission_lib="${2}"
 GCC_BIN="${3}"
 GPP_BIN="${4}"
-TOOLCHAIN_HEADERS="${5}"
-java_home="${6}"
-target="${7}"
-system_dir="${8}"
-build_dir="${9}"
+BUILD_SHARED="${5}"
+TOOLCHAIN_HEADERS="${6}"
+java_home="${7}"
+target="${8}"
+system_dir="${9}"
+build_dir="${10}"
 
 echo "${build_dir}"
 
@@ -28,9 +29,9 @@ getCurrentSystem
 
 JNI_HEADERS_SYSTEM="${JNI_HEADERS}/${system}"
 
-compile "${commission_lib}" "${GCC_BIN}" "${GPP_BIN}" "${INPUT_COMPILER_OPTIONS}" \
+compile "${commission_lib}" "${GCC_BIN}" "${GPP_BIN}" "${BUILD_SHARED}" "${INPUT_COMPILER_OPTIONS}" \
         "${target}" "${TOOLCHAIN_HEADERS};${JNI_HEADERS};${JNI_HEADERS_SYSTEM}" "${system_dir}/${build_dir}"  \
-        "." "${project_dir}" "${sources}" "${dependencies}"
+        "." "${project_dir}" "${sources}" "${dependencies};m;pthread;dl"
 
 moveFile "${project_dir}/cmake-build/${system_dir}/${build_dir}/lib${commission_lib}.so" \
          "${project_dir}/build/lib/${system_dir}/${build_dir}/"
