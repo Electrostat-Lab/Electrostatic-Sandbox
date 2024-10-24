@@ -5,6 +5,7 @@
 
 # Ignore Gradle/CMake build output directory
 build
+docs/doxygen
 cmake-build
 dependencies
 electrostatic4j-examples/libs
