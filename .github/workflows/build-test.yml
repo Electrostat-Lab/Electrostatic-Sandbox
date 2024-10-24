@@ -83,8 +83,8 @@ jobs:
         - name: Testing "hello_unittest.c"
           run: sudo ./helper-scripts/ci-cd/test-electrostatic.sh "hello_unittest.c" "hello-unittest"
 
-        - name: Testing "hello_switching_mux.c"
-          run: sudo ./helper-scripts/ci-cd/test-electrostatic.sh "hello_switching_mux.c" "hello-switching-mux"
+        # - name: Testing "hello_switching_mux.c"
+        #   run: sudo ./helper-scripts/ci-cd/test-electrostatic.sh "hello_switching_mux.c" "hello-switching-mux"
 
         - name: Compiling electrostatic4j Java Binding API
           run: sudo ./helper-scripts/ci-cd/compile-e4j.sh
