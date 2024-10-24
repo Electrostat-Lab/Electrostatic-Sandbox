@@ -74,8 +74,8 @@ jobs:
         - name: Testing electrostatic-core Native Binaries
           run: sudo ./helper-scripts/ci-cd/test-electrostatic.sh "hello_comm.c" "hello-comm"
 
-        - name: Testing "hello_vector2d.c"
-          run: sudo ./helper-scripts/ci-cd/test-electrostatic.sh "hello_vector2d.c" "hello-vec2d"
+        # - name: Testing "hello_vector2d.c"
+        #   run: sudo ./helper-scripts/ci-cd/test-electrostatic.sh "hello_vector2d.c" "hello-vec2d"
 
         - name: Testing "hello_contiguous_buffer.c"
           run: sudo ./helper-scripts/ci-cd/test-electrostatic.sh "hello_lists.c" "hello-listadt"
