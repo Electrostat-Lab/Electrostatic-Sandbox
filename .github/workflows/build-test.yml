@@ -47,21 +47,6 @@ jobs:
 #
 #        - name: Building electrostatic4j:serial4j
 #          run: ./helper-scripts/ci-cd/compile-serial4j.sh
-    setup-sandbox:
-      # runner images with architectures (variants)
-      runs-on: ${{ matrix.os }}
-      strategy:
-        matrix:
-          os: [ 'ubuntu-latest' ]
-      name: Setup sandbox tools
-      steps:
-        - name: Checkout Job
-          uses: actions/checkout@v3
-
-        - name: Setup Electrostatic-Sandbox Workstation
-          run: chmod +rwx ./helper-scripts/setup-environment/setup-sandbox.sh && ./helper-scripts/setup-environment/setup-sandbox.sh
-
-      
     build-electrostatic-primer:
       # runner images with architectures (variants)
       runs-on: ${{ matrix.os }}
@@ -73,6 +58,11 @@ jobs:
 
       # Steps represent a sequence of tasks that will be executed as part of the job
       steps:
+        - name: Checkout Job
+          uses: actions/checkout@v3
+
+        - name: Setup Electrostatic-Sandbox Workstation
+          run: chmod +rwx ./helper-scripts/setup-environment/setup-sandbox.sh && ./helper-scripts/setup-environment/setup-sandbox.sh
 
         - name: User's Permissions Granting
           run: chmod +rwx ./helper-scripts/project-impl/post-compile/post-compile-electrostatic.sh &&
@@ -104,33 +94,3 @@ jobs:
 
         - name: Building Serial4j Framework
           run: sudo ./helper-scripts/ci-cd/compile-serial4j.sh
-  
-    build-page:
-      runs-on: ubuntu-latest
-      needs: setup-sandbox
-      steps:
-        - name: Generate Documentation
-          run: chmod +rwx ./helper-scripts/project-impl/generate-docs.sh && 
-                          ./helper-scripts/project-impl/generate-docs.sh
-    
-        - name: Setup Pages
-          uses: actions/configure-pages@v5
-        - name: Build with Jekyll
-          uses: actions/jekyll-build-pages@v1
-          with:
-            source: ./
-            destination: ./_site
-        - name: Upload artifact
-          uses: actions/upload-pages-artifact@v3
-    
-    # Deployment job
-    deploy:
-      environment:
-        name: github-pages
-        url: ${{ steps.deployment.outputs.page_url }}
-      runs-on: ubuntu-latest
-      needs: build-page
-      steps:
-        - name: Deploy to GitHub Pages
-          id: deployment
-          uses: actions/deploy-pages@v4

@@ -10,7 +10,6 @@ source "${setup_avrdude_script}"
 source "${setup_arduinoide_script}"
 source "${setup_android_ndk_script}"
 source "${setup_avr_toolchains_script}"
-source "${setup_doxygen_script}"
 
 ##
 # Prepare the sandbox workspace
@@ -68,14 +67,6 @@ cleanup_avr
 download_ndk
 extract_ndk
 cleanup_ndk
-
-##
-# Doxygen
-##
-install_doxygen_dependencies
-download_doxygen
-extract_doxygen
-cleanup_doxygen
 
 ##
 # Setup Jetbrains IDE

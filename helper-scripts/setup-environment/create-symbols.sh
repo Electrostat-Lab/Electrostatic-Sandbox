@@ -10,7 +10,6 @@ source "${setup_avrdude_script}"
 source "${setup_arduinoide_script}"
 source "${setup_android_ndk_script}"
 source "${setup_avr_toolchains_script}"
-source "${setup_doxygen_script}"
 
 create_java_symbol
 setup_java_home
@@ -28,7 +27,6 @@ create_avr_headers_symbol
 create_clang_symbols
 create_ndk_headers_symbol
 
-create_doxygen_symbol
 
 all_symbols_manual="============================== \n
         		    Symbolic Links: \n
@@ -42,7 +40,6 @@ all_symbols_manual="============================== \n
                     $(android-clang --version) \n
                     $(android-clang++ --version) \n
                     $(android-ndk-headers) \n
-                    $(doxygen-1.12.0 -v) \n
                     =============================="
 
 echo -e "${all_symbols_manual}"
