@@ -15,6 +15,7 @@ setup_cmake_script="${root_path}/setup-environment/setup-scripts/tools/setup-cma
 setup_avrdude_script="${root_path}/setup-environment/setup-scripts/tools/setup-avrdude.sh"
 setup_android_ndk_script="${root_path}/setup-environment/setup-scripts/tools/setup-android-ndk.sh"
 setup_avr_toolchains_script="${root_path}/setup-environment/setup-scripts/tools/setup-avr-toolchains.sh"
+setup_doxygen_script="${root_path}/setup-environment/setup-scripts/tools/setup-doxygen.sh"
 download_dir="${HOME}/Downloads"
 
 ##
@@ -87,6 +88,17 @@ avrdude_zip_name="avrdude-v7.3-linux_x64.zip"
 avrdude_zip_content="avrdude_linux_x64"
 avrdude_symbol="${local_bin}/avrdude"
 avrdude_provisional_path="${download_dir}/${avrdude_zip_name}"
+
+
+##
+# Doxygen
+##
+doxygen_url="https://github.com/doxygen/doxygen/releases/download/Release_1_12_0/doxygen-1.12.0.linux.bin.tar.gz"
+doxygen_tar_name="doxygen-1.12.0.linux.bin.tar.gz"
+doxygen_tar_content="doxygen-1.12.0"
+doxygen_symbol="${local_bin}/doxygen-1.12.0"
+doxygen_provisional_path="${download_dir}/${doxygen_tar_name}"
+
 
 ##
 # Arduino-ide
