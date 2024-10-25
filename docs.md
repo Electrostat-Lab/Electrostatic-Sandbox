@@ -3,9 +3,9 @@
 The following page lists the documentation manuals provided by the _Electrostatic Sandbox Project_ in the context of embedded systems testing, simulation, and design.
 
 ## The Electrostatic-Sandbox SDK codebase documentation:
-- [Electrostatic-Sandbox SDK Main page](https://electrostat-lab.github.io/Electrostatic-Sandbox/electrostatic-sandbox-framework/docs/doxygen/html/index.html)
-- [Project: Electronetsoft](https://electrostat-lab.github.io/Electrostatic-Sandbox/electrostatic-sandbox-framework/docs/doxygen/html/dir_5043ced2e3b6a99504f4c3528dbc453c.html)
-- [Project:ElectroIO](https://electrostat-lab.github.io/Electrostatic-Sandbox/electrostatic-sandbox-framework/docs/doxygen/html/dir_c01208a60a76216dced9c52dda7dbd72.html)
+- [Electrostatic-Sandbox SDK Main page](https://electrostat-lab.github.io/Electrostatic-Sandbox/electrostatic-sandbox-framework/docs/doxygen/html/index.xhtml)
+- [Project: Electronetsoft](https://electrostat-lab.github.io/Electrostatic-Sandbox/electrostatic-sandbox-framework/docs/doxygen/html/dir_5043ced2e3b6a99504f4c3528dbc453c.xhtml)
+- [Project:ElectroIO](https://electrostat-lab.github.io/Electrostatic-Sandbox/electrostatic-sandbox-framework/docs/doxygen/html/dir_c01208a60a76216dced9c52dda7dbd72.xhtml)
 - [Project:Electrosim]()
 
 ## Computing Guidelines:
