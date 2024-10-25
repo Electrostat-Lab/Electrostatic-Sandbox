@@ -1,7 +1,13 @@
 #!/bin/bash
 
 source "$(pwd)/helper-scripts/setup-environment/setup-scripts/variables.sh"
+source "${abstract_scripts}"
 source "${setup_doxygen_script}"
+
+##
+# Prepare the sandbox workspace
+##
+prepare_sandbox "${sandbox_path}" "+rwx" ""
 
 ##
 # Doxygen
