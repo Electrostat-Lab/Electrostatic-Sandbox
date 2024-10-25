@@ -18,7 +18,7 @@ function generate_default_config() {
 
   cd "${DIR}" || mkdir -p "${DIR}" && cd "${DIR}" || exit
 
-  file "${CONFIG}" || doxygen -g "${CONFIG}"
+  file "${CONFIG}" || doxygen-1.12.0 -g "${CONFIG}"
 
   cd "${temp}" || exit
 }
@@ -31,7 +31,7 @@ function generate_docs() {
 
  cd "${DIR}" || exit
 
- doxygen "${CONFIG}"
+ doxygen-1.12.0 "${CONFIG}"
 
  cd "${temp}" || exit
 }
