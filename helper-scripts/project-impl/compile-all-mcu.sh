@@ -18,15 +18,12 @@ algorithm_module="${electronetsoft}/algorithm/"
 util_module="${electronetsoft}/util/"
 electromio_module="${electroio}/electromio/"
 
-# override the input options
-INPUT_COMPILER_OPTIONS="-O2"
+./helper-scripts/project-impl/compile-electrostatic.sh \
+        "${COMMISSION_LIB}" "${AVR_GCC_BIN}" "${AVR_GPP_BIN}" "ON" "OFF" "OFF" "-O2" \
+        "-mmcu=atmega32 -D_ELECTRO_MIO" "${AVR_TOOLCHAIN_INCLUDES};${electrostatic_core_headers}" "${platform_module} \
+         ${comm_module} ${algorithm_module} ${util_module} ${electromio_module}" "${NULL}" "m" "${source_dir}" "avr-mcu" "atmega32" "${POST_COMPILE_TRUE}"
 
 ./helper-scripts/project-impl/compile-electrostatic.sh \
-        "${AVR_GCC_BIN}" "${AVR_GPP_BIN}" "OFF" \
-        "-mmcu=atmega32 -D_ELECTRO_MIO" "${AVR_TOOLCHAIN_INCLUDES}" "${platform_module} \
-         ${comm_module} ${algorithm_module} ${util_module} ${electromio_module}" "NULL" "avr-mcu" "atmega32"
-
-./helper-scripts/project-impl/compile-electrostatic.sh \
-        "${AVR_GCC_BIN}" "${AVR_GPP_BIN}" "OFF" \
-        "-mmcu=atmega328p -D_ELECTRO_MIO" "${AVR_TOOLCHAIN_INCLUDES}" "${platform_module} \
-        ${comm_module} ${algorithm_module} ${util_module} ${electromio_module}" "NULL" "avr-mcu" "atmega328p"
+        "${COMMISSION_LIB}" "${AVR_GCC_BIN}" "${AVR_GPP_BIN}" "ON" "OFF" "OFF" "-O2" \
+        "-mmcu=atmega328p -D_ELECTRO_MIO" "${AVR_TOOLCHAIN_INCLUDES};${electrostatic_core_headers}" "${platform_module} \
+        ${comm_module} ${algorithm_module} ${util_module} ${electromio_module}" "${NULL}" "m" "${source_dir}" "avr-mcu" "atmega328p" "${POST_COMPILE_TRUE}"

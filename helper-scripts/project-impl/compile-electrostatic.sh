@@ -4,28 +4,42 @@ source "./helper-scripts/abstract/abstract-compile.sh"
 source "./helper-scripts/abstract/abstract-util.sh"
 source "./helper-scripts/project-impl/variables.sh"
 
-cd "${project_root}/${electrostatic_sandbox}" || exit
+cd "${project_root}/${electrostatic_sandbox}" || exit $?
 
-GCC_BIN="${1}"
-GPP_BIN="${2}"
-BUILD_SHARED="${3}"
-TARGET_MACHINE="${4}"
-TOOLCHAIN_HEADERS="${5}"
-CODEBASE_MODULES=("${6}")
-DEPENDENCIES_MODULES=("${7}")
-SYSTEM_DIR="${8}"
-BUILD_DIR="${9}"
+COMMISSION_OUTPUT="${1}"
+GCC_BIN="${2}"
+GPP_BIN="${3}"
+BUILD_STATIC="${4}"
+BUILD_SHARED="${5}"
+BUILD_EXE="${6}"
+COMPILER_OPTIONS="${7}"
+TARGET_MACHINE="${8}"
+HEADERS="${9}"
+CODEBASE_MODULES=("${10}")
+DEPENDENCIES_MODULES=("${11}")
+BUILTIN_LIBS="${12}"
+SOURCE_DIR="${13}"
+SYSTEM_DIR="${14}"
+BUILD_DIR="${15}"
+RUN_POST_COMPILE_SCRIPTS="${16}"
 
 # precompile scripts
 sources=$(find ${CODEBASE_MODULES[*]} -name *.c -o -name *.cpp -o -name *.cxx | tr '\n' ';')
-dependencies=$(find ${DEPENDENCIES_MODULES[*]} -name *.a -o -name *.so -o -name *.ar | tr '\n' ';')
+
+if [ "${DEPENDENCIES_MODULES[*]}" != "${NULL}" ]; then
+    dependencies=$(find ${DEPENDENCIES_MODULES[*]} -name *.a -o -name *.so -o -name *.ar | tr '\n' ';')
+fi
 
 # compile scripts
-compile "${COMMISSION_LIB}" "${GCC_BIN}" "${GPP_BIN}" "${BUILD_SHARED}" "${INPUT_COMPILER_OPTIONS}" \
-        "${TARGET_MACHINE}" "${TOOLCHAIN_HEADERS}" \
-        "${SYSTEM_DIR}/${BUILD_DIR}" "." "${source_dir}" "${sources}" "${dependencies};m;pthread;dl"
+compile "${COMMISSION_OUTPUT}" "${GCC_BIN}" "${GPP_BIN}" "${BUILD_STATIC}" "${BUILD_SHARED}" \
+        "${BUILD_EXE}" "${COMPILER_OPTIONS}" \
+        "${TARGET_MACHINE}" "${HEADERS}" \
+        "${SOURCE_DIR}" "${sources}" "${dependencies};${BUILTIN_LIBS}" \
+        "${SYSTEM_DIR}/${BUILD_DIR}" "." "${SOURCE_DIR}"
 
-cd ${project_root}
+cd ${project_root} || exit $?
 
-# post compile scripts
-./helper-scripts/project-impl/post-compile/post-compile-electrostatic.sh "${SYSTEM_DIR}" "${BUILD_DIR}" || exit
+if [ "${RUN_POST_COMPILE_SCRIPTS}" == "${POST_COMPILE_TRUE}" ]; then
+  # post compile scripts
+  ./helper-scripts/project-impl/post-compile/post-compile-electrostatic.sh "${SYSTEM_DIR}" "${BUILD_DIR}" || exit
+fi

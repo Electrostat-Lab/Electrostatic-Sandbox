@@ -2,6 +2,7 @@
 
 project_root=$(pwd)
 electrostatic_sandbox="electrostatic-sandbox-framework"
+NULL="NULL"
 
 sandbox_path="/opt/electrostatic-sandbox"
 COMMISSION_LIB="electrostatic"
@@ -40,6 +41,9 @@ TARGET_x86="-m32"
 # cmake build caches
 source_dir="electrostatic-core"
 examples_dir="electrostatic-examples"
+
+electrostatic_core_headers="$(pwd)/electrostatic-sandbox-framework/electrostatic-core/src/include"
+POST_COMPILE_TRUE="POST_COMPILE_TRUE"
 
 e4j_dir="electrostatic4j/electrostatic4j-native"
 serial4j_dir="electrostatic4j/serial4j"
