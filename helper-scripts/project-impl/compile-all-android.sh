@@ -16,21 +16,21 @@ algorithm_module="${electronetsoft}/algorithm/"
 util_module="${electronetsoft}/util/"
 
 ./helper-scripts/project-impl/compile-electrostatic.sh \
-        "${CLANG_BIN}" "${CLANGPP_BIN}" "ON" \
-        "-target ${ARM_64}" "${NDK_TOOLCHAIN_INCLUDES}" "${platform_module} ${comm_module} \
-        ${algorithm_module} ${util_module}" "NULL" "android" "${ARM_64}"
+        "${COMMISSION_LIB}" "${CLANG_BIN}" "${CLANGPP_BIN}" "ON" "ON" "OFF" "-O3 -fPIC" \
+        "-target ${ARM_64}" "${NDK_TOOLCHAIN_INCLUDES};${electrostatic_core_headers}" "${platform_module} ${comm_module} \
+        ${algorithm_module} ${util_module}" "${NULL}" "m;pthread;dl" "${source_dir}" "android" "${ARM_64}" "${POST_COMPILE_TRUE}"
 
 ./helper-scripts/project-impl/compile-electrostatic.sh \
-        "${CLANG_BIN}" "${CLANGPP_BIN}" "ON" \
-        "-target ${ARM_32}" "${NDK_TOOLCHAIN_INCLUDES}" "${platform_module} ${comm_module} \
-        ${algorithm_module} ${util_module}" "NULL" "android" "${ARM_32}" "${PRIMER}"
+        "${COMMISSION_LIB}" "${CLANG_BIN}" "${CLANGPP_BIN}" "ON" "ON" "OFF" "-O3 -fPIC" \
+        "-target ${ARM_32}" "${NDK_TOOLCHAIN_INCLUDES};${electrostatic_core_headers}" "${platform_module} ${comm_module} \
+        ${algorithm_module} ${util_module}" "${NULL}" "m;pthread;dl" "${source_dir}" "android" "${ARM_32}" "${POST_COMPILE_TRUE}"
 
 ./helper-scripts/project-impl/compile-electrostatic.sh \
-        "${CLANG_BIN}" "${CLANGPP_BIN}" "ON" \
-        "-target ${ANDROID_x86}" "${NDK_TOOLCHAIN_INCLUDES}" "${platform_module} ${comm_module} \
-        ${algorithm_module} ${util_module}" "NULL" "android" "${ANDROID_x86}"
+        "${COMMISSION_LIB}" "${CLANG_BIN}" "${CLANGPP_BIN}" "ON" "ON" "OFF" "-O3 -fPIC" \
+        "-target ${ANDROID_x86}" "${NDK_TOOLCHAIN_INCLUDES};${electrostatic_core_headers}" "${platform_module} ${comm_module} \
+        ${algorithm_module} ${util_module}" "${NULL}" "m;pthread;dl" "${source_dir}" "android" "${ANDROID_x86}" "${POST_COMPILE_TRUE}"
 
 ./helper-scripts/project-impl/compile-electrostatic.sh \
-        "${CLANG_BIN}" "${CLANGPP_BIN}" "ON" \
-        "-target ${ANDROID_x86_64}" "${NDK_TOOLCHAIN_INCLUDES}" "${platform_module} ${comm_module} \
-        ${algorithm_module} ${util_module}" "NULL" "android" "${ANDROID_x86_64}"
+        "${COMMISSION_LIB}" "${CLANG_BIN}" "${CLANGPP_BIN}" "ON" "ON" "OFF" "-O3 -fPIC" \
+        "-target ${ANDROID_x86_64}" "${NDK_TOOLCHAIN_INCLUDES};${electrostatic_core_headers}" "${platform_module} ${comm_module} \
+        ${algorithm_module} ${util_module}" "${NULL}" "m;pthread;dl" "${source_dir}" "android" "${ANDROID_x86_64}" "${POST_COMPILE_TRUE}"

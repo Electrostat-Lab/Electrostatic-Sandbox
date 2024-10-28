@@ -27,11 +27,14 @@ dependencies=$(find "$(pwd)/${project_dir}/dependencies/libs/${system_dir}/${bui
 
 getCurrentSystem
 
-JNI_HEADERS_SYSTEM="${JNI_HEADERS}/${system}"
+JNI_HEADERS_SYSTEM="${JNI_HEADERS}/${system_dir}"
+PROJECT_HEADERS="$(pwd)/${project_dir}/src/include/"
+ELECTROSTATIC_HEADERS="$(pwd)/${project_dir}/dependencies/include/"
 
-compile "${commission_lib}" "${GCC_BIN}" "${GPP_BIN}" "${BUILD_SHARED}" "${INPUT_COMPILER_OPTIONS}" \
-        "${target}" "${TOOLCHAIN_HEADERS};${JNI_HEADERS};${JNI_HEADERS_SYSTEM}" "${system_dir}/${build_dir}"  \
-        "." "${project_dir}" "${sources}" "${dependencies};m;pthread;dl"
+compile "${commission_lib}" "${GCC_BIN}" "${GPP_BIN}" "ON" "${BUILD_SHARED}" "OFF" "${INPUT_COMPILER_OPTIONS}" \
+        "${target}" "${TOOLCHAIN_HEADERS};${JNI_HEADERS};${JNI_HEADERS_SYSTEM};${PROJECT_HEADERS};${ELECTROSTATIC_HEADERS}" \
+        "${project_dir}" "${sources}" "${dependencies};m;pthread;dl" "${system_dir}/${build_dir}"  \
+        "." "${project_dir}"
 
 moveFile "${project_dir}/cmake-build/${system_dir}/${build_dir}/lib${commission_lib}.so" \
          "${project_dir}/build/lib/${system_dir}/${build_dir}/"

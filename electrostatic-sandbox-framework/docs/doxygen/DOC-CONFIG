@@ -943,7 +943,7 @@ WARN_LOGFILE           = ./warn.log
 # spaces. See also FILE_PATTERNS and EXTENSION_MAPPING
 # Note: If this tag is empty the current directory is searched.
 
-INPUT                  = ../../
+INPUT                  = ../../ ../../../helper-scripts/
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding. Doxygen uses
@@ -1032,6 +1032,8 @@ FILE_PATTERNS          = *.c \
                          *.vhdl \
                          *.ucf \
                          *.qsf \
+                         *.sh \
+                         *.bash \
                          *.ice
 
 # The RECURSIVE tag can be used to specify whether or not subdirectories should
