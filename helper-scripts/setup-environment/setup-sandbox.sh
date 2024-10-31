@@ -12,6 +12,19 @@ source "${setup_android_ndk_script}"
 source "${setup_avr_toolchains_script}"
 
 ##
+# Downloading prerequisite binaries
+##
+echo "Downloading missing binaries"
+# typically for WSL machines
+sudo apt-get install make
+sudo apt-get install usbutils
+sudo apt-get install xorg
+sudo apt-get install libopenal-dev
+sudo apt-get install pulseaudio
+sudo apt-get install gcc
+sudo apt-get install g++
+
+##
 # Prepare the sandbox workspace
 ##
 prepare_sandbox "${sandbox_path}" "+rwx" ""
