@@ -1,5 +1,5 @@
 # <img src="https://user-images.githubusercontent.com/60224159/193262155-bf82f982-e84d-4af4-835f-152c8e923f60.png" width="40" height="30"> Windows Terminal
-## Steps to use WSL on Windows terminal to compile, hex and upload code for avr chips
+## Steps to use WSL on Windows terminal to start development for the Electrostatic-Sandbox SDK:
 
 1) Enable WSL (Windows Subsystem for linux) microsoft widows feature.
 
@@ -7,10 +7,10 @@
 |---------------------------------------|-----------------------------|
 | ![image-1](https://user-images.githubusercontent.com/60224159/193261736-e008010f-1cc3-4996-8881-93f3e0919d07.png) | ![image-2](https://user-images.githubusercontent.com/60224159/193261758-483a1058-ed42-46d4-a196-b4f4c6cd13e9.png) |
 
-2) Download WSL from the command prompt or MS powershell using:
+2) Download WSL debian distro from the command prompt or MS powershell using:
 
 ```
-C:\Users\pavl_g> wsl --install
+C:\Users\pavl_g> wsl --install -d debian
 ```
 
 3) Download usbipd 3rd party utility using the latest github `.msi` file or the windows package manager directly via the command prompt:
@@ -33,34 +33,22 @@ Starting package install...
 Successfully installed
 ```
 
-4) Download debian linux image and install libusb utilities and other usbip utilities from the apt package manager: 
+4) Now open a windows terminal tap and start a debian session to setup your user and root accounts.
 
-```
-C:\Users\pavl_g> wsl --install -d debian
-```
-
-5) Set it as the default linux distribution using: 
-
-```
-C:\Users\pavl_g> wsl --setdefault debian
-```
-
-6) Now open a windows terminal tap and start a debian session to setup your user and root accounts.
-
-7) Now update the apt package manager and install the libusb utils via:
+5) Now update the apt package manager and install the libusb utils via:
 
 ```bash
 pavl_g@pavl-machine:~$ sudo apt-get update
 pavl_g@pavl-machine:~$ sudo apt-get install usbutils
 ```
 
-8) Now download usbip for debian via: 
+6) Now download usbip for debian via: 
 
 ```bash
 pavl_g@pavl-machine:~$ sudo apt install usbip hwdata usbutils
 ```
 
-9) Now start an administrator command prompt session alongside with the original debian session, then connect your usb device and run the following: 
+7) Now start an administrator command prompt session alongside with the original debian session, then connect your usb device and run the following: 
 
 
 - On the Debian session:
@@ -100,11 +88,35 @@ pavl_g@pavl-machine:~$ ls /dev/ttyUSB*
 /dev/ttyUSB0
 ```
 
-10) Now clone the git repo and start development using the Ccoffee build script.
+8) Now clone the git repo and start development.
 
 ```bash
-git clone https://github.com/Software-Hardware-Codesign/AVR-Sandbox.git
+$ cd ./Projects | mkdir ./Projects
+$ git clone https://github.com/Electrostat-Lab/Electrostatic-Sandbox.git && cd ./Electrostatic-Sandbox
 ```
+9) Continue as usual, by running the `~/helper-scripts/setup-environment/setup-sandbox.sh` script and following on with missing binaries. You can use the GitHub CI/CD configurations to gain some insights.
+
+10) Most IDEs support server codebases nowadays; thus you could use your favourite IDE and connect to WSL Debian. The current codebase has pre-set run/build configurations for VSCode, Intellij-IDEA, and Fleet.
+
+> [!NOTE]
+> Alternatively, you can run the NEW setup powershell script found at `~/helper-scripts/setup-environment/windows/setup-wsl-debian.ps1` through the following sequential steps:
+
+1) Run a new powershell or a windows terminal powershell session as administrator.
+
+2) Set the execution policy of the current session for the current process as "Bypass" to enable running unauthorized scripts, which will be reverted normally to the default "restricted" policy when this session is over: 
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process
+```
+
+3) Run the script and follow on.
+
+4) Reboot if needed, and follow-on to enable BIOS/UEFI CPU virtualization if necessary.
+
+5) The script enables the WSL and windows virtualization features, download WSL Debian Distribution binaries, and sets up the `usbipd` utility for routing usb ports across servers.
+
+6) Continue with setting up and customizing your development environment.
+
+
 ----------------------------------------------------------------------------------------------------
 
 ### For more refer to the documentation pages:
@@ -115,3 +127,4 @@ git clone https://github.com/Software-Hardware-Codesign/AVR-Sandbox.git
 - [Windows-Package-Manager-Documentation](https://learn.microsoft.com/en-us/windows/package-manager/winget/)
 - [Debian-Documentation](https://wiki.debian.org/FrontPage)
 - [Apt-Documentation](https://wiki.debian.org/Apt)
+- [Development using VSCode on WSL](https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-vscode)
