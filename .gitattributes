@@ -1,0 +1,5 @@
+# Treat these files as plain text
+*.html -diff text
+*.htm -diff text
+*.js -diff text
+*.css -diff text
