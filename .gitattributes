@@ -1,3 +1,4 @@
 # Treat these files as plain text
-*.html text diff=text
-*.htm text diff=text
+*.html linguist-language=text
+*.htm linguist-language=text
+
