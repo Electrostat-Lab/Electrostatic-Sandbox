@@ -1,5 +1,3 @@
 # Treat these files as plain text
-*.html -diff text
-*.htm -diff text
-*.js -diff text
-*.css -diff text
+*.html text diff=text
+*.htm text diff=text
