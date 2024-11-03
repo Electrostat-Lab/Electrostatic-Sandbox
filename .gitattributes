@@ -1,4 +1,8 @@
 # Treat these files as plain text
 *.html linguist-language=text
 *.htm linguist-language=text
+*.css linguist-language=text
+*.js linguist-language=text
+*.scss linguist-language=text
+*.JS linguist-language=text
 
