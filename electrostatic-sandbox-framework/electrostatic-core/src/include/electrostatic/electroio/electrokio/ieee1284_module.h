@@ -13,64 +13,34 @@ extern "C" {
 #define IEEE1284_LOGIC_ON ((uint8_t) (0xFF))
 #define IEEE1284_LOGIC_OFF ((uint8_t) (0x00))
 
-#define IEEE1284_PIN_0 (0b0)
-#define IEEE1284_PIN_1 (0x01)
-#define IEEE1284_PIN_2 (0x02)
-#define IEEE1284_PIN_3 (0x03)
-#define IEEE1284_PIN_4 (0x04)
-#define IEEE1284_PIN_5 (0x05)
-#define IEEE1284_PIN_6 (0x06)
-#define IEEE1284_PIN_7 (0x07)
+#define IEEE1284_PIN_0 ((uint8_t) 0b0)
+#define IEEE1284_PIN_1 ((uint8_t) 0x01)
+#define IEEE1284_PIN_2 ((uint8_t) 0x02)
+#define IEEE1284_PIN_3 ((uint8_t) 0x03)
+#define IEEE1284_PIN_4 ((uint8_t) 0x04)
+#define IEEE1284_PIN_5 ((uint8_t) 0x05)
+#define IEEE1284_PIN_6 ((uint8_t) 0x06)
+#define IEEE1284_PIN_7 ((uint8_t) 0x07)
 
 typedef struct parport_module (parport_module);
 typedef struct parport_control (parport_control);
 typedef struct parport_status (parport_status);
-typedef struct parport_data (parport_data);
+typedef struct parport_register (parport_register);
 typedef struct parport_callbacks (parport_callbacks);
 
 /**
  * Defines the control register part.
  */
-struct parport_control {
-    uint8_t c0;
-    uint8_t c1;
-    uint8_t c2;
-    uint8_t c3;
-    uint8_t c4;
-    uint8_t c5;
-    uint8_t c6;
-    uint8_t c7;
-    uint8_t c_register;
-};
-
-/**
- * Defines the status register part.
- */
-struct parport_status {
-    uint8_t s0;
-    uint8_t s1;
-    uint8_t s2;
-    uint8_t s3;
-    uint8_t s4;
-    uint8_t s5;
-    uint8_t s6;
-    uint8_t s7;
-    uint8_t s_register;
-};
-
-/**
- * Defines the data register part.
- */
-struct parport_data {
-    uint8_t d0;
-    uint8_t d1;
-    uint8_t d2;
-    uint8_t d3;
-    uint8_t d4;
-    uint8_t d5;
-    uint8_t d6;
-    uint8_t d7;
-    uint8_t d_register;
+struct parport_register {
+    uint8_t bit0;
+    uint8_t bit1;
+    uint8_t bit2;
+    uint8_t bit3;
+    uint8_t bit4;
+    uint8_t bit5;
+    uint8_t bit6;
+    uint8_t bit7;
+    uint8_t memory;
 };
 
 /**
@@ -126,15 +96,25 @@ __int8_t init_mode(parport_module *pmodule);
 
 __int8_t terminate_mode(parport_module *pmodule);
 
-__int8_t pport_write_controls(parport_module *pmodule, parport_control *pcontrol);
+__int8_t pport_write_control_bit(parport_module *pmodule, uint8_t PIN, uint8_t STATE);
 
-__int8_t pport_read_controls(parport_module *pmodule, parport_control *pcontrol);
+__int8_t pport_write_data_bit(parport_module *pmodule, uint8_t PIN, uint8_t STATE);
 
-__int8_t pport_write_data(parport_module *pmodule, parport_data *pdata);
+__int8_t pport_write_controls(parport_module *pmodule, parport_register *pregister);
 
-__int8_t pport_read_data(parport_module *pmodule, parport_data *pdata);
+__int8_t pport_read_controls(parport_module *pmodule, parport_register *pregister);
 
-__int8_t pport_read_status(parport_module *pmodule, parport_status *pstatus);
+__int8_t pport_read_control_bit(parport_module *pmodule, uint8_t PIN, uint8_t *out);
+
+__int8_t pport_write_data(parport_module *pmodule, parport_register *pregister);
+
+__int8_t pport_read_data(parport_module *pmodule, parport_register *pregister);
+
+__int8_t pport_read_data_bit(parport_module *pmodule, uint8_t PIN, uint8_t *out);
+
+__int8_t pport_read_status(parport_module *pmodule, parport_register *pregister);
+
+__int8_t pport_read_status_bit(parport_module *pmodule, uint8_t PIN, uint8_t *out);
 
 #ifdef __cplusplus
 }

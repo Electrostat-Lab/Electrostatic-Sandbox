@@ -28,9 +28,15 @@ int main() {
         .access = O_RDWR,
         .pport_mode = IEEE1284_MODE_COMPAT};
 
-    parport_data pdata = {
-        .d0 = IEEE1284_LOGIC_OFF,
-        .d1 = IEEE1284_LOGIC_ON};
+    parport_register data_register = {
+        .bit0 = IEEE1284_LOGIC_ON,
+        .bit1 = IEEE1284_LOGIC_ON};
+
+    parport_register control_register = {
+        .bit0 = IEEE1284_LOGIC_OFF,
+        .bit1 = IEEE1284_LOGIC_ON,
+        .bit2 = IEEE1284_LOGIC_OFF
+    };
 
     pport_init_callbacks(&pmodule, (parport_callbacks) {
                                        .on_open_success = &on_open_success,
@@ -40,11 +46,14 @@ int main() {
     pport_open(&pmodule);
     pport_claim(&pmodule);
     pport_load_mode(&pmodule);
-//    init_mode(&pmodule);
-    pport_write_data(&pmodule, &pdata);
-    parport_data  pdata_read = {};
-//    pport_read_data(&pmodule, &pdata_read);
-//    fprintf(stdout, "Data register write = %x\n", pdata_read.d_register);
+
+    pport_write_data(&pmodule, &data_register);
+    pport_write_controls(&pmodule, &control_register);
+
+    parport_register pdata_read = {};
+    pport_read_data(&pmodule, &pdata_read);
+    fprintf(stdout, "Data register write = %x\n", pdata_read.memory);
+
     pport_release(&pmodule);
     pport_close(&pmodule);
     return 0;
