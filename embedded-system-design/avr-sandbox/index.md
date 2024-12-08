@@ -45,6 +45,9 @@
 - [DIY Protocol]()
 
 ### Embedded Systems Design:
+- [AVR MCUs Architecture (ATmega32A/8P]()
+- [ARM MCUs Architecture (M-variant/A-variant)]()
+- [X86 CISC Architecture]()
 - [Static Libraries]()
 - [Dynamic Libraries]()
 - [Static V.S. Dynamic libraries]()
