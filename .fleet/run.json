@@ -72,14 +72,21 @@
             "name": "Debug Arithmos ADTs: Contiguous Buffers",
             "type": "command",
             "program": "$PROJECT_DIR$/helper-scripts/ci-cd/test-electrostatic.sh",
-            "args": ["hello_lists.c"],
+            "args": ["hello_lists.c", "hello-lists"],
             "allowParallelRun": true
         },
         {
             "name": "Test Arithmos Vector2d",
             "type": "command",
             "program": "$PROJECT_DIR$/helper-scripts/ci-cd/test-electrostatic.sh",
-            "args": ["hello_vector2d.c"],
+            "args": ["hello_vector2d.c", "hello-vec2d"],
+            "allowParallelRun": true
+        },
+        {
+            "name": "Test Parallel port KIO",
+            "type": "command",
+            "program": "$PROJECT_DIR$/helper-scripts/ci-cd/test-electrostatic.sh",
+            "args": ["linux/hello_kio_parport.c", "hello-kio-parport"],
             "allowParallelRun": true
         },
         {
