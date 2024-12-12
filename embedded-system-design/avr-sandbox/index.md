@@ -1,6 +1,6 @@
 # The AVR-Sandbox project
 
-## Main Blog
+![image](https://github.com/user-attachments/assets/73b527b2-69ba-481d-8390-1414a49cb650)
 
 ### General Electronics Blog:
 - [Circuitry]()
