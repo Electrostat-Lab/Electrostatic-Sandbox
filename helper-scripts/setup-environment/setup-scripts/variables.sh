@@ -60,9 +60,9 @@ posix_headers_symbol="${local_include}/posix-headers"
 ##
 # Android NDK
 ##
-ndk_url="https://dl.google.com/android/repository/android-ndk-r21e-linux-x86_64.zip"
-ndk_zip_name="android-ndk-r21e-linux-x86_64.zip"
-ndk_zip_content="android-ndk-r21e"
+ndk_url="https://dl.google.com/android/repository/android-ndk-r27c-linux.zip"
+ndk_zip_name="android-ndk-r27c-linux.zip"
+ndk_zip_content="android-ndk-r27c"
 clang_symbol="${local_bin}/android-clang"
 clangpp_symbol="${local_bin}/android-clang++"
 android_ndk_headers="${local_include}/android-ndk-headers"
