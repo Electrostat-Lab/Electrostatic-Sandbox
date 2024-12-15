@@ -15,6 +15,7 @@ TOOLCHAIN_INCLUDES_x86="/usr/local/include/posix-headers"
 JAVA_HOME="/opt/electrostatic-sandbox/jdk-20.0.2"
 JNI_HEADERS="${JAVA_HOME}/include"
 INPUT_COMPILER_OPTIONS="-O2"
+NDK_HOME="${sandbox_path}/android-ndk-r27c"
 
 # specify android triples
 minSDKVersion="21"
@@ -24,8 +25,8 @@ ANDROID_x86="i686-linux-android${minSDKVersion}"
 ANDROID_x86_64="x86_64-linux-android${minSDKVersion}"
 
 # specify symbolic binaries for android llvm
-CLANG_BIN="android-clang"
-CLANGPP_BIN="android-clang++"
+CLANG_BIN="${NDK_HOME}/toolchains/llvm/prebuilt/linux-x86_64/bin/clang"
+CLANGPP_BIN="${NDK_HOME}/toolchains/llvm/prebuilt/linux-x86_64/bin/clang++"
 NDK_TOOLCHAIN_INCLUDES="android-ndk-headers"
 
 AVR_GCC_BIN="avr-gcc"
