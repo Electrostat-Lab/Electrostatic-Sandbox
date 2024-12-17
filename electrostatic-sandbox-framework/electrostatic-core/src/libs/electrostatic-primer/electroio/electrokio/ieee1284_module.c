@@ -7,6 +7,7 @@
 #include <errno.h>
 
 static inline void cleanup(parport_module *pmodule) {
+  //TODO later
 }
 
 // routines for initializing compat mode as a host initiated mode
@@ -92,21 +93,14 @@ uint8_t pport_init_callbacks(parport_module *pport_module,
   if (pport_module == NULL) {
     return 1;
   }
-  pport_module->pport_callbacks.on_open_success = pport_callbacks.on_open_success;
-  pport_module->pport_callbacks.on_open_failure = pport_callbacks.on_open_failure;
-  pport_module->pport_callbacks.on_write_success = pport_callbacks.on_write_success;
-  pport_module->pport_callbacks.on_write_failure = pport_callbacks.on_write_failure;
-  pport_module->pport_callbacks.on_read_success = pport_callbacks.on_read_success;
-  pport_module->pport_callbacks.on_read_failure = pport_callbacks.on_read_failure;
-  pport_module->pport_callbacks.on_release_success = pport_callbacks.on_release_success;
-  pport_module->pport_callbacks.on_release_failure = pport_callbacks.on_release_failure;
+  pport_module->pport_callbacks.on_operation_success = pport_callbacks.on_operation_success;
+  pport_module->pport_callbacks.on_operation_failure = pport_callbacks.on_operation_failure;
+
   if (pport_callbacks.cleanup != NULL) {
     pport_module->pport_callbacks.cleanup = pport_callbacks.cleanup;
   } else {
     pport_module->pport_callbacks.cleanup = &cleanup;
   }
-  pport_module->pport_callbacks.on_close_success = pport_callbacks.on_close_success;
-  pport_module->pport_callbacks.on_close_failure = pport_callbacks.on_close_failure;
   return 0;
 }
 
@@ -117,13 +111,13 @@ int pport_open(parport_module *pmodule) {
   pmodule->fd = open(pmodule->device, pmodule->access);
   // post-processing checks and callbacks
   if (pmodule->fd < 0) {
-    if (pmodule->pport_callbacks.on_open_failure) {
-      pmodule->pport_callbacks.on_open_failure(pmodule, errno);
+    if (pmodule->pport_callbacks.on_operation_failure) {
+      pmodule->pport_callbacks.on_operation_failure(pmodule, errno, &pport_open);
     }
     return 1;
   }
-  if (pmodule->pport_callbacks.on_open_success) {
-    pmodule->pport_callbacks.on_open_success(pmodule);
+  if (pmodule->pport_callbacks.on_operation_success) {
+    pmodule->pport_callbacks.on_operation_success(pmodule, &pport_open);
   }
   return pmodule->fd;
 }
@@ -137,12 +131,12 @@ __int8_t pport_close(parport_module *pmodule) {
   __int8_t ret = close(pmodule->fd);
   // call post-processing cleanup
   if (ret == 0) {
-    if (pmodule->pport_callbacks.on_close_success != NULL) {
-      pmodule->pport_callbacks.on_close_success(pmodule);
+    if (pmodule->pport_callbacks.on_operation_success != NULL) {
+      pmodule->pport_callbacks.on_operation_success(pmodule, &pport_close);
     }
   } else {
-    if (pmodule->pport_callbacks.on_close_failure != NULL) {
-      pmodule->pport_callbacks.on_close_failure(pmodule, errno);
+    if (pmodule->pport_callbacks.on_operation_failure != NULL) {
+      pmodule->pport_callbacks.on_operation_failure(pmodule, errno, &pport_close);
     }
   }
   if (pmodule->pport_callbacks.cleanup != NULL) {
@@ -157,12 +151,12 @@ __int8_t pport_release(parport_module *pmodule) {
   }
   int ret = ioctl(pmodule->fd, PPRELEASE);
   if (ret < 0) {
-    if (pmodule->pport_callbacks.on_release_failure != NULL) {
-      pmodule->pport_callbacks.on_release_failure(pmodule, errno);
+    if (pmodule->pport_callbacks.on_operation_failure != NULL) {
+      pmodule->pport_callbacks.on_operation_failure(pmodule, errno, &pport_release);
     }
   } else {
-    if (pmodule->pport_callbacks.on_release_success != NULL) {
-      pmodule->pport_callbacks.on_release_success(pmodule);
+    if (pmodule->pport_callbacks.on_operation_success != NULL) {
+      pmodule->pport_callbacks.on_operation_success(pmodule, &pport_release);
     }
   }
   return ret;
@@ -174,14 +168,14 @@ __int8_t pport_load_mode(parport_module *pmodule) {
   }
   int ret = ioctl(pmodule->fd, PPSETMODE, &(pmodule->pport_mode));
   if (ret < 0) {
-    if (pmodule->pport_callbacks.on_mode_loading_failure != NULL) {
-      pmodule->pport_callbacks.on_mode_loading_failure(pmodule, errno);
+    if (pmodule->pport_callbacks.on_operation_failure != NULL) {
+      pmodule->pport_callbacks.on_operation_failure(pmodule, errno, &pport_load_mode);
     }
     pport_release(pmodule);
     pport_close(pmodule);
   } else {
-    if (pmodule->pport_callbacks.on_mode_loading_success != NULL) {
-      pmodule->pport_callbacks.on_mode_loading_success(pmodule);
+    if (pmodule->pport_callbacks.on_operation_success != NULL) {
+      pmodule->pport_callbacks.on_operation_success(pmodule, &pport_load_mode);
     }
   }
   return ret;
@@ -193,13 +187,13 @@ __int8_t pport_claim(parport_module *pmodule) {
   }
   int ret = ioctl(pmodule->fd, PPCLAIM);
   if (ret < 0) {
-    if (pmodule->pport_callbacks.on_claim_failure != NULL) {
-      pmodule->pport_callbacks.on_claim_failure(pmodule, errno);
+    if (pmodule->pport_callbacks.on_operation_failure != NULL) {
+      pmodule->pport_callbacks.on_operation_failure(pmodule, errno, &pport_claim);
     }
     pport_close(pmodule);
   } else {
-    if (pmodule->pport_callbacks.on_claim_success != NULL) {
-      pmodule->pport_callbacks.on_claim_success(pmodule);
+    if (pmodule->pport_callbacks.on_operation_success != NULL) {
+      pmodule->pport_callbacks.on_operation_success(pmodule, &pport_claim);
     }
   }
   return ret;
@@ -228,12 +222,12 @@ __int8_t pport_write_controls(parport_module *pmodule, parport_register *pregist
 
   int ret = ioctl(pmodule->fd, PPWCONTROL, &(pregister->memory));
   if (ret < 0) {
-    if (pmodule->pport_callbacks.on_write_failure != NULL) {
-      pmodule->pport_callbacks.on_write_failure(pmodule, errno);
+    if (pmodule->pport_callbacks.on_operation_failure != NULL) {
+      pmodule->pport_callbacks.on_operation_failure(pmodule, errno, &pport_write_controls);
     }
   } else {
-    if (pmodule->pport_callbacks.on_write_success != NULL) {
-      pmodule->pport_callbacks.on_write_success(pmodule);
+    if (pmodule->pport_callbacks.on_operation_success != NULL) {
+      pmodule->pport_callbacks.on_operation_success(pmodule, &pport_write_controls);
     }
   }
   return ret;
@@ -246,12 +240,12 @@ __int8_t pport_write_control_bit(parport_module *pmodule, uint8_t PIN, uint8_t S
   uint8_t control_register = (STATE && IEEE1284_LOGIC_ON) << PIN;
   int ret = ioctl(pmodule->fd, PPWCONTROL, &control_register);
   if (ret < 0) {
-    if (pmodule->pport_callbacks.on_write_failure != NULL) {
-      pmodule->pport_callbacks.on_write_failure(pmodule, errno);
+    if (pmodule->pport_callbacks.on_operation_failure != NULL) {
+      pmodule->pport_callbacks.on_operation_failure(pmodule, errno, &pport_write_control_bit);
     }
   } else {
-    if (pmodule->pport_callbacks.on_write_success != NULL) {
-      pmodule->pport_callbacks.on_write_success(pmodule);
+    if (pmodule->pport_callbacks.on_operation_success != NULL) {
+      pmodule->pport_callbacks.on_operation_success(pmodule, &pport_write_control_bit);
     }
   }
   return ret;
@@ -265,8 +259,8 @@ __int8_t pport_read_controls(parport_module *pmodule, parport_register *pregiste
   int value = ioctl(pmodule->fd, PPRCONTROL, &control_register);
   if (value < 0) {
     // leave the parport_register memory block without invoking any side effects!
-    if (pmodule->pport_callbacks.on_read_failure != NULL) {
-      pmodule->pport_callbacks.on_read_failure(pmodule, errno);
+    if (pmodule->pport_callbacks.on_operation_failure != NULL) {
+      pmodule->pport_callbacks.on_operation_failure(pmodule, errno, *pport_read_controls);
     }
   } else {
     // write the control values
@@ -280,8 +274,8 @@ __int8_t pport_read_controls(parport_module *pmodule, parport_register *pregiste
     pregister->bit6 = (control_register & (1 << IEEE1284_PIN_6)) && IEEE1284_LOGIC_ON;
     pregister->bit7 = (control_register & (1 << IEEE1284_PIN_7)) && IEEE1284_LOGIC_ON;
     pregister->memory = control_register;
-    if (pmodule->pport_callbacks.on_read_success != NULL) {
-      pmodule->pport_callbacks.on_read_success(pmodule);
+    if (pmodule->pport_callbacks.on_operation_success != NULL) {
+      pmodule->pport_callbacks.on_operation_success(pmodule, &pport_read_controls);
     }
   }
   return value;
@@ -295,16 +289,37 @@ __int8_t pport_read_control_bit(parport_module *pmodule, uint8_t PIN, uint8_t *o
   if (ret < 0) {
     *out = 0x00;
     // leave the parport_register memory block without invoking any side effects!
-    if (pmodule->pport_callbacks.on_read_failure != NULL) {
-      pmodule->pport_callbacks.on_read_failure(pmodule, errno);
+    if (pmodule->pport_callbacks.on_operation_failure != NULL) {
+      pmodule->pport_callbacks.on_operation_failure(pmodule, errno, &pport_read_control_bit);
     }
   } else {
     *out = *out & PIN;
-    if (pmodule->pport_callbacks.on_read_success != NULL) {
-      pmodule->pport_callbacks.on_read_success(pmodule);
+    if (pmodule->pport_callbacks.on_operation_success != NULL) {
+      pmodule->pport_callbacks.on_operation_success(pmodule, &pport_read_control_bit);
     }
   }
   return ret;
+}
+
+__int8_t pport_register_data_lines(parport_module *pmodule, data_line_direction dld) {
+  if (pmodule == NULL || pmodule->fd < 0) {
+    return 1;
+  }
+  int line_direction = IEEE1284_LOGIC_OFF;
+  if (dld == DATA_LINE_INPUT) {
+    line_direction = IEEE1284_LOGIC_ON;
+  }
+  int ret = ioctl(pmodule->fd, PPDATADIR, &line_direction);
+  if (ret < 0) {
+    if (pmodule->pport_callbacks.on_operation_failure != NULL) {
+      pmodule->pport_callbacks.on_operation_failure(pmodule, errno, &pport_register_data_lines);
+    }
+  } else {
+    if (pmodule->pport_callbacks.on_operation_success != NULL) {
+      pmodule->pport_callbacks.on_operation_success(pmodule, &pport_register_data_lines);
+    }
+  }
+  return 0;
 }
 
 __int8_t pport_write_data(parport_module *pmodule, parport_register *pregister) {
@@ -326,12 +341,12 @@ __int8_t pport_write_data(parport_module *pmodule, parport_register *pregister) 
 
   int ret = ioctl(pmodule->fd, PPWDATA, &(pregister->memory));
   if (ret < 0) {
-    if (pmodule->pport_callbacks.on_write_failure != NULL) {
-      pmodule->pport_callbacks.on_write_failure(pmodule, errno);
+    if (pmodule->pport_callbacks.on_operation_failure != NULL) {
+      pmodule->pport_callbacks.on_operation_failure(pmodule, errno, &pport_write_data);
     }
   } else {
-    if (pmodule->pport_callbacks.on_write_success != NULL) {
-      pmodule->pport_callbacks.on_write_success(pmodule);
+    if (pmodule->pport_callbacks.on_operation_success != NULL) {
+      pmodule->pport_callbacks.on_operation_success(pmodule, &pport_write_data);
     }
   }
   return ret;
@@ -344,12 +359,12 @@ __int8_t pport_write_data_bit(parport_module *pmodule, uint8_t PIN, uint8_t STAT
   uint8_t data_register = (STATE && IEEE1284_LOGIC_ON) << PIN;
   int ret = ioctl(pmodule->fd, PPWDATA, &data_register);
   if (ret < 0) {
-    if (pmodule->pport_callbacks.on_write_failure != NULL) {
-      pmodule->pport_callbacks.on_write_failure(pmodule, errno);
+    if (pmodule->pport_callbacks.on_operation_failure != NULL) {
+      pmodule->pport_callbacks.on_operation_failure(pmodule, errno, &pport_write_data_bit);
     }
   } else {
-    if (pmodule->pport_callbacks.on_write_success != NULL) {
-      pmodule->pport_callbacks.on_write_success(pmodule);
+    if (pmodule->pport_callbacks.on_operation_success != NULL) {
+      pmodule->pport_callbacks.on_operation_success(pmodule, &pport_write_data_bit);
     }
   }
   return ret;
@@ -363,8 +378,8 @@ __int8_t pport_read_data(parport_module *pmodule, parport_register *pregister) {
   int value = ioctl(pmodule->fd, PPRDATA, &data_register);
   if (value < 0) {
     // leave the parport_register memory block without invoking any side effects!
-    if (pmodule->pport_callbacks.on_read_failure != NULL) {
-      pmodule->pport_callbacks.on_read_failure(pmodule, errno);
+    if (pmodule->pport_callbacks.on_operation_failure != NULL) {
+      pmodule->pport_callbacks.on_operation_failure(pmodule, errno, &pport_read_data);
     }
   } else {
     // write the data values
@@ -378,8 +393,8 @@ __int8_t pport_read_data(parport_module *pmodule, parport_register *pregister) {
     pregister->bit6 = (data_register & (1 << IEEE1284_PIN_6)) && IEEE1284_LOGIC_ON;
     pregister->bit7 = (data_register & (1 << IEEE1284_PIN_7)) && IEEE1284_LOGIC_ON;
     pregister->memory = data_register;
-    if (pmodule->pport_callbacks.on_read_success != NULL) {
-      pmodule->pport_callbacks.on_read_success(pmodule);
+    if (pmodule->pport_callbacks.on_operation_success != NULL) {
+      pmodule->pport_callbacks.on_operation_success(pmodule, &pport_read_data);
     }
   }
   return value;
@@ -393,13 +408,13 @@ __int8_t pport_read_data_bit(parport_module *pmodule, uint8_t PIN, uint8_t *out)
   if (ret < 0) {
     *out = 0x00;
     // leave the parport_register memory block without invoking any side effects!
-    if (pmodule->pport_callbacks.on_read_failure != NULL) {
-      pmodule->pport_callbacks.on_read_failure(pmodule, errno);
+    if (pmodule->pport_callbacks.on_operation_failure != NULL) {
+      pmodule->pport_callbacks.on_operation_failure(pmodule, errno, &pport_read_data_bit);
     }
   } else {
     *out = *out & PIN;
-    if (pmodule->pport_callbacks.on_read_success != NULL) {
-      pmodule->pport_callbacks.on_read_success(pmodule);
+    if (pmodule->pport_callbacks.on_operation_success != NULL) {
+      pmodule->pport_callbacks.on_operation_success(pmodule, &pport_read_data_bit);
     }
   }
   return ret;
@@ -413,8 +428,8 @@ __int8_t pport_read_status(parport_module *pmodule, parport_register *pregister)
   int value = ioctl(pmodule->fd, PPRSTATUS, &status_register);
   if (value < 0) {
     // leave the parport_register memory block without invoking any side effects!
-    if (pmodule->pport_callbacks.on_read_failure != NULL) {
-      pmodule->pport_callbacks.on_read_failure(pmodule, errno);
+    if (pmodule->pport_callbacks.on_operation_failure != NULL) {
+      pmodule->pport_callbacks.on_operation_failure(pmodule, errno, &pport_read_status);
     }
   } else {
     // write the status values
@@ -428,8 +443,8 @@ __int8_t pport_read_status(parport_module *pmodule, parport_register *pregister)
     pregister->bit6 = (status_register & (1 << IEEE1284_PIN_6)) && IEEE1284_LOGIC_ON;
     pregister->bit7 = (status_register & (1 << IEEE1284_PIN_7)) && IEEE1284_LOGIC_ON;
     pregister->memory = status_register;
-    if (pmodule->pport_callbacks.on_read_success != NULL) {
-      pmodule->pport_callbacks.on_read_success(pmodule);
+    if (pmodule->pport_callbacks.on_operation_success != NULL) {
+      pmodule->pport_callbacks.on_operation_success(pmodule, &pport_read_status);
     }
   }
   return value;
@@ -443,13 +458,13 @@ __int8_t pport_read_status_bit(parport_module *pmodule, uint8_t PIN, uint8_t *ou
   if (ret < 0) {
     *out = 0x00;
     // leave the parport_register memory block without invoking any side effects!
-    if (pmodule->pport_callbacks.on_read_failure != NULL) {
-      pmodule->pport_callbacks.on_read_failure(pmodule, errno);
+    if (pmodule->pport_callbacks.on_operation_failure != NULL) {
+      pmodule->pport_callbacks.on_operation_failure(pmodule, errno, &pport_read_status_bit);
     }
   } else {
     *out = *out & PIN;
-    if (pmodule->pport_callbacks.on_read_success != NULL) {
-      pmodule->pport_callbacks.on_read_success(pmodule);
+    if (pmodule->pport_callbacks.on_operation_success != NULL) {
+      pmodule->pport_callbacks.on_operation_success(pmodule, &pport_read_status_bit);
     }
   }
   return ret;
