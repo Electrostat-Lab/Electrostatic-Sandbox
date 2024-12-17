@@ -8,3 +8,5 @@ sudo usermod -a -G dialout $(whoami)
 sudo usermod -a -G lock $(whoami)
 # add the user to the tty group
 sudo usermod -a -G tty $(whoami)
+# add the user to the line printer group for parallel port programming
+sudo usermod -aG lp $(whoami)
