@@ -21,28 +21,51 @@ static inline void on_write_failure(parport_module *module, int err) {
     fprintf(stderr, "Write to parallel port %s Failed %d\n", module->device, err);
 }
 
+static inline void on_operation_success(parport_module *module, void *caller) {
+    if (caller == &pport_open) {
+        on_open_success(module);
+    } else if (caller == &pport_write_data || caller == &pport_write_controls) {
+        on_write_success(module);
+    } else {
+    }
+}
+
+static inline void on_operation_failure(parport_module *module, int err, void *caller) {
+    if (caller == &pport_open) {
+        on_open_failure(module, err);
+    } else if (caller == &pport_write_data || caller == &pport_write_controls) {
+        on_write_failure(module, err);
+    } else {
+    }
+}
+
+
 int main() {
     parport_module pmodule = {
         .device = DEVICE,
         .fd = -1, /* the start */
         .access = O_RDWR,
-        .pport_mode = IEEE1284_MODE_COMPAT};
+        .pport_mode = IEEE1284_MODE_ECP};
 
     parport_register data_register = {
-        .bit0 = IEEE1284_LOGIC_ON,
-        .bit1 = IEEE1284_LOGIC_ON};
+        .bit0 = IEEE1284_LOGIC_OFF,
+        .bit7 = IEEE1284_LOGIC_ON // purple pin on the breadboard (1st row)
+     };
 
     parport_register control_register = {
-        .bit0 = IEEE1284_LOGIC_OFF,
-        .bit1 = IEEE1284_LOGIC_ON,
-        .bit2 = IEEE1284_LOGIC_OFF
+        .bit0 = IEEE1284_LOGIC_ON, /*nStrobe is active LOW*/
+        .bit1 = IEEE1284_LOGIC_OFF,
+        .bit2 = IEEE1284_LOGIC_ON, // grey pin on breadboard (2nd row)
+        .bit3 = IEEE1284_LOGIC_OFF,
+        .bit4 = IEEE1284_LOGIC_OFF,
+        .bit5 = IEEE1284_LOGIC_OFF,
+        .bit6 = IEEE1284_LOGIC_OFF,
+        .bit7 = IEEE1284_LOGIC_OFF,
     };
 
-    pport_init_callbacks(&pmodule, (parport_callbacks) {
-                                       .on_open_success = &on_open_success,
-                                       .on_open_failure = &on_open_failure,
-                                       .on_write_success = &on_write_success,
-                                       .on_write_failure = &on_write_failure});
+    pport_init_callbacks(&pmodule, (parport_callbacks){
+                                       .on_operation_success = &on_operation_success,
+                                       .on_operation_failure = &on_operation_failure});
     pport_open(&pmodule);
     pport_claim(&pmodule);
     pport_load_mode(&pmodule);
