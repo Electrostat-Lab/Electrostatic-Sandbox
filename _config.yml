@@ -12,4 +12,4 @@ kramdown:
   syntax_highlighter: rouge
   syntax_highlighter_opts:
     css_class: 'highlight'
-  
+social_media_banner: https://github.com/Electrostat-Lab/Electrostatic-Sandbox/blob/master/assets/Rounded_Square_Logo_Electrostatic-Sandbox.png
