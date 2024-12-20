@@ -31,8 +31,25 @@
            mermaid.initialize({ startOnLoad: true });
            window.mermaid.init(undefined, document.querySelectorAll('.language-mermaid'));
         </script>
+        <!-- Add SVG.js or another library -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/3.0.16/svg.min.js"></script>
     </head>
     <body class="loading">
+         <script>
+            // Example of using SVG.js to make an SVG element interactive
+            document.addEventListener('DOMContentLoaded', (event) => {
+                var draw = SVG().addTo('body').size(300, 300);
+                var rect = draw.rect(100, 100).attr({ fill: '#f06' });
+
+                rect.on('mouseover', function() {
+                    this.fill({ color: '#0f9' });
+                });
+
+                rect.on('mouseout', function() {
+                    this.fill({ color: '#f06' });
+                });
+            });
+        </script>
         <main>
             <div>
                     <div>
