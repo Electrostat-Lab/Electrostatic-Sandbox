@@ -4,6 +4,8 @@ show_downloads: false
 google_analytics: false
 theme: jekyll-theme-slate
 markdown: kramdown
+plugins:
+  - jekyll-graphviz
 kramdown:
   input: GFM
   syntax_highlighter: rouge
