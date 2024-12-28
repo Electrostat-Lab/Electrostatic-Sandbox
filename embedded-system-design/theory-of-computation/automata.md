@@ -19,3 +19,22 @@ So far the _Automata Models_ are categorized under the _Mathematical Models_ whi
   * Appendix-B: References and More about the Automata theory.
   * Appendix-C: The use of the Automata Theory in Medicine.
   * Appendix-D: A Coding project on the _Electrostatic-Sandbox SDK_.
+
+### Computational Models and the Automata Models
+
+Computational Models are abstract mathematical models that aim to provide miniaturized forms for the systems' components that are of interest to describe a specific phenomenon based on a scientific theory.
+
+> [!NOTE]
+> The Finite-Automata Model is the most basic model in the Automata Theory, in addition, it's considered to be the building unit of other more advanced models (e.g., Pushdown Automatas (PDA) - Turing Machines (TM) - Markov Chains). A finite-state-automaton has a limited memory that is allocated only for the input symbol, and the current state in execution. The more advanced models of the Automata Theory usually have other additional means of memory.
+
+Examples of some systems which can be modeled using the finite-automata model are: 
+* Vending Machines.
+* Automatic doors' controllers.
+* Elevators.
+* Traffic Systems.
+* Electric Railway Systems.
+* Kinematics of Armatures (e.g., Animation Systems in Game Engines).
+* Data manipulation in Flip-flops (e.g., Tabular form of the truth table).
+* The reproductive power of bacterium (e.g., The Cellular automata of binary fusion).
+
+### 
