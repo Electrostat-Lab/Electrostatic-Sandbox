@@ -37,4 +37,8 @@ Examples of some systems which can be modeled using the finite-automata model ar
 * Data manipulation in Flip-flops (e.g., Tabular form of the truth table).
 * The reproductive power of bacterium (e.g., The Cellular automata of binary fusion).
 
-### 
+### The Abstract Mathematical Models (Continuous V.S. Discrete Models)
+
+The Automata Models are classified as discrete mathematical models which explain systems in terms of discrete states and relations (or better described as transition functions) based on the Set Theory. Unlike the automata models, the continuous functions (e.g., differential and integral functions) on the other side of mathematics are utilized as mathematical models for modelling continuous systems (e.g., AC Waveforms - DC Noise Filter Circuits - RC Circuits - Rectification Circuits - Medications plasma half-life). The Automata theory cannot be utilized directly for modelling these continuous systems. Some Modified Automatas known as [_"Hybrid Automata"_](https://link.springer.com/chapter/10.1007/978-3-642-59615-5_13) are commonly used in systems that involve both continuous and discrete behavior (e.g., Analog/Digital Circuits. for example, The Electric Railway Monitoring systems - Temperature monitoring systems).
+
+### Finite Automata Models (D.F.A and N.F.A)
