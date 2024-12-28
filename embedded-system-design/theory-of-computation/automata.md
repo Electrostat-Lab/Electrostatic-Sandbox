@@ -25,7 +25,7 @@ So far the _Automata Models_ are categorized under the _Mathematical Models_ whi
 Computational Models are abstract mathematical models that aim to provide miniaturized forms for the systems' components that are of interest to describe a specific phenomenon based on a scientific theory.
 
 > [!NOTE]
-> The Finite-Automata Model is the most basic model in the Automata Theory, in addition, it's considered to be the building unit of other more advanced models (e.g., Pushdown Automatas (PDA) - Turing Machines (TM) - Markov Chains). A finite-state-automaton has a limited memory that is allocated only for the input symbol, and the current state in execution. The more advanced models of the Automata Theory usually have other additional means of memory.
+> The Finite-Automata Model is the most basic model in the Automata Theory, in addition, it's considered to be the building unit of the other more advanced models (e.g., Pushdown Automatas (PDA) - Turing Machines (TM) - Markov Chains). A finite-state-automaton has a limited memory that is allocated only for an input symbol, and the data of the current state in execution. The more advanced models of the Automata Theory usually have other additional means of memory.
 
 Examples of some systems which can be modeled using the finite-automata model are: 
 * Vending Machines.
