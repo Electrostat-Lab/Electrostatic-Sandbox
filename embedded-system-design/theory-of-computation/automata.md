@@ -51,6 +51,6 @@ Formal Notation:
 > $M = \(Q, \Sigma, \delta, q_0, F\)\$:
 > 1) $$Q$$ is a **finite set of states**.
 > 2) $$\Sigma$$ is a **finite set of the input symbols**, aka. the **alphabets** of the automaton language.
-> 3) $$\delta$$ is the **transition function** $$\delta: Q\ x\ \Sigma\ \implies Q$$, that together with the input symbols define the rules for state transitions.
-> 4) $$q_0\ \in\ Q$$ is the **initial** or the **start** state.
-> 5) $$F \subseteq\ Q$$ is a **finite set of states** representing the **final states** aka. the **accept states**; such that the $$F$$ set is a subset of the $$Q$$. 
+> 3) $$\delta$$ is the **transition function** $$\delta: Q \times \Sigma \implies Q$$, that together with the input symbols define the rules for state transitions.
+> 4) $$q_0 \in Q$$ is the **initial** or the **start** state.
+> 5) $$F \subseteq Q$$ is a **finite set of states** representing the **final states** aka. the **accept states**; such that the $$F$$ set is a subset of the $$Q$$. 
