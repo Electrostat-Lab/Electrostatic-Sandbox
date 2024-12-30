@@ -93,14 +93,17 @@ Formal notation of the deterministic machines:
 > typedef struct automaton (automaton);
 > typedef struct automaton_state (automaton_state);
 > typedef struct automaton_input (automaton_input);
+> typedef struct automaton_processors (automaton_processors);
 > typedef void (*delta)(void *) (automaton_delta);
 > 
 > /**
 > * @brief Provides an abstract construct skeleton to the automaton state.
 > */
 > struct automaton_state {
+>    uint8_t is_initial;
+>    uint8_t is_final;
 >    void *state; // field is not nullable 
->    void *metadata; // field is nullable
+>    void *metadata; // field is nullable for the basic automata
 > };
 >
 > /**
@@ -110,12 +113,23 @@ Formal notation of the deterministic machines:
 >    void *input; // field is not nullable
 >    void *metadata; // metadata are additional data such as: virtual time or time stamps - memory stamps - clock ticks and so on -- field is nullable
 > };
-> 
-> struct automaton {
->    automaton_state *state; // a pointer to the current state
->    automaton_input *input; // a pointer to the current input
->    automaton_delta delta; // a pointer to the transition funcion
+>
+> struct automaton_processors {
+>    void (*init_post_processing)(automaton *);
+>    void (*transition_post_processing)(automaton *);
+>    void (*destroy_post_processing)(automaton *);
 > };
+>
+> /**
+> * @brief Provides an abstract construct skeleton to the automaton machine.
+> */
+> struct automaton {
+>    automaton_state *state; // a pointer to the current state, updated on each transition!
+>    automaton_input *input; // a pointer to the current input, updated on each transition!
+>    automaton_delta delta; // a pointer to the transition funcion, constant along the transition engine!
+> };
+>
+> 
 > 
 > #ifdef __cplusplus
 > }
