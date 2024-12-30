@@ -59,6 +59,13 @@ Formal definition of the non-deterministic machines:
 > The formal definition of a non-deterministic machine is similar to that of its deterministic counterpart. Both have states, an input alphabet, a transition function, a start state, and a set of accepting states. However, they differ in one essential way: in the type of the transition function. In a DFA, the transition function takes a state and an input symbol and produces the next state, while in an NFA, the transition function takes a state and an input symbol or **_an empty string_** and produces **the set of possible next states**. For any set $$Q$$, we write $$P(Q)$$ to be the collection of all subsets of $$Q$$. Here $$P(Q)$$ is called the _power set of $$Q$$_. For any alphabet $$\Sigma$$, we write $$\Sigma_{\epsilon}$$ to be $$\Sigma \cup \epsilon$$; thus the formal description of the type of the transition function in NFA is: $$\delta: Q \times \Sigma_{\epsilon} \rightarrow P(Q)$$.
 
 Formal notation of the deterministic machines:
+> A non-deterministic finite automaton is quintuple (5-tuple) sequence; where
+> $M = \(Q, \Sigma, \delta, q_0, F\)\$:
+> 1) $$Q$$ is a **finite set of states**.
+> 2) $$\Sigma$$ is a **finite set of the input symbols**, aka. the **alphabets** of the automaton language; such that $$\Sigma = \Sigma_{\epsilon}$$; as $$\Sigma_{\epsilon} = \Sigma \cup \epsilon$$ where $$\epsilon$$ is the empty string.
+> 3) $$\delta$$ is the **transition function** $$\delta: Q \times \Sigma_{\epsilon} \rightarrow P(Q)$$, that together with the input symbols define the rules for state transitions.
+> 4) $$q_0 \in Q$$ is the **initial** or the **start** state.
+> 5) $$F \subseteq Q$$ is a **finite set of states** representing the **final states** aka. the **accept states**; such that the $$F$$ set is a subset of the $$Q$$. 
 
 > [!TIP]
 > Some vague terms are ought to be defined so far:
