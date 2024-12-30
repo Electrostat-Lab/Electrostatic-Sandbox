@@ -51,7 +51,7 @@ Formal Notation:
 > $M = \(Q, \Sigma, \delta, q_0, F\)\$:
 > 1) $$Q$$ is a **finite set of states**.
 > 2) $$\Sigma$$ is a **finite set of the input symbols**, aka. the **alphabets** of the automaton language.
-> 3) $$\delta$$ is the **transition function** $$\delta: Q \times \Sigma \implies Q$$, that together with the input symbols define the rules for state transitions.
+> 3) $$\delta$$ is the **transition function** $$\delta: Q \times \Sigma \rightarrow Q$$, that together with the input symbols define the rules for state transitions.
 > 4) $$q_0 \in Q$$ is the **initial** or the **start** state.
 > 5) $$F \subseteq Q$$ is a **finite set of states** representing the **final states** aka. the **accept states**; such that the $$F$$ set is a subset of the $$Q$$. 
 
@@ -60,5 +60,5 @@ Formal Notation:
 > 1) _The Language of the Automaton_: the set of all strings that the machine _M_ accepts, and is better be defined formally using the set builder notation (e.g., $$L(M) = [s\ |\ s$$ _is a string composed of the alphabets_ $$\Sigma \land Rule_1 \land ...]$$).
 > 2) _Finite State Recognizers_: abstract machines used to determine whether a given input string belongs to a particular language, as defined by a formal grammar.
 > 3) _State-State Relations_: are defined by the transition functions, which are functions in case of the deterministic machines and relations and/or partial functions in case of the non-deterministic machines.
-> 4) _Deterministic Automaton_: a deterministic machine defines a unique transition function for each pair of state $q_n$ and input $\sigma_n$; the output of the function is deterministically the next state $q_{n + 1}$; thus the following holds and can be used to define the set for the output states: $$Q_{out} = \delta     
+> 4) _Deterministic Automaton_: a deterministic machine defines a unique transition function for each pair of state $q_n$ and input $\sigma_n$; the output of the function is deterministically the next state $q_{n + 1}$; thus the following holds and can be used to define the set for the output states: $$Q_{out} = [\bigcup_{i = 0}^n \delta(q_i, \sigma_i) \rightarrow [q_{i + 1}]] = [q \in Q | \delta(q_i, \sigma_i) = q_{i + 1};\ where\ i <= n]$$     
 > 6) _Non-deterministic Automaton_:
