@@ -61,4 +61,4 @@ Formal Notation:
 > 2) _Finite State Recognizers_: abstract machines used to determine whether a given input string belongs to a particular language, as defined by a formal grammar.
 > 3) _State-State Relations_: are defined by the transition functions, which are functions in case of the deterministic machines and relations and/or partial functions in case of the non-deterministic machines.
 > 4) _Deterministic Automaton_: a deterministic machine defines a unique transition function for each pair of state $q_n$ and input $\sigma_n$; the output of the function is deterministically the next state $q_{n + 1}$; thus the following holds and can be used to define the set for the output states: $$Q_{out} = [\bigcup_{i = 0}^n \delta(q_i, \sigma_i) \rightarrow [q_{i + 1}]] = [q \in Q | \delta(q_i, \sigma_i) = q_{i + 1};\ where\ i <= n]$$     
-> 6) _Non-deterministic Automaton_:
+> 6) _Non-deterministic Automaton_: a non-deterministic machine defines a non-unique transition function for each pair of state $q_n$ and input $\sigma_n$, in other words the transition from the state $q_n$ with the input $\sigma_n$ is not pre-determined 
