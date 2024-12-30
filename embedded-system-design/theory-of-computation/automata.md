@@ -43,10 +43,10 @@ The Automata Models are classified as discrete mathematical models which explain
 
 ### Finite Automata Models (D.F.A and N.F.A)
 
-Formal definition: 
-> A finite automaton or a state-machine "M" is a 5-tuple sequence composed of $$Q$$ representing a finite set of states, $$\Sigma$$ representing a finite set of input symbols known as the "alphabet of the language of the automaton", $$\delta$$ is the transition function of the automaton and together with the members of $$\Sigma$$ they lay down the rules for transiting from a state to another, $$q_0$$ representing the initial state of the machine; where $$q_{0}\ \in\ Q$$, and $$F$$ representing the set of the final accepting states; where $$F\ \subseteq\ Q$$, which together with the initial states are used to define the set of the regular expressions that are recognizable by the automaton "M", also known as the Language of M or $$L(M)$$.
+Formal definition of the deterministic machines: 
+> A deterministic finite automaton or a state-machine "M" is a 5-tuple sequence composed of $$Q$$ representing a finite set of states, $$\Sigma$$ representing a finite set of input symbols known as the "alphabet of the language of the automaton", $$\delta$$ is the transition function of the automaton and together with the members of $$\Sigma$$ they lay down the rules for transiting from a state to another, $$q_0$$ representing the initial state of the machine; where $$q_{0}\ \in\ Q$$, and $$F$$ representing the set of the final accepting states; where $$F\ \subseteq\ Q$$, which together with the initial states are used to define the set of the regular expressions that are recognizable by the automaton "M", also known as the Language of M or $$L(M)$$.
 
-Formal Notation:
+Formal Notation of the deterministic machines:
 > A finite automaton is quintuple (5-tuple) sequence; where
 > $M = \(Q, \Sigma, \delta, q_0, F\)\$:
 > 1) $$Q$$ is a **finite set of states**.
@@ -54,6 +54,11 @@ Formal Notation:
 > 3) $$\delta$$ is the **transition function** $$\delta: Q \times \Sigma \rightarrow Q$$, that together with the input symbols define the rules for state transitions.
 > 4) $$q_0 \in Q$$ is the **initial** or the **start** state.
 > 5) $$F \subseteq Q$$ is a **finite set of states** representing the **final states** aka. the **accept states**; such that the $$F$$ set is a subset of the $$Q$$. 
+
+Formal definition of the non-deterministic machines:
+> The formal definition of a non-deterministic machine is similar to that of its deterministic counterpart. Both have states, an input alphabet, a transition function, a start state, and a set of accepting states. However, they differ in one essential way: in the type of the transition function. In a DFA, the transition function takes a state and an input symbol and produces the next state, while in an NFA, the transition function takes a state and an input symbol or **_an empty string_** and produces **the set of possible next states**. For any set $$Q$$, we write $$P(Q)$$ to be the collection of all subsets of $$Q$$. Here $$P(Q)$$ is called the _power set of $$Q$$_. For any alphabet $$\Sigma$$, we write $$\Sigma_{\epsilon}$$ to be $$\Sigma \cup \epsilon$$; thus the formal description of the type of the transition function in NFA is: $$\delta: Q \times \Sigma_{\epsilon} \rightarrow P(Q)$$.
+
+Formal notation of the deterministic machines:
 
 > [!TIP]
 > Some vague terms are ought to be defined so far:
@@ -63,7 +68,8 @@ Formal Notation:
 >  
 > 3) _State-State Relations_: are defined by the transition functions, which are functions in case of the deterministic machines and relations and/or partial functions in case of the non-deterministic machines.
 > 
-> 4) _Deterministic Automaton_: a deterministic machine defines a unique transition function for each pair of state $q_i$ and input $\sigma_{i + 1}$; where $$i \in N$$ is the index of the current state in the collection $$Q$$, and $$(i + 1) \in N$$ is an arbitrary number representing the position of the input $$\sigma$$ in the collection $$\Sigma$$, the output of the function is deterministically the next state $q_{i + 1}$; where $$0 <= i < n$$ and $$n \in N$$ is an arbitrary number representing the index of the final accepting state; thus the following holds and can be used to define the set for the output states: $Q_{out} = [\bigcup_{i = 0}^{n - 1} \delta(q_i, \sigma_{i + 1}) \rightarrow [q_{i + 1}]] = [q \in Q | \delta(q_i, \sigma_{i + 1}) = q_{i + 1};\ where\ 0 <= i < n \land n \in N]$
+> 4) _Deterministic Automaton (Revisited)_: a deterministic machine defines a unique transition function for each pair of state $q_i$ and input $\sigma_{i + 1}$; where $$i \in N$$ is the index of the current state in the collection $$Q$$, and $$(i + 1) \in N$$ is an arbitrary number representing the position of the input $$\sigma$$ in the collection $$\Sigma$$, the output of the function is deterministically the next state $q_{i + 1}$; where $$0 <= i < n$$ and $$n \in N$$ is an arbitrary number representing the index of the final accepting state; thus the following holds and can be used to define the set for the output states: $Q_{out} = [\bigcup_{i = 0}^{n - 1} \delta(q_i, \sigma_{i + 1}) \rightarrow [q_{i + 1}]] = [q \in Q | \delta(q_i, \sigma_{i + 1}) = q_{i + 1};\ where\ 0 <= i < n \land n \in N]$
 > 
-> 5) _Non-deterministic Automaton_: a non-deterministic machine defines a non-unique transition function for each pair of state $q_i$ and input $\sigma_{i + 1}$, in other words the transition from the state $q_i$ with the input $\sigma_{i + 1}$ is not pre-determined, thus we can define the transition function as $$\delta (q_{i}, \sigma_{i + 1}) \rightarrow P(Q)$$; where $$P(Q)$$ is the power set of Q of cardinality $$|P(Q)| = 2^{|Q|}$$, and the set for the output states of this machine as $Q_{out} = [\bigcup_{i = 0}^{n - 1} \delta(q_i, \sigma_{i + 1}) \rightarrow P(Q)] = [q \in P(Q) | \delta(q_i, \sigma_{i + 1}) = q_{i + 1};\ where\ 0 <= i < n \land n \in N]$.
+> 5) _Non-deterministic Automaton (Revisited)_: a non-deterministic machine defines a non-unique transition function for each pair of state $q_i$ and input $\sigma_{i + 1}$, in other words the transition from the state $q_i$ with the input $\sigma_{i + 1}$ is not pre-determined, thus we can define the transition function as $$\delta (q_{i}, \sigma_{i + 1}) \rightarrow P(Q)$$; where $$P(Q)$$ is the power set of Q of cardinality $$|P(Q)| = 2^{|Q|}$$, and the set for the output states of this machine as $Q_{out} = [\bigcup_{i = 0}^{n - 1} \delta(q_i, \sigma_{i + 1}) \rightarrow P(Q)] = [q \in P(Q) | \delta(q_i, \sigma_{i + 1}) = q_{i + 1};\ where\ 0 <= i < n \land n \in N]$.
+
 
