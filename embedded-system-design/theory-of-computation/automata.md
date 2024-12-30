@@ -78,5 +78,49 @@ Formal notation of the deterministic machines:
 > 4) _Deterministic Automaton (Revisited)_: a deterministic machine defines a unique transition function for each pair of state $q_i$ and input $\sigma_{i + 1}$; where $$i \in N$$ is the index of the current state in the collection $$Q$$, and $$(i + 1) \in N$$ is an arbitrary number representing the position of the input $$\sigma$$ in the collection $$\Sigma$$, the output of the function is deterministically the next state $q_{i + 1}$; where $$0 <= i < n$$ and $$n \in N$$ is an arbitrary number representing the index of the final accepting state; thus the following holds and can be used to define the set for the output states: $Q_{out} = [\bigcup_{i = 0}^{n - 1} \delta(q_i, \sigma_{i + 1}) \rightarrow [q_{i + 1}]] = [q \in Q | \delta(q_i, \sigma_{i + 1}) = q_{i + 1};\ where\ 0 <= i < n \land n \in N]$
 > 
 > 5) _Non-deterministic Automaton (Revisited)_: a non-deterministic machine defines a non-unique transition function for each pair of state $q_i$ and input $\sigma_{i + 1}$, in other words the transition from the state $q_i$ with the input $\sigma_{i + 1}$ is not pre-determined, thus we can define the transition function as $$\delta (q_{i}, \sigma_{i + 1}) \rightarrow P(Q)$$; where $$P(Q)$$ is the power set of Q of cardinality $$|P(Q)| = 2^{|Q|}$$, and the set for the output states of this machine as $Q_{out} = [\bigcup_{i = 0}^{n - 1} \delta(q_i, \sigma_{i + 1}) \rightarrow P(Q)] = [q \in P(Q) | \delta(q_i, \sigma_{i + 1}) = q_{i + 1};\ where\ 0 <= i < n \land n \in N]$.
+>
+> 6) A quick guess to a typical GNU/C99 code that models the automaton constructs; it essentially uses the _proof by construction_ to construct the automaton:
+> ```c
+> #ifndef __AUTOMATA_H__
+> #define __AUTOMATA_H__
+> // insert headers here ...
+>
+> // shutdown C++ name mangling for effective C backward compatibility 
+> #ifdef __cplusplus
+> extern "C" {
+> #endif
+>
+> typedef struct automaton (automaton);
+> typedef struct automaton_state (automaton_state);
+> typedef struct automaton_input (automaton_input);
+> typedef void (*delta)(void *) (automaton_delta);
+> 
+> /**
+> * @brief Provides an abstract construct skeleton to the automaton state.
+> */
+> struct automaton_state {
+>    void *state; // field is not nullable 
+>    void *metadata; // field is nullable
+> };
+>
+> /**
+> * @brief Provides an abstract construct skeleton to the automaton input.
+> */
+> struct automaton_input {
+>    void *input; // field is not nullable
+>    void *metadata; // metadata are additional data such as: virtual time or time stamps - memory stamps - clock ticks and so on -- field is nullable
+> };
+> 
+> struct automaton {
+>    automaton_state *state; // a pointer to the current state
+>    automaton_input *input; // a pointer to the current input
+>    automaton_delta delta; // a pointer to the transition funcion
+> };
+> 
+> #ifdef __cplusplus
+> }
+> #endif
+> #endif 
+> ```
 
 
