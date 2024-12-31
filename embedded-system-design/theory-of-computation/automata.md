@@ -79,11 +79,15 @@ Formal notation of the deterministic machines:
 > 
 > 5) _Non-deterministic Automaton (Revisited)_: a non-deterministic machine defines a non-unique transition function for each pair of state $q_i$ and input $\sigma_{i + 1}$, in other words the transition from the state $q_i$ with the input $\sigma_{i + 1}$ is not pre-determined, thus we can define the transition function as $$\delta (q_{i}, \sigma_{i + 1}) \rightarrow P(Q)$$; where $$P(Q)$$ is the power set of Q of cardinality $$|P(Q)| = 2^{|Q|}$$, and the set for the output states of this machine as $Q_{out} = [\bigcup_{i = 0}^{n - 1} \delta(q_i, \sigma_{i + 1}) \rightarrow P(Q)] = [q \in P(Q) | \delta(q_i, \sigma_{i + 1}) = q_{i + 1};\ where\ 0 <= i < n \land n \in N]$.
 >
-> 6) A quick guess to a typical GNU/C99 code that models the automaton constructs; it essentially uses the _proof by construction_ to construct the automaton:
+> 6) A quick guess to a typical GNU/C99 prototype abstraction that models the automaton constructs; it essentially uses the _proof by construction_ to construct the automaton by putting the most peculiar rule in-mind; which states that _an automaton uses a limited memory and is a quintuple sequence_:
 > ```c
 > #ifndef __AUTOMATA_H__
 > #define __AUTOMATA_H__
-> // insert headers here ...
+>
+> // insert pre-processor directives here ...
+> 
+> #include <inttypes.h>
+> #include <stdlib.h>
 >
 > // shutdown C++ name mangling for effective C backward compatibility 
 > #ifdef __cplusplus
@@ -93,12 +97,13 @@ Formal notation of the deterministic machines:
 > typedef struct automaton (automaton);
 > typedef struct automaton_state (automaton_state);
 > typedef struct automaton_input (automaton_input);
+> typedef struct automaton_transition_complex (automaton_transition_complex);
 > typedef struct automaton_processors (automaton_processors);
 > typedef void (*delta)(void *) (automaton_delta);
 > 
 > /**
-> * @brief Provides an abstract construct skeleton to the automaton state.
-> */
+>  * @brief Provides an abstract construct skeleton to the automaton state.
+>  */
 > struct automaton_state {
 >    uint8_t is_initial;
 >    uint8_t is_final;
@@ -107,29 +112,71 @@ Formal notation of the deterministic machines:
 > };
 >
 > /**
-> * @brief Provides an abstract construct skeleton to the automaton input.
-> */
+>  * @brief Provides an abstract construct skeleton to the automaton input.
+>  */
 > struct automaton_input {
->    void *input; // field is not nullable
->    void *metadata; // metadata are additional data such as: virtual time or time stamps - memory stamps - clock ticks and so on -- field is nullable
+>    /**
+>     * Field is not nullable.
+>     */ 
+>    void *input;
+>
+>    /**
+>     * Metadata are additional data such as:
+>     * virtual time or time stamps - memory stamps - clock ticks and so on -
+>     * field is nullable.
+>     */
+>    void *metadata;
+> };
+>
+> /**
+>  * @brief A triplet sequence representing the next transition complex.
+>  */
+> struct automaton_transition_complex {
+>    automaton_state *next_state;
+>    automaton_input *next_input;
+>    void *metadata; 
 > };
 >
 > struct automaton_processors {
 >    void (*init_post_processing)(automaton *);
 >    void (*transition_post_processing)(automaton *);
+>    void (*transition_failure_post_processing)(automaton *);
+>    void (*start_state_processing)(automaton *);
+>    void (*accepting_state_processing)(automaton *);
 >    void (*destroy_post_processing)(automaton *);
 > };
 >
 > /**
-> * @brief Provides an abstract construct skeleton to the automaton machine.
-> */
+>  * @brief A quadruple sequence providing
+>  * an abstract construct skeleton to the automaton machine.
+>  */
 > struct automaton {
->    automaton_state *state; // a pointer to the current state, updated on each transition!
->    automaton_input *input; // a pointer to the current input, updated on each transition!
->    automaton_delta delta; // a pointer to the transition funcion, constant along the transition engine!
+>    /**
+>     * A pointer to the current state, updated on each transition.
+>     * - Default value: an address to the start state q0.
+>     */
+>    automaton_state *state;
+>
+>    /**
+>     * A pointer to the current input, updated on each transition.
+>     * - Default value: an address to the first input in the alphabet
+>     * of the language of the automaton.
+>     */
+>    automaton_input *input;
+> 
+>    /**
+>     * A pointer to the transition funcion, constant along the transition engine.
+>     */
+>    automaton_delta delta;
+>
+>    void *metadata;
 > };
 >
-> 
+> uint8_t automaton_init(automaton *machine);
+>
+> uint8_t automaton_destroy(automaton *machine);
+>
+> uint8_t automaton_transit(automaton *machine, automaton_transition_complex *transition);
 > 
 > #ifdef __cplusplus
 > }
