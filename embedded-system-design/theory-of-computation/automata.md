@@ -99,7 +99,7 @@ Formal notation of the deterministic machines:
 > typedef struct automaton_input (automaton_input);
 > typedef struct automaton_transition_complex (automaton_transition_complex);
 > typedef struct automaton_processors (automaton_processors);
-> typedef void (*delta)(void *) (automaton_delta);
+> typedef automaton_state *(*delta)(automaton_input *) (automaton_delta);
 > 
 > /**
 >  * @brief Provides an abstract construct skeleton to the automaton state.
@@ -142,7 +142,7 @@ Formal notation of the deterministic machines:
 >    void (*transition_post_processing)(automaton *);
 >    void (*transition_failure_post_processing)(automaton *);
 >    void (*start_state_processing)(automaton *);
->    void (*accepting_state_processing)(automaton *);
+>    void (*accept_state_processing)(automaton *);
 >    void (*destroy_post_processing)(automaton *);
 > };
 >
