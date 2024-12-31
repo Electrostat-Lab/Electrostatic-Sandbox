@@ -98,6 +98,8 @@ Formal notation of the deterministic machines:
 > typedef struct automaton_state (automaton_state);
 > typedef struct automaton_input (automaton_input);
 > typedef struct automaton_transition_complex (automaton_transition_complex);
+> typedef struct automaton_pattern (automaton_pattern);
+> typedef struct automaton_recognizer (automaton_recognizer);
 > typedef struct automaton_processors (automaton_processors);
 > typedef automaton_state *(*delta)(automaton_input *) (automaton_delta);
 > 
@@ -172,11 +174,44 @@ Formal notation of the deterministic machines:
 >    void *metadata;
 > };
 >
+> struct automaton_pattern {
+>    automaton_transition_complex *start_address;
+>    automaton_transition_complex *end_address;
+> };
+>
+> struct automaton_recognizer {
+>    /**
+>     * @brief Provides a complex binary-tuple representing
+>     * the Sigma and the Q collections.
+>     */
+>    automaton_transition_complex **reference_complexes;
+>
+>    /**
+>     * @brief Provdies clamping maneuvers to synthesis a
+>     * word from the alphabet of the automaton
+>     * (i.e., the reference complexes).
+>     */
+>    automaton_pattern *pattern;
+> };
+>
 > uint8_t automaton_init(automaton *machine);
 >
 > uint8_t automaton_destroy(automaton *machine);
 >
 > uint8_t automaton_transit(automaton *machine, automaton_transition_complex *transition);
+>
+> /**
+>  * @brief Automaton Pattern recognizer is a finite machine that
+>  * tests whether a specific pattern of addresses is recognizable in this
+>  * automaton. A transition complex sequence (i.e., the string in formal languages) is
+>  * said to be recognized if and only if the final member in the sequence collection
+>  * `automaton_transition_complex`, that is synethesized from the automaton alphabet, contains
+>  * an accepting state, However, if this condition cannot be met; then the memory pattern
+>  * is said not to be recognizable under this automaton recognizer machine. If the recognition
+>  * operation is a success, the recognition success processer will be invoked, otherwise if the
+>  * machine doesn't accept then the recognition failure processor will be invoked.
+>  */
+> uint8_t automaton_recognizer(automaton *machine, automaton_recognizer *recognizer);
 > 
 > #ifdef __cplusplus
 > }
