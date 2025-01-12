@@ -143,6 +143,8 @@ Formal notation of the deterministic machines:
 >    void (*init_post_processing)(automaton *);
 >    void (*transition_post_processing)(automaton *);
 >    void (*transition_failure_post_processing)(automaton *);
+>    void (*automaton_pattern_accepted)(automaton *, automaton_recognizer *);
+>    void (*automaton_pattern_rejected)(automaton *, automaton_recognizer *);
 >    void (*start_state_processing)(automaton *);
 >    void (*accept_state_processing)(automaton *);
 >    void (*destroy_post_processing)(automaton *);
@@ -218,5 +220,10 @@ Formal notation of the deterministic machines:
 > #endif
 > #endif 
 > ```
+>
+> In this API, it's said that a memory pattern is recognized if the following 2 conditions are met (Conditions for the pattern recognizer algorithm):
+> 1) The `automaton_pattern` represents a start address and an end address for a string from the alphabet collection (i.e., `automaton_transition_complex`).
+> 2) The `automaton_pattern` start address coincides with a transition complex that when unwrapped contains a next state marked as _a start state to initiate the automaton_, and the end address coincides with _a transition to a final accepting state to terminate the automaton_ with the invocation of the `automaton_pattern_accepted` processor. In case of the transition processing reached the end address, and the end address is not coincident with a transition complex that contains a final accepting state; the transition processor exits, and the `automaton_pattern_rejected` processor is invoked. Likewise, if the start address of the `automaton_pattern` is not coincident with a state marked as a start state, the transition processor exits, and the `automaton_pattern_rejected` processor is invoked.
+>
 
 
