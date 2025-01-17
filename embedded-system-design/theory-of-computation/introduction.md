@@ -37,7 +37,16 @@ This document will present some prerequisite definitions and formal representati
    * 
 
 ## Permutations
+- **Definition**: _**Permutations**_ are sequences selected from sets of members (alternatively, later described as **subsets of sets** when dealing with the mathematical formulas); such that the order matters, and the _repetition properties_ are specified. 
+- **Formula**: Recall that _A_ is a set of objects of cardinality $$|A| = n$$ members;
+   * A permutation of A is the number of all the possible subsequences of A taken $$|A|$$ at a time; **given the property of no repetition of the permutated objects**:
+      $$_nP_n = \prod\_{i = 0}^{(n - 1)} (n - i) = \frac{n!}{(n - n)!} = n! = n.(n-1).(n-2).(n-3)...(n-(n-2)).(n-(n-1))$$. 
+   * A permutation of A taken _r_ at a time is the number of all the possible subsequences of A taken _r_ at a time (aka. subsequences constructed with cardinality of _r_); such that $$1 <= r <= n$$, and **given the property of no repetition of the permutated objects**: $$_rP_n = \prod\_{i = 0}^{(r - 1)} (n - i) = \frac{n!}{(n - r)!} = n.(n-1).(n-2).(n-3)....(n-(r-2)).(n-(r-1))$$.
+   * A permutation of A taken _r_ at a time is the number of all the possible subsequences of A taken _r_ at a time; such that $$1 <= r <= n$$, and **given the property of allowed repetitions of the permutated objects**; such that the first member $m_0$ repeats $k_0$ number of times, the second member $m_1$ repeats $k_1$ number of times, and so on till member $m_n$; where n is the total number of objects in set A: $$
+
 
 ## Combinatorics
+- **Definition**: _**Combinations**_ are subsets selected from sets of members; such that the order doesn't matter, and the _repetition properties_ are specified; hence, the uniqueness of a subset chosen over a set of member is defined by the objects selected, and their count in that subset.
+- **Formula**:
 
 ## Mathematical Models
