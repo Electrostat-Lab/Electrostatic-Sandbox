@@ -1,6 +1,6 @@
 # Introduction
 
-This document will present some prerequisite definitions and formal representations for the Sets and the Relations, alongside some examples from the proof theory that will be used in the "Theory of Computation".
+This document will present some prerequisite definitions and formal representations for the Sets and the Relations, alongside some examples from the proof theory that will be used in the _"Theory of Computation"_.
 
 ## Sets: 
 - Definition: A group of objects represented as a unit. A set may contain any type of objects, including numbers, symbols, and even other sets. The objects in a set are called **elements** or **members**.
@@ -56,11 +56,11 @@ This document will present some prerequisite definitions and formal representati
 > * _Lemma.04_: Recall that _C_ is a sequence of objects taken from the set _A_; **given the property of repetitions of members are not allowed within the sequence**, and $$|C| <= |A|$$; then: if the number of possible configurations of sequence _C_ of set _A_ taken $$n$$ at a time is $$\prod_{i = 0}^{(n-1)} (n - i)$$; then let $$n = |C|$$, and whence $$|C| <= |A|$$ thence $$n <= |A|$$; therefore we can rewrite the formula as: $$\prod_{i = 0}^{(r-1)} (n - i)$$; where $$1 <= r <= n$$.
 > 
 
-
 ## Combinations
 - **Definition**: _**Combinations**_ are subsets selected from sets of members; such that the order doesn't matter, and the _repetition properties_ are specified; hence, the uniqueness of a subset chosen over a set of member is defined by the objects selected, and their count in that subset.
-- **Formula**: Recall that _A_ is a set of objects of cardinality $$|A| = n$$ members; hence, let the number of permutations of A taken _r_ at a time is $$_rP_n = \prod\_{i = 0}^{(r - 1)} (n - i)$$ according to the **multiplicative principle of counting**:
--
+- **Formula**: Recall _A_ is a set of objects of cardinality $|A| = n$ members; 
+   * The number of combinations of _A_ taken _r_ at a time is the number of all the possible subsets of _A_ of cardinality _r_; **given the property of repetitions are not allowed**, and $$1 <= r <= n$$: $$_rC_n = \frac{_rP_n}{\prod\_{i = 0}^{(r-1)} (r - i)} = \frac{_rP_n}{r!}$$.
+   * The number of combinations of _A_ taken _r_ at a time is the number of all the possible subsets of _A_ of cardinality _r_; **given the property of allowed repetitions; such that **given the property of allowed repetitions of the permutated objects**; such that the first member $m_0$ repeats $k_0$ number of times, the second member $m_1$ repeats $k_1$ number of times, and so on till member $m_{n-1}$, and $$\sum_{i = 0}^{(n-1)} (k_i) <= n$$ is $$_rC_n^{\\{k_0, k_1, ...k\_{n-1}\\}} = \frac{_rP_n^{\\{k_0, k_1, ...k\_{n-1}\\}}}{\prod\_{i = 0}^{(r-1)} (r - i)}$$.
 
 > [!TIP]
 > Derivation of the combination number
