@@ -63,12 +63,9 @@ This document will present some prerequisite definitions and formal representati
    * The number of combinations of _A_ taken _r_ at a time is the number of all the possible subsets of _A_ of cardinality _r_; **given the property of allowed repetitions; such that **given the property of allowed repetitions of the permutated objects**; such that the first member $m_0$ repeats $k_0$ number of times, the second member $m_1$ repeats $k_1$ number of times, and so on till member $m_{n-1}$, and $$\sum_{i = 0}^{(n-1)} (k_i) <= n$$ is $$_rC_n^{\\{k_0, k_1, ...k\_{n-1}\\}} = \frac{_rP_n^{\\{k_0, k_1, ...k\_{n-1}\\}}}{\prod\_{i = 0}^{(r-1)} (r - i)}$$.
 
 > [!TIP]
-> Derivation of the combination number
-> Recall that _A_ is a set of objects of cardinality $$|A| = n$$ members; hence, let the number of permutations of A taken _r_ at a time is $$_rP_n = \prod\_{i = 0}^{(r - 1)} (n - i)$$ according to the **multiplicative principle of counting**:
--  
-
-## Permutations and Combinations by Proof
-
-
+> **Derivation of the combination number from the number of permutations over the same cardinality:**
+> * Recall that _A_ is a set of objects of cardinality $$|A| = n$$ number of members, _B_ is a subsequence over _A_ of cardinality _r_, and _C_ is a subset over _A_ of cardinality _r_, and **given repetitions of the members within the collections are not allowed**; where $$1 <= r <= n$$.
+> * Now, if the number of all the possible permutations provided for _B_ over the set _A_ is: $$_rP\_n = \prod\_{i = 0}^{(r-1)} (n - i)$$.
+> * Then, the number of all possible combinations of the _C_ subset of cardinality _r_ multiplied by the number of permutations over an r-element combination is the same as $$_rP\_n$$; hence $$C.\prod\_{i = 0}^{(r-1)} (r - i) = _rP_n$$, and therefore, the number of combinations of set _A_ taken _r_ at a time is: $$_rC_n = \frac{_rP_n}{\prod\_{i = 0}^{(r-1)} (r - i)} = \frac{_rP_n}{r!} = \frac{_rP_n}{_rP_r}$$.
 
 ## Mathematical Models
