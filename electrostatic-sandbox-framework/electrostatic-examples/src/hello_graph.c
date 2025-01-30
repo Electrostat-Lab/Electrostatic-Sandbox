@@ -1,5 +1,6 @@
 /**
  * @brief Displays a representation of a graph using edges and edge paths mathematical structures.
+ *
  * @author pavl_g
  */
 #include <electrostatic/electronetsoft/algorithm/arithmos/graph/math_structs.h>
