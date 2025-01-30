@@ -8,16 +8,22 @@
 #include <limits.h>
 #include <math.h>
 
-#define __INFINITY INT_MAX
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 typedef struct dijkstra_processors (dijkstra_processors);
 typedef struct dijkstra_structure (dijkstra_structure);
 
 struct dijkstra_processors {
     void (*initializing_vertices_processor)(dijkstra_structure *);
+
     void (*on_lesser_vertex_found)(dijkstra_structure *, path *);
+
     void (*lesser_vertex_retrieval_processor)(dijkstra_structure *, path *);
+
     void (*update_path_processor)(dijkstra_structure *);
+
     void (*dijkstra_destroy_processor)(dijkstra_structure *);
 };
 
@@ -50,5 +56,9 @@ uint8_t dijkstra_start(dijkstra_structure *d_struct, int start, int end, path *o
  * @return (1) for failure, or (0) otherwise.
  */
 uint8_t dijkstra_destroy(dijkstra_structure *d_struct);
+
+#ifdef __cplusplus
+};
+#endif
 
 #endif
