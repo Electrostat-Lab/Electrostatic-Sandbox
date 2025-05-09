@@ -2,6 +2,7 @@
 #define __DIJKSTRA_ALGO__
 
 #include <electrostatic/electronetsoft/algorithm/arithmos/graph/math_structs.h>
+#include <electrostatic/electronetsoft/util/types.h>
 #include <inttypes.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -17,13 +18,9 @@ typedef struct dijkstra_structure (dijkstra_structure);
 
 struct dijkstra_processors {
     void (*initializing_vertices_processor)(dijkstra_structure *);
-
     void (*on_lesser_vertex_found)(dijkstra_structure *, path *);
-
     void (*lesser_vertex_retrieval_processor)(dijkstra_structure *, path *);
-
     void (*update_path_processor)(dijkstra_structure *);
-
     void (*dijkstra_destroy_processor)(dijkstra_structure *);
 };
 
