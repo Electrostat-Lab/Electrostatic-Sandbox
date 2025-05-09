@@ -33,28 +33,24 @@
 
 #include <stddef.h>
 #include <stdint.h>
+#include <inttypes.h>
+#include <stddef.h>
+#include <electrostatic/electronetsoft/algorithm/arithmos/memory/patcher.h>
+#include <electrostatic/electronetsoft/util/utilities.h>
+#include <electrostatic/electronetsoft/util/types.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include <inttypes.h>
-#include <stdlib.h>
-#include <electrostatic/electronetsoft/algorithm/arithmos/memory/patcher.h>
-#include <electrostatic/electronetsoft/util/errno/errno.h>
-
-typedef struct list(list);
-typedef struct list_info(list_info);
-typedef enum list_type(list_type);
-typedef struct list_element(list_element);
-typedef struct list_function_table(list_function_table);
-
 enum list_type {
   CONTIGUOUS_BUFFER,
-  LINKED_NODES
+  LINKED_BUFFER
 };
 
 struct list_element {
   void *data;
+  void *metadata;
   size_t size;
 };
 
@@ -71,28 +67,29 @@ struct list {
   memory_partition elements_memory;
   uint64_t length;
   uint64_t limit;
-  errno error; //dereference and examine just in case an errno is thrown value is always > 0
 };
 
 struct list_function_table {
-  uint8_t (*contains)(list *, list_element *);
-  void (*iterator)(list *, list_info, void (*callback)(list *, list_element *));
-  uint8_t (*add)(list *, list_element *);
-  list_element *(*get)(list *, uint64_t);
-  uint8_t (*indexof)(list *, list_element *, uint64_t *);
-  uint8_t (*resize)(list *, uint16_t);
-  uint8_t (*update_buffer_size)(list *, void *);
-  uint8_t (*remove_by_element)(list *, list_element *);
-  uint8_t (*remove_by_index)(list *, uint64_t);
-  uint8_t (*contains_all)(list *, list_element **);
-  uint8_t (*add_all)(list *, list_element **);
-  uint8_t (*remove_all)(list *, list_element **);
-  uint8_t (*retains_all)(list *, list_element **);
-  list_element *(*get_start_address)(list *);
-  list_element *(*get_end_address)(list *);
+  status_code (*contains)(list *, list_element *);
+  status_code (*iterator)(list *, list_info, void (*callback)(list *, list_element *));
+  status_code (*add)(list *, list_element *);
+  status_code (*get)(list *, uint64_t, list_element **);
+  status_code (*index_of)(list *, list_element *, uint64_t *);
+  status_code (*resize)(list *, uint16_t);
+  status_code (*update_buffer_size)(list *, void *);
+  status_code (*remove_by_element)(list *, list_element *);
+  status_code (*remove_by_index)(list *, uint64_t);
+  status_code (*contains_all)(list *, list_element **);
+  status_code (*add_all)(list *, list_element **);
+  status_code (*remove_all)(list *, list_element **);
+  status_code (*retains_all)(list *, list_element **);
+  status_code (*get_start_address)(list *, list_element **);
+  status_code (*get_end_address)(list *, list_element **);
+  api_lifecycle *lifecycle;
 };
 
-uint8_t init_list_function_table(list *, list_element **, list_function_table *);
+status_code init_list_function_table(list *, list_element **,
+                                     list_function_table *, api_lifecycle *lifecycle);
 
 #ifdef __cplusplus
 }

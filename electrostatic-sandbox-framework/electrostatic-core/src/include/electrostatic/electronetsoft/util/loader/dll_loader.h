@@ -8,12 +8,9 @@ extern "C" {
 
 #include <stdint.h>
 #include <dlfcn.h>
-#include <electrostatic/electronetsoft/util/errno/errno.h>
+#include <electrostatic/electronetsoft/util/utilities.h>
 #include <electrostatic/electronetsoft/algorithm/arithmos/memory/patcher.h>
-
-typedef struct routine_data (routine_data);
-typedef struct dll_function_table (dll_function_table);
-typedef struct routine_callbacks (routine_callbacks);
+#include <electrostatic/electronetsoft/util/types.h>
 
 struct routine_data {
   char *dispatcher_name;
@@ -27,15 +24,15 @@ struct routine_data {
   char *dll_error;
   
   routine_callbacks *callbacks;
-  errno error;
+  status_code __code;
   memory_partition routine_memory;
 };
 
 // dynamic linking function table
 struct dll_function_table {
-  uint8_t (*dll_open)(routine_data *); // the dynamic library loading function
-  int (*dll_close)(routine_data *); // the dynamic library closing function
-  uint8_t (*dll_function_loading)(routine_data *, dll_function_table *table); // the loading function
+  status_code (*dll_open)(routine_data *); // the dynamic library loading function
+  status_code (*dll_close)(routine_data *); // the dynamic library closing function
+  status_code (*dll_function_loading)(routine_data *, dll_function_table *table); // the loading function
   
   // this is the common pipe between dll files that the user should implement their logic in.
   // notice that this could be used with JNI too...
@@ -48,14 +45,14 @@ struct dll_function_table {
 // NOT IMPLEMENTED YET!
 struct routine_callbacks {
   void (*on_dispatch_success)(routine_data *);
-  void (*on_dispatch_failure)(routine_data *, errno *);
+  void (*on_dispatch_failure)(routine_data *, status_code);
   void (*on_loading_success)(routine_data *);
-  void (*on_loading_failure)(routine_data *, errno *);
+  void (*on_loading_failure)(routine_data *, status_code);
 };
 
-uint8_t init(dll_function_table *object);
-uint8_t init_from(dll_function_table from, dll_function_table *to);
-void *call_dll_convention(routine_data *data, dll_function_table *table);
+status_code init(dll_function_table *object);
+status_code init_from(dll_function_table from, dll_function_table *to);
+status_code call_dll_convention(routine_data *data, dll_function_table *table);
 
 #ifdef __cplusplus
 }
