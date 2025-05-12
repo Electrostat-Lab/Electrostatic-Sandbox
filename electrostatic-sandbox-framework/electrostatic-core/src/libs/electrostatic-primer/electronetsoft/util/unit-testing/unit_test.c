@@ -12,13 +12,11 @@ static inline void iterator_callback0(list *units, list_element *element) {
             || rvalue(element->data) == NULL) {
         return ;
     }
-    
-    unit_test *unit_test_ = element->data;
-    
     if (element->size != HASHED_TYPE) {
         return ;
     }
-    
+    unit_test *unit_test_ = element->data;
+
     test(unit_test_);
 }
 
@@ -26,12 +24,10 @@ static inline void iterator_callback(list *units, list_element *element) {
     if (units == NULL || element == NULL || element->data == NULL) {
         return ;
     }
-
-    unit_test *unit_test_ = element->data;
-
     if (element->size != HASHED_TYPE) {
         return ;
     }
+    unit_test *unit_test_ = element->data;
 
     assert_test(unit_test_);
 }
@@ -109,8 +105,6 @@ status_code remove_unit_test(list *units, list_element *element) {
     if (element->size != HASHED_TYPE) {
         return EINCOMPATTYPE;
     }
-
-    unit_test *unit_test_ = element->data;
     return units->function_table->remove_by_element(units, element);
 }
 
