@@ -140,4 +140,5 @@ uint8_t prim_destroy(prim_structure *p_struct) {
 
   free(p_struct->pd_path);
   p_struct->pd_path = NULL;
+  return 0;
 }

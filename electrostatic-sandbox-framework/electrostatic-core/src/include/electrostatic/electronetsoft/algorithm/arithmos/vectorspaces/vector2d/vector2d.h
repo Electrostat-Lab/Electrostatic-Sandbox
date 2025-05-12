@@ -8,6 +8,7 @@
 #define _vector2d_H_
 
 #include <math.h>
+#include <electrostatic/electronetsoft/util/types.h>
 #include <electrostatic/electronetsoft/algorithm/arithmos/vectorspaces/coordinate.h>
 
 #ifdef __cplusplus
@@ -18,7 +19,7 @@ extern "C" {
  * @brief Represents a 2-dimensional (aka. R(2) space) vector point 
  *        with a x-component and a y-component. 
  */
-typedef struct {
+struct vector2d {
     /**
      * @brief The x-coordinate (Vx->) component of this vector in the R(2) space. 
      */
@@ -28,7 +29,7 @@ typedef struct {
      * @brief The y-coordinate (Vy->) component of this vector in the R(2) space. 
      */
     coordinate y;
-} vector2d;
+};
 
 /**
  * @brief Adds a scalar value to the vector components and returns a new vector.

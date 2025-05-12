@@ -1,4 +1,5 @@
 #include <electrostatic/electronetsoft/util/unit-testing/unit_test.h>
+#include <electrostatic/electronetsoft/util/utilities.h>
 #include <electrostatic/electronetsoft/util/console/colors.h>
 #include <stddef.h>
 #include <stdio.h>
@@ -7,67 +8,56 @@
 #define HASHED_TYPE (SPREAD_HASHING(sizeof(unit_test), size_t))
 
 static inline void iterator_callback0(list *units, list_element *element) {
-    if (units == NULL || element == NULL || element->data == NULL) {
-        init_errno(&units->error);
-        units->error.value = EUNDEFINEDBUFFER;
-        return;
+    if (rvalue(units) == NULL || rvalue(element) == NULL
+            || rvalue(element->data) == NULL) {
+        return ;
     }
-    
-    unit_test *unit_test_ = element->data;
-    
     if (element->size != HASHED_TYPE) {
-        return;
+        return ;
     }
-    
+    unit_test *unit_test_ = element->data;
+
     test(unit_test_);
 }
 
 static inline void iterator_callback(list *units, list_element *element) {
     if (units == NULL || element == NULL || element->data == NULL) {
-        init_errno(&units->error);
-        units->error.value = EUNDEFINEDBUFFER;
-        return;
+        return ;
     }
-
+    if (element->size != HASHED_TYPE) {
+        return ;
+    }
     unit_test *unit_test_ = element->data;
 
-    if (element->size != HASHED_TYPE) {
-        return;
-    }
-    
     assert_test(unit_test_);
 }
 
 // just runs the test without validation
-void test(unit_test *test) {
-    if (test == NULL || test->execute == NULL) {
-        init_errno(&test->error);
-        test->error.value = EUNDEFINEDBUFFER;
-        return;
+int64_t test(unit_test *test) {
+    if (rvalue(test) == NULL
+        || rvalue(test->execute) == NULL) {
+        return EUNDEFINEDBUFFER;
     }
-    test->execute(test->inputs);
+    return test->execute(test->inputs);
 }
 
-void test_units(list *units) {
-    if (units == NULL || units->function_table == NULL) {
-        init_errno(&units->error);
-        units->error.value = EUNDEFINEDBUFFER;
-        return;
+status_code test_units(list *units) {
+    if (rvalue(units) == NULL
+        || rvalue(units->function_table) == NULL) {
+        return EUNDEFINEDBUFFER;
     }
-    units->function_table->iterator(units, (list_info) {
+    return units->function_table->iterator(units, (list_info) {
        .start_index = 0,
        .length = units->length,
        .rate = 1
     }, &iterator_callback0);
 }
 
-void assert_test_units(list *units) {
+status_code assert_test_units(list *units) {
     if (units == NULL || units->function_table == NULL) {
-        init_errno(&units->error);
-        units->error.value = EUNDEFINEDBUFFER;
-        return;
+        return EUNDEFINEDBUFFER;
     }
-    units->function_table->iterator(units, (list_info) {
+    return units->function_table->iterator(units, (list_info) {
        .start_index = 0,
        .length = units->length,
        .rate = 1
@@ -75,33 +65,30 @@ void assert_test_units(list *units) {
 }
 
 // asserts against a proposition and throws an error when necessary
-void assert_test(unit_test *test) {
+status_code assert_test(unit_test *test) {
     if (test == NULL || test->execute == NULL
         || &(test->proposition) == NULL || test->assert == NULL
         || test->on_assertion_success == NULL || test->on_assertion_failure == NULL) {
-        
-        init_errno(&test->error);
-        test->error.value = EUNDEFINEDBUFFER;
-        return;
+        return EUNDEFINEDBUFFER;
     }
     
     int64_t proposition0 = test->execute(test->inputs);
     // predicates position0 and position1 in a formula
-    uint8_t predicate = test->assert(proposition0, test->proposition);
+    status_code predicate = test->assert(proposition0, test->proposition);
     
-    if (!predicate) {
+    if (ASSERTION_FAILURE == predicate) {
         test->on_assertion_failure(test);
-        return;
+        return ASSERTION_FAILURE;
     }
-    
+
     test->on_assertion_success(test);
+
+    return ASSERTION_SUCCESS;
 }
 
-uint8_t add_unit_test(list *units, unit_test *test, list_element *element) {
+status_code add_unit_test(list *units, unit_test *test, list_element *element) {
     if (units == NULL || units->function_table == NULL || test == NULL) {
-        init_errno(&units->error);
-        units->error.value = EUNDEFINEDBUFFER;
-        return 1;
+        return EUNDEFINEDBUFFER;
     }
     
     element->data = test;
@@ -110,46 +97,44 @@ uint8_t add_unit_test(list *units, unit_test *test, list_element *element) {
     return units->function_table->add(units, element);
 }
 
-uint8_t remove_unit_test(list *units, list_element *element) {
+status_code remove_unit_test(list *units, list_element *element) {
     if (units == NULL || units->function_table == NULL
         || element == NULL || element->data == NULL) {
-        init_errno(&units->error);
-        units->error.value = EUNDEFINEDBUFFER;
-        return 1;
+        return EUNDEFINEDBUFFER;
     }
-    unit_test *unit_test_ = element->data;
-
     if (element->size != HASHED_TYPE) {
-        return 1;
+        return EINCOMPATTYPE;
     }
     return units->function_table->remove_by_element(units, element);
 }
 
-uint8_t add_unit_tests(list *units, unit_test **tests, list_element **elements) {
+status_code add_unit_tests(list *units, unit_test **tests, list_element **elements) {
     if (tests == NULL || elements == NULL) {
-        init_errno(&units->error);
-        units->error.value = EUNDEFINEDBUFFER;
-        return 1;
+        return EUNDEFINEDBUFFER;
     }
     
-    uint8_t success = 0;
+    status_code __code = PASS;
     
     for (uint64_t i = 0; tests[i] != NULL && elements[i] != NULL; i++) {
-        success += add_unit_test(units, tests[i], elements[i]);
+        if (PASS != __code) {
+            return __code;
+        }
+        __code = add_unit_test(units, tests[i], elements[i]);
     }
-    return success;
+    return __code;
 }
 
-uint8_t remove_unit_tests(list *units, list_element **elements) {
+status_code remove_unit_tests(list *units, list_element **elements) {
     if (elements == NULL) {
-        init_errno(&units->error);
-        units->error.value = EUNDEFINEDBUFFER;
-        return 1;
+        return EUNDEFINEDBUFFER;
     }
-    uint8_t success = 0;
+    status_code __code = PASS;
     
     for (uint64_t i = 0; elements[i] != NULL; i++) {
-        success += remove_unit_test(units, elements[i]);
+        if (PASS != __code) {
+            return __code;
+        }
+        __code = remove_unit_test(units, elements[i]);
     }
-    return success;
+    return __code;
 }

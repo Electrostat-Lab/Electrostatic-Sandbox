@@ -10,17 +10,16 @@ extern "C" {
 #endif
 
 #include <stdlib.h>
+#include <electrostatic/electronetsoft/util/types.h>
 
-typedef struct {
+struct memory_partition {
     void* start_address;
     void* end_address;
     size_t offset;
     size_t size;
     size_t pointer_location;
-
     void (*invalidate)(void*);
-
-} memory_partition;
+};
 
 #ifdef __cplusplus
 }

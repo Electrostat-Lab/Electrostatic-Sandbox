@@ -1,21 +1,21 @@
 #include <electrostatic/electronetsoft/algorithm/arithmos/adt/list.h>
 #include <electrostatic/electronetsoft/algorithm/arithmos/list/contiguous_buffer.h>
+#include <electrostatic/electronetsoft/algorithm/arithmos/list/linked_buffer.h>
 
-uint8_t init_list_function_table(list *list, list_element **elements, list_function_table *table) {
-    if (list == NULL || elements == NULL || table == NULL) {
-        init_errno(&list->error);
-        list->error.value = EUNDEFINEDBUFFER;
-        return 1;
+status_code init_list_function_table(list *list, list_element **elements, list_function_table *table,
+                                        api_lifecycle *lifecycle) {
+    if (rvalue(list) == NULL || rvalue(elements) == NULL
+                || rvalue(table) == NULL) {
+        return EUNDEFINEDBUFFER;
     }
     
     if (list->type == CONTIGUOUS_BUFFER) {
-        init_contiguous_buffer(list, elements, table);
-        return 0;
-    } else if (list->type == LINKED_NODES) {
+        return init_contiguous_buffer(list, elements, table, lifecycle);
+    } else if (list->type == LINKED_BUFFER) {
         // NOT IMPLEMENTED YET!
-        return 0;
+        return init_linked_buffer(list, elements, table, lifecycle);
     }
     
-    return 0;
+    return EINCOMPATTYPE;
 }
 

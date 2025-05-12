@@ -120,6 +120,7 @@ uint8_t dijkstra_start(dijkstra_structure *d_struct, int start, int end, path *o
         }
         dijkstra_update_path_from_cell(d_struct, cell_index, pd_path);
     }
+    return 0;
 }
 
 uint8_t dijkstra_destroy(dijkstra_structure *d_struct) {

@@ -1,9 +1,9 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="test hello_unittest" type="ShConfigurationType">
+  <configuration default="false" name="test-ansi-font" type="ShConfigurationType">
     <option name="SCRIPT_TEXT" value="" />
     <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
     <option name="SCRIPT_PATH" value="$PROJECT_DIR$/helper-scripts/ci-cd/test-electrostatic.sh" />
-    <option name="SCRIPT_OPTIONS" value="&quot;hello_unittest.c&quot; &quot;hello_unittest&quot;" />
+    <option name="SCRIPT_OPTIONS" value="&quot;linux/hello_ansi_font.c&quot; &quot;hello_ansi_font&quot;" />
     <option name="INDEPENDENT_SCRIPT_WORKING_DIRECTORY" value="true" />
     <option name="SCRIPT_WORKING_DIRECTORY" value="$PROJECT_DIR$" />
     <option name="INDEPENDENT_INTERPRETER_PATH" value="true" />
