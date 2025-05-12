@@ -18,20 +18,34 @@ int main() {
     data->routine_inputs[0] = "Hello";
     data->routine_inputs[1] = " World\n";
     // define the absolute directory for the dll file
-    data->dll_name = "/media/pavl-x86-machine/pavl-g/Projects/Electrostatic-Sandbox/electrostatic-sandbox-framework/electrostatic-examples/build/linux/x86-64/libhello_dll_service.c.so";
+    data->dll_name = "/media/pavl/pavl-g/Projects/Electrostatic-Sandbox/electrostatic-sandbox-framework/electrostatic-examples/cmake-build/linux/x86-64/libhello_dll_service.c.so.elf";
     // define the service conventional routine name
     data->routine_name = "dll_conventional_routine";
     
     // initialize the default functions
-    init(&function_table);
+    status_code _code0 = init(&function_table);
+    if (PASS != _code0) {
+        perror("Failed to initialize the function table\n");
+    }
     
     // open the dll
-    function_table.dll_open(data);
-    function_table.dll_function_loading(data, &function_table);
-    call_dll_convention(data, &function_table);
-    
-    printf("Convention Output = %s", (const char *) data->routine_output);
-    
+    status_code _code1 = function_table.dll_open(data);
+    if (PASS != _code1) {
+        printf("Failed to open the dll file %s!\n", data->dll_error);
+    }
+
+    status_code _code2 = function_table.dll_function_loading(data, &function_table);
+    if (PASS != _code2) {
+        printf("Failed to load the dll function %s!\n", data->dll_error);
+    }
+
+    status_code _code3 = call_dll_convention(data, &function_table);
+    if (PASS != _code3) {
+        printf("Failed to call dll convention %s!\n", data->dll_error);
+    } else {
+        printf("Convention Output = %s", (const char *) data->routine_output);
+    }
+
     function_table.dll_close(data);
     
     free(data->routine_inputs);
