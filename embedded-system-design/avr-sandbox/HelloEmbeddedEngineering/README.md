@@ -492,3 +492,10 @@ int main(void) {
 		}
 	}
 	```
+## References:
+* [Practical Electronics for Inventors McGrawHill](https://www.amazon.com/Practical-Electronics-Inventors-Fourth-Scherz/dp/1259587541)
+* [The AVR Microcontrollers and Embedded Systems Pearson Int.](https://www.amazon.eg/-/en/AVR-Microcontroller-Embedded-Systems-International/dp/1292042567)
+* [Engineering Embedded Systems Springer](https://link.springer.com/book/10.1007/978-3-319-10680-9)
+* [IBM/ILE C/C++ Language Reference](https://www.ibm.com/docs/en/rdfi/9.8.0)
+* [The Serial4j Framework](https://github.com/Electrostat-Lab/Electrostatic-Sandbox/tree/master/electrostatic-sandbox-framework/electrostatic4j/serial4j)
+* [The ElectroMIO Library](https://github.com/Electrostat-Lab/Electrostatic-Sandbox/tree/master/electrostatic-sandbox-framework/electrostatic-core/src/libs/electrostatic-primer/electroio/electromio/avr)
