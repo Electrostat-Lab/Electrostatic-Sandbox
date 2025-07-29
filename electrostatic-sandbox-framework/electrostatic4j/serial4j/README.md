@@ -111,7 +111,91 @@ and the [linux-kernel-hid-intro](https://docs.kernel.org/hid/hidintro.html).
 > ![preview](https://github.com/Software-Hardware-Codesign/Serial4j/assets/60224159/b83a2cca-e76f-4d50-8a26-5084cf02a7de)
 >
 
-## Credits:
+## Appendix:
+
+### Bitwise and Switching Algebra Algorithms:
+**Test for a specific bit pattern in a value (From Serial4j-Electrostatic4j Framework):**
+```java
+ /**
+  * Test whether a flag constant exists in this flag.
+  *
+  * @param flag the flag constant to test against
+  * @return true if the flag exists, or false otherwise
+  */
+ public boolean hasFlag(FlagConst flag) {
+     return (value & flag.getValue()) == flag.getValue();
+ }
+```
+**Disables a specific bit pattern in a value (From Serial4j-Electrostatic4j Framework):**
+```java
+ /**
+  * Disables the flags specified by this parameter.
+  *
+  * @param flag the flag to disable
+  * @return this instance for chained calls
+  */
+ public AppendableFlag disable(FlagConst flag) {
+     this.value &= ~flag.getValue();
+     return this;
+ }
+```
+
+**An algorithm to read analog data sent to the UART register in 8-bit frames:**
+> [!NOTE]
+> * **Idea**: Read the analog signals sent from an ADC register into the UART register over wire.
+> * **Formalization**:
+>   * Let, $$F$$ be a set of frames composed of 8 bits per frame (i.e., cardinality of 8 members),
+>   * therefore: $$F = \\{f_n: f_n = \\{Bit_0, Bit_1, Bit_2, Bit_3, Bit_4, Bit_5, Bit_6, Bit_7\\} \land n \in N\\}$$;
+>   * Now, let $$R$$ be the resolution of the ADC register in digital decimal format (e.g., if 10-bit resolution is selected, then the equivalent decimal is $$(2^0 + 2^1 + 2^2 + 2^3 + 2^4 + 2^5 + 2^6 + 2^7 + 2^8 + 2^9) = 1023$$, and if 8-bit resolution is selected, then the equivalent decimal is $$255$$); with the assertion of the property `R mod 8 == 0` or $$M = \\{m \ is\ the\ modulo\ result\ : m = Resolution_{Assigned} - (n * Resolution_{Base}) \land m = 0 \land Resolution_{Assigned}, n \in N \land Resolution_{Base} \in [8, +\infty[ \land \log_2{Resolution_{Base}} = x \land x \in N\\}$$.
+>   * So, both the base resolution (or the default resolution), and the assigned resolution must be a power of 2; and the assigned resolution must be an integer multiple of the base resolution.
+>   * Let $$Reg_{UART}$$ be a hardware data register of the UART of $$|Reg_{UART}|$$-bit data register; then the number of frames required for the UART to read the data from an ADC of resolution $$R$$ (aka. the cardinality of the $$F$$) can be calculated by this formula: $$|F| = \lceil{|R| / |Reg_{UART}|}\rceil$$; which given an example of an 8-bit (255) ADC resolution signal needs 1 frame in order to be fully read by an 8-bit UART data register (i.e., $$|F| = \lceil{8/8}\rceil = 1$$); unlike the 10-bit register data, the number of frames required to transfer a data of resolution 1023 or 10-bits will be $$|F| = \lceil{10/8}\rceil = 2$$.
+>   * Let $$i$$ be the index of the current frame; such that $$F = \\{f_i: i \in [0, \infty[ \land f_i = \\{Bit_0, Bit_1, Bit_2, Bit_3, Bit_4, Bit_5, Bit_6, Bit_7\\} \land n \in N\\}$$; then to calculate the start index of the new captured frame in a data buffer, it's reasonable to multiply the $$i$$ by the UART data register size in bits, so $$P_f = \\{p_f\ is\ the\ position\ of\ the\ new\ frame: p_f = i * buffer_{data\ register} \land i \in [0, \infty[\\}$$.
+>   * Eventually, to place the new frame in its position, construct a left shift bitwise operation (equivalent to $$*2^{p}$$) on the new captured data frame; and add it to the old buffer using the bitwise OR operation.
+> 
+```java
+...
+@Override
+public void receive() {
+    super.decode(dataRegisterBufferLength -> {
+        for (int frame = 0; terminalDevice.iread(dataRegisterBufferLength) > 0 &&
+                frame < reportDescriptor.getReportLength(); frame++, inputClock.incrementAndGet()) {
+            final int data = terminalDevice.getBuffer()[0];
+            // obtain a shift-value scaled according to the current frame to place
+            // the bits in their right position
+            final int bits = frame * Constants.DEFAULT_DATA_REGISTER_BUFFER_LENGTH;
+            // replace the bits to the left aka. from LSB to MSB
+            // add the bits
+            inputBuffer.set(inputBuffer.intValue() | (data << bits));
+            // if the input clocks completed sending the report, flush the input and return the result
+            if (inputClock.get() == (reportDescriptor.getReportLength() - 1)) {
+                final int value = inputBuffer.get();
+                inputBuffer.set(0); // flush the input buffer
+                inputClock.set(0);
+                return value;
+            }
+        }
+        return null; // skip the decoder dispatch if no end-character is found
+    });
+}
+...
+/**
+  * Adjusts the ADC resolution in bits unit (e.g: 8 for 8-bit resolution).
+  *
+  * <p>
+  * Resolution should be a result of power of two, the minimum value and the default is 8-bit.
+  * </p>
+  *
+  * @param resolution the adc resolution in bits unit
+  */
+ public void setResolution(int resolution) {
+     if (resolution % 8 != 0) {
+         throw new InvalidResolutionException("Resolution " + resolution + "-bits is not a power of two!");
+     }
+     ((ReportDescriptor) this.reportDescriptor).setResolution(resolution);
+ }
+```
+
+### Credits:
 - [The jMonkeyEngine Platform](https://github.com/jMonkeyEngine/jmonkeyengine)
 - [Minie Bullet Physics By Stephen Gold](https://github.com/stephengold/Minie)
 - [GNU/Linux Interfaces](https://www.gnu.org/)
