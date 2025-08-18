@@ -7,6 +7,7 @@
  * <p>
  * Documents for IEEE-1284:
  * <a href="https://ieeexplore.ieee.org/document/879340">IEEE-1284 Standard Document</a>
+ * <a href="https://www.kernel.org/doc/html/v4.12/driver-api/miscellaneous.html">Linux Kernel Parallel Port Devices</a>
  * </p>
  *
  * <p>
