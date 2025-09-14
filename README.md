@@ -281,6 +281,7 @@ title The Electrostatic-Sandbox SDK Milestones
 - Connecting to peripheral digital/analog devices via simulation interfaces in a sandboxed environment (Hardware/Software Co-design).
 - Simulating large Space Missions into small finite simulations (e.g., Rocket Launch, Rocket separation stages, Nose separation, Rocket Launch Abort, and Rocket Engine Failure).
 - Building in-home, office, and outdoor distributed IoT projects (e.g., Smart Homes, Smart Hospitals, Switch Control Military and Traffic control systems).
+- Solving the devastating issue of [work that cannot be fully remote due to the embedded hardware at the company site.](https://www.reddit.com/r/embedded/comments/16ok23y/best_way_to_get_a_remote_job_as_an_embedded/).
 
 ### Board Overview (Migrated Projects Dismissed):
 ![HAL-Electrostatic](https://github.com/Electrostat-Lab/Electrostatic-Sandbox/blob/master/assets/HAL-Electrostatic.jpeg)
