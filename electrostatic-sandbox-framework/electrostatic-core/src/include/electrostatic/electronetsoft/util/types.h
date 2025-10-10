@@ -8,6 +8,8 @@
 #ifndef __TYPES_H_
 #define __TYPES_H_
 
+#include <inttypes.h>
+
 #ifdef __cplusplus
 extern "C" { // disables C++ Name Mangling
 #endif
@@ -15,13 +17,22 @@ extern "C" { // disables C++ Name Mangling
 // Abstract Data Types for Lists
 typedef struct list (list);
 typedef struct list_info (list_info);
-typedef enum list_type (list_type);
+
+typedef enum list_type {
+    CONTIGUOUS_BUFFER,
+    LINKED_BUFFER
+} list_type;
+
 typedef struct list_element (list_element);
 typedef struct list_function_table (list_function_table);
 
 // Concretized types for linked buffers
 typedef struct linked_buffer (linked_buffer);
-typedef enum linked_buffer_type (linked_buffer_type);
+
+typedef enum linked_buffer_type {
+    SINGLE_ENDED,
+    DOUBLE_ENDED,
+} linked_buffer_type;
 
 // Abstract types for Mathematical Graph Structures
 typedef struct vertex (vertex);
@@ -45,8 +56,23 @@ typedef struct dijkstra_structure (dijkstra_structure);
 typedef struct api_lifecycle (api_lifecycle);
 typedef struct typed_pointer (typed_pointer);
 typedef union pointer (pointer);
-typedef enum pointer_type (pointer_type);
-typedef enum status_code (status_code);
+
+typedef enum status_code {
+    PASS = INT32_MAX,
+    EUNDEFINEDBUFFER = INT32_MIN,
+    EEMPTYBUFFER = (EUNDEFINEDBUFFER + 1),
+    EFULLBUFFER = (EEMPTYBUFFER + 1),
+    EINCOMPATTYPE = (EFULLBUFFER + 1),
+    ENOELEMENT = (EINCOMPATTYPE + 1),
+    EBUFFERTURNCATION = (ENOELEMENT + 1),
+    EBUFFEROVERFLOW = (EBUFFERTURNCATION + 1),
+    EDLLOPENFAIL = (EBUFFEROVERFLOW + 1),
+    EDLLSYMFAIL = (EDLLOPENFAIL + 1),
+    EDLLCONVENTIONCALLRETURN = (EDLLSYMFAIL + 1),
+    UNEXPECTED_ERROR = (EDLLCONVENTIONCALLRETURN + 1),
+    ASSERTION_SUCCESS = 1,
+    ASSERTION_FAILURE = 0
+} status_code;
 
 typedef struct memory_partition (memory_partition);
 
@@ -54,6 +80,14 @@ typedef struct memory_partition (memory_partition);
 typedef struct routine_data (routine_data);
 typedef struct dll_function_table (dll_function_table);
 typedef struct routine_callbacks (routine_callbacks);
+
+typedef struct write_op_processor (write_op_processor);
+typedef struct read_op_processor (read_op_processor);
+typedef struct update_op_processor (update_op_processor);
+
+typedef struct serializer_op_processor (serializer_op_processor);
+typedef struct file_mem (file_mem);
+typedef struct pipe_serializer (pipe_serializer);
 
 // Types for Vector Maths Libraries
 typedef struct vector2d (vector2d);

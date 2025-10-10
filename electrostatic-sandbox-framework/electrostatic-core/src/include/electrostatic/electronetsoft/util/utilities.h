@@ -19,33 +19,17 @@ union pointer {
     list_function_table *m_list_function_table;
 };
 
-enum pointer_type {
+typedef enum pointer_type {
     TYPE_LIST = 200,
     TYPE_LIST_ELEMENT = TYPE_LIST + 1,
     TYPE_LINKED_BUFFER = TYPE_LIST_ELEMENT + 1,
     TYPE_LIST_FUNCTION_TABLE = TYPE_LINKED_BUFFER + 1,
     TYPE_UNKNOWN = TYPE_LIST_FUNCTION_TABLE + 1,
-};
+} pointer_type;
 
 struct typed_pointer {
     pointer address;
     pointer_type type;
-};
-
-enum status_code {
-    PASS = INT32_MAX,
-    EUNDEFINEDBUFFER = INT32_MIN,
-    EEMPTYBUFFER = (EUNDEFINEDBUFFER + 1),
-    EFULLBUFFER = (EEMPTYBUFFER + 1),
-    EINCOMPATTYPE = (EFULLBUFFER + 1),
-    ENOELEMENT = (EINCOMPATTYPE + 1),
-    EBUFFERTURNCATION = (ENOELEMENT + 1),
-    EBUFFEROVERFLOW = (EBUFFERTURNCATION + 1),
-    EDLLOPENFAIL = (EBUFFEROVERFLOW + 1),
-    EDLLSYMFAIL = (EDLLOPENFAIL + 1),
-    EDLLCONVENTIONCALLRETURN = (EDLLSYMFAIL + 1),
-    ASSERTION_SUCCESS = 1,
-    ASSERTION_FAILURE = 0
 };
 
 struct api_lifecycle {
@@ -60,7 +44,7 @@ struct api_lifecycle {
  * @param address a pointer variable for a memory address.
  * @return an r-value that is a runtime constant representing the address.
  */
-static inline void *const rvalue(void *address) {
+static inline void *rvalue(void *address) {
     return (void *const) address;
 }
 
@@ -88,7 +72,7 @@ static inline void *const rvalue(void *address) {
 static inline bool is_pass(status_code **codes) {
     // preprocessing automata
     if (rvalue(codes) == NULL ||
-            rvalue(*codes) == NULL) {
+        rvalue(*codes) == NULL) {
         return false;
     }
     // preprocessing initialize with true for
@@ -103,18 +87,17 @@ static inline bool is_pass(status_code **codes) {
 }
 
 static inline typed_pointer get_typed_pointer(void *address, pointer_type type) {
+    typed_pointer pointer;
     // preprocessor automata -- Input Validation.
     if (rvalue(address) == NULL) {
-        return (typed_pointer) {
-            .address.m_list = NULL,
-            .type = TYPE_UNKNOWN
-        };
+        pointer.address.m_list = NULL;
+        pointer.type = TYPE_UNKNOWN;
+        return pointer;
     }
     // processing automata -- returning a typed pointer
-    return (typed_pointer) {
-        .address.m_list = address,
-        .type = type
-    };
+    pointer.address.m_list = (list *) address;
+    pointer.type = type;
+    return pointer;
 }
 
 #ifdef __cplusplus
