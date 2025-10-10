@@ -1,6 +1,8 @@
 #ifndef _FILE_VERIFY_H_
 #define _FILE_VERIFY_H_
 
+#ifndef _ELECTRO_MIO
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -145,4 +147,5 @@ static inline int is_fsymbolic_link(int fd) {
 }
 #endif
 
+#endif
 #endif
