@@ -15,7 +15,7 @@ electroio="$(pwd)/electrostatic-sandbox-framework/${source_dir}/src/libs/electro
 platform_module="${electronetsoft}/platform/linux/"
 comm_module="${electronetsoft}/comm/"
 algorithm_module="${electronetsoft}/algorithm/"
-util_module="${electronetsoft}/util/"
+util_module="${electronetsoft}/util/unit-testing"
 electromio_module="${electroio}/electromio/"
 
 ./helper-scripts/project-impl/compile-electrostatic.sh \

@@ -10,11 +10,6 @@
 extern "C" { // disables the C++ name mangling
 #endif
 
-enum linked_buffer_type {
-    SINGLE_ENDED,
-    DOUBLE_ENDED,
-};
-
 struct linked_buffer {
   // no alignment issues
   // 64-bit (8 bytes) aligned structure

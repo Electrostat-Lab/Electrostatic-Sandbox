@@ -43,11 +43,6 @@
 extern "C" {
 #endif
 
-enum list_type {
-  CONTIGUOUS_BUFFER,
-  LINKED_BUFFER
-};
-
 struct list_element {
   void *data;
   void *metadata;
