@@ -3,7 +3,7 @@
 #include <electrostatic/electronetsoft/util/filesystem/file_verify.h>
 
 status_code write_from_mem(file_mem *mem,
-                           write_op_processor *_processor,
+                           op_processor *_processor,
                            update_op_processor *__processor) {
     // pre-processing automata -- Input validation
     if (rvalue(mem) == NULL) {
@@ -32,8 +32,8 @@ status_code write_from_mem(file_mem *mem,
     ssize_t total_bytes = 0;
     while (1) {
         if (*(mem->buffer + total_bytes) == mem->trailing) {
-            if (NULL != _processor && NULL != _processor->on_eob_reached) {
-                _processor->on_eob_reached(mem);
+            if (NULL != _processor && NULL != _processor->on_trailing_char_sampled) {
+                _processor->on_trailing_char_sampled(mem, &write_from_mem);
             }
             break;
         }
@@ -58,8 +58,8 @@ status_code write_from_mem(file_mem *mem,
         } else if (total_bytes == (mem->n_bytes - 1)) {
             // All bytes are written? -> terminate
             // Equivalent to EOF.
-            if (NULL != _processor && NULL != _processor->on_eob_reached) {
-                _processor->on_eob_reached(mem);
+            if (NULL != _processor && NULL != _processor->on_last_byte_sampled) {
+                _processor->on_last_byte_sampled(mem, &write_from_mem);
             }
             break;
         } else {
