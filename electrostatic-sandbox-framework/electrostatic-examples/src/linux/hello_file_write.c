@@ -11,8 +11,7 @@
 #include <stdlib.h>
 #include <fcntl.h>
 
-static inline void update_model_preprocessor(file_mem *mem,
-                                             void *caller) {
+static inline void op_preprocessor(file_mem *mem, void *caller) {
     if (caller != &write_from_mem) {
         return;
     }
@@ -43,12 +42,14 @@ static inline void on_bytes_processed(file_mem *mem, ssize_t bytes,
     fprintf(stdout, "%s", mem->buffer);
 }
 
-static inline void on_eob_reached(file_mem *mem) {
+static inline void on_eob_reached(file_mem *mem, void *caller) {
+    if (caller != &write_from_mem) {
+        return;
+    }
     fprintf(stdout, "EOB Reached!\n");
 }
 
-static inline void update_model_postprocessor(file_mem *mem,
-                                              void *caller) {
+static inline void op_postprocessor(file_mem *mem, void *caller) {
     if (caller != &write_from_mem) {
         return;
     }
@@ -69,17 +70,14 @@ int main() {
             .__auto_update_attrs = 1,
     };
 
-    write_op_processor _processor = {
+    op_processor _processor = {
             .on_bytes_processed = &on_bytes_processed,
-            .on_eob_reached = &on_eob_reached,
+            .on_trailing_char_sampled = &on_eob_reached,
+            .op_preprocessor = &op_preprocessor,
+            .op_postprocessor = &op_postprocessor
     };
 
-    update_op_processor __processor = {
-            .update_model_preprocessor = &update_model_preprocessor,
-            .update_model_postprocessor = &update_model_postprocessor,
-    };
-
-    status_code __status = write_from_mem(&_file_mem, &_processor, &__processor);
+    status_code __status = write_from_mem(&_file_mem, &_processor, NULL);
 
     if (PASS != __status) {
         fprintf(stderr, "Error Encountered: %s\n", strerror(__status));
