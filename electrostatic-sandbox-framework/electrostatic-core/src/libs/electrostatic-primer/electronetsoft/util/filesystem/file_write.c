@@ -10,8 +10,8 @@ status_code write_from_mem(file_mem *mem,
         return EUNDEFINEDBUFFER;
     }
 
-    if (NULL != __processor && NULL != __processor->update_model_preprocessor) {
-        __processor->update_model_preprocessor(mem, &write_from_mem);
+    if (NULL != _processor && NULL != _processor->op_preprocessor) {
+        _processor->op_preprocessor(mem, &write_from_mem);
     }
 
     if (mem->fd < 0 || !is_fexistential(mem->fd)) {
@@ -73,9 +73,10 @@ status_code write_from_mem(file_mem *mem,
         return ___status;
     }
 
-    // postprocessing automata -- Invoke the update file postprocessor
-    if (NULL != __processor && NULL != __processor->update_model_postprocessor) {
-        __processor->update_model_postprocessor(mem, &write_from_mem);
+    // to avoid premature closure of files; use the postprocessor at the end of the
+    // write routine
+    if (NULL != _processor && NULL != _processor->op_postprocessor) {
+        _processor->op_postprocessor(mem, &write_from_mem);
     }
 
     return PASS;

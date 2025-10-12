@@ -30,6 +30,8 @@ extern "C" {
 #include <electrostatic/electronetsoft/util/utilities.h>
 
 struct read_op_processor {
+    void (*op_preprocessor)(file_mem *, void *);
+    void (*op_postprocessor)(file_mem *, void *);
     void (*on_bytes_processed)(file_mem *, ssize_t, void *); /* Executed on each successful read operation. */
     void (*on_eof_reached)(file_mem *); /* Executed when EOF is reached. Could be used to chain calls to memory deallocators. */
     void (*on_last_char_sampled)(file_mem *, void *caller);
@@ -37,6 +39,8 @@ struct read_op_processor {
 };
 
 struct write_op_processor {
+    void (*op_preprocessor)(file_mem *, void *);
+    void (*op_postprocessor)(file_mem *, void *);
     void (*on_bytes_processed)(file_mem *, ssize_t, void *); /* Executed on each successful read operation. */
     void (*on_eob_reached)(file_mem *);
     void (*on_last_char_sampled)(file_mem *, void *caller);

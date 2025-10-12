@@ -10,8 +10,8 @@ status_code read_into_mem(file_mem *mem,
         return EUNDEFINEDBUFFER;
     }
 
-    if (NULL != __processor && NULL != __processor->update_model_preprocessor) {
-        __processor->update_model_preprocessor(mem, &read_into_mem);
+    if (NULL != _processor && NULL != _processor->op_preprocessor) {
+        _processor->op_preprocessor(mem, &read_into_mem);
     }
 
     // pre-processing automata -- Calculating the file size, current position,
@@ -21,11 +21,6 @@ status_code read_into_mem(file_mem *mem,
         if (PASS != ___status) {
             return ___status;
         }
-    }
-
-    // postprocessing automata -- Invoke the update file postprocessor
-    if (NULL != __processor && NULL != __processor->update_model_postprocessor) {
-        __processor->update_model_postprocessor(mem, &read_into_mem);
     }
 
     if (NULL == mem->buffer) {
@@ -80,6 +75,10 @@ status_code read_into_mem(file_mem *mem,
         } else {
             return UNEXPECTED_ERROR;
         }
+    }
+
+    if (NULL != _processor && NULL != _processor->op_postprocessor) {
+        _processor->op_postprocessor(mem, &read_into_mem);
     }
 
     return ASSERTION_FAILURE;
