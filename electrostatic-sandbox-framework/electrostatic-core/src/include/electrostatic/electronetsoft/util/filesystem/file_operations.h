@@ -29,22 +29,13 @@ extern "C" {
 #include <stdint.h>
 #include <electrostatic/electronetsoft/util/utilities.h>
 
-struct read_op_processor {
+struct op_processor {
     void (*op_preprocessor)(file_mem *, void *);
     void (*op_postprocessor)(file_mem *, void *);
     void (*on_bytes_processed)(file_mem *, ssize_t, void *); /* Executed on each successful read operation. */
-    void (*on_eof_reached)(file_mem *); /* Executed when EOF is reached. Could be used to chain calls to memory deallocators. */
-    void (*on_last_char_sampled)(file_mem *, void *caller);
-    void (*on_error_encountered)(file_mem *, int, void *caller);
-};
-
-struct write_op_processor {
-    void (*op_preprocessor)(file_mem *, void *);
-    void (*op_postprocessor)(file_mem *, void *);
-    void (*on_bytes_processed)(file_mem *, ssize_t, void *); /* Executed on each successful read operation. */
-    void (*on_eob_reached)(file_mem *);
-    void (*on_last_char_sampled)(file_mem *, void *caller);
-    void (*on_error_encountered)(file_mem *, int, void *caller);
+    void (*on_last_byte_sampled)(file_mem *, void *); // uses count
+    void (*on_trailing_char_sampled)(file_mem *, void *); // uses predicate check
+    void (*on_error_encountered)(file_mem *, int, void *);
 };
 
 struct update_op_processor {
@@ -99,7 +90,7 @@ struct pipe_serializer {
  * @param _processor a pointer to the file read operations processor; that links the API to the user application.
  * @param __processor a pointer to the file attrs update processors.
  */
-status_code read_into_mem(file_mem *, read_op_processor *, update_op_processor *);
+status_code read_into_mem(file_mem *, op_processor *, update_op_processor *);
 
 status_code update_file_attrs(file_mem *, update_op_processor *);
 
@@ -111,7 +102,7 @@ status_code update_file_attrs(file_mem *, update_op_processor *);
  * @param mem a pointer to the file memory model struct.
  * @param processor a pointer to the file operations processor; that links the API to the user application.
  */
-status_code write_from_mem(file_mem *, write_op_processor *, update_op_processor *);
+status_code write_from_mem(file_mem *, op_processor *, update_op_processor *);
 
 status_code init_serializer(pipe_serializer *, serializer_op_processor *, update_op_processor *);
 
