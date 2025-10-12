@@ -81,8 +81,7 @@ typedef struct routine_data (routine_data);
 typedef struct dll_function_table (dll_function_table);
 typedef struct routine_callbacks (routine_callbacks);
 
-typedef struct write_op_processor (write_op_processor);
-typedef struct read_op_processor (read_op_processor);
+typedef struct op_processor (op_processor);
 typedef struct update_op_processor (update_op_processor);
 
 typedef struct serializer_op_processor (serializer_op_processor);
