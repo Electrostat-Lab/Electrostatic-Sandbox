@@ -3,15 +3,15 @@
 #include <electrostatic/electronetsoft/util/filesystem/file_verify.h>
 
 status_code write_from_mem(file_mem *mem,
-                           write_op_processor *_processor,
+                           op_processor *_processor,
                            update_op_processor *__processor) {
     // pre-processing automata -- Input validation
     if (rvalue(mem) == NULL) {
         return EUNDEFINEDBUFFER;
     }
 
-    if (NULL != __processor && NULL != __processor->update_model_preprocessor) {
-        __processor->update_model_preprocessor(mem, &write_from_mem);
+    if (NULL != _processor && NULL != _processor->op_preprocessor) {
+        _processor->op_preprocessor(mem, &write_from_mem);
     }
 
     if (mem->fd < 0 || !is_fexistential(mem->fd)) {
@@ -31,9 +31,16 @@ status_code write_from_mem(file_mem *mem,
     ssize_t written_bytes = 0;
     ssize_t total_bytes = 0;
     while (1) {
+        if (!is_fd_existential(mem->fd)) {
+            if (NULL != _processor && NULL != _processor->on_error_encountered) {
+                _processor->on_error_encountered(mem, errno, &read_into_mem);
+            }
+            return errno;
+        }
+
         if (*(mem->buffer + total_bytes) == mem->trailing) {
-            if (NULL != _processor && NULL != _processor->on_eob_reached) {
-                _processor->on_eob_reached(mem);
+            if (NULL != _processor && NULL != _processor->on_trailing_char_sampled) {
+                _processor->on_trailing_char_sampled(mem, &write_from_mem);
             }
             break;
         }
@@ -58,8 +65,8 @@ status_code write_from_mem(file_mem *mem,
         } else if (total_bytes == (mem->n_bytes - 1)) {
             // All bytes are written? -> terminate
             // Equivalent to EOF.
-            if (NULL != _processor && NULL != _processor->on_eob_reached) {
-                _processor->on_eob_reached(mem);
+            if (NULL != _processor && NULL != _processor->on_last_byte_sampled) {
+                _processor->on_last_byte_sampled(mem, &write_from_mem);
             }
             break;
         } else {
@@ -73,9 +80,10 @@ status_code write_from_mem(file_mem *mem,
         return ___status;
     }
 
-    // postprocessing automata -- Invoke the update file postprocessor
-    if (NULL != __processor && NULL != __processor->update_model_postprocessor) {
-        __processor->update_model_postprocessor(mem, &write_from_mem);
+    // to avoid premature closure of files; use the postprocessor at the end of the
+    // write routine
+    if (NULL != _processor && NULL != _processor->op_postprocessor) {
+        _processor->op_postprocessor(mem, &write_from_mem);
     }
 
     return PASS;

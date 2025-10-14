@@ -10,6 +10,23 @@ extern "C" {
 #include <sys/stat.h>
 #include <stdio.h>
 #include <stdint.h>
+#include <unistd.h>
+#include <string.h>
+#include <electrostatic/electronetsoft/util/filesystem/file_operations.h>
+
+static inline int get_path_from_fd(int fd, char *buf, ssize_t len) {
+    if (fd < 0 || NULL == buf) {
+        return -1;
+    }
+
+    pid_t pid = getpid();
+
+    char path[255];
+    memset(path, '\0', sizeof (path));
+    sprintf(path, "/proc/%d/fd/%d", pid, fd);
+
+    return readlink(path, buf, len) > 0;
+}
 
 static inline int is_existential(const char *file) {
     if (file == NULL) {
@@ -19,7 +36,23 @@ static inline int is_existential(const char *file) {
     return stat(file, &statbuf) == 0;
 }
 
+static inline int is_fd_existential(int fd) {
+    if (fd < 0) {
+        return -1;
+    }
+    char path[255];
+    memset(path, '\0', sizeof (path));
+    int __status = get_path_from_fd(fd, path, sizeof (path));
+    if (!__status) {
+        return -1;
+    }
+    return is_existential(path);
+}
+
 static inline int is_fexistential(int fd) {
+    if (fd < 0) {
+        return -1;
+    }
     struct stat statbuf;
     return fstat(fd, &statbuf) == 0;
 }

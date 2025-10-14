@@ -9,6 +9,14 @@ status_code update_file_attrs(file_mem *mem,
         return EUNDEFINEDBUFFER;
     }
 
+    if (!mem->__auto_update_attrs) {
+        return PASS;
+    }
+
+    if (NULL != _processor && NULL != _processor->update_model_preprocessor) {
+        _processor->update_model_preprocessor(mem, &read_into_mem);
+    }
+
     if (mem->fd < 0 || !is_fexistential(mem->fd)) {
         return EUNDEFINEDBUFFER;
     }
@@ -48,6 +56,11 @@ status_code update_file_attrs(file_mem *mem,
         if (NULL != _processor && NULL != _processor->on_update_nbytes) {
             _processor->on_update_nbytes(mem, __old);
         }
+    }
+
+    // postprocessing automata -- Invoke the update file postprocessor
+    if (NULL != _processor && NULL != _processor->update_model_postprocessor) {
+        _processor->update_model_postprocessor(mem, &read_into_mem);
     }
 
     return PASS;

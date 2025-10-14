@@ -3,15 +3,15 @@
 #include <electrostatic/electronetsoft/util/filesystem/file_verify.h>
 
 status_code read_into_mem(file_mem *mem,
-                          read_op_processor *_processor,
+                          op_processor *_processor,
                           update_op_processor *__processor) {
     // pre-processing automata -- Input validation
     if (rvalue(mem) == NULL) {
         return EUNDEFINEDBUFFER;
     }
 
-    if (NULL != __processor && NULL != __processor->update_model_preprocessor) {
-        __processor->update_model_preprocessor(mem, &read_into_mem);
+    if (NULL != _processor && NULL != _processor->op_preprocessor) {
+        _processor->op_preprocessor(mem, &read_into_mem);
     }
 
     // pre-processing automata -- Calculating the file size, current position,
@@ -23,11 +23,6 @@ status_code read_into_mem(file_mem *mem,
         }
     }
 
-    // postprocessing automata -- Invoke the update file postprocessor
-    if (NULL != __processor && NULL != __processor->update_model_postprocessor) {
-        __processor->update_model_postprocessor(mem, &read_into_mem);
-    }
-
     if (NULL == mem->buffer) {
         return EUNDEFINEDBUFFER;
     }
@@ -37,6 +32,13 @@ status_code read_into_mem(file_mem *mem,
     ssize_t read_bytes = 0;
     ssize_t total_bytes = 0;
     while (1) {
+        // sanity check the file
+        if (!is_fd_existential(mem->fd)) {
+            if (NULL != _processor && NULL != _processor->on_error_encountered) {
+                _processor->on_error_encountered(mem, errno, &read_into_mem);
+            }
+            return errno;
+        }
         read_bytes = read(mem->fd, (mem->buffer + total_bytes), /* Advance linearly over the File Mem model buffer
                                                                 * with the read bytes */
                                    (mem->n_bytes - 1) - total_bytes); /* Retro-advance on the number of available bytes
@@ -55,14 +57,14 @@ status_code read_into_mem(file_mem *mem,
         } else if (0 == read_bytes) {
             // EOF terminate!
             mem->buffer[total_bytes] = mem->trailing; /* add a null-terminating character */
-            if (NULL != _processor && NULL != _processor->on_eof_reached) {
-                _processor->on_eof_reached(mem);
+            if (NULL != _processor && NULL != _processor->on_trailing_char_sampled) {
+                _processor->on_trailing_char_sampled(mem, &read_into_mem);
             }
             // post-processing sub-state (HACK!)
             if (mem->__continue_after_eof) {
                 continue;
             }
-            return PASS;
+            break;
         } else if (read_bytes > 0) {
             // execute on_read
             if (NULL != _processor && NULL != _processor->on_bytes_processed) {
@@ -73,8 +75,8 @@ status_code read_into_mem(file_mem *mem,
             // even though the EOF is not reached, yet.
             if ((mem->n_bytes - 1) == total_bytes) {
                 mem->buffer[total_bytes] = mem->trailing; /* add a null-terminating character */
-                if (NULL != _processor && NULL != _processor->on_last_char_sampled) {
-                    _processor->on_last_char_sampled(mem, &read_into_mem);
+                if (NULL != _processor && NULL != _processor->on_last_byte_sampled) {
+                    _processor->on_last_byte_sampled(mem, &read_into_mem);
                 }
             }
         } else {
@@ -82,5 +84,9 @@ status_code read_into_mem(file_mem *mem,
         }
     }
 
-    return ASSERTION_FAILURE;
+    if (NULL != _processor && NULL != _processor->op_postprocessor) {
+        _processor->op_postprocessor(mem, &read_into_mem);
+    }
+
+    return PASS;
 }

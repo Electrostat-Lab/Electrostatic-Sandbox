@@ -49,10 +49,12 @@ static inline void on_bytes_processed(file_mem *mem,
     if (caller != &read_into_mem) {
         return;
     }
-    fprintf(stdout, "Read bytes = %s\n", mem->buffer);
 }
 
-static inline void on_eof_reached(file_mem *mem) {
+static inline void on_eof_reached(file_mem *mem, void *caller) {
+    if (caller != &read_into_mem) {
+        return;
+    }
     // support for stdin
     if (mem->fd == STDIN_FILENO && mem->n_bytes < 20) {
         mem->n_bytes += mem->n_bytes;
@@ -61,6 +63,13 @@ static inline void on_eof_reached(file_mem *mem) {
     }
     fprintf(stdout, "Read Bytes after EOF: %s\n", mem->buffer);
     fprintf(stdout, "EOF Reached!\n");
+}
+
+static inline void op_postprocessor(file_mem *mem, void *caller) {
+    if (&read_into_mem != caller) {
+        return;
+    }
+
     // deallocates memory here!
     if (NULL != mem->buffer) {
         free(mem->buffer);
@@ -87,9 +96,10 @@ int main() {
         .__continue_after_eof = 0
     };
 
-    read_op_processor _processor = {
+    op_processor _processor = {
         .on_bytes_processed = &on_bytes_processed,
-        .on_eof_reached = &on_eof_reached
+        .on_trailing_char_sampled = &on_eof_reached,
+        .op_postprocessor = &op_postprocessor
     };
 
     update_op_processor __processor = {
