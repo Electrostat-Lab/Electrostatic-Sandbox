@@ -32,6 +32,13 @@ status_code read_into_mem(file_mem *mem,
     ssize_t read_bytes = 0;
     ssize_t total_bytes = 0;
     while (1) {
+        // sanity check the file
+        if (!is_fd_existential(mem->fd)) {
+            if (NULL != _processor && NULL != _processor->on_error_encountered) {
+                _processor->on_error_encountered(mem, errno, &read_into_mem);
+            }
+            return errno;
+        }
         read_bytes = read(mem->fd, (mem->buffer + total_bytes), /* Advance linearly over the File Mem model buffer
                                                                 * with the read bytes */
                                    (mem->n_bytes - 1) - total_bytes); /* Retro-advance on the number of available bytes

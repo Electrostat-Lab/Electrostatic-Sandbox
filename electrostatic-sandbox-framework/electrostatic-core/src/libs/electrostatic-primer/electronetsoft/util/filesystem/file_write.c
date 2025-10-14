@@ -31,6 +31,13 @@ status_code write_from_mem(file_mem *mem,
     ssize_t written_bytes = 0;
     ssize_t total_bytes = 0;
     while (1) {
+        if (!is_fd_existential(mem->fd)) {
+            if (NULL != _processor && NULL != _processor->on_error_encountered) {
+                _processor->on_error_encountered(mem, errno, &read_into_mem);
+            }
+            return errno;
+        }
+
         if (*(mem->buffer + total_bytes) == mem->trailing) {
             if (NULL != _processor && NULL != _processor->on_trailing_char_sampled) {
                 _processor->on_trailing_char_sampled(mem, &write_from_mem);
