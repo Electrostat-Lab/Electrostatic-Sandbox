@@ -90,6 +90,31 @@ typedef struct pipe_serializer (pipe_serializer);
 
 // Types for Vector Maths Libraries
 typedef struct vector2d (vector2d);
+typedef struct vec2d_space (vec2d_space);
+typedef struct vec2d_polar (vec2d_polar);
+typedef struct vec2d_processors (vec2d_processors);
+
+typedef struct physics2d_engine (physics2d_engine);
+typedef struct physics2d_object (physics2d_object);
+typedef struct physics2d_processor (physics2d_processor);
+
+typedef struct object2d_transformation (object2d_transformation);
+
+typedef struct vector3d (vector3d);
+typedef struct vec3d_space (vec3d_space);
+typedef struct vec3d_polar (vec3d_polar);
+typedef struct vec3d_processors (vec3d_processors);
+
+typedef struct matrix (matrix);
+typedef struct mat_processors (mat_processors);
+typedef struct mat_proc_sig (mat_proc_sig);
+typedef struct mat_binary_op_sig (mat_binary_op_sig);
+typedef enum mat_iterator {
+    ROW_CONVENTION_ITERATOR = ((INT32_MAX >> 16) ^ INT32_MAX),
+    COLUMN_CONVENTION_ITERATOR = ROW_CONVENTION_ITERATOR - 1,
+} mat_iterator;
+
+typedef struct caller_graph (caller_graph);
 
 #ifdef __cplusplus
 };

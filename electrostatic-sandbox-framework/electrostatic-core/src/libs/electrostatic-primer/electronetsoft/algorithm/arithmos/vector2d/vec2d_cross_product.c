@@ -15,8 +15,15 @@
  *       = (u1 v2 - u2 v1)ixj
  * 
  * # Conclusion:
- * ixj is the projection k component which is congurent to z-axis in R(3) vectorspaces.
+ * ixj is the projection k component which is congruent to z-axis in R(3) vectorspaces.
  */
-coordinate vector2d_cross_product(vector2d vec0, vector2d vec1) {
-    return vec0.x * vec1.y - vec0.y * vec1.x;
+status_code vec2d_cross_product(vector2d v0, vector2d v1,
+                                vec_component *out, vec2d_processors *processors) {
+    if (rvalue(out) == NULL) {
+        return EUNDEFINEDBUFFER;
+    }
+
+    *out = v0.x * v1.y - v0.y * v1.x;
+
+    return PASS;
 }
