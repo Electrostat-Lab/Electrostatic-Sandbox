@@ -5,8 +5,19 @@ status_code vec2d_subtract(vector2d v0, vector2d v1,
     if (rvalue(out) == NULL) {
         return EUNDEFINEDBUFFER;
     }
-    out->x = v0.x - v1.x;
-    out->y = v0.y - v1.y;
+    // find the negation of v1
+    status_code __code;
+    vector2d neg_v1;
+    vector2d neg_unit = {
+         .x = (vec_component) -1,
+         .y = (vec_component) -1,
+    };
 
-    return PASS;
+    __code = vec2d_product(v1, neg_unit, &neg_v1, processors);
+    if (PASS != __code) {
+        return __code;
+    }
+    // calculate the addition primitive op.
+
+    return vec2d_add(v0, neg_v1, out, processors);
 }

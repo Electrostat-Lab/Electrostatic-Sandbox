@@ -7,7 +7,7 @@ status_code vec2d_length(vector2d v, vec_component *out,
     }
 
     float sum = powf(v.x, 2) + powf(v.y, 2);
-    *out = (vec_component) powf(sum, 0.5);
+    *out = (vec_component) powf(sum, 0.5f);
 
     return PASS;
 }
