@@ -1,14 +1,14 @@
 # Arithmos _αριθμός_
 
-Arithmos is a set of APIs that target different taxonomies of algorithms to solve problems through providing _algorithm generic utilities_, and several implementations for the common _abstract data types (adt)_ commonly encountered during solving problems while building commericial applications or participating in problem solving contests.
+Arithmos is a set of APIs that target different taxonomies of algorithms to solve problems through providing _algorithm generic utilities_, and several implementations for the common _abstract data types (adt)_ commonly encountered during solving problems while building commercial applications or participating in problem solving contests.
 
 Arithmos is essentially composed of the following:
 - [x] Vector2d Library (Finished).
-- [ ] Vector3d Library.
-- [ ] MatrixNd Library.
+- [x] Vector3d Library (Partially Finished).
+- [x] MatrixNd Library (Partially Finished).
 - [ ] Discrete Sets Operations (Conjunctive, Disjunctive, Subtraction, Powersets, De'Morgans formulas).
 - [ ] Physics Simulation Library (Collision detection - Force Control - Objects interactions).
-- [ ] Statistics Algoritms Library (Present in Java - WIP to port).
+- [ ] Statistics Algorithms Library (Present in Java - WIP to port).
 - [ ] Differential and Integral Calculus Library.
 - [ ] Generic Algorithms Utilities Library.
 - [ ] Linear Algorithms Library.
@@ -52,7 +52,7 @@ Most of these libraries rely on the _Generic Algorithms Utilities Library_; this
     - Hashing Algorithms.
       - [ ] Modular Arithmetics.
     - Un-hashing Algorithms.
-    - Switching Algebra ALgorithms.
+    - Switching Algebra Algorithms.
       - [ ] Elementary Bit switching.
       - [ ] Elementary Bit shifting.
       - [ ] Elementary Byte switching.
