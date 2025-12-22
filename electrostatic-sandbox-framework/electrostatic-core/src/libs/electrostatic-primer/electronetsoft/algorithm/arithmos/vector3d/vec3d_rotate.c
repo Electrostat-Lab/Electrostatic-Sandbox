@@ -8,7 +8,7 @@ struct rotation_metadata {
 };
 
 typedef enum {
-    GIMBAL_X = 200,
+    GIMBAL_X = (INT16_MAX >> 8) ^ INT16_MAX,
     GIMBAL_Y = GIMBAL_X - 1,
     GIMBAL_Z = GIMBAL_Y - 1
 } vector_gimbal;
@@ -85,7 +85,6 @@ static inline status_code init_rotator_gimbal(vector3d *axis, matrix *__rotator,
                                               vec_component *angle1,
                                               vec3d_gimbal *gimbal) {
     if (get_vec_gimbal(axis) == GIMBAL_Z) {
-        fprintf(stdout, "Order rotation around Z\n");
         // rotate around z-axis
         // pre-processing automata
         // Let the X-axis in the R(3) space be the X-axis in the 2D projection.
@@ -102,7 +101,6 @@ static inline status_code init_rotator_gimbal(vector3d *axis, matrix *__rotator,
         *angle1 = gimbal->z_gimbal;
 
     } else if (get_vec_gimbal(axis) == GIMBAL_Y) {
-        fprintf(stdout, "Order rotation around Y\n");
         // rotate around y-axis
         // pre-processing automata
         // Let the X-axis in the R(3) space be the X-axis in the 2D projection.
@@ -118,7 +116,6 @@ static inline status_code init_rotator_gimbal(vector3d *axis, matrix *__rotator,
         gimbal->y_gimbal += angle;
         *angle1 = gimbal->y_gimbal;
     } else if (get_vec_gimbal(axis) == GIMBAL_X) {
-        fprintf(stdout, "Order rotation around X\n");
 
         // rotate around x-axis
         // pre-processing automata
