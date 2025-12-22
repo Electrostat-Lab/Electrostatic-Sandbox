@@ -7,7 +7,8 @@
 #ifndef __VECTOR_2D_H_
 #define __VECTOR_2D_H_
 
-#define ___ROTATION_MIN_THRESHOLD (0.00000012)
+#define ___ROTATION_MIN_THRESHOLD (vector2d_abs(cosf(M_PI/2)))
+#define ___ROTATION_MIN2_THRESHOLD (___ROTATION_MIN_THRESHOLD/2)
 
 #include <math.h>
 #include <electrostatic/electronetsoft/util/types.h>

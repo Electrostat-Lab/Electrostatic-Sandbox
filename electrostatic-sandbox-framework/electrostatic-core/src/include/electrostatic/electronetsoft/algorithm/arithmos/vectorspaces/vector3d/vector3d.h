@@ -17,6 +17,14 @@
 extern "C" {
 #endif
 
+struct vec3d_gimbal {
+    vec_component x_gimbal;
+    vec_component y_gimbal;
+    vec_component z_gimbal;
+
+    matrix *orientation;
+};
+
 /**
  * @brief Represents a 3-dimensional (aka. R(3) space) vector point
  *        with a x-component, a y-component, and z-component.
@@ -34,7 +42,7 @@ struct vector3d {
 
     vec_component z;
 
-    matrix *orientation;
+    vec3d_gimbal gimbal;
 };
 
 struct vec3d_space {
