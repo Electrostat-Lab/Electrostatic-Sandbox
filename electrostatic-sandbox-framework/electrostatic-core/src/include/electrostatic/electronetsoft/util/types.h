@@ -104,6 +104,7 @@ typedef struct vector3d (vector3d);
 typedef struct vec3d_space (vec3d_space);
 typedef struct vec3d_polar (vec3d_polar);
 typedef struct vec3d_processors (vec3d_processors);
+typedef struct vec3d_gimbal (vec3d_gimbal);
 
 typedef struct matrix (matrix);
 typedef struct mat_processors (mat_processors);
