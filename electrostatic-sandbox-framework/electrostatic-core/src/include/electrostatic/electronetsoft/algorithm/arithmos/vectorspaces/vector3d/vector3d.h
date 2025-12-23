@@ -58,7 +58,28 @@ struct vec3d_polar {
     vec_component theta; // angle with +ve direction of xy plane
 };
 
+/**
+ * @brief Defines the encodings for a set of three gimbal axes.
+ * @note Those encodings are constant numbers; the don't swap orientation
+ * with one another.
+ */
+typedef enum {
+    GIMBAL_X = (INT16_MAX >> 8) ^ INT16_MAX,
+    GIMBAL_Y = GIMBAL_X - 1,
+    GIMBAL_Z = GIMBAL_Y - 1
+} vector_gimbal;
+
 struct vec3d_processors {
+    /**
+     * @brief A function pointer to be called on a gimbal lock trap. A gimbal trap is a
+     * software trap that is executed when a potential angle that could produce gimbal
+     * lock is being floating-point approached or reached.
+     * @param rotated the rotated vector in the R(3) vectorspace.
+     * @param gimbal the gimbal around which the rotational motion is being executed.
+     * @param angle the last angle that triggered this gimbal trap
+     *              (it shouldn't have to be PI/2 or -PI/2).
+     */
+    void (*on_gimbal_lock_trap)(vector3d rotated, vector_gimbal gimbal, vec_component angle);
     /**
      * @brief A function pointer to be called on a successful operation.
      * @param caller A void pointer to the original calling context or object.
@@ -78,6 +99,26 @@ extern vector3d VEC3_X_COMPONENT;
 extern vector3d VEC3_Y_COMPONENT;
 
 extern vector3d VEC3_Z_COMPONENT;
+
+static inline vector_gimbal get_vec_gimbal(vector3d axis) {
+    if ((axis.x > ___ROTATION_MIN_THRESHOLD) &&
+        ((axis.y >= 0) && (axis.y < 1)) &&
+        ((axis.z >= 0) && (axis.z < 1))) {
+
+        return GIMBAL_X;
+    } else if ((axis.y > ___ROTATION_MIN_THRESHOLD) &&
+               ((axis.x >= 0) && (axis.x < 1)) &&
+               ((axis.z >= 0) && (axis.z < 1))) {
+
+        return GIMBAL_Y;
+    } else if ((axis.z > ___ROTATION_MIN_THRESHOLD) &&
+               ((axis.y >= 0) && (axis.y < 1)) &&
+               ((axis.x >= 0) && (axis.x < 1))) {
+
+        return GIMBAL_Z;
+    }
+    return -1;
+}
 
 /**
  * @brief Adds a scalar value to the vector components and returns a new vector.

@@ -7,12 +7,6 @@ struct rotation_metadata {
     matrix *out_orientation;
 };
 
-typedef enum {
-    GIMBAL_X = (INT16_MAX >> 8) ^ INT16_MAX,
-    GIMBAL_Y = GIMBAL_X - 1,
-    GIMBAL_Z = GIMBAL_Y - 1
-} vector_gimbal;
-
 static inline void preprocess_orientator(vector3d *v, vector3d *axis) {
 
     // create a column vector matrix
@@ -60,27 +54,7 @@ static inline status_code __on_entry_iterated(mat_proc_sig proc_sig) {
     return PASS;
 }
 
-static inline vector_gimbal get_vec_gimbal(vector3d *axis) {
-    if ((axis->x > ___ROTATION_MIN_THRESHOLD) &&
-        ((axis->y >= 0) && (axis->y < 1)) &&
-        ((axis->z >= 0) && (axis->z < 1))) {
-
-        return GIMBAL_X;
-    } else if ((axis->y > ___ROTATION_MIN_THRESHOLD) &&
-                ((axis->x >= 0) && (axis->x < 1)) &&
-                ((axis->z >= 0) && (axis->z < 1))) {
-
-        return GIMBAL_Y;
-    } else if ((axis->z > ___ROTATION_MIN_THRESHOLD) &&
-                ((axis->y >= 0) && (axis->y < 1)) &&
-                ((axis->x >= 0) && (axis->x < 1))) {
-
-        return GIMBAL_Z;
-    }
-    return -1;
-}
-
-static inline status_code init_rotator_gimbal(vector3d *axis, matrix *__rotator,
+static inline status_code init_rotator_gimbal(vector3d axis, matrix *__rotator,
                                               vec_component angle,
                                               vec_component *angle1,
                                               vec3d_gimbal *gimbal) {
@@ -163,7 +137,7 @@ static inline status_code rotate_about_gimbal(matrix *__rotator,
     return PASS;
 }
 
-static inline status_code rotate_gimbal(vector3d *axis, vec_component angle1,
+static inline status_code rotate_gimbal(vector3d axis, vec_component angle1,
                                         matrix *__rotator,
                                         vec3d_gimbal *in_gimbal,
                                         vec3d_gimbal *out_gimbal,
@@ -301,7 +275,7 @@ status_code vec3d_rotate(vector3d v, vector3d axis, vec_component angle,
     preprocess_orientator(&v, &axis);
     vec3d_abs(axis, &axis, NULL);
 
-    __code = init_rotator_gimbal(&axis, &__rotator, angle,
+    __code = init_rotator_gimbal(axis, &__rotator, angle,
                                  &angle1, &out->gimbal);
 
     if (PASS != __code) {
@@ -323,8 +297,11 @@ status_code vec3d_rotate(vector3d v, vector3d axis, vec_component angle,
 
     if (vector2d_abs(vector2d_cos(angle1)) <= ___ROTATION_MIN_THRESHOLD
             && vector2d_abs(vector2d_sin(angle1)) == 1) {
+        if (NULL != procs && NULL != procs->on_gimbal_lock_trap) {
+            procs->on_gimbal_lock_trap(*out, get_vec_gimbal(axis), angle);
+        }
         // rotate the gimbals axes (the orientation)
-        __code = rotate_gimbal(&axis, angle1, &__rotator,
+        __code = rotate_gimbal(axis, angle1, &__rotator,
                                &(v.gimbal),
                                &out->gimbal, procs);
         if (PASS != __code) {
