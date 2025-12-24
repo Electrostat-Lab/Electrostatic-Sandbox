@@ -64,7 +64,7 @@ static status_code assert_gimbals(vector3d v0, vector3d v,
 
     // assert the new position of the Y Gimbal (After performing a Pi/2 Y-gimbal rotation).
     if ((vector2d_abs(v.gimbal.orientation->element[0][1]) != 1) ||
-            !(vector2d_abs(v.gimbal.orientation->element[1][1] <= ___ROTATION_MIN_THRESHOLD)) ||
+            !(vector2d_abs(v.gimbal.orientation->element[1][1]) <= ___ROTATION_MIN_THRESHOLD) ||
             !(v.gimbal.orientation->element[2][1] <= ___ROTATION_MIN_THRESHOLD)) {
         fprintf(stdout, RED "(6) Failed to assert the new X-Gimbal orientation vector!\n" RESET);
         return ASSERTION_FAILURE;
