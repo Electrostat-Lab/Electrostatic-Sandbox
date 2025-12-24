@@ -54,10 +54,16 @@ static inline status_code __on_entry_iterated(mat_proc_sig proc_sig) {
     return PASS;
 }
 
-static inline status_code init_rotator_gimbal(vector3d axis, matrix *__rotator,
+static inline status_code init_rotator_gimbal(vector3d axis,
+                                              matrix *__rotator,
                                               vec_component angle,
                                               vec_component *angle1,
                                               vec3d_gimbal *gimbal) {
+
+    if (NULL == __rotator || NULL == __rotator->element) {
+        return EUNDEFINEDBUFFER;
+    }
+
     if (get_vec_gimbal(axis) == GIMBAL_Z) {
         // rotate around z-axis
         // pre-processing automata
@@ -71,8 +77,10 @@ static inline status_code init_rotator_gimbal(vector3d axis, matrix *__rotator,
         __rotator->element[1][1] = vector2d_cos(angle);
         __rotator->element[2][2] = 1;
 
-        gimbal->z_gimbal += angle;
-        *angle1 = gimbal->z_gimbal;
+        if (NULL != gimbal && NULL != angle1) {
+            gimbal->z_gimbal += angle;
+            *angle1 = gimbal->z_gimbal;
+        }
 
     } else if (get_vec_gimbal(axis) == GIMBAL_Y) {
         // rotate around y-axis
@@ -87,8 +95,11 @@ static inline status_code init_rotator_gimbal(vector3d axis, matrix *__rotator,
         __rotator->element[2][2] = vector2d_cos(angle);
         __rotator->element[1][1] = 1;
 
-        gimbal->y_gimbal += angle;
-        *angle1 = gimbal->y_gimbal;
+        if (NULL != gimbal && NULL != angle1) {
+            gimbal->y_gimbal += angle;
+            *angle1 = gimbal->y_gimbal;
+        }
+
     } else if (get_vec_gimbal(axis) == GIMBAL_X) {
 
         // rotate around x-axis
@@ -103,8 +114,11 @@ static inline status_code init_rotator_gimbal(vector3d axis, matrix *__rotator,
         __rotator->element[1][1] = vector2d_cos(angle);
         __rotator->element[0][0] = 1;
 
-        gimbal->x_gimbal += angle;
-        *angle1 = gimbal->x_gimbal;
+        if (NULL != gimbal && NULL != angle1) {
+            gimbal->x_gimbal += angle;
+            *angle1 = gimbal->x_gimbal;
+        }
+
     } else {
         return EINCOMPATTYPE;
     }
@@ -142,26 +156,14 @@ static inline status_code rotate_gimbal(vector3d axis, vec_component angle1,
                                         vec3d_gimbal *in_gimbal,
                                         vec3d_gimbal *out_gimbal,
                                         vec3d_processors *procs) {
-    if (get_vec_gimbal(axis) == GIMBAL_Z) {
-        __rotator->element[0][0] = vector2d_cos(angle1);
-        __rotator->element[0][1] = -vector2d_sin(angle1);
-        __rotator->element[1][0] = vector2d_sin(angle1);
-        __rotator->element[1][1] = vector2d_cos(angle1);
-        __rotator->element[2][2] = 1;
-    } else if (get_vec_gimbal(axis) == GIMBAL_Y) {
-        __rotator->element[0][0] = vector2d_cos(angle1);
-        __rotator->element[0][2] = -vector2d_sin(angle1);
-        __rotator->element[2][0] = vector2d_sin(angle1);
-        __rotator->element[2][2] = vector2d_cos(angle1);
-        __rotator->element[1][1] = 1;
-    } else if (get_vec_gimbal(axis) == GIMBAL_X) {
-        __rotator->element[2][2] = vector2d_cos(angle1);
-        __rotator->element[2][1] = -vector2d_sin(angle1);
-        __rotator->element[1][2] = vector2d_sin(angle1);
-        __rotator->element[1][1] = vector2d_cos(angle1);
-        __rotator->element[0][0] = 1;
-    } else {
-        return EINCOMPATTYPE;
+
+    status_code __code = init_rotator_gimbal(axis, __rotator, angle1,
+                                             NULL, NULL);
+    if (PASS != __code) {
+        if (NULL != procs && NULL != procs->on_op_failed) {
+            procs->on_op_failed(&vec3d_rotate, __code);
+        }
+        return __code;
     }
 
     // init the output orientation matrix
@@ -178,8 +180,7 @@ static inline status_code rotate_gimbal(vector3d axis, vec_component angle1,
     mat_processors mat_procs = {
     };
 
-    status_code __code =
-            mat_product(*__rotator,
+    __code = mat_product(*__rotator,
                         *(in_gimbal->orientation),
                         &__orient, mat_procs);
     if (PASS != __code) {
