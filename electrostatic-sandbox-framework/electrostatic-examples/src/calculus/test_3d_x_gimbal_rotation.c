@@ -20,71 +20,50 @@ static status_code assert_gimbals(vector3d v0, vector3d v,
     // system continues and skips the gimbal rotation, however,
     // accumulates the gimbal angle inside the structure
     // [vec3d_gimbal].
-    if (v.gimbal.y_gimbal != angle) {
-        fprintf(stdout, RED "(1) Failed to assert the Y-Gimbal Angle Rotated Orthogonally!\n" RESET);
+    if (v.gimbal.x_gimbal != angle) {
         return ASSERTION_FAILURE;
     }
 
-    fprintf(stdout, GREEN "(1) Asserted the Y-Gimbal Angle Rotated Orthogonally!\n" RESET);
-
-    if (v.gimbal.x_gimbal != 0) {
-        fprintf(stdout, RED "(2) Failed to assert the X-Gimbal Angle unchanged!\n" RESET);
+    if (v.gimbal.y_gimbal != 0) {
         return ASSERTION_FAILURE;
     }
-
-    fprintf(stdout, GREEN "(2) Asserted the X-Gimbal Angle unchanged!\n" RESET);
 
     if (v.gimbal.z_gimbal != 0) {
-        fprintf(stdout, RED "(3) Failed to assert the Z-Gimbal Angle unchanged!\n" RESET);
         return ASSERTION_FAILURE;
     }
 
-    fprintf(stdout, GREEN "(3) Asserted the Z-Gimbal Angle unchanged!\n" RESET);
-
-    // assert the position of the Y Gimbal (Which should never change!)
-    if ((v.gimbal.orientation->element[0][1] != 0) ||
-        (v.gimbal.orientation->element[1][1] != 1) ||
-        (v.gimbal.orientation->element[2][1] != 0)) {
-        fprintf(stdout, RED "(4) Failed to assert the Y-Gimbal orientation unchanged!\n" RESET);
+    // assert the position of the X Gimbal (Which should never change!)
+    if ((v.gimbal.orientation->element[0][0] != 1) ||
+        (v.gimbal.orientation->element[1][0] != 0) ||
+        (v.gimbal.orientation->element[2][0] != 0)) {
         return ASSERTION_FAILURE;
     }
 
-    fprintf(stdout, GREEN "(4) Asserted the Y-Gimbal orientation unchanged!\n" RESET);
-
-    // assert the new position of the X Gimbal (After performing a Pi/2 Y-gimbal rotation)
-    if (!(vector2d_abs(v.gimbal.orientation->element[0][0]) <=
+    // assert the new position of the Y Gimbal (After performing a Pi/2 Y-gimbal rotation)
+    if (!(vector2d_abs(v.gimbal.orientation->element[1][1]) <=
             ___ROTATION_MIN_THRESHOLD) ||
         (v.gimbal.orientation->element[0][1] != 0) ||
-        (v.gimbal.orientation->element[2][0] != 1)) {
-        fprintf(stdout, RED "(5) Failed to assert the new X-Gimbal orientation!\n" RESET);
+        (v.gimbal.orientation->element[2][1] != -1)) {
         return ASSERTION_FAILURE;
     }
-
-    fprintf(stdout, GREEN "(5) Asserted the new X-Gimbal orientation!\n" RESET);
 
     // assert the new position of the Z Gimbal (After performing a Pi/2 Y-gimbal rotation).
-    if ((vector2d_abs(v.gimbal.orientation->element[0][2]) != 1) ||
-            !(v.gimbal.orientation->element[1][2] <= ___ROTATION_MIN_THRESHOLD) ||
+    if ((vector2d_abs(v.gimbal.orientation->element[1][2]) != 1) ||
+            !(v.gimbal.orientation->element[0][2] <= ___ROTATION_MIN_THRESHOLD) ||
             !(vector2d_abs(v.gimbal.orientation->element[2][2]) <= ___ROTATION_MIN_THRESHOLD)){
-        fprintf(stdout, RED "(6) Failed to assert the new Z-Gimbal orientation!\n" RESET);
         return ASSERTION_FAILURE;
     }
 
-    fprintf(stdout, GREEN "(6) Asserted the new Z-Gimbal orientation!\n" RESET);
-
     // assert the vector itself
-    v.x = roundf(v.x);
+    v.y = roundf(v.y);
     v.z = roundf(v.z);
 
     if (PASS != vec3d_are_equal(v, (vector3d) {
-            .x = roundf(-v0.z),
-            .y = v0.y,
-            .z = roundf(v0.x)}, NULL)) {
-        fprintf(stdout, RED "(7) Failed to assert the position of the new vector!\n" RESET);
+        .x = v0.x,
+        .y = roundf(v0.z),
+        .z = roundf(-v0.y)}, NULL)) {
         return ASSERTION_FAILURE;
     }
-
-    fprintf(stdout, GREEN "(7) Asserted the position of the new vector!\n" RESET);
 
     return ASSERTION_SUCCESS;
 }
@@ -118,7 +97,7 @@ static inline int64_t execute(void **inputs) {
     struct vec3d_processors processors = {
     };
 
-    fprintf(stdout, "Perform a rotation around the Y-axis for the following vector with these gimbal axes.\n");
+    fprintf(stdout, "Perform a rotation around the X-axis for the following vector with these gimbal axes.\n");
 
     fprintf(stdout, "V = (%f, %f, %f)\n", v.x, v.y, v.z);
     fprintf(stdout, "\n");
@@ -128,7 +107,7 @@ static inline int64_t execute(void **inputs) {
     fprintf(stdout, "Vz Orientation = (%f, %f, %f)\n", v.gimbal.orientation->element[0][2], v.gimbal.orientation->element[1][2], v.gimbal.orientation->element[2][2]);
     fprintf(stdout, "\n");
 
-    status_code __code = vec3d_rotate(v, VEC3_Y_COMPONENT, M_PI/2, &v, &processors);
+    status_code __code = vec3d_rotate(v, VEC3_X_COMPONENT, M_PI/2, &v, &processors);
     if (__code != PASS) {
         fprintf(stderr, "Error: %d\n", __code);
     }
@@ -143,7 +122,7 @@ static inline int64_t execute(void **inputs) {
     return assert_gimbals((vector3d) {.x = 2, .y = 3, .z = 4},
                           v, 0); // the gimbal angle is resettled to ZERO after approaching an angle
                                                // that introduces a gimbal lock
-                                               // and the system rotates the 2 other Planar gimbals (i.e., the X and Z Gimbals).
+                                               // and the system rotates the 2 other Planar gimbals (i.e., the Y and Z Gimbals).
 }
 
 static inline status_code assert(int64_t prop0, int64_t prop1) {
