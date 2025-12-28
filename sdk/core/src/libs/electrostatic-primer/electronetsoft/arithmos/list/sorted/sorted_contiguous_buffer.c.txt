@@ -1,0 +1,202 @@
+#include <electrostatic/electronetsoft/algorithm/arithmos/list/sorted/sorted_contiguous_buffer.h>
+#include <math.h>
+
+const uint8_t lp_factor = 2;
+
+static inline status_code contiguous_update_buffer_size(list *list, void *caller) {
+    if (rvalue(list) == NULL || rvalue(list->elements) == NULL
+        || rvalue(list->function_table) == NULL
+        || rvalue(list->function_table->update_buffer_size) == NULL
+        || rvalue(caller) == NULL) {
+
+        return EUNDEFINEDBUFFER;
+    }
+    return list->function_table->update_buffer_size(list, caller);
+}
+
+static inline status_code contiguous_buffer_search_index(list *buffer,
+                                                     list_element *element,
+                                                     uint64_t *out) {
+    // preprocessor automata -- Input Validation
+    if (rvalue(buffer) == NULL || rvalue(element) == NULL
+                || rvalue(out) == NULL) {
+        return EUNDEFINEDBUFFER;
+    }
+    // preprocessor automata -- Type Validation
+    if (SORTED_CONTIGUOUS_BUFFER != buffer->type) {
+        return EINCOMPATTYPE;
+    }
+    struct {
+        uint64_t start_index;
+        uint64_t end_index;
+        uint64_t lerp;
+        uint64_t length;
+    } tween = {
+        .start_index = 0,
+        .end_index = buffer->length - 1,
+        .lerp = ((uint64_t) ceil(buffer->length / lp_factor)) - 1,
+        .length = buffer->length
+    };
+    // preprocessor automata -- Start a tween-interpolation reduction algorithm
+    //
+    status_code __code = ASSERTION_FAILURE;
+    while (true) {
+        __code = buffer->function_table->compare(element,
+                                                 buffer->elements[tween.lerp]);
+        // Key codes logic:
+        // ------------------------------------------------
+        // PASS <==> (insert before the lerp)             |
+        // ASSERTION_SUCCESS <==> (insert after the lerp) |
+        // ASSERTION_FAILED <==> (insert on the lerp)     |
+        // ------------------------------------------------
+        if (PASS == __code) { // mimics smaller than
+            // Comparison PASSED
+            // add before this item
+            tween.end_index = tween.lerp;
+        } else if (ASSERTION_SUCCESS == __code) { // mimics larger than
+            // Comparison Success
+            // add after this item
+            tween.start_index = tween.lerp;
+        } else if (ASSERTION_FAILURE == __code) { // mimics equals marking the end of tween lerp
+            break;
+        } else {
+            return EBUFFERTURNCATION;
+        }
+
+        // postprocessing -- define the rate limiting step
+        tween.length = (tween.end_index - tween.start_index) + 1;
+        if (tween.length < lp_factor) {
+            break;
+        }
+        // middle interpolation -- lerp(start, end, 0.5f)
+        tween.lerp = (((uint64_t) ceil(tween.length / lp_factor))
+                + tween.start_index) - 1; // lerp is an index identifier, so subtract (1) from the length
+    };
+    // postprocessing automata -- insertion stage
+    // by the end of this preprocessing stage -- we would have a structure that
+    // maps a buffer with only and only 2 items.
+    // insertion would follow according to the last status code.
+    // processing automata -- add the item on the pointer location
+    // enough for sorted add using binary search, and defer insertion handling to another algorithm...
+
+    if (PASS == __code) {
+        *out = tween.start_index;
+    } else if (ASSERTION_SUCCESS == __code) {
+        *out = tween.end_index;
+    }
+    return PASS;
+}
+
+static inline status_code unsafe_rightshift_items_by_one(list *buffer) {
+    if (rvalue(buffer) == NULL) {
+        return EUNDEFINEDBUFFER;
+    }
+
+
+
+}
+
+static inline status_code contiguous_buffer_insert(list *buffer, list_element *element, uint64_t index) {
+    // preprocessor automata -- Input Validation
+    if (rvalue(buffer) == NULL || rvalue(element) == NULL) {
+        return EUNDEFINEDBUFFER;
+    }
+    // preprocessor automata -- Type Validation
+    if (SORTED_CONTIGUOUS_BUFFER != buffer->type) {
+        return EINCOMPATTYPE;
+    }
+    // preprocessing automata -- Ensure enough space and realloc if required
+    if (buffer->limit != 0 && buffer->length >= buffer->limit) {
+        // run a stretching algorithm
+        // the stretching algorithm
+        if (rvalue(buffer->function_table) != NULL &&
+            rvalue(buffer->function_table->resize) != NULL) {
+            buffer->function_table->resize(buffer, 0x02);
+        }
+        contiguous_update_buffer_size(buffer, buffer->function_table->insert);
+    }
+    // preprocessing automata -- Right shift buffer elements after this insertion
+    //                           to the right creating a hole for the new element
+
+    // processing automata -- Insert the new element
+    buffer->elements[index] = element;
+    // post-processing automata -- Increment the available items and return
+    buffer->length += 1;
+    // post-processing automata -- Update the associated APIs (memory APIs)
+    return PASS;
+}
+
+static inline status_code contiguous_buffer_add(list *buffer, list_element *element) {
+    // preprocessor automata -- Input Validation
+    if (rvalue(buffer) == NULL || rvalue(element) == NULL) {
+        return EUNDEFINEDBUFFER;
+    }
+    if (rvalue(buffer->function_table->compare) == NULL) {
+        return ECOMPAREFUNCTIONNOTFOUND;
+    }
+    if (SORTED_CONTIGUOUS_BUFFER != buffer->type) {
+        return EINCOMPATTYPE;
+    }
+    // preprocessor automata -- find the index of the new element to add.
+    uint64_t index = 0;
+    status_code __code =
+            contiguous_buffer_search_index(buffer, element, &index);
+    if (PASS != __code) {
+        return __code;
+    }
+
+    // processor and post-processing automata is delegated!
+    return buffer->function_table->insert(buffer, element, index);
+}
+
+static inline status_code contiguous_buffer_dispatch_by_address(void **input,
+                                                                void *caller,
+                                                                void *output) {
+    // preprocessing automata -- Input Validation
+    if (rvalue(input) == NULL || rvalue(*input) == NULL
+            || rvalue(caller) == NULL || rvalue(output) == NULL) {
+        return EUNDEFINEDBUFFER;
+    }
+    // preprocessing automata -- retrieving stable signatures
+    list *buffer = (list *) input[0];
+    list_element *element = (list_element *) input[1];
+    // preprocessing automata -- Input Validation
+    if (rvalue(buffer) == NULL || rvalue(element) == NULL) {
+        return EUNDEFINEDBUFFER;
+    }
+    // preprocessing automata -- Type Validation
+    if (SORTED_CONTIGUOUS_BUFFER != buffer->type) {
+        return EINCOMPATTYPE;
+    }
+
+    // preprocessing automata -- Routing callbacks
+    if (rvalue(caller) == &contiguous_buffer_search_index) {
+        // processing automata -- Delegation
+        // preprocessing
+        uint64_t *out = (uint64_t *) output;
+        return contiguous_buffer_search_index(buffer, element, out);
+    }
+    return ASSERTION_FAILURE;
+}
+
+status_code init_sorted_contiguous_buffer(list *list,
+                                      list_element **elements,
+                                      list_function_table *table,
+                                      api_lifecycle *lifecycle) {
+    if (rvalue(list) == NULL ||
+        rvalue(elements) == NULL ||
+        rvalue(table) == NULL) {
+        return EUNDEFINEDBUFFER;
+    }
+    // initialize the function table
+    list->function_table = table;
+    table->add = &contiguous_buffer_add;
+    table->insert = &contiguous_buffer_insert;
+    table->dispatch_by_address = &contiguous_buffer_dispatch_by_address;
+    list->type = SORTED_CONTIGUOUS_BUFFER;
+    list->elements_memory = (memory_partition) {
+            .start_address = 0,
+            .end_address = 0 // this is dynamic and it needs to be updated on each WRITE operation!
+    };
+    return PASS;
+}

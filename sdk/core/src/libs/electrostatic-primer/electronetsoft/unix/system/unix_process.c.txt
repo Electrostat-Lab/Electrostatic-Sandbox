@@ -1,0 +1,148 @@
+#include <electrostatic/electronetsoft/unix/system/unix_process.h>
+#include <electrostatic/electronetsoft/util/filesystem/file_status.h>
+#include <unistd.h>
+#include <errno.h>
+#include <stdlib.h>
+
+static inline status_code is_forked_process(uprocess *proc) {
+    if (rvalue(proc) == NULL) {
+        return EUNDEFINEDBUFFER;
+    }
+    return (proc->proc_id == 0) ? ASSERTION_SUCCESS: ASSERTION_FAILURE;
+}
+
+static inline status_code is_parent_process(uprocess *proc) {
+    if (rvalue(proc) == NULL) {
+        return EUNDEFINEDBUFFER;
+    }
+    return (proc->proc_id > 0) ? ASSERTION_SUCCESS: ASSERTION_FAILURE;
+}
+
+static inline status_code intern_forked_process_runtime(uprocess *proc, uprocess_pipe *pipe) {
+    // execute a new program here
+    // channel the output and input from and to that program respectively
+    // ...
+    if (NULL == pipe || NULL == pipe->master || NULL == pipe->slave) {
+        return EUNDEFINEDBUFFER;
+    }
+    int ___in = pipe->pipe[0];
+    int ___out = pipe->pipe[1];
+
+    if (!(___in > 0 && ___out > 0)) {
+        return EUNDEFINEDBUFFER;
+    }
+
+    // pre-processing automata
+    __off_t __size;
+    status_code ___status = get_file_bytes(___in, &__size);
+    if (___status != PASS) {
+        return ___status;
+    }
+
+    off_t __pos;
+    status_code ___status_ = get_file_pos(___in, &__pos);
+    if (___status_ != PASS) {
+        return ___status_;
+    }
+
+    char *__in_str = calloc((__size - __pos) + 1, sizeof (char));
+    while (1) {
+        // processing automata
+        ssize_t n_bytes = 0;
+        n_bytes = read(___in, (__in_str + n_bytes), (__size - __pos));
+        // post processing automata
+        if (__status != -1) {
+            // report error
+            break;
+        } else if (__status == 0) {
+            // EOF terminate!
+            break;
+        }
+    }
+    __in_str[(__size - __pos) + 1] = '\n';
+
+    return PASS;
+}
+
+static inline status_code intern_current_process_runtime(uprocess *proc, uprocess_pipe *pipe) {
+    // channel some input to the forked process program
+    // ...
+
+    return PASS;
+}
+
+status_code fork_subprocess(uprocess *process, uprocess_lifecycle *lifecycle) {
+    if (rvalue(process) == NULL ||
+            rvalue(lifecycle) == NULL ||
+                rvalue(lifecycle->forked_process_runtime) == NULL) {
+        return EUNDEFINEDBUFFER;
+    }
+
+    process->proc_id = fork();
+    if (is_forked_process(process)) {
+        process->proc_id = getpid();
+        process->is_pendant = 1;
+        process->is_active = 1;
+        // define the subprocess resources and the IPC channels here
+        // ...
+        lifecycle->forked_process_runtime(process);
+    } else if (is_parent_process(process)) {
+        process->proc_id = getpid();
+        process->is_pendant = 0;
+        process->is_active = 1;
+        // continue execution of the parent process here
+        // ...
+        lifecycle->current_process_runtime(process);
+    } else {
+        process->proc_id = -1;
+        process->is_pendant = -1;
+        // terminate execution with failure here
+        // ...
+        if (NULL != lifecycle->fork_failure) {
+            lifecycle->fork_failure(process, errno);
+        }
+        return errno;
+    }
+
+    return PASS;
+}
+status_code exit_subprocess(uprocess *process, uprocess_lifecycle *lifecycle, status_code __STATUS) {
+    if (rvalue(process) == NULL || rvalue(lifecycle) == NULL) {
+        return EUNDEFINEDBUFFER;
+    }
+    process->proc_id = -1;
+    process->is_active = 0;
+    process->name = NULL;
+    process->runtime = NULL;
+    if (NULL != lifecycle->on_process_exit) {
+        on_exit(lifecycle->on_process_exit, process);
+    }
+    exit(__STATUS);
+    return __STATUS;
+}
+
+status_code fork_subprocess_exec(uprocess *process, uprocess_lifecycle *lifecycle,
+                                 unix_exe *exe) {
+    if (rvalue(process) == NULL || rvalue(lifecycle) == NULL
+            || rvalue(exe) == NULL) {
+        return EUNDEFINEDBUFFER;
+    }
+
+    // create a pipe with a write-end and a read-end
+    pipe()
+
+    // pipe and execute automata: pipe the current process input, fork a subprocess, execute a program, and pipe the output.
+    fork_subprocess(process, &((uprocess_lifecycle) {
+       .current_process_runtime = &intern_current_process_runtime,
+       .forked_process_runtime = &intern_forked_process_runtime
+    }));
+
+    return PASS;
+}
+
+status_code init_uprocess_lifecycle(uprocess_lifecycle *lifecycle) {
+    return PASS;
+}
+status_code init_uprocess_lifecycle_from(uprocess_lifecycle *from, uprocess_lifecycle *to) {
+    return PASS;
+}

@@ -2,9 +2,9 @@
 source "./helper-scripts/common-variables.sh"
 source "./helper-scripts/project-impl/variables.sh"
 
-serial4j_core=":electrostatic-sandbox-framework:electrostatic4j:serial4j:serial4j-core"
-serial4j_native=":electrostatic-sandbox-framework:electrostatic4j:serial4j:serial4j-native"
-serial4j_examples=":electrostatic-sandbox-framework:electrostatic4j:serial4j:serial4j-examples"
+serial4j_core=":sdk:electrostatic4j:serial4j:serial4j-core"
+serial4j_native=":sdk:electrostatic4j:serial4j:serial4j-native"
+serial4j_examples=":sdk:electrostatic4j:serial4j:serial4j-examples"
 
 echo -e "${ORANGE_C} Compiling and Assembling serial4j-core"
 

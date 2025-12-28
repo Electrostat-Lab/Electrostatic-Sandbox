@@ -241,8 +241,7 @@ title The Electrostatic-Sandbox SDK Milestones
 > [!IMPORTANT]
 > **Migration Milestones:**
 > - [x] Migrating Serial4j to the project.
-> - [ ] Migrating ShiftAvr to the project.
-> - [ ] Migrating jSnapLoader to the project.
+> - [x] Migrating ShiftAvr to the project.
 > - [ ] Migrating Automata4j to the project.
 > - [ ] Migrating Jector to the project.
 
@@ -282,33 +281,6 @@ title The Electrostatic-Sandbox SDK Milestones
 - Simulating large Space Missions into small finite simulations (e.g., Rocket Launch, Rocket separation stages, Nose separation, Rocket Launch Abort, and Rocket Engine Failure).
 - Building in-home, office, and outdoor distributed IoT projects (e.g., Smart Homes, Smart Hospitals, Switch Control Military and Traffic control systems).
 - Solving the devastating issue of [work that cannot be fully remote due to the embedded hardware at the company site.](https://www.reddit.com/r/embedded/comments/16ok23y/best_way_to_get_a_remote_job_as_an_embedded/).
-
-### Board Overview (Migrated Projects Dismissed):
-![HAL-Electrostatic](https://github.com/Electrostat-Lab/Electrostatic-Sandbox/blob/master/assets/HAL-Electrostatic.jpeg)
-
-## General progress:
-**API used:**
-- [x] Serial4j.
-- [x] Articular-ES.
-- [x] Automata4j.
-- [x] Jector.
-- [ ] ShiftAvr.
-- [ ] Parallel4j.
-- [ ] Socket4j.
-- [x] Electrostatic-sandbox-framework.
-
-**Environment Setup**:
-- [x] `setup-tools` scripting.
-- [x] `setup-framework` scripting.
-
-**Electrostatic-sandbox framework**:
-- [ ] Electroserial API: wraps Serial4j API providing a generic boundary to the Electrocomponent API.
-- [ ] Electroparallel API: wraps Parallel4j API providing a generic boundary to the Electrocomponent API.
-- [ ] Electrosocket API: wraps Socket4j API providing a generic boundary to the Electrocomponent API.
-- [ ] Electrocomponent API: provides the vertical HAL for interacting with devices through device managers based on the scientific model provided by the _Set Theory_.
-- [x] Electrostatic-sandbox-examples: examples and techdemos utilizing the HAL API directly to interact with peripheral devices and/or use one of the above core APIs.
-- [ ] Deployment to Maven Central.
-- [ ] Build the framework into an SDK.
 
 ## References (Direct links to useful topics):
 ### Operational:

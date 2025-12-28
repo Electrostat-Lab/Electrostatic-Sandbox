@@ -9,14 +9,14 @@ PRIMER_SUFFIX="${1}"
 # The suffix 'primer' swaps binaries with
 # the original project for testing purposes!
 ##
-electronetsoft="$(pwd)/electrostatic-sandbox-framework/${source_dir}/src/libs/electrostatic${PRIMER_SUFFIX}/electronetsoft"
-electroio="$(pwd)/electrostatic-sandbox-framework/${source_dir}/src/libs/electrostatic${PRIMER_SUFFIX}/electroio"
+electronetsoft="$(pwd)/sdk/${source_dir}/src/libs/electrostatic${PRIMER_SUFFIX}/electronetsoft"
+electroio="$(pwd)/sdk/${source_dir}/src/libs/electrostatic${PRIMER_SUFFIX}/electroio"
 
 platform_module="${electronetsoft}/platform/linux/"
 comm_module="${electronetsoft}/comm/"
-algorithm_module="${electronetsoft}/algorithm/"
+algorithm_module="${electronetsoft}/arithmos/"
 util_module="${electronetsoft}/util/unit-testing"
-electromio_module="${electroio}/electromio/"
+electromio_module="${electroio}/mio/"
 
 ./helper-scripts/project-impl/compile-electrostatic.sh \
         "${COMMISSION_LIB}" "${AVR_GCC_BIN}" "${AVR_GPP_BIN}" "ON" "OFF" "OFF" "-O2" \

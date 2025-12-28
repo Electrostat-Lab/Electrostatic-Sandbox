@@ -2,7 +2,7 @@
 source "./helper-scripts/common-variables.sh"
 source "./helper-scripts/project-impl/variables.sh"
 
-serial4j_examples=":electrostatic-sandbox-framework:electrostatic4j:serial4j:serial4j-examples"
+serial4j_examples=":sdk:electrostatic4j:serial4j:serial4j-examples"
 
 demo="${1}"
 
