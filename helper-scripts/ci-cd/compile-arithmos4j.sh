@@ -2,9 +2,9 @@
 source "./helper-scripts/common-variables.sh"
 source "./helper-scripts/project-impl/variables.sh"
 
-arithmos4j_core=":electrostatic-sandbox-framework:electrostatic4j:arithmos4j:arithmos4j-core"
-arithmos4j_native=":electrostatic-sandbox-framework:electrostatic4j:arithmos4j:arithmos4j-native"
-arithmos4j_examples=":electrostatic-sandbox-framework:electrostatic4j:arithmos4j:arithmos4j-examples"
+arithmos4j_core=":sdk:electrostatic4j:arithmos4j:arithmos4j-core"
+arithmos4j_native=":sdk:electrostatic4j:arithmos4j:arithmos4j-native"
+arithmos4j_examples=":sdk:electrostatic4j:arithmos4j:arithmos4j-examples"
 
 echo -e "${ORANGE_C} Compiling and Assembling serial4j-core"
 

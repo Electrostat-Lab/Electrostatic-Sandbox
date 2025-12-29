@@ -1,0 +1,19 @@
+#include <electrostatic/electronetsoft/algorithm/arithmos/list/sorted/sorted_linked_buffer.h>
+
+status_code init_sorted_linked_buffer(list *list,
+                                      list_element **elements,
+                                      list_function_table *table,
+                                      api_lifecycle *lifecycle) {
+    if (rvalue(list) == NULL ||
+        rvalue(elements) == NULL ||
+        rvalue(table) == NULL) {
+        return EUNDEFINEDBUFFER;
+    }
+    // initialize the function table
+    list->type = SORTED_LINKED_BUFFER;
+    list->elements_memory = (memory_partition) {
+            .start_address = 0,
+            .end_address = 0 // this is dynamic and it needs to be updated on each WRITE operation!
+    };
+    return PASS;
+}

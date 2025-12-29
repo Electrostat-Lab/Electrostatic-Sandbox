@@ -11,7 +11,7 @@ build_dir="${5}"
 ./helper-scripts/project-impl/compile-examples-mcu.sh "-mmcu=${target}" \
     "${example}" "${executable}" "${build_dir}" "${target}" "OFF"
 
-root_build_path="$(pwd)/electrostatic-sandbox-framework/electrostatic-examples"
+root_build_path="$(pwd)/sdk/examples"
 
 ./helper-scripts/project-impl/upload-hex.sh "${executable}.elf" \
     "${root_build_path}/cmake-build/${build_dir}/${target}" "${chip_alias}" ""

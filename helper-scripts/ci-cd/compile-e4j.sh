@@ -2,9 +2,9 @@
 source "./helper-scripts/common-variables.sh"
 source "./helper-scripts/project-impl/variables.sh"
 
-e4j_core=":electrostatic-sandbox-framework:electrostatic4j:electrostatic4j-core"
-e4j_native=":electrostatic-sandbox-framework:electrostatic4j:electrostatic4j-native"
-e4j_examples=":electrostatic-sandbox-framework:electrostatic4j:electrostatic4j-examples"
+e4j_core=":sdk:electrostatic4j:electrostatic4j-core"
+e4j_native=":sdk:electrostatic4j:electrostatic4j-native"
+e4j_examples=":sdk:electrostatic4j:electrostatic4j-examples"
 
 echo -e "${ORANGE_C} Compiling and Assembling e4j-core"
 
