@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <electrostatic/electronetsoft/arithmos_calculus.h>
+#include <electronetsoft/arithmos_calculus.h>
 
 int main() {
 

@@ -10,7 +10,7 @@
  * of this license document, but changing it is not allowed.
  */
 #define F_CPU 16000000UL
-#include <electrostatic/electroio/electromio/avr/gpio/gpio.h>
+#include <electroio/mio/gpio/gpio.h>
 #include <util/delay.h>
 
 int main() {

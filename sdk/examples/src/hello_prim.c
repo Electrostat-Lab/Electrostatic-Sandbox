@@ -1,4 +1,4 @@
-#include <electrostatic/electronetsoft/algorithm/arithmos/graph/prim.h>
+#include <electronetsoft/arithmos/graph/prim.h>
 
 vertex v0 = {
         .data = (void *) "Vertex 0"

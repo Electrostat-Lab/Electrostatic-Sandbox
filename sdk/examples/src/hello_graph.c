@@ -3,7 +3,7 @@
  *
  * @author pavl_g
  */
-#include <electrostatic/electronetsoft/algorithm/arithmos/graph/math_structs.h>
+#include <electronetsoft/arithmos/graph/math_structs.h>
 #include <alloca.h>
 #include <stdio.h>
 

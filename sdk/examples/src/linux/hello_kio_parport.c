@@ -1,7 +1,7 @@
 #include <linux/parport.h>
 #include <stdio.h>
 #include <fcntl.h>
-#include <electrostatic/electroio/electrokio/ieee1284_module.h>
+#include <electroio/kio/ieee1284_module.h>
 
 #define DEVICE "/dev/parport0"
 

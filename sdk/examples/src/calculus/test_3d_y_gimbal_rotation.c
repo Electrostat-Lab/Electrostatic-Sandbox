@@ -1,7 +1,7 @@
-#include <electrostatic/electronetsoft/algorithm/arithmos/adt/list.h>
-#include <electrostatic/electronetsoft/util/unit-testing/unit_test.h>
-#include <electrostatic/electronetsoft/util/console/colors.h>
-#include <electrostatic/electronetsoft/arithmos_calculus.h>
+#include <electronetsoft/arithmos/adt/list.h>
+#include <electronetsoft/util/unit-testing/unit_test.h>
+#include <electronetsoft/util/console/colors.h>
+#include <electronetsoft/arithmos_calculus.h>
 #include <stdio.h>
 
 static status_code assert_gimbals(vector3d v0, vector3d v,

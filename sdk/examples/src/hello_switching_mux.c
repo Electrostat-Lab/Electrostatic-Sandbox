@@ -1,4 +1,4 @@
-#include <electrostatic/electronetsoft/algorithm/arithmos/algebra/switching.h>
+#include <electronetsoft/arithmos/algebra/switching.h>
 #include <stdio.h>
 #include <stdlib.h>
 

@@ -7,7 +7,7 @@
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <electrostatic/electronetsoft/algorithm/arithmos/adt/list.h>
+#include <electronetsoft/arithmos/adt/list.h>
 
 /**
  * Dispatched by the API callers callbacks when an "iterate" command

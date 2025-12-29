@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <electrostatic/electronetsoft/algorithm/arithmos/graph/dijkstra.h>
+#include <electronetsoft/arithmos/graph/dijkstra.h>
 
 static inline void dijkstra_init(dijkstra_structure *d_struct) {
 

@@ -2,7 +2,7 @@
 #include <string.h>
 #include <alloca.h>
 #include <stdlib.h>
-#include <electrostatic/electronetsoft/arithmos_calculus.h>
+#include <electronetsoft/arithmos_calculus.h>
 
 void on_op_success(mat_proc_sig proc_sig) {
     matrix mat = proc_sig.mat;

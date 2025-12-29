@@ -32,17 +32,6 @@ The ElectroIO Project is divided into two subprojects, ElectroMIO and ElectroKIO
 - **ElectroMIO**: Provides modules for interacting with microcontroller I/O such as GPIO, USART, ADC, EEPROM, TWI, SPI, and WiFi-Sockets.
 - **ElectroKIO**: Covers connectivity modules including USB-FS, RS232, IEEE-1284, IEEE-802.3, DVD-CDROM, and PCI-e.
 
-### Platform Binding APIs
-The Platform Binding APIs facilitate the integration of various APIs and frameworks into the SDK:
-- **Serial4j**: Serial communication library.
-- **Jector**: Dependency injection framework.
-- **Articular-ES**: Articulated simulation components.
-- **Jme-alloc**: Memory allocation library.
-- **jSnapLoader**: Snapshot loader.
-- **Automata4j**: Automata processing library.
-- **ElectroIO**: Interface for the ElectroIO project.
-- **Parallel4j**: Parallel processing library.
-
 ## Architecture Diagram
 
 <img src="https://electrostat-lab.github.io/Electrostatic-Sandbox/electrostatic-sandbox-framework/docs/electrostatic-sdk.svg"/>

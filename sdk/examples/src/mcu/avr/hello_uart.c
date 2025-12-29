@@ -9,7 +9,7 @@
  * of this license document, but changing it is not allowed.
  */
 #define F_CPU 16000000UL
-#include <electrostatic/electroio/electromio/avr/uart/uart.h>
+#include <electroio/mio/uart/uart.h>
 
 void on_protocol_started() {
 }

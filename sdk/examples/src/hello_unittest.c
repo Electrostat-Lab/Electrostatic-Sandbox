@@ -1,6 +1,6 @@
-#include <electrostatic/electronetsoft/algorithm/arithmos/adt/list.h>
-#include <electrostatic/electronetsoft/util/unit-testing/unit_test.h>
-#include <electrostatic/electronetsoft/util/console/colors.h>
+#include <electronetsoft/arithmos/adt/list.h>
+#include <electronetsoft/util/unit-testing/unit_test.h>
+#include <electronetsoft/util/console/colors.h>
 #include <stdio.h>
 
 static inline int64_t execute(void **inputs) {

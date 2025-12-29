@@ -1,2 +1,0 @@
-# Electrostatic-core
-The core modular API for the electrostatic framework. A provisional innovation for the ease of communication protocols on GNU/Linux systems utilizing the core file system APIs and userspace APIs provided by the Linux Kernel.

@@ -3,7 +3,7 @@
  * @author pavl_g.
  * @date 10-2025
  */
-#include <electrostatic/electronetsoft/util/filesystem/file_operations.h>
+#include <electronetsoft/util/filesystem/file_operations.h>
 #include <errno.h>
 #include <string.h>
 #include <stdio.h>

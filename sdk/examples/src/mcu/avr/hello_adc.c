@@ -9,10 +9,10 @@
  * of this license document, but changing it is not allowed.
  */
 #define F_CPU 16000000UL
-#include <electrostatic/electroio/electromio/avr/adc/adc.h>
+#include <electroio/mio/adc/adc.h>
 #include <stdio.h>
-#include <electrostatic/electroio/electromio/avr/uart/uart.h>
-#include <electrostatic/electroio/electromio/avr/gpio/gpio.h>
+#include <electroio/mio/uart/uart.h>
+#include <electroio/mio/gpio/gpio.h>
 
 void adc_on_received(const uint16_t);
 void adc_on_protocol_started();

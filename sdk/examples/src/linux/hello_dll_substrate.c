@@ -1,5 +1,5 @@
-#include <electrostatic/electronetsoft/util/loader/dll_loader.h>
-#include <electrostatic/electronetsoft/util/console/colors.h>
+#include <electronetsoft/util/loader/dll_loader.h>
+#include <electronetsoft/util/console/colors.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <gnu/lib-names.h>
@@ -18,7 +18,7 @@ int main() {
     data->routine_inputs[0] = "Hello";
     data->routine_inputs[1] = " World\n";
     // define the absolute directory for the dll file
-    data->dll_name = "/media/pavl/pavl-g/Projects/Electrostatic-Sandbox/electrostatic-sandbox-framework/electrostatic-examples/cmake-build/linux/x86-64/libhello_dll_service.c.so.elf";
+    data->dll_name = "/media/pavl/pavl-g/Projects/Electrostatic-Sandbox/sdk/examples/cmake-build/linux/x86-64/libhello_dll_service.c.so.elf";
     // define the service conventional routine name
     data->routine_name = "dll_conventional_routine";
     
