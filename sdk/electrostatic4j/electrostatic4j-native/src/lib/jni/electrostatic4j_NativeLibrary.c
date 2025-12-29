@@ -1,5 +1,5 @@
 #include <jni/electrostatic4j_NativeLibrary.h>
-#include <electrostatic/electronetsoft/comm/comm.h>
+#include <electronetsoft/comm/comm.h>
 #include <stdio.h>
 
 JNIEXPORT jint JNICALL Java_electrostatic4j_NativeLibrary_open
