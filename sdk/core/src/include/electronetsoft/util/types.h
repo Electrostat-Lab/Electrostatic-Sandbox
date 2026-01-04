@@ -114,6 +114,8 @@ typedef enum mat_iterator {
     ROW_CONVENTION_ITERATOR = ((INT32_MAX >> 16) ^ INT32_MAX),
     COLUMN_CONVENTION_ITERATOR = ROW_CONVENTION_ITERATOR - 1,
 } mat_iterator;
+typedef struct mat3_gimbal (mat3_gimbal);
+typedef struct mat3_processors (mat3_processors);
 
 typedef struct caller_graph (caller_graph);
 
