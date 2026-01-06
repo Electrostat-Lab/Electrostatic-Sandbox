@@ -5,11 +5,32 @@ status_code mat3_rotate(mat3_gimbal in, vector3d axis,
                         mat3_gimbal *out, vec_component angle,
                         mat3_processors proc) {
 
+    caller_graph caller = {
+            .api = "arithmos:matrix3#mat3_rotate",
+            .func = &mat3_rotate,
+            .params = NULL,
+            .root = proc.processors.root,
+    };
+
+    mat_proc_sig proc_sig = {
+            .proc = proc.processors,
+            .caller = caller,
+            .metadata = proc.processors.metadata,
+    };
+
     // preprocessing automata -- input validation phases
     if (NULL == in.mat3d.element ||
+        NULL == in.gimbal3d.orientation ||
+        NULL == in.gimbal3d.orientation->element ||
         NULL == out ||
         NULL == out->mat3d.element ||
+        NULL == out->gimbal3d.orientation ||
         NULL == out->gimbal3d.orientation->element) {
+
+        if (NULL != proc.processors.on_op_failure) {
+            proc.processors.on_op_failure(proc_sig, EUNDEFINEDBUFFER);
+        }
+
         return EUNDEFINEDBUFFER;
     }
 
@@ -18,6 +39,11 @@ status_code mat3_rotate(mat3_gimbal in, vector3d axis,
             in.mat3d.n != in.gimbal3d.orientation->n ||
             in.mat3d.m != in.mat3d.n ||
             in.mat3d.m != 3) {
+
+        if (NULL != proc.processors.on_op_failure) {
+            proc.processors.on_op_failure(proc_sig, EBUFFERTURNCATION);
+        }
+
         return EBUFFERTURNCATION;
     }
 
@@ -26,21 +52,46 @@ status_code mat3_rotate(mat3_gimbal in, vector3d axis,
         in.gimbal3d.orientation->n != out->gimbal3d.orientation->n ||
         out->gimbal3d.orientation->m != out->gimbal3d.orientation->n ||
         out->gimbal3d.orientation->m != 3) {
+
+        if (NULL != proc.processors.on_op_failure) {
+            proc.processors.on_op_failure(proc_sig, EBUFFERTURNCATION);
+        }
+
         return EBUFFERTURNCATION;
     }
 
     // test in.mat3d against out->mat3d
     if (in.mat3d.m != out->mat3d.m ||
             in.mat3d.n != out->mat3d.n) {
+
+        if (NULL != proc.processors.on_op_failure) {
+            proc.processors.on_op_failure(proc_sig, EBUFFERTURNCATION);
+        }
+
         return EBUFFERTURNCATION;
     }
+
+    proc_sig.mat = out->mat3d;
 
     status_code __code;
     vec_component angle1 = 0;
 
     // preprocessing automata -- initialize the input column vector
-    preprocess_orientator(&axis, &axis);
-    vec3d_abs(axis, &axis, NULL);
+    __code = preprocess_mat3_orientator(in.gimbal3d, &axis);
+    if (PASS != __code) {
+        if (NULL != proc.processors.on_op_failure) {
+            proc.processors.on_op_failure(proc_sig, __code);
+        }
+        return __code;
+    }
+
+    __code = vec3d_abs(axis, &axis, NULL);
+    if (PASS != __code) {
+        if (NULL != proc.processors.on_op_failure) {
+            proc.processors.on_op_failure(proc_sig, __code);
+        }
+        return __code;
+    }
 
     // preprocessing automata -- allocate rotator matrix for the angular motion
     vec_component __rotate_x[3] = {0, 0, 0,};
@@ -58,12 +109,18 @@ status_code mat3_rotate(mat3_gimbal in, vector3d axis,
     __code = init_rotator_gimbal(axis, &__rotator, angle,
                                  &angle1, &out->gimbal3d);
     if (PASS != __code) {
+        if (NULL != proc.processors.on_op_failure) {
+            proc.processors.on_op_failure(proc_sig, __code);
+        }
         return __code;
     }
 
     // processing automata -- rotate the matrix
     __code = mat_product(in.mat3d, __rotator, &(out->mat3d), proc.processors);
     if (PASS != __code) {
+        if (NULL != proc.processors.on_op_failure) {
+            proc.processors.on_op_failure(proc_sig, __code);
+        }
         return __code;
     }
 
@@ -78,14 +135,17 @@ status_code mat3_rotate(mat3_gimbal in, vector3d axis,
                                &(in.gimbal3d),
                                &out->gimbal3d,
                                NULL);
+
         if (PASS != __code) {
             if (NULL != proc.processors.on_op_failure) {
-                proc.processors.on_op_failure((mat_proc_sig) {
-
-                    }, __code);
+                proc.processors.on_op_failure(proc_sig, __code);
             }
             return __code;
         }
+    }
+
+    if (NULL != proc.processors.on_op_success) {
+        proc.processors.on_op_success(proc_sig);
     }
 
     return PASS;
