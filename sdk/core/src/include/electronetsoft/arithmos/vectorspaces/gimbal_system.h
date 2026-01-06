@@ -17,6 +17,8 @@ struct rotation_metadata {
 
 void preprocess_orientator(vector3d *v, vector3d *axis);
 
+status_code preprocess_mat3_orientator(vec3d_gimbal, vector3d *);
+
 status_code init_rotator_gimbal(vector3d axis, matrix *__rotator,
                                               vec_component angle,
                                               vec_component *angle1,
