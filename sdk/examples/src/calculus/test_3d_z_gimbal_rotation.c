@@ -131,6 +131,7 @@ static inline int64_t execute(void **inputs) {
     status_code __code = vec3d_rotate(v, VEC3_Z_COMPONENT, M_PI/2, &v, &processors);
     if (__code != PASS) {
         fprintf(stderr, "Error: %d\n", __code);
+        return __code;
     }
 
     fprintf(stdout, "Vx Orientation = (%f, %f, %f)\n", v.gimbal.orientation->element[0][0], v.gimbal.orientation->element[1][0], v.gimbal.orientation->element[2][0]);
