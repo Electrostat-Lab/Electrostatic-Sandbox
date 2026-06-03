@@ -1,0 +1,656 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{pifont}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+
+% Define theorem environments
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{property}{Property}
+
+% Code listings setup
+\lstset{
+    language=C,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue},
+    commentstyle=\color{gray},
+    stringstyle=\color{red},
+    breaklines=true,
+    numberstyle=\tiny\color{gray},
+    numbers=left,
+    showstringspaces=false
+}
+
+% Header and footer
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Electrostatic Sandbox}
+\lhead{3D Matrix Rotation API Blueprint}
+\cfoot{\thepage}
+
+\title{\textbf{3D Matrix Rotation and Gimbal System API Blueprint}\\
+       \small{High-Performance Infrastructure Framework}}
+\author{Electrostatic-Lab}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This document provides a comprehensive technical blueprint of the 3D matrix rotation API within the Electrostatic-Sandbox framework. It details the mathematical foundations, algorithmic structure, and implementation specifics of gimbal-based 3D rotations. The API supports rotation operations on $3 \times 3$ matrices with gimbal lock detection and compensation mechanisms.
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\section{Introduction}
+
+\subsection{Overview}
+
+The 3D Matrix Rotation API is a core component of the arithmetic operations library (arithmos) in the Electrostatic-Sandbox framework. It provides high-performance matrix rotation operations combined with gimbal system tracking for distributed systems simulation based on IEEE-1516 HLA specifications.
+
+\subsection{Key Components}
+
+\begin{itemize}
+    \item \texttt{mat3\_rotate}: Primary API for rotating 3×3 matrices with gimbal tracking
+    \item \texttt{rotate\_gimbal}: Gimbal orientation matrix rotation handler
+    \item \texttt{mat3\_gimbal}: Data structure combining 3D matrices with gimbal metadata
+    \item \texttt{vec3d\_gimbal}: 3D vector with gimbal orientation tracking
+\end{itemize}
+
+\section{Mathematical Foundations}
+
+\subsection{3D Rotation Matrices}
+
+\begin{definition}[Rotation Matrix in $\mathbb{R}^3$]
+A rotation matrix $R(\theta) \in SO(3)$ (the special orthogonal group) is a $3 \times 3$ matrix satisfying:
+\begin{equation}
+R^T R = I_3 \quad \text{and} \quad \det(R) = 1
+\end{equation}
+where $I_3$ is the $3 \times 3$ identity matrix and $\theta$ represents the rotation angle.
+\end{definition}
+
+\subsubsection{Rotation About Axes}
+
+The fundamental rotation matrices about the coordinate axes are:
+
+\paragraph{Rotation about X-axis by angle $\theta$:}
+\begin{equation}
+R_x(\theta) = \begin{pmatrix}
+1 & 0 & 0 \\
+0 & \cos\theta & -\sin\theta \\
+0 & \sin\theta & \cos\theta
+\end{pmatrix}
+\end{equation}
+
+\paragraph{Rotation about Y-axis by angle $\theta$:}
+\begin{equation}
+R_y(\theta) = \begin{pmatrix}
+\cos\theta & 0 & \sin\theta \\
+0 & 1 & 0 \\
+-\sin\theta & 0 & \cos\theta
+\end{pmatrix}
+\end{equation}
+
+\paragraph{Rotation about Z-axis by angle $\theta$:}
+\begin{equation}
+R_z(\theta) = \begin{pmatrix}
+\cos\theta & -\sin\theta & 0 \\
+\sin\theta & \cos\theta & 0 \\
+0 & 0 & 1
+\end{pmatrix}
+\end{equation}
+
+\subsection{Matrix Rotation Operation}
+
+The core rotation operation transforms an input matrix $M_{in}$ to an output matrix $M_{out}$:
+
+\begin{equation}
+M_{out} = R(\theta, \mathbf{a}) \cdot M_{in}
+\end{equation}
+
+where:
+\begin{itemize}
+    \item $R(\theta, \mathbf{a})$ is the rotation matrix for angle $\theta$ about axis $\mathbf{a}$
+    \item $M_{in} \in \mathbb{R}^{3 \times 3}$ is the input matrix
+    \item $M_{out} \in \mathbb{R}^{3 \times 3}$ is the output matrix
+\end{itemize}
+
+\subsection{Gimbal System}
+
+\begin{definition}[Gimbal System]
+A gimbal system in 3D space comprises three gimbal axes (X, Y, Z) that define the orientation of a reference frame. Each gimbal stores an angular offset that indicates rotation around its respective axis.
+\end{definition}
+
+\subsubsection{Gimbal Representation}
+
+A gimbal configuration is represented as:
+\begin{equation}
+G = \begin{pmatrix}
+x_{\text{gimbal}} \\
+y_{\text{gimbal}} \\
+z_{\text{gimbal}}
+\end{pmatrix} \quad \text{with orientation matrix} \quad O \in \mathbb{R}^{3 \times 3}
+\end{equation}
+
+\begin{property}[Gimbal State]
+Each gimbal value $g \in \{x_{\text{gimbal}}, y_{\text{gimbal}}, z_{\text{gimbal}}\}$ represents the accumulated rotation angle around its respective axis within the gimbal frame.
+\end{property}
+
+\subsection{Gimbal Lock Phenomenon}
+
+\begin{definition}[Gimbal Lock]
+Gimbal lock occurs when two or more gimbal axes align, reducing the degrees of freedom in rotation representation from three to two. Mathematically, this occurs when:
+\end{definition}
+
+\begin{equation}
+|\cos(\alpha)| \leq \epsilon \quad \text{AND} \quad |\sin(\alpha)| = 1
+\end{equation}
+
+where $\alpha$ is the rotation angle and $\epsilon$ is a numerical threshold (denoted as \texttt{\_\_\_ROTATION\_MIN\_THRESHOLD} in code).
+
+\section{Algorithm Design}
+
+\subsection{Primary API: \texttt{mat3\_rotate}}
+
+\subsubsection{Function Signature}
+
+\begin{lstlisting}
+status_code mat3_rotate(mat3_gimbal in, vector3d axis,
+                        mat3_gimbal *out, vec_component angle,
+                        mat3_processors proc);
+\end{lstlisting}
+
+\subsubsection{Algorithmic Flow}
+
+The \texttt{mat3\_rotate} function implements a multi-phase state machine:
+
+\paragraph{Phase 1: Preprocessing \& Validation}
+
+\begin{enumerate}
+    \item \textbf{Input Validation}: Verify all input and output buffers are non-null
+    \item \textbf{Dimension Verification}: Ensure input matrix and gimbal orientation are $3 \times 3$
+    \item \textbf{Consistency Check}: Verify compatibility between input and output structures
+    \item \textbf{Axis Preprocessing}: Normalize the rotation axis
+    \item \textbf{Axis Magnitude}: Compute absolute value of axis components
+\end{enumerate}
+
+\paragraph{Phase 2: Rotator Matrix Initialization}
+
+\begin{enumerate}
+    \item Allocate rotator matrix $R$ as a $3 \times 3$ matrix
+    \item Initialize rotator using the gimbal system:
+    \begin{equation}
+    R = \text{init\_rotator\_gimbal}(\mathbf{a}, \theta)
+    \end{equation}
+    where $\mathbf{a}$ is the normalized axis and $\theta$ is the angle
+    \item Output gimbal angle update: $\alpha_1 \leftarrow \text{computed angle}$
+\end{enumerate}
+
+\paragraph{Phase 3: Matrix Rotation}
+
+Perform the core matrix product operation:
+\begin{equation}
+M_{out}^{\text{temp}} = M_{in} \cdot R
+\end{equation}
+
+\paragraph{Phase 4: Gimbal Orientation Update}
+
+Iterate through the temporary orientation matrix and copy to output gimbal:
+\begin{equation}
+O_{out}[i][j] = M_{out}^{\text{temp}}[i][j] \quad \forall i,j \in \{0,1,2\}
+\end{equation}
+
+\paragraph{Phase 5: Gimbal Lock Detection}
+
+Evaluate gimbal lock condition:
+\begin{equation}
+\text{IF} \quad |\cos(\alpha_1)| \leq \epsilon \quad \text{AND} \quad |\sin(\alpha_1)| = 1 \quad \text{THEN}
+\end{equation}
+
+\begin{itemize}
+    \item Invoke gimbal lock trap handler (if provided)
+    \item Execute secondary gimbal rotation to handle gimbal lock compensation
+    \item Zero out the gimbal component corresponding to the rotation axis
+\end{itemize}
+
+\subsection{Secondary API: \texttt{rotate\_gimbal}}
+
+\subsubsection{Function Signature}
+
+\begin{lstlisting}
+status_code rotate_gimbal(vector3d axis, vec_component angle1,
+                          matrix *__rotator,
+                          vec3d_gimbal *in_gimbal,
+                          vec3d_gimbal *out_gimbal,
+                          vec3d_processors *procs);
+\end{lstlisting}
+
+\subsubsection{Gimbal Rotation Logic}
+
+\paragraph{Step 1: Gimbal Orientation Matrix Product}
+
+\begin{equation}
+O_{\text{temp}} = R \cdot O_{in}
+\end{equation}
+
+where $O_{in}$ is the input gimbal orientation matrix.
+
+\paragraph{Step 2: Element-wise Copy with Iteration}
+
+For each element at position $(i, j)$ in $O_{\text{temp}}$:
+\begin{equation}
+O_{out}[i][j] \leftarrow O_{\text{temp}}[i][j]
+\end{equation}
+
+This is implemented via the row-convention iterator callback \texttt{\_\_on\_entry\_iterated}.
+
+\paragraph{Step 3: Gimbal Axis Zeroing}
+
+Based on the rotation axis, zero the corresponding gimbal component:
+
+\begin{equation}
+\text{IF} \; \text{axis} = \text{GIMBAL\_Z} \quad \text{THEN} \quad z_{\text{gimbal}} \leftarrow 0
+\end{equation}
+
+\begin{equation}
+\text{IF} \; \text{axis} = \text{GIMBAL\_Y} \quad \text{THEN} \quad y_{\text{gimbal}} \leftarrow 0
+\end{equation}
+
+\begin{equation}
+\text{IF} \; \text{axis} = \text{GIMBAL\_X} \quad \text{THEN} \quad x_{\text{gimbal}} \leftarrow 0
+\end{equation}
+
+\section{Data Structures}
+
+\subsection{\texttt{mat3\_gimbal} Structure}
+
+\begin{lstlisting}
+struct mat3_gimbal {
+    matrix mat3d;              // 3x3 transformation matrix
+    vec3d_gimbal gimbal3d;     // Gimbal orientation metadata
+};
+\end{lstlisting}
+
+\textbf{Components:}
+\begin{itemize}
+    \item \texttt{mat3d}: The primary $3 \times 3$ matrix for geometric transformations
+    \item \texttt{gimbal3d}: Gimbal state including orientation matrix and angle components
+\end{itemize}
+
+\subsection{\texttt{vec3d\_gimbal} Structure}
+
+\begin{lstlisting}
+struct vec3d_gimbal {
+    vec_component x_gimbal;     // Rotation angle around X-axis
+    vec_component y_gimbal;     // Rotation angle around Y-axis
+    vec_component z_gimbal;     // Rotation angle around Z-axis
+    matrix *orientation;        // 3x3 gimbal orientation matrix
+};
+\end{lstlisting}
+
+\textbf{Components:}
+\begin{itemize}
+    \item \texttt{x\_gimbal, y\_gimbal, z\_gimbal}: Current rotational angles for each gimbal axis
+    \item \texttt{orientation}: Reference to the gimbal's current orientation matrix
+\end{itemize}
+
+\subsection{\texttt{mat3\_processors} Structure}
+
+\begin{lstlisting}
+struct mat3_processors {
+    mat_processors processors;
+    void (*on_gimbal_lock_trap)(mat3_gimbal rotated,
+            vector_gimbal gimbal,
+            vec_component angle);
+};
+\end{lstlisting}
+
+\textbf{Components:}
+\begin{itemize}
+    \item \texttt{processors}: Base matrix operation callbacks
+    \item \texttt{on\_gimbal\_lock\_trap}: Callback invoked when gimbal lock is detected
+\end{itemize}
+
+\section{Worked Example}
+
+\subsection{Scenario: 90° Rotation About Z-Axis}
+
+Let us trace through a concrete example: rotating a $3 \times 3$ matrix by $90°$ counterclockwise about the Z-axis.
+
+\subsubsection{Input Setup}
+
+Input matrix $M_{in}$:
+\begin{equation}
+M_{in} = \begin{pmatrix}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+0 & 0 & 1
+\end{pmatrix}
+\end{equation}
+
+Input gimbal configuration:
+\begin{equation}
+G_{in} = \begin{pmatrix}
+0 \\
+0 \\
+0
+\end{pmatrix}, \quad
+O_{in} = \begin{pmatrix}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+0 & 0 & 1
+\end{pmatrix}
+\end{equation}
+
+Rotation parameters:
+\begin{itemize}
+    \item Rotation axis: $\mathbf{a} = (0, 0, 1)^T$ (Z-axis)
+    \item Rotation angle: $\theta = \frac{\pi}{2}$ radians (90°)
+\end{itemize}
+
+\subsubsection{Phase 1: Preprocessing}
+
+\begin{itemize}
+    \item All buffers are valid \ding{51}
+    \item Matrix dimensions: $3 \times 3$ \ding{51}
+    \item Axis preprocessing: $|\mathbf{a}| = 1$ (already normalized)
+\end{itemize}
+
+\subsubsection{Phase 2: Rotator Matrix Initialization}
+
+The rotator matrix is constructed as:
+\begin{equation}
+R = R_z\left(\frac{\pi}{2}\right) = \begin{pmatrix}
+\cos\frac{\pi}{2} & -\sin\frac{\pi}{2} & 0 \\
+\sin\frac{\pi}{2} & \cos\frac{\pi}{2} & 0 \\
+0 & 0 & 1
+\end{pmatrix} = \begin{pmatrix}
+0 & -1 & 0 \\
+1 & 0 & 0 \\
+0 & 0 & 1
+\end{pmatrix}
+\end{equation}
+
+\subsubsection{Phase 3: Matrix Rotation}
+
+\begin{equation}
+M_{out} = M_{in} \cdot R = \begin{pmatrix}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+0 & 0 & 1
+\end{pmatrix} \cdot \begin{pmatrix}
+0 & -1 & 0 \\
+1 & 0 & 0 \\
+0 & 0 & 1
+\end{pmatrix} = \begin{pmatrix}
+0 & -1 & 0 \\
+1 & 0 & 0 \\
+0 & 0 & 1
+\end{pmatrix}
+\end{equation}
+
+\subsubsection{Phase 4: Gimbal Orientation Update}
+
+The gimbal orientation undergoes the same transformation:
+\begin{equation}
+O_{\text{temp}} = O_{in} \cdot R = \begin{pmatrix}
+0 & -1 & 0 \\
+1 & 0 & 0 \\
+0 & 0 & 1
+\end{pmatrix}
+\end{equation}
+
+Output gimbal orientation:
+\begin{equation}
+O_{out} = O_{\text{temp}} = \begin{pmatrix}
+0 & -1 & 0 \\
+1 & 0 & 0 \\
+0 & 0 & 1
+\end{pmatrix}
+\end{equation}
+
+\subsubsection{Phase 5: Gimbal Lock Check}
+
+\begin{equation}
+\alpha_1 = \frac{\pi}{2}
+\end{equation}
+
+Check condition:
+\begin{equation}
+|\cos(\frac{\pi}{2})| = 0 \leq \epsilon \quad \text{AND} \quad |\sin(\frac{\pi}{2})| = 1 \quad \text{\checkmark\ GIMBAL LOCK DETECTED}
+\end{equation}
+
+The gimbal lock trap handler is invoked, and the Z-gimbal component is zeroed:
+\begin{equation}
+z_{\text{gimbal}} \leftarrow 0
+\end{equation}
+
+\subsubsection{Final Output}
+
+\begin{equation}
+M_{out} = \begin{pmatrix}
+0 & -1 & 0 \\
+1 & 0 & 0 \\
+0 & 0 & 1
+\end{pmatrix}, \quad
+G_{out} = \begin{pmatrix}
+0 \\
+0 \\
+0
+\end{pmatrix}, \quad
+O_{out} = \begin{pmatrix}
+0 & -1 & 0 \\
+1 & 0 & 0 \\
+0 & 0 & 1
+\end{pmatrix}
+\end{equation}
+
+\section{Algorithmic Complexity Analysis}
+
+\subsection{Time Complexity}
+
+\begin{itemize}
+    \item \textbf{Input Validation}: $O(1)$ — constant-time checks
+    \item \textbf{Axis Preprocessing}: $O(1)$ — vector magnitude computation (fixed dimension)
+    \item \textbf{Rotator Initialization}: $O(1)$ — matrix construction and gimbal lookup
+    \item \textbf{Matrix Product}: $O(n^3) = O(27)$ — for $3 \times 3$ matrices, effectively $O(1)$
+    \item \textbf{Gimbal Iteration}: $O(9)$ — iterating through $3 \times 3$ matrix
+    \item \textbf{Gimbal Lock Check}: $O(1)$ — constant-time threshold comparison
+\end{itemize}
+
+\textbf{Overall Time Complexity}: $O(1)$ (constant time for fixed $3 \times 3$ matrices)
+
+\subsection{Space Complexity}
+
+\begin{itemize}
+    \item \textbf{Rotator Matrix}: $O(9)$ — local $3 \times 3$ matrix
+    \item \textbf{Temporary Orientation}: $O(9)$ — temporary computation matrix
+    \item \textbf{Metadata}: $O(1)$ — structure pointers and scalars
+\end{itemize}
+
+\textbf{Overall Space Complexity}: $O(1)$ (constant space for fixed $3 \times 3$ matrices)
+
+\section{Illustrative Figures}
+
+\subsection{Coordinate System and Gimbal Configuration}
+
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}[scale=2]
+    % Draw coordinate axes
+    \draw[thick,->] (0,0,0) -- (2,0,0) node[right] {$X$};
+    \draw[thick,->] (0,0,0) -- (0,2,0) node[above] {$Y$};
+    \draw[thick,->] (0,0,0) -- (0,0,2) node[above] {$Z$};
+    
+    % Draw gimbal rings (simplified 2D representation)
+    \draw[red, thick] (1.5,0,0) arc (0:180:1.5) node[midway, below] {Z-Gimbal};
+    \draw[green, thick] (0,0,0) circle (1.2) node[midway, left] {Y-Gimbal};
+    \draw[blue, thick] (0,1.2,0) arc (0:180:1.2 and 0.6) node[midway, above] {X-Gimbal};
+    
+    % Draw object at center
+    \draw[fill=yellow, opacity=0.3] (0,0,0) circle (0.3);
+    \node at (0,0,-0.5) {Reference Object};
+\end{tikzpicture}
+\caption{3D Gimbal System Configuration: Three orthogonal gimbal axes (X-red, Y-green, Z-blue) surrounding a central reference object.}
+\end{figure}
+
+\subsection{Algorithm Flow Diagram}
+
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}[node distance=1.5cm, auto]
+    % Define styles
+    \tikzstyle{block} = [rectangle, draw, fill=blue!20, text width=3cm, text centered, rounded corners, minimum height=0.8cm]
+    \tikzstyle{decision} = [diamond, draw, fill=orange!20, text width=2.5cm, text centered, minimum height=0.8cm]
+    \tikzstyle{process} = [rectangle, draw, fill=green!20, text width=3cm, text centered, rounded corners, minimum height=0.8cm]
+    
+    % Nodes
+    \node[block] (start) {START: \texttt{mat3\_rotate}};
+    \node[block] (validate) [below of=start] {Phase 1: Validate Inputs};
+    \node[decision] (valid) [below of=validate] {Valid?};
+    \node[process] (init) [below of=valid, xshift=2cm] {Phase 2: Initialize Rotator $R$};
+    \node[process] (rotate) [below of=init] {Phase 3: Compute $M_{out} = M_{in} \cdot R$};
+    \node[process] (gimbal) [below of=rotate] {Phase 4: Update Gimbal Orientation};
+    \node[decision] (lock) [below of=gimbal] {Gimbal Lock?};
+    \node[process] (handle) [below of=lock, xshift=2cm] {Phase 5: Handle Gimbal Lock};
+    \node[block] (end) [below of=handle] {RETURN: \texttt{PASS}};
+    
+    % Arrows
+    \draw[->] (start) -- (validate);
+    \draw[->] (validate) -- (valid);
+    \draw[->] (valid) -- node[right] {No} (end);
+    \draw[->] (valid) -- node[left] {Yes} (init);
+    \draw[->] (init) -- (rotate);
+    \draw[->] (rotate) -- (gimbal);
+    \draw[->] (gimbal) -- (lock);
+    \draw[->] (lock) -- node[left] {Yes} (handle);
+    \draw[->] (lock) -- node[right] {No} (end);
+    \draw[->] (handle) -- (end);
+\end{tikzpicture}
+\caption{Algorithmic Flow of \texttt{mat3\_rotate}: Multi-phase state machine for matrix rotation with gimbal lock detection.}
+\end{figure}
+
+\subsection{Rotation Transformation Example}
+
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}[scale=1.5]
+    % Input matrix representation
+    \node at (-2.5, 2.5) {\textbf{Input}};
+    \draw (-3.2, 1.5) rectangle (-1.8, 0.5);
+    \node at (-2.5, 1.8) {$I_3$};
+    
+    % Arrow and rotation matrix
+    \draw[thick, ->] (-1.5, 1) -- (-0.5, 1);
+    \node at (-1, 1.3) {$\times R_z(90°)$};
+    
+    % Output matrix representation
+    \node at (1.5, 2.5) {\textbf{Output}};
+    \draw (0.8, 1.5) rectangle (2.2, 0.5);
+    \node at (1.5, 1.8) {Rotated};
+    
+    % Coordinate frames
+    \begin{scope}[shift={(-2.5, -0.5)}]
+        \draw[->] (0,0) -- (0.8,0) node[right] {$X$};
+        \draw[->] (0,0) -- (0,0.8) node[above] {$Y$};
+        \node at (-0.3, -0.3) {Before};
+    \end{scope}
+    
+    \begin{scope}[shift={(1.5, -0.5)}]
+        \draw[->] (0,0) -- (-0.8,0) node[left] {$X'$};
+        \draw[->] (0,0) -- (0,0.8) node[above] {$Y'$};
+        \node at (-0.3, -0.3) {After};
+    \end{scope}
+\end{tikzpicture}
+\caption{Matrix Rotation Transformation: Input identity matrix $I_3$ rotated 90° about Z-axis produces rotated output matrix.}
+\end{figure}
+
+\subsection{Gimbal Lock Condition}
+
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}[scale=2]
+    % Plot sine and cosine
+    \draw[->] (-0.5, 0) -- (4, 0) node[right] {$\alpha$};
+    \draw[->] (0, -1.5) -- (0, 1.5) node[above] {Value};
+    
+    % Sine curve
+    \draw[red, thick, domain=0:3.14] plot (\x, {sin(\x r)}) node[right] {$\sin(\alpha)$};
+    
+    % Cosine curve
+    \draw[blue, thick, domain=0:3.14] plot (\x, {cos(\x r)}) node[right] {$\cos(\alpha)$};
+    
+    % Threshold lines
+    \draw[dashed, gray] (0, 0.1) -- (3.14, 0.1) node[right, font=\tiny] {$+\epsilon$};
+    \draw[dashed, gray] (0, -0.1) -- (3.14, -0.1) node[right, font=\tiny] {$-\epsilon$};
+    
+    % Gimbal lock zone
+    \draw[fill=yellow, opacity=0.2] (1.4, -1.5) rectangle (1.74, 1.5);
+    \node[rotate=90] at (1.57, 1.8) {\small Gimbal Lock Zone};
+    
+    % Mark critical angle
+    \draw[thick, dashed, black] (1.57, 0) -- (1.57, 1);
+    \node at (1.57, -0.3) {$\pi/2$};
+\end{tikzpicture}
+\caption{Gimbal Lock Detection: The region where $|\cos(\alpha)| \leq \epsilon$ and $|\sin(\alpha)| \approx 1$ indicates gimbal lock.}
+\end{figure}
+
+\section{Error Handling}
+
+The API implements comprehensive error handling through status codes:
+
+\begin{itemize}
+    \item \texttt{PASS}: Operation completed successfully
+    \item \texttt{EUNDEFINEDBUFFER}: Null pointer detected in input/output buffers
+    \item \texttt{EBUFFERTURNCATION}: Matrix dimension mismatch or non-3×3 matrix
+    \item \textit{Custom}: User-defined error codes for extended validation
+\end{itemize}
+
+Error handling occurs at each phase with optional callback invocation via \texttt{on\_op\_failure}.
+
+\section{Performance Considerations}
+
+\subsection{Optimization Techniques}
+
+\begin{enumerate}
+    \item \textbf{Fixed Dimensions}: Use of $3 \times 3$ matrices enables unrolled matrix multiplication loops
+    \item \textbf{Cache Locality}: Sequential access patterns in row-convention iteration
+    \item \textbf{Callback Mechanism}: Defer non-essential operations to user-provided handlers
+    \item \textbf{Early Validation}: Fail fast on invalid inputs before expensive computations
+\end{enumerate}
+
+\subsection{Memory Efficiency}
+
+\begin{itemize}
+    \item Stack-allocated temporary matrices (no dynamic allocation overhead)
+    \item In-place gimbal iteration using iterator callbacks
+    \item Metadata shared via pointers to avoid duplication
+\end{itemize}
+
+\section{Conclusion}
+
+The 3D Matrix Rotation API in the Electrostatic-Sandbox framework provides a robust, efficient implementation of gimbal-based rotations with built-in gimbal lock detection. The mathematical foundation ensures correctness through orthogonal transformation properties, while the multi-phase algorithmic approach enables flexible error handling and event-driven callbacks.
+
+Key achievements:
+\begin{itemize}
+    \item Constant-time performance for fixed $3 \times 3$ matrices
+    \item Robust gimbal lock detection and compensation
+    \item Extensible callback mechanism for custom event handling
+    \item Comprehensive input validation and error reporting
+\end{itemize}
+
+The framework successfully integrates this API into distributed systems simulation, providing reliable 3D orientation transformations compliant with IEEE-1516 HLA specifications.
+
+\end{document}
