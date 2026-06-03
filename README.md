@@ -1,4 +1,4 @@
-# <img src="https://electrostat-lab.github.io/Electrostatic-Sandbox/assets/Rounded_Square_Logo_Electrostatic-Sandbox.png" height=100 width=100/> The Electrostatic-Sandbox SDK
+# <img src="https://github.com/Electrostat-Lab/Electrostatic-Sandbox/blob/master/assets/logo.svg" height=180 width=180/> The Electrostatic-Sandbox SDK
 
 > <a href="https://www.youtube.com/playlist?list=PLNLJxPHSQiq-WZCZQEpUaAA4zXOUlaIOz"> <img src="https://github.com/Electrostat-Lab/Electrostatic-Sandbox/assets/60224159/a9a22af5-f725-4c1b-b662-ccef867a6fc0" height=30 width=30/> </a>
 
