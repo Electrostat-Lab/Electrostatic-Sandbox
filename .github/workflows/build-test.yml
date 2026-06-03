@@ -100,6 +100,9 @@ jobs:
         - name: Testing Arithmos Calculus (3D Gimbal Rotation around Z-axis)
           run: sudo ./helper-scripts/ci-cd/test-electrostatic.sh "calculus/test_3d_z_gimbal_rotation.c" "test_3d_z_gimbal_rotation"
 
+        - name: Testing Arithmos Matrix Rotation API
+          run: sudo ./helper-scripts/ci-cd/test-electrostatic.sh "calculus/test_3d_mat_gimbal_rotation.c" "test_3d_mat_gimbal_rotation"
+
         - name: Testing Arithmos Calculus (Matrix Algebra Operations -- mat_product)
           run: sudo ./helper-scripts/ci-cd/test-electrostatic.sh "calculus/test_mat_product.c" "test_mat_product"
 
