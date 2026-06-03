@@ -1,0 +1,174 @@
+<svg viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Gradients for distributed network effect -->
+    <linearGradient id="nodeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00D4FF;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0099CC;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="hardwareGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF6B35;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#D84315;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="softwareGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4CAF50;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2E7D32;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="simulationGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#9C27B0;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#6A1B9A;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Glow effects -->
+    <filter id="nodeGlow">
+      <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <filter id="connectionGlow">
+      <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <filter id="strongGlow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Circular background -->
+  <circle cx="128" cy="128" r="125" fill="#0F1419"/>
+  
+  <!-- Outer ring - represents the sandbox boundary -->
+  <circle cx="128" cy="128" r="122" fill="none" stroke="url(#nodeGradient)" stroke-width="2" opacity="0.6"/>
+  <circle cx="128" cy="128" r="115" fill="none" stroke="url(#nodeGradient)" stroke-width="0.5" opacity="0.3" stroke-dasharray="5,5"/>
+  
+  <!-- Hardware layer (left side) - orange nodes -->
+  <!-- Microcontroller node -->
+  <g id="mcu-node">
+    <circle cx="50" cy="128" r="12" fill="url(#hardwareGradient)" filter="url(#nodeGlow)"/>
+    <circle cx="50" cy="128" r="10" fill="none" stroke="#FF6B35" stroke-width="1" opacity="0.5"/>
+    <text x="50" y="133" font-family="monospace" font-size="8" text-anchor="middle" fill="#fff" font-weight="bold">MCU</text>
+  </g>
+  
+  <!-- GPIO/ADC nodes -->
+  <g id="gpio-node">
+    <circle cx="40" cy="95" r="9" fill="url(#hardwareGradient)" filter="url(#nodeGlow)"/>
+    <text x="40" y="100" font-family="monospace" font-size="6" text-anchor="middle" fill="#fff" font-weight="bold">IO</text>
+  </g>
+  
+  <g id="adc-node">
+    <circle cx="40" cy="161" r="9" fill="url(#hardwareGradient)" filter="url(#nodeGlow)"/>
+    <text x="40" y="166" font-family="monospace" font-size="6" text-anchor="middle" fill="#fff" font-weight="bold">ADC</text>
+  </g>
+  
+  <!-- Software/OS layer (left-center) - green nodes -->
+  <g id="os-node">
+    <circle cx="95" cy="85" r="11" fill="url(#softwareGradient)" filter="url(#nodeGlow)"/>
+    <circle cx="95" cy="85" r="9" fill="none" stroke="#4CAF50" stroke-width="1" opacity="0.5"/>
+    <text x="95" y="91" font-family="monospace" font-size="7" text-anchor="middle" fill="#fff" font-weight="bold">OS</text>
+  </g>
+  
+  <g id="hal-node">
+    <circle cx="95" cy="171" r="11" fill="url(#softwareGradient)" filter="url(#nodeGlow)"/>
+    <circle cx="95" cy="171" r="9" fill="none" stroke="#4CAF50" stroke-width="1" opacity="0.5"/>
+    <text x="95" y="177" font-family="monospace" font-size="7" text-anchor="middle" fill="#fff" font-weight="bold">HAL</text>
+  </g>
+  
+  <!-- Central Simulation Engine (purple) -->
+  <g id="sim-engine" filter="url(#strongGlow)">
+    <circle cx="128" cy="128" r="20" fill="url(#simulationGradient)"/>
+    <circle cx="128" cy="128" r="17" fill="none" stroke="#9C27B0" stroke-width="1.5" opacity="0.6"/>
+    <circle cx="128" cy="128" r="14" fill="none" stroke="#CE93D8" stroke-width="0.5" opacity="0.4"/>
+    
+    <!-- Inner geometric pattern -->
+    <polygon points="128,112 140,122 135,135 121,135 116,122" fill="#E1BEE7" opacity="0.3"/>
+    
+    <!-- Core dot -->
+    <circle cx="128" cy="128" r="3" fill="#FFE082"/>
+  </g>
+  
+  <!-- Software/Simulation layer (right-center) - green nodes -->
+  <g id="sim-node1">
+    <circle cx="161" cy="85" r="11" fill="url(#softwareGradient)" filter="url(#nodeGlow)"/>
+    <circle cx="161" cy="85" r="9" fill="none" stroke="#4CAF50" stroke-width="1" opacity="0.5"/>
+    <text x="161" y="91" font-family="monospace" font-size="7" text-anchor="middle" fill="#fff" font-weight="bold">SIM</text>
+  </g>
+  
+  <g id="sim-node2">
+    <circle cx="161" cy="171" r="11" fill="url(#softwareGradient)" filter="url(#nodeGlow)"/>
+    <circle cx="161" cy="171" r="9" fill="none" stroke="#4CAF50" stroke-width="1" opacity="0.5"/>
+    <text x="161" y="177" font-family="monospace" font-size="7" text-anchor="middle" fill="#fff" font-weight="bold">NET</text>
+  </g>
+  
+  <!-- Distributed System nodes (right side) - cyan nodes -->
+  <g id="remote-node1">
+    <circle cx="206" cy="95" r="9" fill="url(#nodeGradient)" filter="url(#nodeGlow)"/>
+    <text x="206" y="100" font-family="monospace" font-size="6" text-anchor="middle" fill="#000" font-weight="bold">D1</text>
+  </g>
+  
+  <g id="remote-node2">
+    <circle cx="216" cy="128" r="12" fill="url(#nodeGradient)" filter="url(#nodeGlow)"/>
+    <circle cx="216" cy="128" r="10" fill="none" stroke="#00D4FF" stroke-width="1" opacity="0.5"/>
+    <text x="216" y="133" font-family="monospace" font-size="8" text-anchor="middle" fill="#000" font-weight="bold">RTI</text>
+  </g>
+  
+  <g id="remote-node3">
+    <circle cx="206" cy="161" r="9" fill="url(#nodeGradient)" filter="url(#nodeGlow)"/>
+    <text x="206" y="166" font-family="monospace" font-size="6" text-anchor="middle" fill="#000" font-weight="bold">D2</text>
+  </g>
+  
+  <!-- Connection lines - Hardware to HAL -->
+  <path d="M 62 95 L 86 85" fill="none" stroke="url(#hardwareGradient)" stroke-width="1.5" filter="url(#connectionGlow)" opacity="0.7"/>
+  <path d="M 62 128 L 75 128" fill="none" stroke="url(#hardwareGradient)" stroke-width="2" filter="url(#connectionGlow)" opacity="0.8"/>
+  <path d="M 62 161 L 86 171" fill="none" stroke="url(#hardwareGradient)" stroke-width="1.5" filter="url(#connectionGlow)" opacity="0.7"/>
+  
+  <!-- Connection lines - HAL to Central Engine -->
+  <path d="M 106 85 L 118 118" fill="none" stroke="url(#softwareGradient)" stroke-width="1.5" filter="url(#connectionGlow)" opacity="0.7"/>
+  <path d="M 106 128 L 108 128" fill="none" stroke="url(#softwareGradient)" stroke-width="2" filter="url(#connectionGlow)" opacity="0.8"/>
+  <path d="M 106 171 L 118 138" fill="none" stroke="url(#softwareGradient)" stroke-width="1.5" filter="url(#connectionGlow)" opacity="0.7"/>
+  
+  <!-- Connection lines - Engine to Simulation layer -->
+  <path d="M 138 118 L 150 85" fill="none" stroke="url(#softwareGradient)" stroke-width="1.5" filter="url(#connectionGlow)" opacity="0.7"/>
+  <path d="M 148 128 L 150 128" fill="none" stroke="url(#softwareGradient)" stroke-width="2" filter="url(#connectionGlow)" opacity="0.8"/>
+  <path d="M 138 138 L 150 171" fill="none" stroke="url(#softwareGradient)" stroke-width="1.5" filter="url(#connectionGlow)" opacity="0.7"/>
+  
+  <!-- Connection lines - Simulation to Distributed nodes -->
+  <path d="M 172 85 L 197 95" fill="none" stroke="url(#nodeGradient)" stroke-width="1.5" filter="url(#connectionGlow)" opacity="0.7"/>
+  <path d="M 172 128 L 204 128" fill="none" stroke="url(#nodeGradient)" stroke-width="2.5" filter="url(#connectionGlow)" opacity="0.9"/>
+  <path d="M 172 171 L 197 161" fill="none" stroke="url(#nodeGradient)" stroke-width="1.5" filter="url(#connectionGlow)" opacity="0.7"/>
+  
+  <!-- Distributed inter-connections (mesh pattern) -->
+  <path d="M 206 95 Q 211 111 216 128" fill="none" stroke="url(#nodeGradient)" stroke-width="1" opacity="0.4" stroke-dasharray="3,3"/>
+  <path d="M 206 161 Q 211 145 216 128" fill="none" stroke="url(#nodeGradient)" stroke-width="1" opacity="0.4" stroke-dasharray="3,3"/>
+  <path d="M 206 95 L 206 161" fill="none" stroke="url(#nodeGradient)" stroke-width="1" opacity="0.3" stroke-dasharray="3,3"/>
+  
+  <!-- Pulsing data flow indicators -->
+  <g id="pulse1" opacity="0.6">
+    <circle cx="65" cy="128" r="2" fill="#FF6B35" filter="url(#nodeGlow)"/>
+  </g>
+  
+  <g id="pulse2" opacity="0.6">
+    <circle cx="100" cy="105" r="2" fill="#4CAF50" filter="url(#nodeGlow)"/>
+  </g>
+  
+  <g id="pulse3" opacity="0.6">
+    <circle cx="155" cy="110" r="2" fill="#4CAF50" filter="url(#nodeGlow)"/>
+  </g>
+  
+  <g id="pulse4" opacity="0.6">
+    <circle cx="190" cy="128" r="2" fill="#00D4FF" filter="url(#nodeGlow)"/>
+  </g>
+</svg>
