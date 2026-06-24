@@ -15,6 +15,8 @@ source "${setup_avr_toolchains_script}"
 # Downloading prerequisite binaries
 ##
 echo "Downloading missing binaries"
+
+sudo apt update
 # typically for WSL machines
 sudo apt-get install make
 sudo apt-get install usbutils
@@ -23,6 +25,17 @@ sudo apt-get install libopenal-dev
 sudo apt-get install pulseaudio
 sudo apt-get install gcc
 sudo apt-get install g++
+
+sudo apt install \
+    build-essential \
+    pkg-config \
+    libgl1-mesa-dev \
+    libglu1-mesa-dev \
+    freeglut3-dev \
+    libglfw3-dev \
+    libglew-dev
+
+sudo apt update
 
 ##
 # Prepare the sandbox workspace
