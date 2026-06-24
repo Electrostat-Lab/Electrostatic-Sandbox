@@ -15,17 +15,11 @@ struct rotation_metadata {
     matrix *out_orientation;
 };
 
-void preprocess_orientator(vector3d *v, vector3d *axis);
+status_code init_rotator_gimbal(vector3d axis, matrix orientation,
+                                                matrix *__rotator,
+                                              vec_component angle);
 
-status_code preprocess_mat3_orientator(vec3d_gimbal, vector3d *);
-
-status_code init_rotator_gimbal(vector3d axis, matrix *__rotator,
-                                              vec_component angle,
-                                              vec_component *angle1,
-                                              vec3d_gimbal *gimbal);
-
-status_code rotate_gimbal(vector3d axis, vec_component angle1,
-                                        matrix *__rotator,
+status_code rotate_gimbal(vector3d axis, matrix __rotator,
                                         vec3d_gimbal *in_gimbal,
                                         vec3d_gimbal *out_gimbal,
                                         vec3d_processors *procs);
