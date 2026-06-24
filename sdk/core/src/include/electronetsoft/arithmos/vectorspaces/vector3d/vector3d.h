@@ -22,6 +22,10 @@ struct vec3d_gimbal {
     vec_component y_gimbal;
     vec_component z_gimbal;
 
+    vec_component delta_x;
+    vec_component delta_y;
+    vec_component delta_z;
+
     matrix *orientation;
 };
 
@@ -102,18 +106,18 @@ extern vector3d VEC3_Z_COMPONENT;
 
 static inline vector_gimbal get_vec_gimbal(vector3d axis) {
     if ((axis.x > ___ROTATION_MIN_THRESHOLD) &&
-        ((axis.y >= 0) && (axis.y < 1)) &&
-        ((axis.z >= 0) && (axis.z < 1))) {
+        ((axis.y >= 0) && (axis.y < axis.x)) &&
+        ((axis.z >= 0) && (axis.z < axis.x))) {
 
         return GIMBAL_X;
     } else if ((axis.y > ___ROTATION_MIN_THRESHOLD) &&
-               ((axis.x >= 0) && (axis.x < 1)) &&
-               ((axis.z >= 0) && (axis.z < 1))) {
+               ((axis.x >= 0) && (axis.x < axis.y)) &&
+               ((axis.z >= 0) && (axis.z < axis.y))) {
 
         return GIMBAL_Y;
     } else if ((axis.z > ___ROTATION_MIN_THRESHOLD) &&
-               ((axis.y >= 0) && (axis.y < 1)) &&
-               ((axis.x >= 0) && (axis.x < 1))) {
+               ((axis.y >= 0) && (axis.y < axis.z)) &&
+               ((axis.x >= 0) && (axis.x < axis.z))) {
 
         return GIMBAL_Z;
     }
