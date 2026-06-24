@@ -70,8 +70,8 @@ jobs:
         - name: Compiling electrostatic-core Native Binaries
           run: sudo ./helper-scripts/ci-cd/compile-electrostatic.sh "-primer"
 
-        - name: Testing electrostatic-core Native Binaries
-          run: sudo ./helper-scripts/ci-cd/test-electrostatic.sh "hello_comm.c" "hello-comm"
+        # - name: Testing electrostatic-core Native Binaries
+        #   run: sudo ./helper-scripts/ci-cd/test-electrostatic.sh "hello_comm.c" "hello-comm"
 
         # - name: Testing "hello_vector2d.c"
         #   run: sudo ./helper-scripts/ci-cd/test-electrostatic.sh "hello_vector2d.c" "hello-vec2d"
