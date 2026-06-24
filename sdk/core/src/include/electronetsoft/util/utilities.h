@@ -5,7 +5,11 @@
 #include <stdarg.h>
 #include <stdbool.h>
 #include <stddef.h>
+#include <string.h>
+#include <electronetsoft/arithmos/vectorspaces/vector2d/vector2d.h>
 #include <electronetsoft/util/types.h>
+
+#define ___DELTA ((float) 1 * vector2d_pow(10.0f, -10.0f))
 
 #ifdef __cplusplus
 extern "C" { // disable C++ name mangling by declaring function prototypes
@@ -98,6 +102,43 @@ static inline typed_pointer get_typed_pointer(void *address, pointer_type type) 
     pointer.address.m_list = (list *) address;
     pointer.type = type;
     return pointer;
+}
+
+/**
+ * @brief Improved spreading: uses a 64-bit Mixer (MurmurHash3 style)
+ * to distribute entropy across the entire 64-bit range.
+ */
+static inline status_code spread_64(uint64_t in, uint64_t *out) {
+    if (rvalue(out) == NULL) {
+        return EUNDEFINEDBUFFER;
+    }
+
+    in = (in ^ (in >> 30)) * 0xbf58476d1ce4e5b9ULL;
+    in = (in ^ (in >> 27)) * 0x94d049bb133111ebULL;
+    in = in ^ (in >> 31);
+    *out = in;
+
+    return PASS;
+}
+
+static inline status_code hash_key(const char *key, uint64_t *hash) {
+    if (rvalue((void *) key) == NULL || rvalue(hash) == NULL) {
+        return EUNDEFINEDBUFFER;
+    }
+
+    // Use a large prime constant to initialize (FNV-1a style)
+    uint64_t h = 0xcbf29ce484222325ULL;
+
+    // Process every character
+    for (const char *address = key; *address != '\0'; address++) {
+        // 1. XOR the character into the hash
+        h ^= (uint8_t) (*address);
+        // 2. Multiply by a large prime (this spreads the bits)
+        h *= 0x100000001b3ULL;
+    }
+
+    // Apply your spread_64 as a finalizer to ensure high entropy
+    return spread_64(h, hash);
 }
 
 #ifdef __cplusplus

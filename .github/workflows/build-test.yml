@@ -68,55 +68,55 @@ jobs:
                   chmod +rwx ./helper-scripts/project-impl/*.sh && chmod +rwx ./helper-scripts/ci-cd/*.sh
         
         - name: Compiling electrostatic-core Native Binaries
-          run: sudo ./helper-scripts/ci-cd/compile-electrostatic.sh "-primer"
+          run: ./helper-scripts/ci-cd/compile-electrostatic.sh "-primer"
 
         - name: Testing electrostatic-core Native Binaries
-          run: sudo ./helper-scripts/ci-cd/test-electrostatic.sh "hello_comm.c" "hello-comm"
+          run: ./helper-scripts/ci-cd/test-electrostatic.sh "hello_comm.c" "hello-comm"
 
         # - name: Testing "hello_vector2d.c"
         #   run: sudo ./helper-scripts/ci-cd/test-electrostatic.sh "hello_vector2d.c" "hello-vec2d"
 
         - name: Testing "hello_contiguous_buffer.c"
-          run: sudo ./helper-scripts/ci-cd/test-electrostatic.sh "hello_lists.c" "hello-listadt"
+          run: ./helper-scripts/ci-cd/test-electrostatic.sh "hello_lists.c" "hello-listadt"
 
         - name: Testing "hello_unittest.c"
-          run: sudo ./helper-scripts/ci-cd/test-electrostatic.sh "hello_unittest.c" "hello-unittest"
+          run: ./helper-scripts/ci-cd/test-electrostatic.sh "hello_unittest.c" "hello-unittest"
 
         - name: Testing "hello_switching_mux.c"
-          run: sudo ./helper-scripts/ci-cd/test-electrostatic.sh "hello_switching_mux.c" "hello-switching-mux"
+          run: ./helper-scripts/ci-cd/test-electrostatic.sh "hello_switching_mux.c" "hello-switching-mux"
 
         - name: Testing Arithmos Calculus (2D Vector Rotation)
-          run: sudo ./helper-scripts/ci-cd/test-electrostatic.sh "calculus/test_vec2d_rotation.c" "test_2d_rotation"
+          run: ./helper-scripts/ci-cd/test-electrostatic.sh "calculus/test_vec2d_rotation.c" "test_2d_rotation"
 
         - name: Testing Arithmos Calculus (3D Gimbal Rotation Sequence)
-          run: sudo ./helper-scripts/ci-cd/test-electrostatic.sh "calculus/test_vec3d_rotation.c" "test_3d_rotation"
+          run: ./helper-scripts/ci-cd/test-electrostatic.sh "calculus/test_vec3d_rotation.c" "test_3d_rotation"
 
         - name: Testing Arithmos Calculus (3D Gimbal Rotation around X-axis)
           run: sudo ./helper-scripts/ci-cd/test-electrostatic.sh "calculus/test_3d_x_gimbal_rotation.c" "test_3d_x_gimbal_rotation"
 
         - name: Testing Arithmos Calculus (3D Gimbal Rotation around Y-axis)
-          run: sudo ./helper-scripts/ci-cd/test-electrostatic.sh "calculus/test_3d_y_gimbal_rotation.c" "test_3d_y_gimbal_rotation"
+          run: ./helper-scripts/ci-cd/test-electrostatic.sh "calculus/test_3d_y_gimbal_rotation.c" "test_3d_y_gimbal_rotation"
 
         - name: Testing Arithmos Calculus (3D Gimbal Rotation around Z-axis)
-          run: sudo ./helper-scripts/ci-cd/test-electrostatic.sh "calculus/test_3d_z_gimbal_rotation.c" "test_3d_z_gimbal_rotation"
+          run: ./helper-scripts/ci-cd/test-electrostatic.sh "calculus/test_3d_z_gimbal_rotation.c" "test_3d_z_gimbal_rotation"
 
         - name: Testing Arithmos Matrix Rotation API
-          run: sudo ./helper-scripts/ci-cd/test-electrostatic.sh "calculus/test_3d_mat_gimbal_rotation.c" "test_3d_mat_gimbal_rotation"
+          run: ./helper-scripts/ci-cd/test-electrostatic.sh "calculus/test_3d_mat_gimbal_rotation.c" "test_3d_mat_gimbal_rotation"
 
         - name: Testing Arithmos Calculus (Matrix Algebra Operations -- mat_product)
-          run: sudo ./helper-scripts/ci-cd/test-electrostatic.sh "calculus/test_mat_product.c" "test_mat_product"
+          run: ./helper-scripts/ci-cd/test-electrostatic.sh "calculus/test_mat_product.c" "test_mat_product"
 
         - name: Testing Arithmos Calculus (Matrix Algebra Operations -- mat_add)
-          run: sudo ./helper-scripts/ci-cd/test-electrostatic.sh "calculus/test_matrix_addition.c" "test_mat_addition"
+          run: ./helper-scripts/ci-cd/test-electrostatic.sh "calculus/test_matrix_addition.c" "test_mat_addition"
 
         - name: Testing Arithmos Calculus (Matrix Algebra Operations -- mat_iterate_elements)
-          run: sudo ./helper-scripts/ci-cd/test-electrostatic.sh "calculus/test_matrix_iteration.c" "test_mat_traversal"
+          run: ./helper-scripts/ci-cd/test-electrostatic.sh "calculus/test_matrix_iteration.c" "test_mat_traversal"
 
         - name: Compiling electrostatic4j Java Binding API
-          run: sudo ./helper-scripts/ci-cd/compile-e4j.sh
+          run: ./helper-scripts/ci-cd/compile-e4j.sh
           
         - name: Testing electrostatic4j Java Binding API
-          run: sudo ./helper-scripts/ci-cd/test-e4j.sh
+          run: ./helper-scripts/ci-cd/test-e4j.sh
 
         - name: Building Serial4j Framework
           run: sudo ./helper-scripts/ci-cd/compile-serial4j.sh

@@ -17,7 +17,7 @@ dependencies="$(pwd)/${examples_dir}/dependencies/libs/${SYSTEM_DIR}/${BUILD_DIR
 compile "${EXECUTABLE}" "${GCC_BIN_x86}" "${GPP_BIN_x86}" \
         "OFF" "OFF" "ON" "${INPUT_COMPILER_OPTIONS}" \
         "${TARGET_MACHINE}" "${TOOLCHAIN_INCLUDES_x86};${electrostatic_core_headers}" \
-        "${examples_dir}" "${sources}" "${dependencies};m;pthread;dl"  \
+        "${examples_dir}" "${sources}" "${dependencies};m;pthread;dl;glfw;GL"  \
          "${SYSTEM_DIR}/${BUILD_DIR}" "."
 
 cd "${project_root}" || exit $?
