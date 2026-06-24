@@ -1,6 +1,7 @@
 #include <electronetsoft/arithmos/vectorspaces/vector2d/vector2d.h>
 #include <electronetsoft/arithmos/vectorspaces/vector3d/vector3d.h>
 #include <electronetsoft/arithmos/vectorspaces/gimbal_system.h>
+#include <electronetsoft/arithmos/vectorspaces/matrix/matrix3.h>
 #include <stdio.h>
 
 static inline status_code rotate_about_gimbal(matrix *__rotator,
@@ -82,13 +83,29 @@ status_code vec3d_rotate(vector3d v, vector3d axis, vec_component angle,
     };
 
     status_code __code;
-    vec_component angle1 = 0;
+    vec_component *gimbal_angle = NULL;
+    vector_gimbal rotator_gimbal;
 
-    preprocess_orientator(&v, &axis);
-    vec3d_abs(axis, &axis, NULL);
+    if (get_vec_gimbal(axis) == GIMBAL_X) {
+        out->gimbal.x_gimbal += angle;
+        out->gimbal.delta_x = angle;
+        gimbal_angle = &(out->gimbal.x_gimbal);
+        rotator_gimbal = GIMBAL_X;
+    } else if (get_vec_gimbal(axis) == GIMBAL_Y) {
+        out->gimbal.y_gimbal += angle;
+        out->gimbal.delta_y = angle;
+        gimbal_angle = &(out->gimbal.y_gimbal);
+        rotator_gimbal = GIMBAL_Y;
+    } else if (get_vec_gimbal(axis) == GIMBAL_Z) {
+        out->gimbal.z_gimbal += angle;
+        out->gimbal.delta_z = angle;
+        gimbal_angle = &(out->gimbal.z_gimbal);
+        rotator_gimbal = GIMBAL_Z;
+    } else {
+        return EINCOMPATTYPE;
+    }
 
-    __code = init_rotator_gimbal(axis, &__rotator, angle,
-                                 &angle1, &out->gimbal);
+    __code = init_rotator_gimbal(axis, *(v.gimbal.orientation), &__rotator, angle);
 
     if (PASS != __code) {
         if (NULL != procs && NULL != procs->on_op_failed) {
@@ -107,13 +124,17 @@ status_code vec3d_rotate(vector3d v, vector3d axis, vec_component angle,
         return __code;
     }
 
-    if (vector2d_abs(vector2d_cos(angle1)) <= ___ROTATION_MIN_THRESHOLD
-            && vector2d_abs(vector2d_sin(angle1)) == 1) {
-        if (NULL != procs && NULL != procs->on_gimbal_lock_trap) {
-            procs->on_gimbal_lock_trap(*out, get_vec_gimbal(axis), angle);
-        }
+    if (fabsf(vector2d_abs(vector2d_cos(*gimbal_angle)) - ___ROTATION_MIN_THRESHOLD) < ___DELTA || fabsf(vector2d_abs(vector2d_sin(*gimbal_angle)) - 1.0f) < ___DELTA) {
         // rotate the gimbals axes (the orientation)
-        __code = rotate_gimbal(axis, angle1, &__rotator,
+        __code = init_rotator_gimbal(axis, *(v.gimbal.orientation), &__rotator, *gimbal_angle);
+        if (PASS != __code) {
+            if (NULL != procs && NULL != procs->on_op_failed) {
+                procs->on_op_failed(&vec3d_rotate, __code);
+            }
+            return __code;
+        }
+
+        __code = rotate_gimbal(axis, __rotator,
                                &(v.gimbal),
                                &out->gimbal, procs);
         if (PASS != __code) {
@@ -122,6 +143,12 @@ status_code vec3d_rotate(vector3d v, vector3d axis, vec_component angle,
             }
             return __code;
         }
+
+        if (NULL != procs && NULL != procs->on_gimbal_lock_trap) {
+            procs->on_gimbal_lock_trap(*out, get_vec_gimbal(axis), *gimbal_angle);
+        }
+
+        *gimbal_angle = 0.0f;
     }
 
     if (NULL != procs && NULL != procs->on_op_success) {
