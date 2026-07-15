@@ -70,6 +70,8 @@ typedef enum status_code {
     EDLLSYMFAIL = (EDLLOPENFAIL + 1),
     EDLLCONVENTIONCALLRETURN = (EDLLSYMFAIL + 1),
     UNEXPECTED_ERROR = (EDLLCONVENTIONCALLRETURN + 1),
+    EBUFFER_EXISTS = (UNEXPECTED_ERROR + 1),
+    INVALID_OP = (EBUFFER_EXISTS + 1),
     ASSERTION_SUCCESS = 1,
     ASSERTION_FAILURE = 0
 } status_code;
@@ -118,6 +120,27 @@ typedef struct mat3_gimbal (mat3_gimbal);
 typedef struct mat3_processors (mat3_processors);
 
 typedef struct caller_graph (caller_graph);
+
+typedef struct map (map);
+typedef struct map_element (map_element);
+typedef enum map_type {
+    MAP_TYPE_HASHMAP = COLUMN_CONVENTION_ITERATOR - 1,
+    MAP_TYPE_TREEMAP = MAP_TYPE_HASHMAP - 1
+} map_type;
+typedef struct map_function_table (map_function_table);
+typedef struct map_processors (map_processors);
+typedef struct hash_component (hash_component);
+
+typedef struct automaton (automaton);
+typedef struct automaton_state (automaton_state);
+typedef struct automaton_input (automaton_input);
+typedef struct automaton_zeta (automaton_zeta);
+typedef struct automaton_component (automaton_component);
+
+typedef enum {
+    ELEMENT_LIST = MAP_TYPE_TREEMAP - 1,
+    ELEMENT_MAP_ITEM = ELEMENT_LIST - 1,
+} element_type;
 
 #ifdef __cplusplus
 };
