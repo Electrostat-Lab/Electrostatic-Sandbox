@@ -16,35 +16,8 @@
  * @param buffer the data buffer of interest
  * @param element the current item of iteration
  */
-void iterator(list *buffer, list_element *element) {
-    uint64_t index = 0;
-    if (element < 0) {
-        return;
-    }
-    buffer->function_table->index_of(buffer, element, &index);
-    printf("Index at %llud = %p\n", index, element->data);
-}
-
-/**
- * Dispatched by the API callers callbacks when a "resize" command
- * is executed to continue operations safely.
- *
- * @param buffer the data buffer of interest
- * @param caller the caller address
- * @return PASS to indicate a pass code, otherwise a failure code
- */
-status_code update_buffer_size(list *buffer, void *caller) {
-    if (rvalue(buffer) == NULL || rvalue(caller) == NULL) {
-        return EUNDEFINEDBUFFER;
-    }
-    if (caller == buffer->function_table->add) {
-        printf("Caller for expansion\n");
-        buffer->elements = realloc(buffer->elements, (size_t) buffer->limit * sizeof(list_element*));
-    } else if (caller == buffer->function_table->remove_by_index) {
-        printf("Caller for remove\n");
-        buffer->limit >>= 2; // shrunk the limit by power of 2
-        buffer->elements = realloc(buffer->elements, (size_t) (buffer->length << 2) * sizeof(list_element*));
-    }
+status_code iterator_callback(list *buffer, list_info info, list_element *element) {
+    printf("Index at %lud = %p\n", info.index, element->data);
     return PASS;
 }
 
@@ -52,12 +25,11 @@ int main() {
 
     // Preprocessing automata (pre-init phase) -- memory allocation
     list_function_table table = {
-        .update_buffer_size = &update_buffer_size
     };
     list buffer_ = {
             .type = CONTIGUOUS_BUFFER,
             .function_table = &table,
-            .limit = 8 << 2,
+            .limit = (8 << 2) + 1,
     };
     list_element **elements = calloc(buffer_.limit, sizeof(list_element*));
     list *buffer = &buffer_;
@@ -72,7 +44,7 @@ int main() {
 
     // Processing automata -- Data Write (adding items)
     status_code _code1 = PASS;
-    for (int i = 0; i < 20; i++) {
+    for (int i = 0; i < 100; i++) {
         list_element *element = alloca(sizeof(list_element));
         int *test_data = alloca(sizeof(int));
         *test_data = 260 + i;
@@ -89,10 +61,10 @@ int main() {
     // Processing automata -- Data Read and Printing items
     status_code _code2 = buffer->function_table->iterator(buffer,
                                                     (list_info) {
-                                                        .start_index = 0,
-                                                        .length = buffer->length,
-                                                        .rate = 1
-                                                    }, &iterator);
+                                                        .index = 0,
+                                                        .length = buffer->limit,
+                                                        .rate = 2
+                                                    }, &iterator_callback);
     if (PASS != _code2) {
         perror("Failure to iterate\n");
     }
@@ -104,10 +76,10 @@ int main() {
     } else {
         buffer->function_table->iterator(buffer,
                                          (list_info) {
-                                                 .start_index = 0,
-                                                 .length = buffer->length,
+                                                 .index = 0,
+                                                 .length = buffer->limit,
                                                  .rate = 1
-                                         }, &iterator);
+                                         }, &iterator_callback);
     }
 
     // post-processing automata -- Buffer destruction and memory release
@@ -115,7 +87,7 @@ int main() {
     // Warning: free (elements) wrong! Because of reallocation callback processors.
     free(buffer->elements);
 
-    // run:  valgrind -v -s ./electrostatic-sandbox-framework/electrostatic-examples/cmake-build/linux/x86-64/hello_lists.elf
+    // run:  valgrind -v -s ./sdk/examples/cmake-build/linux/x86-64/hello_lists.elf
     // to examine for memory leaks.
 
     return 0;
