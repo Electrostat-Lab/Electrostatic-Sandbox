@@ -52,7 +52,7 @@ status_code test_units(list *units) {
         return EUNDEFINEDBUFFER;
     }
     return units->function_table->iterator(units, (list_info) {
-       .start_index = 0,
+       .index = 0,
        .length = units->position,
        .rate = 1
     }, &iterator_callback0);
@@ -63,7 +63,7 @@ status_code assert_test_units(list *units) {
         return EUNDEFINEDBUFFER;
     }
     return units->function_table->iterator(units, (list_info) {
-       .start_index = 0,
+       .index = 0,
        .length = units->position,
        .rate = 1
     }, &iterator_callback);
