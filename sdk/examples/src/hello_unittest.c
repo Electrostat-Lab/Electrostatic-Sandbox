@@ -37,7 +37,7 @@ static inline status_code update_buffer_size(list *buffer, void *caller) {
     } else if (caller == buffer->function_table->remove_by_index) {
         printf("Caller for remove\n");
         buffer->limit >>= 2; // shrunk the limit by power of 2
-        buffer->elements = realloc(buffer->elements, (size_t) (buffer->length << 2) * sizeof(list_element*));
+        buffer->elements = realloc(buffer->elements, (size_t) (buffer->limit << 2) * sizeof(list_element*));
     }
     return PASS;
 }
