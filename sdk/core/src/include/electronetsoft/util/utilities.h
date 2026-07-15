@@ -41,6 +41,12 @@ struct api_lifecycle {
     void (*on_operation_failed)(void *api, void *caller, status_code cause);
 };
 
+struct hash_component {
+    char *key;
+    uint64_t *hash;
+    uint64_t user_key;
+};
+
 /**
  * Uses a pointer as an r-value for safe
  * comparison reasons.
@@ -104,25 +110,20 @@ static inline typed_pointer get_typed_pointer(void *address, pointer_type type) 
     return pointer;
 }
 
-/**
- * @brief Improved spreading: uses a 64-bit Mixer (MurmurHash3 style)
- * to distribute entropy across the entire 64-bit range.
- */
 static inline status_code spread_64(uint64_t in, uint64_t *out) {
     if (rvalue(out) == NULL) {
         return EUNDEFINEDBUFFER;
     }
 
-    in = (in ^ (in >> 30)) * 0xbf58476d1ce4e5b9ULL;
-    in = (in ^ (in >> 27)) * 0x94d049bb133111ebULL;
-    in = in ^ (in >> 31);
+    in = in ^ ((in ^ (in >> 32)) >> 32);
     *out = in;
 
     return PASS;
 }
 
-static inline status_code hash_key(const char *key, uint64_t *hash) {
-    if (rvalue((void *) key) == NULL || rvalue(hash) == NULL) {
+static inline status_code hash_key(hash_component hasher) {
+    if (rvalue((void *) hasher.key) == NULL ||
+            rvalue(hasher.hash) == NULL) {
         return EUNDEFINEDBUFFER;
     }
 
@@ -130,16 +131,64 @@ static inline status_code hash_key(const char *key, uint64_t *hash) {
     uint64_t h = 0xcbf29ce484222325ULL;
 
     // Process every character
-    for (const char *address = key; *address != '\0'; address++) {
+    // Algorithm for polynomial hashing using Horner's rule
+    for (const char *address = hasher.key; *address != '\0'; address++) {
+        // use reverse Horner's Rule to compute the hash
         // 1. XOR the character into the hash
-        h ^= (uint8_t) (*address);
-        // 2. Multiply by a large prime (this spreads the bits)
-        h *= 0x100000001b3ULL;
+        h ^= (*address);
+        // 2. Multiply by 2^5 (aka 32) which is the same as left-shifting by
+        // 5 bits using Cyclic Shift Hashcode
+        h = (h << 5) | (h >> (64 - 5));
+        // 4. Combine MSB Component with LSB Component
+        h = (h >> 32) ^ h;
     }
 
     // Apply your spread_64 as a finalizer to ensure high entropy
-    return spread_64(h, hash);
+    return spread_64(h ^ hasher.user_key, hasher.hash);
 }
+
+static inline uint64_t hash_compress(uint64_t hash,
+                                     uint64_t limit) {
+    // the equivalent of modulus operation
+    // finds the remainder of an integer division operation
+    return hash - (((uint64_t) (hash/limit)) * limit);
+}
+
+static inline uint64_t generate_next_odd(uint64_t n) {
+    return (n * 2) + 1;
+}
+
+static inline status_code hashkey_compress64(hash_component hasher,
+                                             uint64_t limit) {
+    if (rvalue((void *) hasher.key) == NULL ||
+        rvalue(hasher.hash) == NULL) {
+        return EUNDEFINEDBUFFER;
+    }
+
+    status_code __code = hash_key(hasher);
+    if (PASS != __code) {
+        return __code;
+    }
+    *(hasher.hash) = hash_compress(*(hasher.hash), limit);
+
+    return PASS;
+}
+
+//static inline status_code is_prime(uint64_t n) {
+//    return PASS;
+//}
+//
+//static inline uint64_t generate_next_prime(uint64_t n) {
+//    uint64_t next_odd = n;
+//
+//    while (1) {
+//        next_odd = generate_next_odd(next_odd);
+//        if (is_prime(next_odd)) {
+//            return next_odd;
+//        }
+//    }
+//    return n;
+//}
 
 #ifdef __cplusplus
 };
