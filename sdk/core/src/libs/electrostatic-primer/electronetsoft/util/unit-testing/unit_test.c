@@ -7,29 +7,34 @@
 #define SPREAD_HASHING(value, type) ((type) #value >> (sizeof(type) / 2) ^ (type) #value)
 #define HASHED_TYPE (SPREAD_HASHING(sizeof(unit_test), size_t))
 
-static inline void iterator_callback0(list *units, list_element *element) {
+static inline status_code iterator_callback0(list *units,
+                                             list_info info,
+                                             list_element *element) {
     if (rvalue(units) == NULL || rvalue(element) == NULL
             || rvalue(element->data) == NULL) {
-        return ;
+        return EUNDEFINEDBUFFER;
     }
     if (element->size != HASHED_TYPE) {
-        return ;
+        return EINCOMPATTYPE;
     }
     unit_test *unit_test_ = element->data;
 
     test(unit_test_);
+    return PASS;
 }
 
-static inline void iterator_callback(list *units, list_element *element) {
+static inline status_code iterator_callback(list *units,
+                                            list_info info,
+                                            list_element *element) {
     if (units == NULL || element == NULL || element->data == NULL) {
-        return ;
+        return EUNDEFINEDBUFFER;
     }
     if (element->size != HASHED_TYPE) {
-        return ;
+        return EINCOMPATTYPE;
     }
     unit_test *unit_test_ = element->data;
 
-    assert_test(unit_test_);
+    return assert_test(unit_test_);
 }
 
 // just runs the test without validation
@@ -48,7 +53,7 @@ status_code test_units(list *units) {
     }
     return units->function_table->iterator(units, (list_info) {
        .start_index = 0,
-       .length = units->length,
+       .length = units->position,
        .rate = 1
     }, &iterator_callback0);
 }
@@ -59,7 +64,7 @@ status_code assert_test_units(list *units) {
     }
     return units->function_table->iterator(units, (list_info) {
        .start_index = 0,
-       .length = units->length,
+       .length = units->position,
        .rate = 1
     }, &iterator_callback);
 }
