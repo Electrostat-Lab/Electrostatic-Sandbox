@@ -146,7 +146,7 @@ static inline status_code linked_buffer_add(list *buffer, list_element *element)
         return EINCOMPATTYPE;
     }
     // preprocessing automata -- Buffer limit check and resize
-    if (0 != buffer->limit && buffer->length >= buffer->limit) {
+    if (0 != buffer->limit && buffer->position >= buffer->limit) {
         // run a stretching algorithm
         // the stretching algorithm
         if (rvalue(buffer->function_table) != NULL &&
@@ -195,7 +195,7 @@ static inline status_code linked_buffer_add(list *buffer, list_element *element)
     }
 
     // post-processing automata -- increment the length counter
-    buffer->length += 1;
+    buffer->position += 1;
     return PASS;
 }
 
@@ -346,7 +346,7 @@ static inline status_code linked_buffer_remove_by_element(list *buffer, list_ele
     }
 
     // post-processing automata -- decrement the length counter
-    buffer->length -= 1;
+    buffer->position -= 1;
     return PASS;
 }
 
@@ -410,7 +410,8 @@ static inline status_code linked_buffer_remove_by_index(list *buffer, uint64_t i
 }
 
 static inline status_code linked_buffer_iterator(list *buffer, list_info info,
-                                             void (*callback)(list *, list_element *)) {
+                                             status_code (*callback)(list *,
+                                                     list_info, list_element *)) {
     // pre-processor automata -- Input Validation
     if (rvalue(buffer) == NULL || rvalue(callback) == NULL) {
         return EUNDEFINEDBUFFER;
@@ -429,13 +430,22 @@ static inline status_code linked_buffer_iterator(list *buffer, list_info info,
     // processing automata -- Iterative Automata
     //                        (i.e., a For-All Formulation)
     status_code __code = PASS;
+    uint64_t index = 0;
     for (list_element *element = chain->start_address;
             (rvalue(element) != NULL &&
                     rvalue(element) != chain->end_address); // compatible with non-null terminated lists
-                        __code = get_next_element(chain, element, &element)) {
-        callback(buffer, element);
+                        get_next_element(chain, element, &element), index++) {
+        __code = callback(buffer, (list_info) {
+            .start_index = index,
+            .metadata = info.metadata,
+            .length = buffer->limit,
+            .rate = info.rate
+        }, element);
+        if (PASS != __code) {
+            return __code;
+        }
     }
-    return PASS;
+    return __code;
 }
 
 status_code init_linked_buffer(list *list, list_element **elements, list_function_table *table, api_lifecycle *lifecycle) {
@@ -460,9 +470,9 @@ status_code init_linked_buffer(list *list, list_element **elements, list_functio
 
     list->function_table = table;
     list->elements = elements;
-    memset(list->elements, 0, list->length);
+    memset(list->elements, 0, list->position);
 
-    list->length = 0;
+    list->position = 0;
     list->limit = 8 << 2;
 
     linked_buffer *chain = NULL;

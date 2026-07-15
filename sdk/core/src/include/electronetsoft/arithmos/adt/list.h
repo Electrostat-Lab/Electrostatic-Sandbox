@@ -47,12 +47,14 @@ struct list_element {
   void *data;
   void *metadata;
   size_t size;
+  element_type type;
 };
 
 struct list_info {
   uint64_t start_index;
   uint64_t length;
   uint64_t rate;
+  void *metadata;
 };
 
 struct list {
@@ -60,14 +62,20 @@ struct list {
   list_function_table *function_table;
   list_type type;
   memory_partition elements_memory;
-  uint64_t length;
+  uint64_t position;
   uint64_t limit;
+  uint64_t hash_key;
 };
 
 struct list_function_table {
   status_code (*contains)(list *, list_element *);
-  status_code (*iterator)(list *, list_info, void (*callback)(list *, list_element *));
+  status_code (*iterator)(list *, list_info,
+          status_code (*callback)(list *, list_info, list_element *));
   status_code (*add)(list *, list_element *);
+  status_code (*insert)(list *, list_element *, uint64_t);
+  status_code (*on_collision)(list *, uint64_t, list_element *);
+  status_code (*insert_overwrite)(list *, list_element *, uint64_t);
+  status_code (*on_collision_overwrite)(list *, uint64_t, list_element *);
   status_code (*get)(list *, uint64_t, list_element **);
   status_code (*index_of)(list *, list_element *, uint64_t *);
   status_code (*resize)(list *, uint16_t);
