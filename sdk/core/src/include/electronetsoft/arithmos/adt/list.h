@@ -51,7 +51,7 @@ struct list_element {
 };
 
 struct list_info {
-  uint64_t start_index;
+  uint64_t index;
   uint64_t length;
   uint64_t rate;
   void *metadata;

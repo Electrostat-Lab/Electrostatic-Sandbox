@@ -291,20 +291,23 @@ static inline status_code contiguous_buffer_remove_all(list *list, list_element 
     return PASS; // success
 }
 
-static inline status_code contiguous_buffer_iterator(list *list,
+static inline status_code contiguous_buffer_iterator(list *buffer,
                                                      list_info info,
-                                                     status_code (*callback)(struct list *, list_info, list_element *)) {
-    if (rvalue(list) == NULL || rvalue(callback) == NULL) {
+                                                     status_code (*callback)(list *, list_info, list_element *)) {
+    if (rvalue(buffer) == NULL || rvalue(callback) == NULL) {
         return EUNDEFINEDBUFFER;
     }
     status_code __code;
-    for (uint64_t i = info.start_index; i < info.length; i += info.rate) {
-        __code = callback(list, (list_info) {
-            .start_index = i,
-            .length = list->limit,
+    for (uint64_t i = info.index; i < info.length; i += info.rate) {
+        if (NULL == buffer->elements[i]) {
+            continue;
+        }
+        __code = callback(buffer, (list_info) {
+            .index = i,
+            .length = buffer->limit,
             .metadata = info.metadata,
             .rate = info.rate
-        }, list->elements[i]);
+        }, buffer->elements[i]);
         // use the return value as a control variable
         if (PASS != __code) {
             return __code;

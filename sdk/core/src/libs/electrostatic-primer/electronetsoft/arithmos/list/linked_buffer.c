@@ -436,7 +436,7 @@ static inline status_code linked_buffer_iterator(list *buffer, list_info info,
                     rvalue(element) != chain->end_address); // compatible with non-null terminated lists
                         get_next_element(chain, element, &element), index++) {
         __code = callback(buffer, (list_info) {
-            .start_index = index,
+            .index = index,
             .metadata = info.metadata,
             .length = buffer->limit,
             .rate = info.rate
