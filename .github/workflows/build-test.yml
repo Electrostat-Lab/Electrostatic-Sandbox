@@ -79,6 +79,9 @@ jobs:
         - name: Testing "hello_contiguous_buffer.c"
           run: ./helper-scripts/ci-cd/test-electrostatic.sh "hello_lists.c" "hello-listadt"
 
+        - name: Testing "hello_hashmaps.c"
+          run: ./helper-scripts/ci-cd/test-electrostatic.sh "hello_hashmaps.c" "hello-hashmaps"
+
         - name: Testing "hello_unittest.c"
           run: ./helper-scripts/ci-cd/test-electrostatic.sh "hello_unittest.c" "hello-unittest"
 
