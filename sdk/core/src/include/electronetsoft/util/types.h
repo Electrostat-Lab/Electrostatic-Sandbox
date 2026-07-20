@@ -105,6 +105,7 @@ typedef struct object2d_transformation (object2d_transformation);
 typedef struct vector3d (vector3d);
 typedef struct vec3d_space (vec3d_space);
 typedef struct vec3d_polar (vec3d_polar);
+typedef struct vec3d_cylinderical (vec3d_cylinderical);
 typedef struct vec3d_processors (vec3d_processors);
 typedef struct vec3d_gimbal (vec3d_gimbal);
 
