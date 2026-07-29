@@ -15,6 +15,22 @@ int main() {
     map_function_table table = (map_function_table) {
 
     };
+
+    typed_pointer __key_0 = (typed_pointer) {
+        .address.str = "test_hashes",
+        .type = TYPE_STR
+    };
+
+    typed_pointer __key_1 = (typed_pointer) {
+        .address.str = "hashes_test",
+        .type = TYPE_STR
+    };
+
+    typed_pointer __key_2 = (typed_pointer) {
+        .address.str = "test_hashes112",
+        .type = TYPE_STR
+    };
+
     status_code __code = init_map_function_table(&hash_map,
                                                  &table,
                                                  NULL);
@@ -24,7 +40,7 @@ int main() {
     }
 
     __code = hash_map.function_table->insert(&hash_map, &((map_element) {
-        .key = "test_hashes",
+        .key = __key_0,
         .value = &((list_element) {
             .type = ELEMENT_MAP_ITEM,
             .data = "Data 00"
@@ -39,37 +55,7 @@ int main() {
     }
 
     __code = hash_map.function_table->insert(&hash_map, &((map_element) {
-            .key = "test_hashes",
-            .value = &((list_element) {
-                    .type = ELEMENT_MAP_ITEM,
-                    .data = "Data 00"
-            })
-    }));
-    if (PASS == __code) {
-        fprintf(stderr, "%s %d\n",
-                GREEN "Inserting Success" RESET, __code);
-    } else if (EBUFFER_EXISTS == __code) {
-        fprintf(stderr, "%s %d\n",
-                RED "Inserting Failed: Buffer Exists; Data Updated!" RESET, __code);
-    }
-
-    __code = hash_map.function_table->insert(&hash_map, &((map_element) {
-            .key = "test_hashes",
-            .value = &((list_element) {
-                    .type = ELEMENT_MAP_ITEM,
-                    .data = "Data 00"
-            })
-    }));
-    if (PASS == __code) {
-        fprintf(stderr, "%s %d\n",
-                GREEN "Inserting Success" RESET, __code);
-    } else if (EBUFFER_EXISTS == __code) {
-        fprintf(stderr, "%s %d\n",
-                RED "Inserting Failed: Buffer Exists; Data Updated!" RESET, __code);
-    }
-
-    __code = hash_map.function_table->insert(&hash_map, &((map_element) {
-            .key = "hashes_test",
+            .key = __key_1,
             .value = &((list_element) {
                     .type = ELEMENT_MAP_ITEM,
                     .data = "Data 01"
@@ -83,9 +69,39 @@ int main() {
                 RED "Inserting Failed: Buffer Exists; Data Updated!" RESET, __code);
     }
 
+    __code = hash_map.function_table->insert(&hash_map, &((map_element) {
+            .key = __key_2,
+            .value = &((list_element) {
+                    .type = ELEMENT_MAP_ITEM,
+                    .data = "Data 00"
+            })
+    }));
+    if (PASS == __code) {
+        fprintf(stderr, "%s %d\n",
+                GREEN "Inserting Success" RESET, __code);
+    } else if (EBUFFER_EXISTS == __code) {
+        fprintf(stderr, "%s %d\n",
+                RED "Inserting Failed: Buffer Exists; Data Updated!" RESET, __code);
+    }
+
+    __code = hash_map.function_table->insert(&hash_map, &((map_element) {
+            .key = __key_0,
+            .value = &((list_element) {
+                    .type = ELEMENT_MAP_ITEM,
+                    .data = "Data 013132"
+            })
+    }));
+    if (PASS == __code) {
+        fprintf(stderr, "%s %d\n",
+                GREEN "Inserting Success" RESET, __code);
+    } else if (EBUFFER_EXISTS == __code) {
+        fprintf(stderr, "%s %d\n",
+                RED "Inserting Failed: Buffer Exists; Data Updated!" RESET, __code);
+    }
+
     map_element out = {
     };
-    __code = hash_map.function_table->get(&hash_map, "hashes_test", &out);
+    __code = hash_map.function_table->get(&hash_map, __key_0, &out);
     if (PASS != __code) {
         fprintf(stderr, "%s %d\n",
                 "Error while retrieving the Map item!", __code);
@@ -93,7 +109,6 @@ int main() {
         fprintf(stdout, "LOG Data item %s\n",
                 (const char *) out.value->data);
     }
-
 
     __code = hash_map.function_table->iterator(&hash_map, &iterator_callback);
     if (PASS != __code) {
@@ -103,14 +118,15 @@ int main() {
         fprintf(stdout, "Iterated successfully!\n");
     }
 
-    __code = hash_map.function_table->remove(&hash_map, "hashes_test");
+    __code = hash_map.function_table->remove(&hash_map, __key_0);
     if (PASS != __code) {
         fprintf(stderr, "%s %d\n",
                 "Error while retrieving the Map item!", __code);
     }
 
-    __code = hash_map.function_table->contains_all(&hash_map, (const char *[]) {
-            "hashes_test", "test_hashes",
+    __code = hash_map.function_table->contains_all(&hash_map,
+   (typed_pointer *[]) {
+            &__key_1, &__key_2, NULL
     });
     if (PASS != __code) {
         fprintf(stderr, "%s %d\n",
@@ -128,7 +144,7 @@ int main() {
                 hash_map.adt->limit);
     }
 
-    __code = hash_map.function_table->get(&hash_map, "hashes_test", &out);
+    __code = hash_map.function_table->get(&hash_map, __key_0, &out);
     if (PASS != __code) {
         fprintf(stderr, "%s %d\n",
                 "Error while retrieving the Map item!", __code);
