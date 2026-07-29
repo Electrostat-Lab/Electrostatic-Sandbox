@@ -12,7 +12,7 @@ extern "C" {
 #endif
 
 struct map_element {
-    char *key;
+    typed_pointer key;
     list_element *value;
 };
 
@@ -41,12 +41,12 @@ struct map {
 struct map_function_table {
     status_code (*insert)(map *, map_element *);
     status_code (*insert_all)(map *, map_element **);
-    status_code (*remove)(map *, const char *);
-    status_code (*remove_all)(map *, const char **);
+    status_code (*remove)(map *, typed_pointer);
+    status_code (*remove_all)(map *, typed_pointer **);
     status_code (*resize)(map *, uint64_t);
-    status_code (*contains)(map *, const char *);
-    status_code (*contains_all)(map *, const char **);
-    status_code (*get)(map *, const char *key, map_element *);
+    status_code (*contains)(map *, typed_pointer);
+    status_code (*contains_all)(map *, typed_pointer **);
+    status_code (*get)(map *, typed_pointer key, map_element *);
     status_code (*iterator)(map *, status_code (*callback)(map *, map_element *));
 };
 
