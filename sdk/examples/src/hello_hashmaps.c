@@ -135,7 +135,7 @@ int main() {
         fprintf(stdout, GREEN "Contains Passed!\n" RESET);
     }
 
-    __code = hash_map.function_table->resize(&hash_map, hash_map.adt->limit << 4);
+    __code = hash_map.function_table->rehash(&hash_map, hash_map.adt->limit << 4);
     if (PASS != __code) {
         fprintf(stderr, "%s %d\n",
                 "Resizing has failed!", __code);
