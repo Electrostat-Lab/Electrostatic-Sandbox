@@ -20,7 +20,7 @@ struct map_processors {
     status_code (*on_initialization)(map *);
     status_code (*on_deinitialization)(map *);
     status_code (*on_insertion)(map *, map_element *, uint64_t);
-    status_code (*on_resize_dispatch)(map *, list_element **);
+    status_code (*on_rehash_dispatch)(map *, list_element **);
     status_code (*on_removal)(map *, list *, uint64_t);
     status_code (*on_collision)(list *,
                                 uint64_t,
@@ -43,7 +43,7 @@ struct map_function_table {
     status_code (*insert_all)(map *, map_element **);
     status_code (*remove)(map *, typed_pointer);
     status_code (*remove_all)(map *, typed_pointer **);
-    status_code (*resize)(map *, uint64_t);
+    status_code (*rehash)(map *, uint64_t);
     status_code (*contains)(map *, typed_pointer);
     status_code (*contains_all)(map *, typed_pointer **);
     status_code (*get)(map *, typed_pointer key, map_element *);

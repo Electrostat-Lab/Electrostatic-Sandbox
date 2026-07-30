@@ -136,6 +136,7 @@ static inline status_code collision_init_separate_chain
     __chain_element->data = __separate_chain;
     __chain_element->type = ELEMENT_LIST;
     __chain_element->size = sizeof (list);
+    __chain_element->metadata = buffer->elements[index]->metadata;
 
     __code = buffer->function_table->insert_overwrite(buffer, __chain_element, index);
     if (PASS != __code) {
@@ -202,7 +203,7 @@ static inline status_code hashmap_on_collision(list *buffer,
     return __code;
 }
 
-static inline status_code hashmap_resize(map *hashmap, uint64_t limit) {
+static inline status_code hashmap_rehash(map *hashmap, uint64_t limit) {
     if (NULL == hashmap || NULL == hashmap->adt || 0 == hashmap->adt->limit
                 || 0 == limit) {
         return EUNDEFINEDBUFFER;
@@ -212,42 +213,72 @@ static inline status_code hashmap_resize(map *hashmap, uint64_t limit) {
         return INVALID_OP;
     }
 
-    list_element **elements = calloc(limit, sizeof (void *));
-    if (NULL == elements) {
-        return EBUFFEROVERFLOW;
+    list *buffer = hashmap->adt;
+    list *_buffer = NULL;
+    status_code __code = init_adt_list(&_buffer, limit);
+    if (PASS != __code) {
+        return __code;
     }
 
-    list *buffer = hashmap->adt;
+    _buffer->function_table->on_collision = &hashmap_on_collision;
+
     uint64_t hashcode;
     hash_component hasher = {
           .hash = &hashcode,
           .user_key = ((uint64_t) INT16_MAX << 8) + 1
     };
-    status_code __code;
 
     for (uint64_t i = 0; i < buffer->limit; i++) {
         if (NULL == buffer->elements[i]) {
             continue;
         }
-        hasher.key = *((typed_pointer *) buffer->elements[i]->metadata);
-        __code = crypto_hashkey_compress64(hasher, limit);
-        if (PASS != __code) {
+        if (ELEMENT_LIST == buffer->elements[i]->type) {
+            list *__buffer = buffer->elements[i]->data;
+            if (NULL == __buffer->elements) {
+                continue;
+            }
+            for (uint64_t j = 0; j < __buffer->limit; j++) {
+                if (NULL == __buffer->elements[j]) {
+                    continue;
+                }
+                hasher.key = *((typed_pointer *) __buffer->elements[j]->metadata);
+                __code = crypto_hashkey_compress64(hasher, limit);
+                if (PASS != __code) {
+                    break;
+                }
+                __code = _buffer->function_table->insert(_buffer, __buffer->elements[j], *hasher.hash);
+                if (PASS != __code) {
+                    break;
+                }
+            }
             continue;
         }
+        if (ELEMENT_MAP_ITEM == buffer->elements[i]->type) {
+            hasher.key = *((typed_pointer *) buffer->elements[i]->metadata);
+            __code = crypto_hashkey_compress64(hasher, limit);
+            if (PASS != __code) {
+                break;
+            }
 
-        // deep/physical copy of the data from the
-        // old memory to the newly allocated buffer
-        elements[*hasher.hash] = buffer->elements[i];
+            // deep/physical copy of the data from the
+            // old memory to the newly allocated buffer
+            __code = _buffer->function_table->insert(_buffer, buffer->elements[i], *hasher.hash);
+            if (PASS != __code) {
+                break;
+            }
+        }
     }
 
     // post-processing automata -- re-invalidate the internal buffer
-    free(buffer->elements);
-    buffer->elements = elements;
-    buffer->limit = limit;
+    __code = hashmap_deinit(hashmap, NULL);
+    if (PASS != __code) {
+        return __code;
+    }
+    hashmap->adt = _buffer;
 
     if (NULL != hashmap->processors &&
-        NULL != hashmap->processors->on_resize_dispatch) {
-        hashmap->processors->on_resize_dispatch(hashmap, buffer->elements);
+        NULL != hashmap->processors->on_rehash_dispatch) {
+        hashmap->processors->on_rehash_dispatch(hashmap, buffer->elements);
     }
 
     return PASS;
@@ -300,7 +331,7 @@ static inline status_code hashmap_insert(map *hashmap,
     }
     if (lambda_factor >= 0.75f) {
         // appy resize and rehashing algorithm
-        __code = hashmap_resize(hashmap, hashmap->adt->limit << 4);
+        __code = hashmap_rehash(hashmap, hashmap->adt->limit << 4);
         if (PASS != __code) {
             return __code;
         }
@@ -595,7 +626,7 @@ status_code hashmap_init(map *hashmap, map_function_table *table,
 
     table->insert = &hashmap_insert;
     table->insert_all = &hashmap_insert_all;
-    table->resize = &hashmap_resize;
+    table->rehash = &hashmap_rehash;
     table->iterator = &hashmap_iterator;
     table->contains = &hashmap_contains;
     table->contains_all = &hashmap_contains_all;
