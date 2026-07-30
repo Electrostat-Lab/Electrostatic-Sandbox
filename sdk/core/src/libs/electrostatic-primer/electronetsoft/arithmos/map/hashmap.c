@@ -1,6 +1,6 @@
 #include <electronetsoft/arithmos/map/hashmap.h>
 #include <electronetsoft/arithmos/adt/list.h>
-#include <electronetsoft/util/utilities.h>
+#include <electronetsoft/util/number/crypto.h>
 #include <stdio.h>
 
 typedef struct {
@@ -37,7 +37,7 @@ static inline status_code init_adt_list(list **buffer, uint64_t limit) {
     return init_list_function_table(*buffer, elements, list_table, NULL);
 }
 
-static inline status_code get_element_by_key(list *buffer,
+static inline status_code get_element_by_str_key(list *buffer,
                                     const char *__key0,
                                     key_element *__out) {
     char *__key1 = NULL;
@@ -63,6 +63,48 @@ static inline status_code get_element_by_key(list *buffer,
         break;
     }
     return __code;
+}
+
+static inline status_code get_element_by_long_key(list *buffer, uint64_t *key,
+                                                  key_element *__out) {
+    uint64_t *__key1 = NULL;
+    status_code __code;
+
+    for (uint64_t i = 0; i < buffer->limit; i += 1) {
+        if (NULL == buffer->elements[i] ||
+            NULL == buffer->elements[i]->data) {
+            continue;
+        }
+        // HERE
+        __key1 = buffer->elements[i]->metadata;
+        if (*__key1 != *key) {
+            __code = ENOELEMENT;
+            continue;
+        }
+        __code = PASS;
+
+        if (NULL != __out) {
+            __out->index = i;
+            __out->value = buffer->elements[i];
+        }
+        break;
+    }
+    return __code;
+}
+
+static inline status_code get_element_by_typed_key(list *buffer, typed_pointer key,
+                                                   key_element *out) {
+    if (TYPE_STR == key.type) {
+        return get_element_by_str_key(buffer,
+                (const char *) key.address.str, out);
+    } else if (TYPE_ID == key.type) {
+        return get_element_by_long_key(buffer,
+                                key.address.id, out);
+    } else {
+        return EINCOMPATTYPE;
+    }
+    
+    return PASS;
 }
 
 static inline status_code collision_init_separate_chain
@@ -94,6 +136,7 @@ static inline status_code collision_init_separate_chain
     __chain_element->data = __separate_chain;
     __chain_element->type = ELEMENT_LIST;
     __chain_element->size = sizeof (list);
+    __chain_element->metadata = buffer->elements[index]->metadata;
 
     __code = buffer->function_table->insert_overwrite(buffer, __chain_element, index);
     if (PASS != __code) {
@@ -116,8 +159,8 @@ static inline status_code hashmap_on_collision(list *buffer,
         // test if the list has the element with the exact key
         // add to the secondary buffer only if it is not present
         // if the element is not present in the buffer; add it
-        if (ENOELEMENT == get_element_by_key(__internal_buffer,
-                                (const char *) element->metadata, NULL)) {
+        if (ENOELEMENT == get_element_by_typed_key(__internal_buffer,
+                                                   *((typed_pointer *) element->metadata), NULL)) {
             return __internal_buffer->function_table->
                             add(__internal_buffer, element);
         }
@@ -160,7 +203,7 @@ static inline status_code hashmap_on_collision(list *buffer,
     return __code;
 }
 
-static inline status_code hashmap_resize(map *hashmap, uint64_t limit) {
+static inline status_code hashmap_rehash(map *hashmap, uint64_t limit) {
     if (NULL == hashmap || NULL == hashmap->adt || 0 == hashmap->adt->limit
                 || 0 == limit) {
         return EUNDEFINEDBUFFER;
@@ -170,51 +213,82 @@ static inline status_code hashmap_resize(map *hashmap, uint64_t limit) {
         return INVALID_OP;
     }
 
-    list_element **elements = calloc(limit, sizeof (void *));
-    if (NULL == elements) {
-        return EBUFFEROVERFLOW;
+    list *buffer = hashmap->adt;
+    list *_buffer = NULL;
+    status_code __code = init_adt_list(&_buffer, limit);
+    if (PASS != __code) {
+        return __code;
     }
 
-    list *buffer = hashmap->adt;
+    _buffer->function_table->on_collision = &hashmap_on_collision;
+
     uint64_t hashcode;
     hash_component hasher = {
           .hash = &hashcode,
           .user_key = ((uint64_t) INT16_MAX << 8) + 1
     };
-    status_code __code;
 
     for (uint64_t i = 0; i < buffer->limit; i++) {
         if (NULL == buffer->elements[i]) {
             continue;
         }
-        hasher.key = buffer->elements[i]->metadata;
-        __code = hashkey_compress64(hasher, limit);
-        if (PASS != __code) {
+        if (ELEMENT_LIST == buffer->elements[i]->type) {
+            list *__buffer = buffer->elements[i]->data;
+            if (NULL == __buffer->elements) {
+                continue;
+            }
+            for (uint64_t j = 0; j < __buffer->limit; j++) {
+                if (NULL == __buffer->elements[j]) {
+                    continue;
+                }
+                hasher.key = *((typed_pointer *) __buffer->elements[j]->metadata);
+                __code = crypto_hashkey_compress64(hasher, limit);
+                if (PASS != __code) {
+                    break;
+                }
+                __code = _buffer->function_table->insert(_buffer, __buffer->elements[j], *hasher.hash);
+                if (PASS != __code) {
+                    break;
+                }
+            }
             continue;
         }
+        if (ELEMENT_MAP_ITEM == buffer->elements[i]->type) {
+            hasher.key = *((typed_pointer *) buffer->elements[i]->metadata);
+            __code = crypto_hashkey_compress64(hasher, limit);
+            if (PASS != __code) {
+                break;
+            }
 
-        // deep/physical copy of the data from the
-        // old memory to the newly allocated buffer
-        elements[*hasher.hash] = buffer->elements[i];
+            // deep/physical copy of the data from the
+            // old memory to the newly allocated buffer
+            __code = _buffer->function_table->insert(_buffer, buffer->elements[i], *hasher.hash);
+            if (PASS != __code) {
+                break;
+            }
+        }
     }
 
     // post-processing automata -- re-invalidate the internal buffer
-    free(buffer->elements);
-    buffer->elements = elements;
-    buffer->limit = limit;
+    __code = hashmap_deinit(hashmap, NULL);
+    if (PASS != __code) {
+        return __code;
+    }
+    hashmap->adt = _buffer;
 
     if (NULL != hashmap->processors &&
-        NULL != hashmap->processors->on_resize_dispatch) {
-        hashmap->processors->on_resize_dispatch(hashmap, buffer->elements);
+        NULL != hashmap->processors->on_rehash_dispatch) {
+        hashmap->processors->on_rehash_dispatch(hashmap, buffer->elements);
     }
 
     return PASS;
 }
 
-static inline status_code hashmap_insert(map *hashmap, map_element *element) {
+static inline status_code hashmap_insert(map *hashmap,
+                                         map_element *element) {
     // preprocessing automata -- Input Validation
-    if (NULL == hashmap || NULL == hashmap->adt || NULL == element ||
-            NULL == element->key || 0 == hashmap->adt->limit) {
+    if (NULL == hashmap || NULL == hashmap->adt || NULL == element
+                || 0 == hashmap->adt->limit) {
         return EUNDEFINEDBUFFER;
     }
 
@@ -225,11 +299,11 @@ static inline status_code hashmap_insert(map *hashmap, map_element *element) {
     // processing automata -- Hashing the key
     uint64_t hash_code = 0;
     hash_component hasher = {
-         .key = (char *) element->key,
+         .key = element->key,
          .user_key = ((uint64_t) INT16_MAX << 8) + 1,
          .hash = &hash_code
     };
-    status_code __code = hashkey_compress64(hasher, hashmap->adt->limit);
+    status_code __code = crypto_hashkey_compress64(hasher, hashmap->adt->limit);
     if (PASS != __code) {
         return __code;
     }
@@ -240,7 +314,7 @@ static inline status_code hashmap_insert(map *hashmap, map_element *element) {
 
     element->value->size = sizeof(map_element);
     element->value->type = ELEMENT_MAP_ITEM;
-    element->value->metadata = element->key;
+    element->value->metadata = &(element->key);
     __code = hashmap->adt->function_table->insert(hashmap->adt,
                                         element->value, hash_code);
 
@@ -255,9 +329,9 @@ static inline status_code hashmap_insert(map *hashmap, map_element *element) {
     if (PASS != __code) {
         return __code;
     }
-    if (lambda_factor >= 1.0f) {
+    if (lambda_factor >= 0.75f) {
         // appy resize and rehashing algorithm
-        __code = hashmap_resize(hashmap, hashmap->adt->limit << 4);
+        __code = hashmap_rehash(hashmap, hashmap->adt->limit << 4);
         if (PASS != __code) {
             return __code;
         }
@@ -278,10 +352,10 @@ static inline status_code hashmap_insert_all(map *hashmap,
 }
 
 static inline status_code hashmap_get(map *hashmap,
-                                      const char *key,
+                                      typed_pointer key,
                                       map_element *out) {
     // preprocessing automata -- Input Validation
-    if (NULL == hashmap || NULL == hashmap->adt || NULL == key ||
+    if (NULL == hashmap || NULL == hashmap->adt ||
             0 == hashmap->adt->limit || NULL == out) {
         return EUNDEFINEDBUFFER;
     }
@@ -289,11 +363,11 @@ static inline status_code hashmap_get(map *hashmap,
     // processing automata -- Hashing the key
     uint64_t hash_code = 0;
     hash_component hasher = {
-            .key = (char *) key,
+            .key = key,
             .user_key = ((uint64_t) INT16_MAX << 8) + 1,
             .hash = &hash_code
     };
-    status_code __code = hashkey_compress64(hasher, hashmap->adt->limit);
+    status_code __code = crypto_hashkey_compress64(hasher, hashmap->adt->limit);
     if (PASS != __code) {
         return __code;
     }
@@ -310,7 +384,7 @@ static inline status_code hashmap_get(map *hashmap,
             .value = NULL,
             .index = 0
         };
-        __code = get_element_by_key(buffer, key, &(__key_element));
+        __code = get_element_by_typed_key(buffer, key, &(__key_element));
         if (PASS != __code) {
             return __code;
         }
@@ -318,16 +392,16 @@ static inline status_code hashmap_get(map *hashmap,
         return PASS;
     }
 
-    out->key = (char *) key;
+    out->key = key;
     out->value = element;
 
     return PASS;
 }
 
-static inline status_code hashmap_contains(map *hashmap, const char *key) {
+static inline status_code hashmap_contains(map *hashmap, typed_pointer key) {
     map_element out = {
          .value = NULL,
-         .key = (char *) key
+         .key = key
     };
 
     status_code __code = hashmap_get(hashmap, key, &out);
@@ -341,7 +415,7 @@ static inline status_code hashmap_contains(map *hashmap, const char *key) {
 static inline status_code __hashmap_remove(map *hashmap, hash_component hasher) {
     // preprocessing automata -- Input Validation
     if (NULL == hashmap || NULL == hashmap->adt ||
-            NULL == hasher.hash || NULL == hasher.key ||
+            NULL == hasher.hash ||
                 0 == hashmap->adt->limit) {
         return EUNDEFINEDBUFFER;
     }
@@ -362,8 +436,8 @@ static inline status_code __hashmap_remove(map *hashmap, hash_component hasher) 
                 .value = NULL,
                 .index = 0
         };
-        __code = get_element_by_key(buffer,
-                                    (const char *) hasher.key,
+        __code = get_element_by_typed_key(buffer,
+                                    hasher.key,
                                     &__key_element);
         if (PASS != __code) {
             return __code;
@@ -392,20 +466,20 @@ static inline status_code __hashmap_remove(map *hashmap, hash_component hasher) 
     return PASS;
 }
 
-static inline status_code hashmap_remove(map *hashmap, const char *key) {
+static inline status_code hashmap_remove(map *hashmap, typed_pointer key) {
     // preprocessing automata -- Input Validation
-    if (NULL == hashmap || NULL == hashmap->adt || NULL == key ||
+    if (NULL == hashmap || NULL == hashmap->adt ||
          0 == hashmap->adt->limit) {
         return EUNDEFINEDBUFFER;
     }
     // processing automata -- Hashing the key
     uint64_t hash_code = 0;
     hash_component hasher = {
-            .key = (char *) key,
+            .key = key,
             .user_key = ((uint64_t) INT16_MAX << 8) + 1,
             .hash = &hash_code
     };
-    status_code __code = hashkey_compress64(hasher, hashmap->adt->limit);
+    status_code __code = crypto_hashkey_compress64(hasher, hashmap->adt->limit);
     if (PASS != __code) {
         return __code;
     }
@@ -414,10 +488,10 @@ static inline status_code hashmap_remove(map *hashmap, const char *key) {
 }
 
 static inline status_code hashmap_remove_all(map *hashmap,
-                                             const char **keys) {
+                                             typed_pointer **keys) {
     // preprocessing automata -- Input Validation
-    if (NULL == hashmap || NULL == hashmap->adt || NULL == keys ||
-        0 == hashmap->adt->limit || NULL == keys[0]) {
+    if (NULL == hashmap || NULL == hashmap->adt ||
+           0 == hashmap->adt->limit || NULL == keys || NULL == keys[0]) {
         return EUNDEFINEDBUFFER;
     }
 
@@ -430,8 +504,8 @@ static inline status_code hashmap_remove_all(map *hashmap,
     status_code __code;
 
     for (uint64_t i = 0; NULL != keys[i]; i++) {
-        __hasher.key = (char *) keys[i];
-        __code = hashkey_compress64(__hasher, hashmap->adt->limit);
+        __hasher.key = *(keys[i]);
+        __code = crypto_hashkey_compress64(__hasher, hashmap->adt->limit);
         if (PASS != __code) {
             return __code;
         }
@@ -452,7 +526,7 @@ static inline status_code hashmap_remove_all(map *hashmap,
 }
 
 status_code hashmap_contains_all(map *hashmap,
-                                 const char **keys) {
+                                 typed_pointer **keys) {
     // preprocessing automata -- Input Validation
     if (NULL == hashmap || NULL == hashmap->adt || NULL == keys ||
         0 == hashmap->adt->limit || NULL == keys[0]) {
@@ -462,7 +536,7 @@ status_code hashmap_contains_all(map *hashmap,
     status_code __code;
 
     for (uint64_t i = 0; NULL != keys[i]; i++) {
-        __code = hashmap_contains(hashmap, (const char *) keys[i]);
+        __code = hashmap_contains(hashmap, *(keys[i]));
         if (PASS != __code) {
             return __code;
         }
@@ -500,7 +574,7 @@ status_code hashmap_iterator(map *hashmap,
                     continue;
                 }
                 element.value = __buffer->elements[j];
-                element.key = __buffer->elements[j]->metadata;
+                element.key = *((typed_pointer *) __buffer->elements[j]->metadata);
                 __code = callback(hashmap, &element);
                 if (PASS != __code) {
                     return __code;
@@ -509,7 +583,7 @@ status_code hashmap_iterator(map *hashmap,
             continue;
         }
         element.value = buffer->elements[i];
-        element.key = buffer->elements[i]->metadata;
+        element.key = *((typed_pointer *) buffer->elements[i]->metadata);
         __code = callback(hashmap, &element);
         if (PASS != __code) {
             return __code;
@@ -552,7 +626,7 @@ status_code hashmap_init(map *hashmap, map_function_table *table,
 
     table->insert = &hashmap_insert;
     table->insert_all = &hashmap_insert_all;
-    table->resize = &hashmap_resize;
+    table->rehash = &hashmap_rehash;
     table->iterator = &hashmap_iterator;
     table->contains = &hashmap_contains;
     table->contains_all = &hashmap_contains_all;

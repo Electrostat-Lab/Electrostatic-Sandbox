@@ -1,13 +1,25 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <electronetsoft/util/utilities.h>
+#include <electronetsoft/util/number/crypto.h>
 
 int main() {
-    const char *key = "test_message_11";
     uint64_t hash = 0;
-    hash_key(key, &hash, (1024 << 8) + 1);
+    hash_component component = {
+         .key = (typed_pointer) {
+             .address.str = "message_test_11",
+             .type = TYPE_STR,
+         },
+         .user_key = (1024 << 8) + 1,
+         .hash = &hash
+    };
+    status_code __code = crypto_hash_key(component);
+    if (PASS != __code) {
+        fprintf(stderr,
+                "Failed to hash the key; exit with error = %d\n", __code);
+        return __code;
+    }
 
     fprintf(stdout, "%lu\n", hash);
-    fprintf(stdout, "%lu\n", hash_compress(hash, 201));
+    fprintf(stdout, "%lu\n", crypto_hash_compress(hash, 201));
     return 0;
 }
