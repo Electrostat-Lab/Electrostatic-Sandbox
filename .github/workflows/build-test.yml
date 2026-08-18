@@ -115,6 +115,9 @@ jobs:
         - name: Testing Arithmos Calculus (Matrix Algebra Operations -- mat_iterate_elements)
           run: ./helper-scripts/ci-cd/test-electrostatic.sh "calculus/test_matrix_iteration.c" "test_mat_traversal"
 
+        - name: Testing LCG Number Randomizer
+          run: ./helper-scripts/ci-cd/test-electrostatic.sh "hello_lcg_random.c" "hello_lcg_random"
+
         - name: Compiling electrostatic4j Java Binding API
           run: ./helper-scripts/ci-cd/compile-e4j.sh
           

@@ -122,6 +122,23 @@ static inline uint64_t crypto_hash_compress(uint64_t hash,
                                      uint64_t limit) {
     // the equivalent of modulus operation
     // finds the remainder of an integer division operation
+
+    // if the number (hash) is less than (limit)
+    // the result (hash/limit) integer division
+    // is less than 1; then the result of compression will reveal
+    // the (hash) code unchanged.
+
+    // if the number (hash) is larger than (limit)
+    // the result (hash/limit) integer division
+    // is larger than 1; then the result of compression will reveal
+    // the remainder which is the number of times
+    // by which the number (hash) trips over the (limit)
+
+    // if the number (hash) is equal to the (limit)
+    // the result (hash/limit) integer division
+    // is equal to 1; then the result of compression will reveal
+    // ZERO; as the remainder which is the number of times
+    // by which the number (hash) trips over the (limit)
     return hash - (((uint64_t) (hash/limit)) * limit);
 }
 
