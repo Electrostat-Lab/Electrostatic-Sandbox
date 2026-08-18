@@ -138,10 +138,17 @@ typedef struct automaton_input (automaton_input);
 typedef struct automaton_zeta (automaton_zeta);
 typedef struct automaton_component (automaton_component);
 
+typedef struct linear_congruent_seq (linear_congruent_seq);
+
 typedef enum {
     ELEMENT_LIST = MAP_TYPE_TREEMAP - 1,
     ELEMENT_MAP_ITEM = ELEMENT_LIST - 1,
 } element_type;
+
+typedef struct eca (eca);
+typedef struct eca_function_table (eca_function_table);
+typedef struct eca_system (eca_system);
+typedef struct eca_component (eca_component);
 
 #ifdef __cplusplus
 };
