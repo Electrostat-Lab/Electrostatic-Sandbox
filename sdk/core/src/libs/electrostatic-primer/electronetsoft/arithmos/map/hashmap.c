@@ -40,7 +40,7 @@ static inline status_code init_adt_list(list **buffer, uint64_t limit) {
 static inline status_code get_element_by_str_key(list *buffer,
                                     const char *__key0,
                                     key_element *__out) {
-    char *__key1 = NULL;
+    typed_pointer *__key1 = NULL;
     status_code __code;
 
     for (uint64_t i = 0; i < buffer->limit; i += 1) {
@@ -50,10 +50,11 @@ static inline status_code get_element_by_str_key(list *buffer,
         }
         // HERE
         __key1 = buffer->elements[i]->metadata;
-        if (strcmp(__key0, __key1) != 0) {
+        if (strcmp(__key0, __key1->address.str) != 0) {
             __code = ENOELEMENT;
             continue;
         }
+
         __code = PASS;
 
         if (NULL != __out) {
@@ -67,7 +68,7 @@ static inline status_code get_element_by_str_key(list *buffer,
 
 static inline status_code get_element_by_long_key(list *buffer, uint64_t *key,
                                                   key_element *__out) {
-    uint64_t *__key1 = NULL;
+    typed_pointer *__key1 = NULL;
     status_code __code;
 
     for (uint64_t i = 0; i < buffer->limit; i += 1) {
@@ -77,7 +78,7 @@ static inline status_code get_element_by_long_key(list *buffer, uint64_t *key,
         }
         // HERE
         __key1 = buffer->elements[i]->metadata;
-        if (*__key1 != *key) {
+        if (*__key1->address.id != *key) {
             __code = ENOELEMENT;
             continue;
         }
@@ -159,11 +160,13 @@ static inline status_code hashmap_on_collision(list *buffer,
         // test if the list has the element with the exact key
         // add to the secondary buffer only if it is not present
         // if the element is not present in the buffer; add it
-        if (ENOELEMENT == get_element_by_typed_key(__internal_buffer,
-                                                   *((typed_pointer *) element->metadata), NULL)) {
+        if (ALLOW_DUPLICATES == buffer->col_scheme ||
+                     ENOELEMENT == get_element_by_typed_key(__internal_buffer,
+                           *((typed_pointer *) element->metadata), NULL)) {
             return __internal_buffer->function_table->
                             add(__internal_buffer, element);
         }
+        return __internal_buffer->function_table->insert_overwrite(__internal_buffer, element, index);
     }
 
     if (ELEMENT_MAP_ITEM != buffer->elements[index]->type) {
@@ -178,17 +181,35 @@ static inline status_code hashmap_on_collision(list *buffer,
         return __code;
     }
 
-    // test if they are identical items
-    // replace the map element with the new
-    // map_element carried on the element
-    // de-allocate the carrier structure
-    const char *__key0 = item->metadata;
-    const char *__key1 = element->metadata;
-    if (strcmp(__key0, __key1) == 0) {
-        item->data = element->data;
-        item->type = element->type;
-        item->size = element->size;
-        return EBUFFER_EXISTS;
+    // Note that; after using the NO_DUPLICATES scheme
+    // items are no longer writable via insert(...)
+    // it now requires to iterate through the buffer
+    // of duplicates and update them element by element
+    if (NO_DUPLICATES == buffer->col_scheme) {
+        // test if they are identical items
+        // replace the map element with the new
+        // map_element carried on the element
+        // de-allocate the carrier structure
+        typed_pointer *__key0 = item->metadata;
+        typed_pointer *__key1 = element->metadata;
+
+        if (__key0->type == __key1->type && __key0->type == TYPE_STR) {
+            if (strcmp(__key0->address.str, __key1->address.str) == 0) {
+                item->data = element->data;
+                item->type = element->type;
+                item->size = element->size;
+                return EBUFFER_EXISTS;
+            }
+        } else if (__key0->type == __key1->type && __key0->type == TYPE_ID) {
+            if (*__key0->address.id == *__key1->address.id) {
+                item->data = element->data;
+                item->type = element->type;
+                item->size = element->size;
+                return EBUFFER_EXISTS;
+            }
+        } else {
+            return EINCOMPATTYPE;
+        }
     }
 
     __code = collision_init_separate_chain(buffer, item,
@@ -215,11 +236,13 @@ static inline status_code hashmap_rehash(map *hashmap, uint64_t limit) {
 
     list *buffer = hashmap->adt;
     list *_buffer = NULL;
+
     status_code __code = init_adt_list(&_buffer, limit);
     if (PASS != __code) {
         return __code;
     }
 
+    _buffer->col_scheme = buffer->col_scheme;
     _buffer->function_table->on_collision = &hashmap_on_collision;
 
     uint64_t hashcode;
@@ -232,6 +255,7 @@ static inline status_code hashmap_rehash(map *hashmap, uint64_t limit) {
         if (NULL == buffer->elements[i]) {
             continue;
         }
+
         if (ELEMENT_LIST == buffer->elements[i]->type) {
             list *__buffer = buffer->elements[i]->data;
             if (NULL == __buffer->elements) {
@@ -246,6 +270,7 @@ static inline status_code hashmap_rehash(map *hashmap, uint64_t limit) {
                 if (PASS != __code) {
                     break;
                 }
+
                 __code = _buffer->function_table->insert(_buffer, __buffer->elements[j], *hasher.hash);
                 if (PASS != __code) {
                     break;
@@ -253,6 +278,7 @@ static inline status_code hashmap_rehash(map *hashmap, uint64_t limit) {
             }
             continue;
         }
+
         if (ELEMENT_MAP_ITEM == buffer->elements[i]->type) {
             hasher.key = *((typed_pointer *) buffer->elements[i]->metadata);
             __code = crypto_hashkey_compress64(hasher, limit);
@@ -262,6 +288,7 @@ static inline status_code hashmap_rehash(map *hashmap, uint64_t limit) {
 
             // deep/physical copy of the data from the
             // old memory to the newly allocated buffer
+
             __code = _buffer->function_table->insert(_buffer, buffer->elements[i], *hasher.hash);
             if (PASS != __code) {
                 break;
@@ -351,6 +378,39 @@ static inline status_code hashmap_insert_all(map *hashmap,
     return PASS;
 }
 
+static inline status_code hashmap_get_raw(map *hashmap,
+                                          typed_pointer key,
+                                          map_element *out) {
+    // preprocessing automata -- Input Validation
+    if (NULL == hashmap || NULL == hashmap->adt ||
+        0 == hashmap->adt->limit || NULL == out) {
+        return EUNDEFINEDBUFFER;
+    }
+
+    // processing automata -- Hashing the key
+    uint64_t hash_code = 0;
+    hash_component hasher = {
+            .key = key,
+            .user_key = ((uint64_t) INT16_MAX << 8) + 1,
+            .hash = &hash_code
+    };
+    status_code __code = crypto_hashkey_compress64(hasher, hashmap->adt->limit);
+    if (PASS != __code) {
+        return __code;
+    }
+
+    list_element *element = NULL;
+    __code = hashmap->adt->function_table->get(hashmap->adt, hash_code, &element);
+    if (PASS != __code) {
+        return __code;
+    }
+
+    out->key = key;
+    out->value = element;
+
+    return PASS;
+}
+
 static inline status_code hashmap_get(map *hashmap,
                                       typed_pointer key,
                                       map_element *out) {
@@ -385,6 +445,7 @@ static inline status_code hashmap_get(map *hashmap,
             .index = 0
         };
         __code = get_element_by_typed_key(buffer, key, &(__key_element));
+
         if (PASS != __code) {
             return __code;
         }
@@ -410,7 +471,6 @@ static inline status_code hashmap_contains(map *hashmap, typed_pointer key) {
     }
     return PASS;
 }
-
 
 static inline status_code __hashmap_remove(map *hashmap, hash_component hasher) {
     // preprocessing automata -- Input Validation
@@ -605,15 +665,15 @@ status_code map_get_lambda_factor(map *hashmap, float *lambda) {
     return PASS;
 }
 
-status_code hashmap_init(map *hashmap, map_function_table *table,
-                         api_lifecycle *lifecycle) {
-    if (NULL == hashmap) {
+status_code hashmap_init_limit(map *hashmap, uint64_t limit, map_function_table *table,
+                               api_lifecycle *lifecycle) {
+    if (NULL == hashmap || NULL == table) {
         return EUNDEFINEDBUFFER;
     }
 
     // preprocessing automata -- ADT allocation and initialization
     list *buffer = NULL;
-    status_code __code = init_adt_list(&buffer, (16 << 2) + 1);
+    status_code __code = init_adt_list(&buffer, limit);
 
     if (PASS != __code) {
         return __code;
@@ -621,6 +681,7 @@ status_code hashmap_init(map *hashmap, map_function_table *table,
 
     // processing automata -- HASHMap allocation and initialization
     hashmap->adt = buffer;
+    buffer->col_scheme = hashmap->col_scheme;
     hashmap->type = MAP_TYPE_HASHMAP;
     hashmap->function_table = table;
 
@@ -631,15 +692,21 @@ status_code hashmap_init(map *hashmap, map_function_table *table,
     table->contains = &hashmap_contains;
     table->contains_all = &hashmap_contains_all;
     table->get = &hashmap_get;
+    table->get_raw = &hashmap_get_raw;
     table->remove = &hashmap_remove;
     table->remove_all = &hashmap_remove_all;
 
     if (NULL != hashmap->processors &&
-            NULL != hashmap->processors->on_initialization) {
+        NULL != hashmap->processors->on_initialization) {
         hashmap->processors->on_initialization(hashmap);
     }
 
     return PASS;
+}
+
+status_code hashmap_init(map *hashmap, map_function_table *table,
+                         api_lifecycle *lifecycle) {
+    return hashmap_init_limit(hashmap, (1024 << 2) + 1, table, lifecycle);
 }
 
 status_code hashmap_deinit(map *hashmap,
@@ -656,21 +723,31 @@ status_code hashmap_deinit(map *hashmap,
         hashmap->processors->on_deinitialization(hashmap);
     }
 
+    // fetch mainstream buffer
     list *buffer = (list *) (hashmap->adt);
-
     for (uint64_t i = 0; i < hashmap->adt->limit; i++) {
-        if (NULL != buffer->elements[i] && ELEMENT_LIST == buffer->elements[i]->type) {
-            list *buffer2 = buffer->elements[i]->data;
-            free(buffer2->function_table);
-            free(buffer2->elements);
-            free(buffer2);
-            free(buffer->elements[i]);
+        if (NULL == buffer->elements[i]) {
+            continue;
         }
+        if (ELEMENT_LIST == buffer->elements[i]->type) {
+            list *__buffer = buffer->elements[i]->data;
+            free(__buffer->elements);
+            __buffer->elements = NULL;
+            free(__buffer->function_table);    
+            __buffer->function_table = NULL;
+            free(__buffer);
+            __buffer = NULL;
+            free(buffer->elements[i]);
+            buffer->elements[i] = NULL;
+        } 
     }
 
     free(buffer->function_table);
+    buffer->function_table = NULL;
     free(buffer->elements);
+    buffer->elements = NULL;
     free(buffer);
+    buffer = NULL;
 
     if (NULL != lifecycle && NULL != lifecycle->on_operation_succeeded) {
         lifecycle->on_operation_succeeded(&hashmap_deinit, hashmap);
