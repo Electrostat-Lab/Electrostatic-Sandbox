@@ -40,10 +40,11 @@ int main(void) {
         buffer_slots[i].size = sizeof(myData[i]);
         buffer_slots[i].type = ELEMENT_LIST;
 
-        if (buffer.function_table->add(&buffer, &buffer_slots[i]) != PASS) {
-            fprintf(stderr, "Could not add an item\n");
+        if (buffer.function_table->add(&buffer, &buffer_slots[i]) != PASS) 
+        {
+            printf("Could not add an item\n");
             free(buffer.elements);
-            return EXIT_FAILURE;
+            return -1;
         }
     }
 
@@ -51,28 +52,32 @@ int main(void) {
     buffer_slots[10].data = &myData[10];
     buffer_slots[10].size = sizeof(myData[10]);
     buffer_slots[10].type = ELEMENT_LIST;
-    if (buffer.function_table->add(&buffer, &buffer_slots[10]) != PASS) {
-        fprintf(stderr, "Could not add 99\n");
+    if (buffer.function_table->add(&buffer, &buffer_slots[10]) != PASS) 
+    {
+        printf("Could not add 99\n");
         free(buffer.elements);
-        return EXIT_FAILURE;
+        return -1;
     }
 
     // Shift items right to insert 99 in the middle.
-    for (size_t i = buffer.position - 1; i > 5; --i) {
+    for (size_t i = buffer.position - 1; i > 5; i--) 
+    {
         buffer.elements[i] = buffer.elements[i - 1];
     }
     buffer.elements[5] = &buffer_slots[10];
 
     // Delete the second item (index 1).
-    if (buffer.function_table->remove_by_index(&buffer, 1) != PASS) {
-        fprintf(stderr, "Could not remove the second item\n");
+    if (buffer.function_table->remove_by_index(&buffer, 1) != PASS) 
+    {
+        printf("Could not remove the second item\n");
         free(buffer.elements);
-        return EXIT_FAILURE;
+        return -1;
     }
 
     // Print the final buffer.
-    for (size_t i = 0; i < buffer.position; ++i) {
-        printf("%d ", *(int *) buffer.elements[i]->data);
+    for (size_t i = 0; i < buffer.position; i++) 
+    {
+        printf("%d ", *(int *) buffer.elements[i]->data); // Cast pointer to dereference it
     }
     printf("\n");
 
