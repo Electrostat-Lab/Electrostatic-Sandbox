@@ -50,7 +50,7 @@ extern "C" {
 
 struct list_element {
   void *data;
-  void *metadata;
+  typed_pointer metadata;
   size_t size;
   element_type type;
 };
@@ -59,7 +59,7 @@ struct list_info {
   uint64_t index;
   uint64_t length;
   uint64_t rate;
-  void *metadata;
+  typed_pointer metadata;
 };
 
 struct list {
