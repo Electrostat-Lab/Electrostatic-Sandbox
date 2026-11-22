@@ -16,7 +16,7 @@ dependencies="$(pwd)/${examples_dir}/dependencies/libs/${SYSTEM_DIR}/${BUILD_DIR
 
 compile "${EXECUTABLE}" "${AVR_GCC_BIN}" "${AVR_GPP_BIN}" \
         "OFF" "OFF" "ON" "${INPUT_COMPILER_OPTIONS}" \
-        "${TARGET_MACHINE}" "${AVR_TOOLCHAIN_INCLUDES};${electrostatic_core_headers}" \
+        "${TARGET_MACHINE}" "${AVR_TOOLCHAIN_INCLUDES};${electrostatic_core_headers};${electrostatic_internal_headers}" \
         "${examples_dir}" "${sources}" "${dependencies};m"  \
          "${SYSTEM_DIR}/${BUILD_DIR}" "."
 
