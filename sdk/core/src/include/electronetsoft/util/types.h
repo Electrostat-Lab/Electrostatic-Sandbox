@@ -88,6 +88,10 @@ typedef struct update_op_processor (update_op_processor);
 
 typedef struct serializer_op_processor (serializer_op_processor);
 typedef struct file_mem (file_mem);
+typedef struct file_page (file_page);
+typedef struct file_pager (file_pager);
+typedef struct file_paging_processor (file_paging_processor);
+
 typedef struct pipe_serializer (pipe_serializer);
 
 // Types for Vector Maths Libraries
@@ -96,9 +100,16 @@ typedef struct vec2d_space (vec2d_space);
 typedef struct vec2d_polar (vec2d_polar);
 typedef struct vec2d_processors (vec2d_processors);
 
-typedef struct physics2d_engine (physics2d_engine);
-typedef struct physics2d_object (physics2d_object);
-typedef struct physics2d_processor (physics2d_processor);
+typedef struct physics_engine (physics_engine);
+typedef struct physics_vector (physics_vector);
+typedef struct physics_object (physics_object);
+typedef struct physics_particle (physics_particle);
+typedef struct physics_group (physics_group);
+typedef struct physics_processor (physics_processor);
+typedef enum {
+    LOCAL_PHYSICS_OPERATION = -(INVALID_OP + 1),
+    GLOBAL_PHYSICS_OPERATION = (LOCAL_PHYSICS_OPERATION + 1)
+} physics_op_type;
 
 typedef struct object2d_transformation (object2d_transformation);
 
@@ -145,10 +156,34 @@ typedef enum {
     ELEMENT_MAP_ITEM = ELEMENT_LIST - 1,
 } element_type;
 
+typedef struct text (text);
+typedef struct text_op (text_op);
+typedef struct text_substring (text_substring);
+
 typedef struct eca (eca);
 typedef struct eca_function_table (eca_function_table);
 typedef struct eca_system (eca_system);
 typedef struct eca_component (eca_component);
+
+typedef struct permutation (permutation);
+typedef struct combination (combination);
+
+typedef struct file_driver (file_driver);
+typedef struct driver_lexical_grammar (driver_lexical_grammar);
+typedef struct driver_lexical_component (driver_lexical_component);
+typedef struct file_processing_metadata (file_processing_metadata);
+typedef struct file_driver_processor (file_driver_processor);
+typedef struct file_driver_op (file_driver_op);
+
+typedef struct txt_driver (txt_driver);
+typedef struct json_driver (json_driver);
+typedef struct sqlite_driver (sqlite_driver);
+typedef struct sql_driver (sql_driver);
+
+typedef enum {
+    ALLOW_DUPLICATES = (ELEMENT_MAP_ITEM - 1),
+    NO_DUPLICATES = (ALLOW_DUPLICATES - 1)
+} collision_scheme;
 
 #ifdef __cplusplus
 };
