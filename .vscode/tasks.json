@@ -1,0 +1,147 @@
+
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Setup Electrostatic-Sandbox Workstation",
+            "type": "shell",
+            "command": "chmod +rwx ./helper-scripts/setup-environment/setup-sandbox.sh && ./helper-scripts/setup-environment/setup-sandbox.sh",
+            "problemMatcher": []
+        },
+        {
+            "label": "User's Permissions Granting",
+            "type": "shell",
+            "command": "chmod +rwx ./helper-scripts/project-impl/post-compile/post-compile-electrostatic.sh && chmod +rwx ./helper-scripts/project-impl/*.sh && chmod +rwx ./helper-scripts/ci-cd/*.sh",
+            "problemMatcher": []
+        },
+        {
+            "label": "Compile electrostatic-core Native Binaries",
+            "type": "shell",
+            "command": "./helper-scripts/ci-cd/compile-electrostatic.sh",
+            "args": ["-primer"],
+            "problemMatcher": []
+        },
+        {
+            "label": "Test electrostatic-core Native Binaries",
+            "type": "shell",
+            "command": "./helper-scripts/ci-cd/test-electrostatic.sh",
+            "args": ["hello_comm.c", "hello-comm"],
+            "problemMatcher": []
+        },
+        {
+            "label": "Test hello_lists",
+            "type": "shell",
+            "command": "./helper-scripts/ci-cd/test-electrostatic.sh",
+            "args": ["hello_lists.c", "hello-listadt"],
+            "problemMatcher": []
+        },
+        {
+            "label": "Test hello_hashmaps",
+            "type": "shell",
+            "command": "./helper-scripts/ci-cd/test-electrostatic.sh",
+            "args": ["hello_hashmaps.c", "hello-hashmaps"],
+            "problemMatcher": []
+        },
+        {
+            "label": "Test hello_unittest",
+            "type": "shell",
+            "command": "./helper-scripts/ci-cd/test-electrostatic.sh",
+            "args": ["hello_unittest.c", "hello-unittest"],
+            "problemMatcher": []
+        },
+        {
+            "label": "Test hello_switching_mux",
+            "type": "shell",
+            "command": "./helper-scripts/ci-cd/test-electrostatic.sh",
+            "args": ["hello_switching_mux.c", "hello-switching-mux"],
+            "problemMatcher": []
+        },
+        {
+            "label": "Test Arithmos 2D Vector Rotation",
+            "type": "shell",
+            "command": "./helper-scripts/ci-cd/test-electrostatic.sh",
+            "args": ["calculus/test_vec2d_rotation.c", "test_2d_rotation"],
+            "problemMatcher": []
+        },
+        {
+            "label": "Test Arithmos 3D Gimbal Rotation Sequence",
+            "type": "shell",
+            "command": "./helper-scripts/ci-cd/test-electrostatic.sh",
+            "args": ["calculus/test_vec3d_rotation.c", "test_3d_rotation"],
+            "problemMatcher": []
+        },
+        {
+            "label": "Test Arithmos 3D X Gimbal Rotation",
+            "type": "shell",
+            "command": "sudo ./helper-scripts/ci-cd/test-electrostatic.sh calculus/test_3d_x_gimbal_rotation.c test_3d_x_gimbal_rotation",
+            "problemMatcher": []
+        },
+        {
+            "label": "Test Arithmos 3D Y Gimbal Rotation",
+            "type": "shell",
+            "command": "./helper-scripts/ci-cd/test-electrostatic.sh",
+            "args": ["calculus/test_3d_y_gimbal_rotation.c", "test_3d_y_gimbal_rotation"],
+            "problemMatcher": []
+        },
+        {
+            "label": "Test Arithmos 3D Z Gimbal Rotation",
+            "type": "shell",
+            "command": "./helper-scripts/ci-cd/test-electrostatic.sh",
+            "args": ["calculus/test_3d_z_gimbal_rotation.c", "test_3d_z_gimbal_rotation"],
+            "problemMatcher": []
+        },
+        {
+            "label": "Test Arithmos Matrix Rotation API",
+            "type": "shell",
+            "command": "./helper-scripts/ci-cd/test-electrostatic.sh",
+            "args": ["calculus/test_3d_mat_gimbal_rotation.c", "test_3d_mat_gimbal_rotation"],
+            "problemMatcher": []
+        },
+        {
+            "label": "Test Arithmos Matrix Product",
+            "type": "shell",
+            "command": "./helper-scripts/ci-cd/test-electrostatic.sh",
+            "args": ["calculus/test_mat_product.c", "test_mat_product"],
+            "problemMatcher": []
+        },
+        {
+            "label": "Test Arithmos Matrix Addition",
+            "type": "shell",
+            "command": "./helper-scripts/ci-cd/test-electrostatic.sh",
+            "args": ["calculus/test_matrix_addition.c", "test_mat_addition"],
+            "problemMatcher": []
+        },
+        {
+            "label": "Test Arithmos Matrix Iteration",
+            "type": "shell",
+            "command": "./helper-scripts/ci-cd/test-electrostatic.sh",
+            "args": ["calculus/test_matrix_iteration.c", "test_mat_traversal"],
+            "problemMatcher": []
+        },
+        {
+            "label": "Test LCG Number Randomizer",
+            "type": "shell",
+            "command": "./helper-scripts/ci-cd/test-electrostatic.sh",
+            "args": ["hello_lcg_random.c", "hello_lcg_random"],
+            "problemMatcher": []
+        },
+        {
+            "label": "Compile electrostatic4j Java Binding API",
+            "type": "shell",
+            "command": "./helper-scripts/ci-cd/compile-e4j.sh",
+            "problemMatcher": []
+        },
+        {
+            "label": "Test electrostatic4j Java Binding API",
+            "type": "shell",
+            "command": "./helper-scripts/ci-cd/test-e4j.sh",
+            "problemMatcher": []
+        },
+        {
+            "label": "Build Serial4j Framework",
+            "type": "shell",
+            "command": "sudo ./helper-scripts/ci-cd/compile-serial4j.sh",
+            "problemMatcher": []
+        }
+    ]
+}

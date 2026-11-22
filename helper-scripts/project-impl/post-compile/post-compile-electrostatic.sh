@@ -50,3 +50,6 @@ cp -r "$(pwd)/sdk/${source_dir}/src/include/" \
 
 cp -r "$(pwd)/sdk/${source_dir}/src/include/" \
     "$(pwd)/sdk/${examples_dir}/dependencies/"
+
+# Update symbolic link file for the Clangd-LSP
+ln -sf ./sdk/core/cmake-build/linux/x86-64/compile_commands.json compile_commands.json
