@@ -141,6 +141,18 @@
             "command": "valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=all --verbose --num-callers=40 --error-exitcode=1 ./sdk/examples/cmake-build/linux/x86-64/test_3d_z_gimbal_rotation.elf"
         },
         {
+            "name": "Test OpenGL 3D Gimbal Rotation",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "./helper-scripts/ci-cd/test-electrostatic.sh calculus/test_opengl_gimbal.c test_opengl_gimbal"
+        },
+        {
+            "name": "Valgrind - OpenGL 3D Gimbal Rotation",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=all --verbose --num-callers=40 --error-exitcode=1 ./sdk/examples/cmake-build/linux/x86-64/test_opengl_gimbal.elf"
+        },
+        {
             "name": "Test Arithmos Matrix Rotation API",
             "type": "node-terminal",
             "request": "launch",
