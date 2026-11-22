@@ -491,7 +491,7 @@ status_code map_get_lambda_factor(map *hashmap, float *lambda) {
         return EUNDEFINEDBUFFER;
     }
 
-    *lambda = (float) (hashmap->count/hashmap->adt->limit);
+    *lambda = (float) hashmap->count / (float) hashmap->adt->limit;
 
     return PASS;
 }
