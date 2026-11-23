@@ -54,7 +54,7 @@
             "name": "Valgrind - hello_hashmaps",
             "type": "node-terminal",
             "request": "launch",
-            "command": "valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=all --verbose --num-callers=40 --error-exitcode=1 ./sdk/examples/cmake-build/linux/x86-64/hello_hashmaps.elf"
+            "command": "valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=all --verbose --num-callers=40 --error-exitcode=1 ./sdk/examples/cmake-build/linux/x86-64/hello-hashmaps.elf"
         },
         {
             "name": "Test hello_unittest",
@@ -67,6 +67,30 @@
             "type": "node-terminal",
             "request": "launch",
             "command": "valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=all --verbose --num-callers=40 --error-exitcode=1 ./sdk/examples/cmake-build/linux/x86-64/hello_unittest.elf"
+        },
+        {
+            "name": "Test File Read",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "./helper-scripts/ci-cd/test-electrostatic.sh linux/hello_file_read.c hello_file_read"
+        },
+        {
+            "name": "Valgrind - File Read",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=all --verbose --num-callers=40 --error-exitcode=1 ./sdk/examples/cmake-build/linux/x86-64/hello_file_read.elf"
+        },
+        {
+            "name": "Test File Paging",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "./helper-scripts/ci-cd/test-electrostatic.sh linux/hello_file_paging.c hello_file_paging"
+        },
+        {
+            "name": "Valgrind - File Paging",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=all --verbose --num-callers=40 --error-exitcode=1 ./sdk/examples/cmake-build/linux/x86-64/hello_file_paging.elf"
         },
         {
             "name": "Test hello_switching_mux",
