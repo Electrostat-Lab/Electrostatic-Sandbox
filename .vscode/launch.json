@@ -1,0 +1,258 @@
+
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Setup Electrostatic-Sandbox Workstation",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "chmod +rwx ./helper-scripts/setup-environment/setup-sandbox.sh && ./helper-scripts/setup-environment/setup-sandbox.sh"
+        },
+        {
+            "name": "User's Permissions Granting",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "chmod +rwx ./helper-scripts/project-impl/post-compile/post-compile-electrostatic.sh && chmod +rwx ./helper-scripts/project-impl/*.sh && chmod +rwx ./helper-scripts/ci-cd/*.sh"
+        },
+        {
+            "name": "Compile electrostatic-core Native Binaries",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "./helper-scripts/ci-cd/compile-electrostatic.sh -primer"
+        },
+        {
+            "name": "Test electrostatic-core Native Binaries",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "./helper-scripts/ci-cd/test-electrostatic.sh hello_comm.c hello-comm"
+        },
+        {
+            "name": "Valgrind - electrostatic-core Native Binaries",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=all --verbose --num-callers=40 --error-exitcode=1 ./sdk/examples/cmake-build/linux/x86-64/hello_comm.elf"
+        },
+        {
+            "name": "Test hello_lists",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "./helper-scripts/ci-cd/test-electrostatic.sh hello_lists.c hello-listadt"
+        },
+        {
+            "name": "Valgrind - hello_lists",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=all --verbose --num-callers=40 --error-exitcode=1 ./sdk/examples/cmake-build/linux/x86-64/hello_lists.elf"
+        },
+        {
+            "name": "Test hello_hashmaps",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "./helper-scripts/ci-cd/test-electrostatic.sh hello_hashmaps.c hello-hashmaps"
+        },
+        {
+            "name": "Valgrind - hello_hashmaps",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=all --verbose --num-callers=40 --error-exitcode=1 ./sdk/examples/cmake-build/linux/x86-64/hello-hashmaps.elf"
+        },
+        {
+            "name": "Test hello_unittest",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "./helper-scripts/ci-cd/test-electrostatic.sh hello_unittest.c hello-unittest"
+        },
+        {
+            "name": "Valgrind - hello_unittest",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=all --verbose --num-callers=40 --error-exitcode=1 ./sdk/examples/cmake-build/linux/x86-64/hello_unittest.elf"
+        },
+        {
+            "name": "Test File Read",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "./helper-scripts/ci-cd/test-electrostatic.sh linux/hello_file_read.c hello_file_read"
+        },
+        {
+            "name": "Valgrind - File Read",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=all --verbose --num-callers=40 --error-exitcode=1 ./sdk/examples/cmake-build/linux/x86-64/hello_file_read.elf"
+        },
+        {
+            "name": "Test File Paging",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "./helper-scripts/ci-cd/test-electrostatic.sh linux/hello_file_paging.c hello_file_paging"
+        },
+        {
+            "name": "Valgrind - File Paging",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=all --verbose --num-callers=40 --error-exitcode=1 ./sdk/examples/cmake-build/linux/x86-64/hello_file_paging.elf"
+        },
+        {
+            "name": "Test hello_switching_mux",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "./helper-scripts/ci-cd/test-electrostatic.sh hello_switching_mux.c hello-switching-mux"
+        },
+        {
+            "name": "Valgrind - hello_switching_mux",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=all --verbose --num-callers=40 --error-exitcode=1 ./sdk/examples/cmake-build/linux/x86-64/hello_switching_mux.elf"
+        },
+        {
+            "name": "Test Arithmos 2D Vector Rotation",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "./helper-scripts/ci-cd/test-electrostatic.sh calculus/test_vec2d_rotation.c test_2d_rotation"
+        },
+        {
+            "name": "Valgrind - Arithmos 2D Vector Rotation",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=all --verbose --num-callers=40 --error-exitcode=1 ./sdk/examples/cmake-build/linux/x86-64/test_vec2d_rotation.elf"
+        },
+        {
+            "name": "Test Arithmos 3D Gimbal Rotation Sequence",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "./helper-scripts/ci-cd/test-electrostatic.sh calculus/test_vec3d_rotation.c test_3d_rotation"
+        },
+        {
+            "name": "Valgrind - Arithmos 3D Gimbal Rotation Sequence",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=all --verbose --num-callers=40 --error-exitcode=1 ./sdk/examples/cmake-build/linux/x86-64/test_vec3d_rotation.elf"
+        },
+        {
+            "name": "Test Arithmos 3D X Gimbal Rotation",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "sudo ./helper-scripts/ci-cd/test-electrostatic.sh calculus/test_3d_x_gimbal_rotation.c test_3d_x_gimbal_rotation"
+        },
+        {
+            "name": "Valgrind - Arithmos 3D X Gimbal Rotation",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=all --verbose --num-callers=40 --error-exitcode=1 ./sdk/examples/cmake-build/linux/x86-64/test_3d_x_gimbal_rotation.elf"
+        },
+        {
+            "name": "Test Arithmos 3D Y Gimbal Rotation",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "./helper-scripts/ci-cd/test-electrostatic.sh calculus/test_3d_y_gimbal_rotation.c test_3d_y_gimbal_rotation"
+        },
+        {
+            "name": "Valgrind - Arithmos 3D Y Gimbal Rotation",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=all --verbose --num-callers=40 --error-exitcode=1 ./sdk/examples/cmake-build/linux/x86-64/test_3d_y_gimbal_rotation.elf"
+        },
+        {
+            "name": "Test Arithmos 3D Z Gimbal Rotation",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "./helper-scripts/ci-cd/test-electrostatic.sh calculus/test_3d_z_gimbal_rotation.c test_3d_z_gimbal_rotation"
+        },
+        {
+            "name": "Valgrind - Arithmos 3D Z Gimbal Rotation",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=all --verbose --num-callers=40 --error-exitcode=1 ./sdk/examples/cmake-build/linux/x86-64/test_3d_z_gimbal_rotation.elf"
+        },
+        {
+            "name": "Test OpenGL 3D Gimbal Rotation",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "./helper-scripts/ci-cd/test-electrostatic.sh calculus/test_opengl_gimbal.c test_opengl_gimbal"
+        },
+        {
+            "name": "Valgrind - OpenGL 3D Gimbal Rotation",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=all --verbose --num-callers=40 --error-exitcode=1 ./sdk/examples/cmake-build/linux/x86-64/test_opengl_gimbal.elf"
+        },
+        {
+            "name": "Test Arithmos Matrix Rotation API",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "./helper-scripts/ci-cd/test-electrostatic.sh calculus/test_3d_mat_gimbal_rotation.c test_3d_mat_gimbal_rotation"
+        },
+        {
+            "name": "Valgrind - Arithmos Matrix Rotation API",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=all --verbose --num-callers=40 --error-exitcode=1 ./sdk/examples/cmake-build/linux/x86-64/test_3d_mat_gimbal_rotation.elf"
+        },
+        {
+            "name": "Test Arithmos Matrix Product",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "./helper-scripts/ci-cd/test-electrostatic.sh calculus/test_mat_product.c test_mat_product"
+        },
+        {
+            "name": "Valgrind - Arithmos Matrix Product",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=all --verbose --num-callers=40 --error-exitcode=1 ./sdk/examples/cmake-build/linux/x86-64/test_mat_product.elf"
+        },
+        {
+            "name": "Test Arithmos Matrix Addition",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "./helper-scripts/ci-cd/test-electrostatic.sh calculus/test_matrix_addition.c test_mat_addition"
+        },
+        {
+            "name": "Valgrind - Arithmos Matrix Addition",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=all --verbose --num-callers=40 --error-exitcode=1 ./sdk/examples/cmake-build/linux/x86-64/test_matrix_addition.elf"
+        },
+        {
+            "name": "Test Arithmos Matrix Iteration",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "./helper-scripts/ci-cd/test-electrostatic.sh calculus/test_matrix_iteration.c test_matrix_iteration"
+        },
+        {
+            "name": "Valgrind - Arithmos Matrix Iteration",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=all --verbose --num-callers=40 --error-exitcode=1 ./sdk/examples/cmake-build/linux/x86-64/test_matrix_iteration.elf"
+        },
+        {
+            "name": "Test LCG Number Randomizer",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "./helper-scripts/ci-cd/test-electrostatic.sh hello_lcg_random.c hello_lcg_random"
+        },
+        {
+            "name": "Valgrind - LCG Number Randomizer",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=all --verbose --num-callers=40 --error-exitcode=1 ./sdk/examples/cmake-build/linux/x86-64/hello_lcg_random.elf"
+        },
+        {
+            "name": "Compile electrostatic4j Java Binding API",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "./helper-scripts/ci-cd/compile-e4j.sh"
+        },
+        {
+            "name": "Test electrostatic4j Java Binding API",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "./helper-scripts/ci-cd/test-e4j.sh"
+        },
+        {
+            "name": "Build Serial4j Framework",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "sudo ./helper-scripts/ci-cd/compile-serial4j.sh"
+        }
+    ]
+}

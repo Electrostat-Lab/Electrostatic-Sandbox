@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-static inline status_code contiguous_update_buffer_size(list *list, void *caller) {
+static inline status_code contiguous_update_buffer_size(list *list, uint64_t old_limit, void *caller) {
     if (rvalue(list) == NULL || rvalue(list->elements) == NULL
         || rvalue(list->function_table) == NULL
         || rvalue(list->function_table->update_buffer_size) == NULL
@@ -15,7 +15,7 @@ static inline status_code contiguous_update_buffer_size(list *list, void *caller
 
         return EUNDEFINEDBUFFER;
     }
-    return list->function_table->update_buffer_size(list, caller);
+    return list->function_table->update_buffer_size(list, old_limit, caller);
 }
 
 static inline status_code contiguous_buffer_memory_update(list *list) {
@@ -63,11 +63,12 @@ static inline status_code contiguous_buffer_add(list *list, list_element *elemen
     if (list->limit != 0 && list->position >= list->limit) {
         // run a stretching algorithm
         // the stretching algorithm
+        uint64_t old_limit = list->limit;
         if (rvalue(list->function_table) != NULL &&
                 rvalue(list->function_table->resize) != NULL) {
             list->function_table->resize(list, 0x02);
         }
-        __code = contiguous_update_buffer_size(list, list->function_table->add);
+        __code = contiguous_update_buffer_size(list, old_limit, list->function_table->add);
         if (PASS != __code) {
             return __code;
         }
@@ -94,8 +95,9 @@ static inline status_code contiguous_buffer_insert(list *list,
     if (list->limit != 0 && index >= list->limit) {
         // run a stretching algorithm
         // the stretching algorithm
+        uint64_t old_limit = list->limit;
         list->limit = (index << 2) + 1;
-        __code = contiguous_update_buffer_size(list, list->function_table->insert);
+        __code = contiguous_update_buffer_size(list, old_limit, list->function_table->insert);
         if (PASS != __code) {
             return __code;
         }
@@ -134,8 +136,9 @@ static inline status_code contiguous_buffer_insert_overwrite(list *buffer,
     if (buffer->limit != 0 && index >= buffer->limit) {
         // run a stretching algorithm
         // the stretching algorithm
+        uint64_t old_limit = buffer->limit;
         buffer->limit = (index << 2) + 1;
-        __code = contiguous_update_buffer_size(buffer, buffer->function_table->insert);
+        __code = contiguous_update_buffer_size(buffer, old_limit, buffer->function_table->insert_overwrite);
         if (PASS != __code) {
             return __code;
         }
@@ -190,7 +193,7 @@ static inline status_code unsafe_leftshift_items_by_one(list *list, uint64_t sta
         elements[i] = elements[i + 1]; // shift the elements to the left by one index (+ 1)
         elements[i + 1] = NULL;
     }
-    return contiguous_update_buffer_size(list, list->function_table->remove_by_index);
+    return contiguous_update_buffer_size(list, 0, list->function_table->remove_by_index);
 }
 
 static inline status_code unsafe_get_index_from_element(list *list, list_element *element, uint64_t *output) {
@@ -419,19 +422,32 @@ static inline status_code contiguous_buffer_indexof(list *list, list_element *el
  * @param caller the caller address
  * @return PASS to indicate a pass code, otherwise a failure code
  */
-static inline status_code dynamic_alloc_update_buffer_size(list *buffer, void *caller) {
+static inline status_code dynamic_alloc_update_buffer_size(list *buffer, uint64_t old_limit, void *caller) {
     if (rvalue(buffer) == NULL || rvalue(caller) == NULL) {
         return EUNDEFINEDBUFFER;
     }
-
     // expand
-    if (caller == buffer->function_table->add) {
-        buffer->elements = realloc(buffer->elements, (size_t) buffer->limit * sizeof(list_element*));
+    if (caller == buffer->function_table->add ||
+        caller == buffer->function_table->insert ||
+        caller == buffer->function_table->insert_overwrite) {
+
+        buffer->elements = realloc(buffer->elements, buffer->limit * sizeof(list_element *));
+        if (NULL == buffer->elements) {
+            return EBUFFERTURNCATION;
+        }
+
+        memset(buffer->elements + old_limit, 0,
+        (buffer->limit - old_limit) * sizeof(list_element *));
     } else if (caller == buffer->function_table->remove_by_index) {
         // shrink
         buffer->limit >>= 2; // shrunk the limit by power of 2
         buffer->elements = realloc(buffer->elements, (size_t) (buffer->position << 2) * sizeof(list_element*));
     }
+
+    if (NULL == buffer->elements) {
+        return EBUFFERTURNCATION;
+    }
+
     return PASS;
 }
 

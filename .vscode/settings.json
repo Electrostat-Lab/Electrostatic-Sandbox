@@ -1,0 +1,7 @@
+{
+    "clangd.arguments": [
+        "--background-index",
+        "--compile-commands-dir=${workspaceFolder}"
+    ],
+    "cmake.sourceDirectory": "${workspaceFolder}/sdk"
+}

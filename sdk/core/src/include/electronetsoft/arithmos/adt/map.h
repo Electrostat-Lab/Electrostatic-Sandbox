@@ -36,6 +36,7 @@ struct map {
     list *adt;
     map_processors *processors;
     uint64_t count;
+    collision_scheme col_scheme;
 };
 
 struct map_function_table {
@@ -47,6 +48,7 @@ struct map_function_table {
     status_code (*contains)(map *, typed_pointer);
     status_code (*contains_all)(map *, typed_pointer **);
     status_code (*get)(map *, typed_pointer key, map_element *);
+    status_code (*get_raw)(map *, typed_pointer key, map_element *);
     status_code (*iterator)(map *, status_code (*callback)(map *, map_element *));
 };
 
