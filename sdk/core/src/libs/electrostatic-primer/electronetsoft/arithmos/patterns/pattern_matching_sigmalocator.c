@@ -58,12 +58,12 @@ static inline status_code __sigma_locate_pattern(map hashmap, text in,
     status_code __code;
     map_element __element = {0};
     list_element *__list_element = NULL;
-    typed_pointer ___key = {0};
-    size_t trailing_index = 0;
+    typed_pointer lookup_key = {0};
+    size_t leading_index = 0;
 
-    char __key[2] = {pattern.chars[0], '\0'};
+    char initial_char[2] = {pattern.chars[0], '\0'};
     __code = hashmap.function_table->get_raw(&hashmap, (typed_pointer) {
-            .address.str = (char *) __key,
+            .address.str = (char *) initial_char,
             .type = TYPE_STR
     }, &__element);
 
@@ -87,17 +87,17 @@ static inline status_code __sigma_locate_pattern(map hashmap, text in,
                 continue;
             }
 
-            ___key = __list_element->metadata;
-            trailing_index = *((size_t *) __list_element->data);
+            lookup_key = __list_element->metadata;
+            leading_index = *((size_t *) __list_element->data);
 
-            if (strcmp(___key.address.str, __key) != 0) {
+            if (strcmp(lookup_key.address.str, initial_char) != 0) {
                 if (j == __buffer->limit - 1) {
                     return ENOELEMENT;
                 }
                 continue;
             }
 
-            __code = __lookup_preprocessor(in, pattern, trailing_index);
+            __code = __lookup_preprocessor(in, pattern, leading_index);
             if (PASS != __code) {
                 if (j == __buffer->limit - 1) {
                     return ENOELEMENT;
@@ -106,7 +106,7 @@ static inline status_code __sigma_locate_pattern(map hashmap, text in,
             }
 
             // start index found
-            __code = __eval_pattern(in, pattern, trailing_index);
+            __code = __eval_pattern(in, pattern, leading_index);
             if (PASS != __code) {
                 if (j == __buffer->limit - 1) {
                     return ENOELEMENT;
@@ -114,7 +114,7 @@ static inline status_code __sigma_locate_pattern(map hashmap, text in,
                 continue;
             }
 
-            out->start_index = trailing_index;
+            out->start_index = leading_index;
             out->length = pattern.length;
 
             return PASS;
@@ -122,19 +122,19 @@ static inline status_code __sigma_locate_pattern(map hashmap, text in,
     }
 
     __list_element = __element.value;
-    trailing_index = *((size_t *) __list_element->data);
-    ___key = __list_element->metadata;
+    leading_index = *((size_t *) __list_element->data);
+    lookup_key = __list_element->metadata;
 
-    if (strcmp(___key.address.str, __key) != 0) {
+    if (strcmp(lookup_key.address.str, initial_char) != 0) {
         return ENOELEMENT;
     }
 
-    __code = __eval_pattern(in, pattern, trailing_index);
+    __code = __eval_pattern(in, pattern, leading_index);
     if (PASS != __code) {
         return ENOELEMENT;
     }
 
-    out->start_index = trailing_index;
+    out->start_index = leading_index;
     out->length = pattern.length;
 
     return PASS;
