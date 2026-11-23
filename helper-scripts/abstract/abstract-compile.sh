@@ -33,6 +33,7 @@ function compile() {
           "-DPROJECT_SOURCES=${PROJECT_SOURCES}" \
           "-DDEPENDENCIES=${DEPENDENCIES}" \
           "-DBUILD_DIR=${BUILD_DIR}" \
+          "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON" \
           -S . -B "$(pwd)/${SOURCES_DIR}/cmake-build/${BUILD_DIR}"
 
     cmake-3.19 --build "$(pwd)/${SOURCES_DIR}/cmake-build/${BUILD_DIR}" || exit $?

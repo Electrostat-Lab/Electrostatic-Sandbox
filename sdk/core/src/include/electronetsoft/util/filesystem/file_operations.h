@@ -21,12 +21,15 @@
 extern "C" {
 #endif
 
+#define __ERR_ENCOUNTERED -1
+
 #include <sys/stat.h>
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdint.h>
+#include <stdbool.h>
 #include <electronetsoft/util/utilities.h>
 
 struct op_processor {
@@ -51,6 +54,17 @@ struct serializer_op_processor {
      void (*serializer_init_postprocessor)(pipe_serializer *);
 };
 
+struct file_page {
+    ssize_t __leading_byte; 
+    ssize_t __size;
+};
+
+struct file_pager {
+    file_page *current;
+    ssize_t paging_factor;
+    ssize_t n_pages;
+};
+
 struct file_mem {
     int fd;
     char trailing; /* The trailing byte of the buffer.*/
@@ -61,10 +75,14 @@ struct file_mem {
     ssize_t bytes_processed;
     char *buffer;
     __off_t file_size; /* Cached file size in bytes */
-    __off_t file_pos; /* Cached file position */
-    uint8_t __auto_update_attrs; /* Conditional flag to specify whether auto-update
+    off_t file_pos; /* Cached file position */
+    bool __auto_update_attrs; /* Conditional flag to specify whether auto-update
                                     * in the pre-processing stage is enabled. */
-    uint8_t __continue_after_eof; /* Conditional flag to specify whether to continue after the EOF. */
+    bool __continue_after_eof; /* Conditional flag to specify whether to continue after the EOF. */
+    bool __file_attrs_preprocessor;
+    bool __file_attrs_postprocessor;
+    file_pager *pager;
+    status_code __err_code;
 };
 
 /**
@@ -105,6 +123,22 @@ status_code update_file_attrs(file_mem *, update_op_processor *);
 status_code write_from_mem(file_mem *, op_processor *, update_op_processor *);
 
 status_code init_serializer(pipe_serializer *, serializer_op_processor *, update_op_processor *);
+
+static inline status_code has_bytes_processing_completed(file_mem *mem) {
+    if (NULL == mem) {
+        return EUNDEFINEDBUFFER;
+    }
+
+    if (0 == mem->n_bytes || 0 == mem->file_size || 
+                0 == mem->bytes_processed) {
+        return EBUFFERTURNCATION;
+    }
+
+    if ((mem->file_size - 1) > mem->bytes_processed) {
+        return ASSERTION_SUCCESS;
+    }
+    return ASSERTION_FAILURE;
+}
 
 #ifdef __cplusplus
 }

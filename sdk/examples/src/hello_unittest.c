@@ -1,6 +1,7 @@
 #include <electronetsoft/arithmos/adt/list.h>
 #include <electronetsoft/util/unit-testing/unit_test.h>
 #include <electronetsoft/util/console/colors.h>
+#include <stdint.h>
 #include <stdio.h>
 
 static inline int64_t execute(void **inputs) {
@@ -19,32 +20,8 @@ static inline void on_assertion_failure(unit_test *test) {
     fprintf(stderr, RED "Test predicate %p isn't existential!\n" RESET, test->assert);
 }
 
-/**
- * Dispatched by the API callers callbacks when a "resize" command
- * is executed to continue operations safely.
- *
- * @param buffer the data buffer of interest
- * @param caller the caller address
- * @return PASS to indicate a pass code, otherwise a failure code
- */
-static inline status_code update_buffer_size(list *buffer, void *caller) {
-    if (rvalue(buffer) == NULL || rvalue(caller) == NULL) {
-        return EUNDEFINEDBUFFER;
-    }
-    if (caller == buffer->function_table->add) {
-        printf("Caller for expansion\n");
-        buffer->elements = realloc(buffer->elements, (size_t) buffer->limit * sizeof(list_element*));
-    } else if (caller == buffer->function_table->remove_by_index) {
-        printf("Caller for remove\n");
-        buffer->limit >>= 2; // shrunk the limit by power of 2
-        buffer->elements = realloc(buffer->elements, (size_t) (buffer->limit << 2) * sizeof(list_element*));
-    }
-    return PASS;
-}
-
 int main() {
     list_function_table table = {
-        .update_buffer_size = &update_buffer_size
     };
     
     list buffer = {

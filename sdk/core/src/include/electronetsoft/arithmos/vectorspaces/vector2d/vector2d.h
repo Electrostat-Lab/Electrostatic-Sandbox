@@ -39,27 +39,6 @@ struct vector2d {
 };
 
 /**
- * @brief Represents a 2D coordinate system (a vector space) defined by two basis vectors.
- * @details A vector space is a collection of vectors and the operations that can be
- *          performed on them. By defining custom basis vectors (x_axis, y_axis), you can
- *          create a transformed coordinate system (e.g., rotated or scaled) relative
- *          to the standard Cartesian plane. Any vector can then be represented as a
- *          linear combination of these basis vectors.
- */
-struct vec2d_space {
-    /**
-     * @brief The first basis vector, defining the direction of the local x-axis.
-     */
-    vector2d x_axis;
-    /**
-     * @brief The second basis vector, defining the direction of the local y-axis.
-     */
-    vector2d y_axis;
-
-    vector2d ref_point;
-};
-
-/**
  * @brief Represents a 2D vector in polar coordinates.
  */
 struct vec2d_polar {
@@ -99,7 +78,6 @@ extern vector2d VEC2_Y_COMPONENT; // Unit vector for the y-axis (0, 1)
 extern vector2d VEC2_XY_PLANE;    // Often a zero vector or placeholder in 2D context
 
 // --- Function Prototypes ---
-
 
 extern status_code vec2d_is_unit(vector2d v, vec2d_processors *procs);
 
@@ -387,6 +365,27 @@ extern status_code vec2d_are_dependent(vector2d v1, vector2d v2, vec2d_processor
 extern status_code vec2d_projection_vector(vector2d v1, vector2d v2, vector2d *out, vec2d_processors *procs);
 
 /**
+ * @brief Finds the complementary projection (or the orthogonal of the projection) of vector v1 onto vector v2.
+ * @details Applies a vector subtraction operation on the projection vector.
+ *
+ * @param v1 the projected vector.
+ * @param v2 the vector to project onto.
+ * @param out a memory address for the output cell.
+ * @param procs a memory address for callback handlers.
+ */
+extern status_code vec2d_orthogonal_proj_vec(vector2d v1, vector2d v2, vector2d *out, vec2d_processors *procs);
+
+/**
+ * @brief Finds the component of vector v1 that is parallel to vector v2.
+ *
+ * @param v1 the projected vector.
+ * @param v2 the vector to project onto.
+ * @param out a memory address for the output cell.
+ * @param procs a memory address for callback handlers.
+ */
+extern status_code vec2d_component_proj_vec(vector2d v1, vector2d v2, vec_component *out, vec2d_processors *procs);
+
+/**
  * @brief Rotates a vector around a specified pivot point.
  * @details To rotate a vector `v` around a pivot `p`, we first translate the system so the
  *          pivot is at the origin (`v' = v - p`). Then, we apply the standard 2D rotation matrix:
@@ -401,16 +400,6 @@ extern status_code vec2d_projection_vector(vector2d v1, vector2d v2, vector2d *o
  * @return A status code.
  */
 extern status_code vec2d_rotate(vector2d v, vector2d axis, vec_component angle, vector2d *out, vec2d_processors *procs);
-
-/**
- * @brief Creates a 2D vector space (a coordinate system) from two basis vectors.
- * @param basis1 The first basis vector (e.g., the new x-axis).
- * @param basis2 The second basis vector (e.g., the new y-axis).
- * @param out Pointer to store the created subspace.
- * @param procs Pointer to callback handlers.
- * @return A status code.
- */
-extern status_code vec2d_create_subspace(vector2d basis1, vector2d basis2, vec2d_space *out, vec2d_processors *procs);
 
 /**
  * @brief Tests if vector `v2` is a rotated version of `v1` by a specific angle.
@@ -449,6 +438,15 @@ extern status_code vec2d_swap_components(vector2d v, vector2d *out, vec2d_proces
  * @return A status code.
  */
 extern status_code vec2d_negate(vector2d v1, vector2d v2, vector2d *out, vec2d_processors *procs);
+
+extern status_code vec2d_rate_of_change(vector2d v0,
+                                            vector2d (*vec2d_func)(vec_component x),
+                                            vec_component delta_x,
+                                            vec_component *out, vec2d_processors *procs);
+
+extern status_code vec2d_tangential_component(vector2d, vector2d *);
+
+extern status_code vec2d_centripetal_component();
 
 #ifdef __cplusplus
 }

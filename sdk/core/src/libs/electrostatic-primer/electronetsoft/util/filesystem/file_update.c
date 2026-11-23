@@ -13,8 +13,10 @@ status_code update_file_attrs(file_mem *mem,
         return PASS;
     }
 
-    if (NULL != _processor && NULL != _processor->update_model_preprocessor) {
-        _processor->update_model_preprocessor(mem, &read_into_mem);
+    if (mem->__file_attrs_preprocessor) {
+        if (NULL != _processor && NULL != _processor->update_model_preprocessor) {
+            _processor->update_model_preprocessor(mem, &read_into_mem);
+        }
     }
 
     if (mem->fd < 0 || !is_fexistential(mem->fd)) {
@@ -22,7 +24,7 @@ status_code update_file_attrs(file_mem *mem,
     }
 
     // pre-processing automata -- Comparing Values
-    __off_t __pos;
+    off_t __pos;
     status_code __status = get_file_pos(mem->fd, &__pos);
     if (PASS != __status) {
         __pos = 0;
@@ -58,9 +60,11 @@ status_code update_file_attrs(file_mem *mem,
         }
     }
 
-    // postprocessing automata -- Invoke the update file postprocessor
-    if (NULL != _processor && NULL != _processor->update_model_postprocessor) {
-        _processor->update_model_postprocessor(mem, &read_into_mem);
+    if (mem->__file_attrs_postprocessor) {
+        // postprocessing automata -- Invoke the update file postprocessor
+        if (NULL != _processor && NULL != _processor->update_model_postprocessor) {
+            _processor->update_model_postprocessor(mem, &read_into_mem);
+        }
     }
 
     return PASS;

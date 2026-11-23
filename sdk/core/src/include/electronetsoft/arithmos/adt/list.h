@@ -27,6 +27,11 @@
 //                           \
 //              [doubly_linked_buffer - circular_linked_buffer - unrolled_linked_buffer]
 //
+// NB:
+// * the framework uses a [list_element **] rather than a [list_element *]; because
+// it enables navigating the virtual memory buffer using NULL pointer delimiters after
+// allocating memory using `calloc` or using the combination [`malloc` + `memset(buffer, 0)`].
+// * using the [list_element *] only; would require the length to be valid.
 
 #ifndef _LIST_H_
 #define _LIST_H_
@@ -45,7 +50,7 @@ extern "C" {
 
 struct list_element {
   void *data;
-  void *metadata;
+  typed_pointer metadata;
   size_t size;
   element_type type;
 };
@@ -54,13 +59,14 @@ struct list_info {
   uint64_t index;
   uint64_t length;
   uint64_t rate;
-  void *metadata;
+  typed_pointer metadata;
 };
 
 struct list {
   list_element **elements;
   list_function_table *function_table;
   list_type type;
+  collision_scheme col_scheme;
   memory_partition elements_memory;
   uint64_t position;
   uint64_t limit;
@@ -79,7 +85,7 @@ struct list_function_table {
   status_code (*get)(list *, uint64_t, list_element **);
   status_code (*index_of)(list *, list_element *, uint64_t *);
   status_code (*resize)(list *, uint16_t);
-  status_code (*update_buffer_size)(list *, void *);
+  status_code (*update_buffer_size)(list *, uint64_t, void *);
   status_code (*remove_by_element)(list *, list_element *);
   status_code (*remove_by_index)(list *, uint64_t);
   status_code (*contains_all)(list *, list_element **);

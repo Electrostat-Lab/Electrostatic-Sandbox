@@ -302,6 +302,41 @@ extern status_code vec3d_dot_product(vector3d, vector3d,
                                      vec_component *, vec3d_processors *);
 
 /**
+ * @brief Computes the projection of vector v1 onto vector v2.
+ * @details Vector projection finds the "shadow" that `v1` casts onto the line defined by `v2`.
+ *          It results in a vector parallel to `v2`. The formula is:
+ *          `proj_v2(v1) = ( (v1 . v2) / |v2|^2 ) * v2`
+ *          This is geometrically equivalent to finding the closest point on the line of `v2` to the tip of `v1`.
+ * @param v1 The vector to be projected.
+ * @param v2 The vector to project onto.
+ * @param out Pointer to store the resulting projection vector.
+ * @param procs Pointer to callback handlers.
+ * @return A status code.
+ */
+extern status_code vec3d_projection_vector(vector3d, vector3d, vector3d *, vec3d_processors *);
+
+/**
+ * @brief Finds the complementary projection (or the orthogonal of the projection) of vector v1 onto vector v2.
+ * @details Applies a vector subtraction operation on the projection vector.
+ *
+ * @param v1 the projected vector.
+ * @param v2 the vector to project onto.
+ * @param out a memory address for the output cell.
+ * @param procs a memory address for callback handlers.
+ */
+extern status_code vec3d_orthogonal_proj_vec(vector3d, vector3d, vector3d *, vec3d_processors *);
+
+/**
+ * @brief Finds the component of vector v1 that is parallel to vector v2.
+ *
+ * @param v1 the projected vector.
+ * @param v2 the vector to project onto.
+ * @param out a memory address for the output cell.
+ * @param procs a memory address for callback handlers.
+ */
+extern status_code vec3d_component_proj_vec(vector3d, vector3d, vec_component *out, vec3d_processors *);
+
+/**
  * @brief Performs a scalar multiplication operation on the first vector components using the
  *        second vector components in a R(3) vector-space returning a new vector.
  *

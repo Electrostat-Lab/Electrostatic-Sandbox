@@ -17,4 +17,4 @@ sdk/electrostatic4j/serial4j/serial4j-examples/libserial4j.so
 .so
 .cache
 .idea
-.vscode
+compile_commands.json

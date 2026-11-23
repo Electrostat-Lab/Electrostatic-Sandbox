@@ -44,6 +44,7 @@ source_dir="core"
 examples_dir="examples"
 
 electrostatic_core_headers="$(pwd)/sdk/core/src/include"
+electrostatic_internal_headers="$(pwd)/sdk/core/src/internals"
 POST_COMPILE_TRUE="POST_COMPILE_TRUE"
 
 e4j_dir="electrostatic4j/electrostatic4j-native"

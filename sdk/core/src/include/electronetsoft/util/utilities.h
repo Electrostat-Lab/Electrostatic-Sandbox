@@ -7,7 +7,6 @@
 #include <stddef.h>
 #include <string.h>
 #include <stdio.h>
-#include <electronetsoft/arithmos/vectorspaces/vector2d/vector2d.h>
 #include <electronetsoft/util/types.h>
 
 #define ___DELTA ((float) 1 * vector2d_pow(10.0f, -10.0f))
@@ -20,20 +19,43 @@ extern "C" { // disable C++ name mangling by declaring function prototypes
 union pointer {
     list *m_list;
     list_element *m_list_element;
+    list_element **m_elements;
     linked_buffer *m_linked_buffer;
     list_function_table *m_list_function_table;
     uint64_t *id;
     char *str;
+    int *m_int;
+    void *generic;
+    automaton_state *state;
+    automaton_input *input;
+    file_driver *m_file_driver;
+    txt_driver *m_txt_driver;
+    json_driver *m_json_driver;
+    sqlite_driver *m_sqlite_driver;
+    sql_driver *m_sql_driver;
+    permutation *m_permutation;
+    vector2d *m_vec2d;
+    vector3d *m_vec3d;
 };
 
 typedef enum pointer_type {
-    TYPE_LIST = 200,
+    TYPE_LIST = 201,
     TYPE_LIST_ELEMENT = TYPE_LIST + 1,
     TYPE_LINKED_BUFFER = TYPE_LIST_ELEMENT + 1,
     TYPE_LIST_FUNCTION_TABLE = TYPE_LINKED_BUFFER + 1,
     TYPE_UNKNOWN = TYPE_LIST_FUNCTION_TABLE + 1,
     TYPE_ID = TYPE_UNKNOWN + 1,
-    TYPE_STR = TYPE_ID + 1
+    TYPE_STR = TYPE_ID + 1,
+    TYPE_32_SIGNED_INT = TYPE_STR + 1,
+    TYPE_FILE_DRIVER = TYPE_32_SIGNED_INT + 1,
+    TYPE_TXT_DRIVER = TYPE_FILE_DRIVER + 1,
+    TYPE_JSON_DRIVER = TYPE_TXT_DRIVER + 1,
+    TYPE_SQLITE_DRIVER = TYPE_JSON_DRIVER + 1,
+    TYPE_SQL_DRIVER = TYPE_SQLITE_DRIVER + 1,
+    TYPE_PERMUTATION = TYPE_SQL_DRIVER + 1,
+    TYPE_VEC2D = TYPE_PERMUTATION + 1,
+    TYPE_VEC3D = TYPE_VEC2D + 1,
+    TYPE_ELEMENTS = TYPE_VEC3D + 1
 } pointer_type;
 
 struct typed_pointer {
