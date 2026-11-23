@@ -3,7 +3,7 @@
 #include <stdio.h>
 
 static inline status_code iterator_callback(map *hashmap, map_element *element) {
-    fprintf(stdout, "Iterated element = (%s)\n",
+    fprintf(stdout, "Iterated element = (%s, %s)\n", element->key.address.str,
             (const char *) element->value->data);
     return PASS;
 }
@@ -11,6 +11,7 @@ static inline status_code iterator_callback(map *hashmap, map_element *element) 
 int main() {
     map hash_map = (map) {
       .type = MAP_TYPE_HASHMAP,
+      .col_scheme = NO_DUPLICATES
     };
     map_function_table table = (map_function_table) {
 
@@ -118,11 +119,11 @@ int main() {
         fprintf(stdout, "Iterated successfully!\n");
     }
 
-    __code = hash_map.function_table->remove(&hash_map, __key_0);
-    if (PASS != __code) {
-        fprintf(stderr, "%s %d\n",
-                "Error while retrieving the Map item!", __code);
-    }
+   __code = hash_map.function_table->remove(&hash_map, __key_0);
+   if (PASS != __code) {
+       fprintf(stderr, "%s %d\n",
+               "Error while retrieving the Map item!", __code);
+   }
 
     __code = hash_map.function_table->contains_all(&hash_map,
    (typed_pointer *[]) {
@@ -133,6 +134,34 @@ int main() {
                 RED "Contains Failed!" RESET, __code);
     } else {
         fprintf(stdout, GREEN "Contains Passed!\n" RESET);
+    }
+
+
+    __code = hash_map.function_table->get(&hash_map, __key_0, &out);
+    if (PASS != __code) {
+        fprintf(stderr, "%s %d\n",
+                "Error while retrieving the Map item!", __code);
+    } else {
+        fprintf(stdout, "LOG Data item %s\n",
+                (const char *) out.value->data);
+    }
+
+    __code = hash_map.function_table->rehash(&hash_map, hash_map.adt->limit << 4);
+    if (PASS != __code) {
+        fprintf(stderr, "%s %d\n",
+                "Resizing has failed!", __code);
+    } else {
+        fprintf(stdout, "Resizing succeeded with size = (%lu)\n",
+                hash_map.adt->limit);
+    }
+
+    __code = hash_map.function_table->rehash(&hash_map, hash_map.adt->limit << 4);
+    if (PASS != __code) {
+        fprintf(stderr, "%s %d\n",
+                "Resizing has failed!", __code);
+    } else {
+        fprintf(stdout, "Resizing succeeded with size = (%lu)\n",
+                hash_map.adt->limit);
     }
 
     __code = hash_map.function_table->rehash(&hash_map, hash_map.adt->limit << 4);

@@ -1,5 +1,7 @@
 /**
- * @brief A tech=demo for the implementation of the file reading algorithm that provides a dynamic algorithm of determining the number of bytes to read out of a file using the file stat attributes from the Unix Standard library by requesting a call to the file status utility.
+ * @brief A tech=demo for the implementation of the file reading algorithm that provides a dynamic algorithm of 
+ *   determining the number of bytes to read out of a file using the file stat attributes from the Unix Standard library 
+ *   by requesting a call to the file status utility.
  * @author pavl_g.
  * @date 10-2025
  */
@@ -35,10 +37,14 @@ static inline void update_model_postprocessor(file_mem *mem, void *caller) {
         mem->n_bytes = 2; // two bytes are given; the leading and the trailing byte.
                           // marking the start and the end of the string buffer
     }
+    // number of bytes to be read; the trailing byte inside the file size is 
+    // the null terminator and it's excluded from the read operation
+    mem->n_bytes = (mem->file_size - 1); 
+    
     fprintf(stdout, "Size of memory buffer (in bytes) = %zd\n",
-            mem->n_bytes);
-    mem->buffer = calloc(mem->n_bytes, sizeof (char));
-
+            mem->file_size);
+    mem->buffer = calloc(mem->file_size, sizeof (char));
+    
     if (NULL == mem->buffer) {
         return;
     }
@@ -70,6 +76,8 @@ static inline void op_postprocessor(file_mem *mem, void *caller) {
         return;
     }
 
+    fprintf(stdout, "Read Bytes: %s\n", mem->buffer);
+
     // deallocates memory here!
     if (NULL != mem->buffer) {
         free(mem->buffer);
@@ -93,7 +101,9 @@ int main() {
         .file_size = -1,
         .file_pos = -1,
         .__auto_update_attrs = 1,
-        .__continue_after_eof = 0
+        .__continue_after_eof = 0,
+        .__file_attrs_preprocessor = 1,
+        .__file_attrs_postprocessor = 1,
     };
 
     op_processor _processor = {
