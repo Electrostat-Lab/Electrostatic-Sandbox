@@ -57,7 +57,7 @@ in "list.h" header file
 
 static void printListValues(list userList) // for debugging
 {
-    for (size_t i = 0; i < userList.position; i++)
+    for (int i = 0; i < userList.position; i++)
     {
         // In order to get the data: dereference (list_elements **) by array index
         //                         -> dereference (list_element *) by using "->"
@@ -77,7 +77,7 @@ int main(void)
 
     // Put data into "list_element"s because list only takes pointers to this type
     list_element myElements[10];
-    for (size_t i = 0; i < 10; i++)
+    for (int i = 0; i < 10; i++)
     {
         myElements[i].data = &myData[i];
     }
@@ -97,7 +97,7 @@ int main(void)
         return -1;
     }
 
-    for (size_t i = 0; i < myList.limit; i++) // Nullify list pointers
+    for (int i = 0; i < myList.limit; i++) // Nullify list pointers
     {
         myList.elements[i] = NULL;
     }
@@ -116,7 +116,7 @@ int main(void)
 
 
     // Add myData (in form of myElements) to the allocated list buffer
-    for (size_t i = 0; i < myList.limit; i++)
+    for (int i = 0; i < myList.limit; i++)
     {
         if (myList.function_table->add(&myList, &myElements[i]) != PASS)
         {
