@@ -1,7 +1,9 @@
+#include "electronetsoft/util/types.h"
 #include <electronetsoft/arithmos/adt/list.h>
 #include <electronetsoft/arithmos/memory/patcher.h>
 #include <electronetsoft/arithmos/list/contiguous_buffer.h>
 #include <electronetsoft/util/utilities.h>
+#include <stddef.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,28 +11,28 @@
 
 static inline status_code contiguous_update_buffer_size(list *list, uint64_t old_limit, void *caller) {
     if (rvalue(list) == NULL || rvalue(list->elements) == NULL
-        || rvalue(list->function_table) == NULL
-        || rvalue(list->function_table->update_buffer_size) == NULL
+        || rvalue(list->operations) == NULL
+        || rvalue(list->operations->update_buffer_size) == NULL
         || rvalue(caller) == NULL) {
 
         return EUNDEFINEDBUFFER;
     }
-    return list->function_table->update_buffer_size(list, old_limit, caller);
+    return list->operations->update_buffer_size(list, old_limit, caller);
 }
 
 static inline status_code contiguous_buffer_memory_update(list *list) {
-    if (rvalue(list) == NULL || rvalue(list->elements) == NULL) {
+    if (NULL == list || NULL == list->elements) {
         return EUNDEFINEDBUFFER;
     }
 
-    list->elements_memory.start_address = &(list->elements[0]);
-    list->elements_memory.end_address = &(list->elements[list->position - 1]);
+    list->elements_memory.start_address = list->elements;
+    list->elements_memory.end_address = list->elements + (list->capacity - 1);
 
     return PASS;
 }
 
 static inline status_code get_start_address(list *buffer, list_element **address) {
-    if (rvalue(buffer) == NULL || rvalue(address) == NULL) {
+    if (NULL == buffer || NULL == address) {
         return EUNDEFINEDBUFFER;
     }
     *address = buffer->elements_memory.start_address;
@@ -38,76 +40,83 @@ static inline status_code get_start_address(list *buffer, list_element **address
 }
 
 static inline status_code get_end_address(list *buffer, list_element **address) {
-    if (rvalue(buffer) == NULL || rvalue(address) == NULL) {
+    if (NULL == buffer || NULL == address) {
         return EUNDEFINEDBUFFER;
     }
     *address = buffer->elements_memory.end_address;
     return PASS;
 }
 
-static inline status_code contiguous_buffer_resize(list *list, uint16_t left_shift_exponent) {
-    if (rvalue(list) == NULL) {
+static inline status_code contiguous_buffer_resize(list *buffer, uint16_t left_shift_exponent) {
+    if (NULL == buffer) {
         return EUNDEFINEDBUFFER;
     }
-    list->limit = (list->limit << left_shift_exponent) + 1;
+    buffer->capacity = (buffer->capacity << left_shift_exponent) + 1;
     return PASS;
 }
 
-static inline status_code contiguous_buffer_add(list *list, list_element *element) {
-    if (rvalue(list) == NULL || rvalue(element) == NULL) {
+static inline status_code contiguous_buffer_add(list *buffer, list_element *element) {
+    if (NULL == buffer || NULL == element) {
         return EUNDEFINEDBUFFER;
     }
 
     status_code __code;
     
-    if (list->limit != 0 && list->position >= list->limit) {
+    if (0 != buffer->capacity && buffer->position >= buffer->capacity) {
         // run a stretching algorithm
         // the stretching algorithm
-        uint64_t old_limit = list->limit;
-        if (rvalue(list->function_table) != NULL &&
-                rvalue(list->function_table->resize) != NULL) {
-            list->function_table->resize(list, 0x02);
+        uint64_t old_limit = buffer->capacity;
+        if (NULL != buffer->operations &&
+                NULL != buffer->operations->resize) {
+            buffer->operations->resize(buffer, 0x02);
         }
-        __code = contiguous_update_buffer_size(list, old_limit, list->function_table->add);
+        __code = contiguous_update_buffer_size(buffer, old_limit, buffer->operations->add);
         if (PASS != __code) {
             return __code;
         }
     }
     
-    list->elements[list->position] = element;
-    list->position += 1;
-    __code = contiguous_buffer_memory_update(list);
+    list_element *buffer_element = buffer->elements + buffer->position;
+    buffer_element->data = element->data;
+    buffer_element->metadata = element->metadata;
+    buffer_element->size = element->size;
+    buffer_element->type = element->type;
+
+    buffer->position += 1;
+    __code = contiguous_buffer_memory_update(buffer);
     
     return __code;
 }
 
-static inline status_code contiguous_buffer_insert(list *list,
+static inline status_code contiguous_buffer_insert(list *buffer,
                                  list_element *element,
                                  uint64_t index) {
     // preprocessor automata -- Input Validation stage
-    if (rvalue(list) == NULL || rvalue(element) == NULL) {
+    if (NULL == buffer || NULL == element) {
         return EUNDEFINEDBUFFER;
     }
 
     // preprocessor automata -- Buffer Size Validation Stage and recorrection algorithm
     status_code __code;
 
-    if (list->limit != 0 && index >= list->limit) {
+    if (0 != buffer->capacity && index >= buffer->capacity) {
         // run a stretching algorithm
         // the stretching algorithm
-        uint64_t old_limit = list->limit;
-        list->limit = (index << 2) + 1;
-        __code = contiguous_update_buffer_size(list, old_limit, list->function_table->insert);
+        uint64_t old_limit = buffer->capacity;
+        buffer->capacity = (index << 2) + 1;
+        __code = contiguous_update_buffer_size(buffer, old_limit, buffer->operations->insert);
         if (PASS != __code) {
             return __code;
         }
     }
 
+    list_element *buffer_element = buffer->elements + index;
+
     // preprocessor automata -- Collision Detection and callbacks
-    if (NULL != list->elements[index]) {
-        if (NULL != list->function_table &&
-            NULL != list->function_table->on_collision) {
-            __code = list->function_table->on_collision(list, index, element);
+    if (NULL != buffer_element->data) {
+        if (NULL != buffer->operations &&
+            NULL != buffer->operations->on_collision) {
+            __code = buffer->operations->on_collision(buffer, index, element);
 
             if (PASS != __code) {
                 return __code;
@@ -117,7 +126,11 @@ static inline status_code contiguous_buffer_insert(list *list,
     }
 
     // processor automata -- Insertion of the new element
-    list->elements[index] = element;
+    // deep copy data to the existing buffer
+    buffer_element->data = element->data;
+    buffer_element->size = element->size;
+    buffer_element->metadata = element->metadata;
+    buffer_element->type = element->type;
 
     return PASS;
 }
@@ -126,52 +139,67 @@ static inline status_code contiguous_buffer_insert_overwrite(list *buffer,
                                            list_element *element,
                                            uint64_t index) {
     if (NULL == buffer || NULL == buffer->elements ||
-            NULL == element || 0 == buffer->limit) {
+            NULL == element || 0 == buffer->capacity) {
         return EUNDEFINEDBUFFER;
     }
 
     // preprocessor automata -- Buffer Size Validation Stage and recorrection algorithm
-    status_code __code;
+    status_code __code = PASS;
 
-    if (buffer->limit != 0 && index >= buffer->limit) {
+    if (0 != buffer->capacity && index >= buffer->capacity) {
         // run a stretching algorithm
         // the stretching algorithm
-        uint64_t old_limit = buffer->limit;
-        buffer->limit = (index << 2) + 1;
-        __code = contiguous_update_buffer_size(buffer, old_limit, buffer->function_table->insert_overwrite);
+        uint64_t old_limit = buffer->capacity;
+        buffer->capacity = (index << 2) + 1;
+        __code = contiguous_update_buffer_size(buffer, old_limit, buffer->operations->insert_overwrite);
         if (PASS != __code) {
             return __code;
         }
     }
 
+    list_element *buffer_element = buffer->elements + index;
+
     // preprocessor automata -- Collision Detection and callbacks
-    if (NULL != buffer->elements[index]) {
-        if (NULL != buffer->function_table &&
-            NULL != buffer->function_table->on_collision_overwrite) {
-            buffer->function_table->on_collision_overwrite(buffer, index, element);
+    if (NULL != buffer_element->data) {
+        if (NULL != buffer->operations &&
+            NULL != buffer->operations->on_collision_overwrite) {
+            __code = 
+                buffer->operations->on_collision_overwrite(buffer, index, element);
         }
     }
 
     // processor automata -- Insertion of the new element
-    buffer->elements[index] = element;
+    buffer_element->data = element->data;
+    buffer_element->metadata = element->metadata;
+    buffer_element->size = element->size;
+    buffer_element->type = element->type;
 
-    return PASS;
+    return __code;
 }
 
-static inline status_code contiguous_buffer_add_all(list *list, list_element **elements) {
-    if (rvalue(list) == NULL || rvalue(elements) == NULL) {
+static inline status_code contiguous_buffer_add_all(list *buffer, list_element *elements, size_t n_elements) {
+    if (NULL == buffer || NULL == elements) {
         return EUNDEFINEDBUFFER;
     }
+
+    if (0 == n_elements) {
+        return EBUFFERTURNCATION;
+    }
     
-    for (uint64_t i = 0; elements[i] != NULL; i++) {
-        contiguous_buffer_add(list, elements[i]);
+    status_code __code;
+
+    for (uint64_t i = 0; i < n_elements; i++) {
+        __code = contiguous_buffer_add(buffer, elements + i);
+        if (PASS != __code) {
+            return __code;
+        }
     }
     
     return PASS;
 }
 
 static inline status_code unsafe_leftshift_items_by_one(list *list, uint64_t start) {
-    list_element **elements = list->elements;
+    list_element *elements = list->elements;
     // this algorithm merges the list items into the start index by
     // simply operating on two indices at the same time
     // and it entails shifting elements from their indicies towards
@@ -191,17 +219,21 @@ static inline status_code unsafe_leftshift_items_by_one(list *list, uint64_t sta
     // ---- Memory-Complexity Analysis ----
     for (uint64_t i = start; i < list->position; i++) {
         elements[i] = elements[i + 1]; // shift the elements to the left by one index (+ 1)
-        elements[i + 1] = NULL;
+                                       // by performing successive deep copies and clearing the right element
+        elements[i + 1] = (list_element) {0};
+        // OR
+        // memset(elements + (i + 1), 0, sizeof(list_element));        
     }
-    return contiguous_update_buffer_size(list, 0, list->function_table->remove_by_index);
+    return contiguous_update_buffer_size(list, 0, list->operations->remove_by_index);
 }
 
-static inline status_code unsafe_get_index_from_element(list *list, list_element *element, uint64_t *output) {
+static inline status_code unsafe_get_index_from_element(list *buffer, list_element *element, uint64_t *output) {
     uint8_t is_found = 0;
     // determine the index first
     // this adds an f(N) overhead to the total clock complexity
-    for (uint64_t i = 0; i < list->position; i++) {
-        if (rvalue(list->elements[i]) == element) {
+    for (uint64_t i = 0; i < buffer->position; i++) {
+        list_element *buffer_element = buffer->elements + i;
+        if (rvalue(buffer_element->data) == element->data) {
             *output = i;
             is_found = 1;
             break;
@@ -218,7 +250,7 @@ static inline status_code contiguous_buffer_remove0(list *list, uint64_t index) 
         return EUNDEFINEDBUFFER;
     }
     
-    if (index >= list->limit) {
+    if (index >= list->capacity) {
         // index out of boundaries
         return EBUFFERTURNCATION;
     }
@@ -238,15 +270,15 @@ static inline status_code contiguous_buffer_remove0(list *list, uint64_t index) 
     return memory_update;
 }
 
-static inline status_code contiguous_buffer_remove_by_element(list *list, list_element *element) {
+static inline status_code contiguous_buffer_remove_by_element(list *buffer, list_element *element) {
     // pre-processing automata -- Input Validation
-    if (rvalue(list) == NULL || rvalue(element) == NULL) {
+    if (NULL == buffer || NULL == element) {
         return EUNDEFINEDBUFFER;
     }
 
     // pre-processing automata -- Retrieve the index of the element
     uint64_t index = 0;
-    status_code code0 = unsafe_get_index_from_element(list, element, &index);
+    status_code code0 = unsafe_get_index_from_element(buffer, element, &index);
 
     // pre-processing automata -- Premature return upon failure
     if (PASS != code0) {
@@ -255,26 +287,26 @@ static inline status_code contiguous_buffer_remove_by_element(list *list, list_e
     }
 
     // pre-processing automata -- Input Validation
-    if (index >= list->limit) {
+    if (index >= buffer->capacity) {
         // index out of boundaries
         return EBUFFERTURNCATION;
     }
 
     // processing automata -- Drop an item from the list using a linear shifting algorithm
-    status_code code1 = unsafe_leftshift_items_by_one(list, index);
+    status_code code1 = unsafe_leftshift_items_by_one(buffer, index);
 
     if (PASS != code1) {
         return code1;
     }
 
     // processing automata -- update the memory addresses
-    status_code code2 = contiguous_buffer_memory_update(list);
+    status_code code2 = contiguous_buffer_memory_update(buffer);
     if (PASS != code2) {
         return code2;
     }
 
     // post-processing automata -- update the index
-    list->position -= 1;
+    buffer->position -= 1;
 
     return PASS;
 }
@@ -295,22 +327,19 @@ static inline status_code contiguous_buffer_remove_all(list *list, list_element 
 }
 
 static inline status_code contiguous_buffer_iterator(list *buffer,
-                                                     list_info info,
-                                                     status_code (*callback)(list *, list_info, list_element *)) {
+                                                     iterator_info info,
+                                                     status_code (*callback)(list *, iterator_info, list_element *)) {
     if (rvalue(buffer) == NULL || rvalue(callback) == NULL) {
         return EUNDEFINEDBUFFER;
     }
-    status_code __code;
+    status_code __code = PASS;
     for (uint64_t i = info.index; i < info.length; i += info.rate) {
-        if (NULL == buffer->elements[i]) {
-            continue;
-        }
-        __code = callback(buffer, (list_info) {
+        __code = callback(buffer, (iterator_info) {
             .index = i,
-            .length = buffer->limit,
+            .length = buffer->capacity,
             .metadata = info.metadata,
             .rate = info.rate
-        }, buffer->elements[i]);
+        }, (buffer->elements + i));
         // use the return value as a control variable
         if (PASS != __code) {
             return __code;
@@ -319,14 +348,18 @@ static inline status_code contiguous_buffer_iterator(list *buffer,
     return __code;
 }
 
-static inline status_code contiguous_buffer_contains_all(list *list, list_element **elements) {
+static inline status_code contiguous_buffer_contains_all(list *buffer, list_element *elements, size_t size) {
     // you could run this in Pi(V) * E(I) = V * V * (E + E + E ....) which
     // reduces to V^2 or square function
     // or better is Pi(V) * E(I) = V1 * V2 * E'(I)  which decomposes the clock-complexity
     // dependencies 
     
-    if (rvalue(list) == NULL || rvalue(elements) == NULL) {
+    if (NULL == buffer || NULL == elements) {
         return EUNDEFINEDBUFFER;
+    }
+
+    if (size > buffer->capacity || 0 == size) {
+        return EBUFFERTURNCATION;
     }
     
     struct {
@@ -346,66 +379,100 @@ static inline status_code contiguous_buffer_contains_all(list *list, list_elemen
     // algorithm finishes up! Also, depending on your implementation, if the
     // list_element** component is heap-allocated then higher memory usages may be
     // incurred at this point.
-    for (uint64_t i = 0; rvalue(elements[i]) != NULL; i += 1, search_progress.length += 1) {
+    for (uint64_t i = 0; i < size; i += 1, search_progress.length += 1) {
         
         // ----- Clock Complexity Analysis ------
         // loop closure Pi(V2) = limit, N(c2) = V2 * E'(I) = limit * (1 + 1)
         // this subroutine complexity rises linearly when the length of the elements increases
-        for (uint64_t k = 0; k < list->position; k += 1) {
-            if (rvalue(list->elements[k]) == elements[i]) {
+        for (uint64_t k = 0; k < buffer->capacity; k += 1) {
+            if (rvalue(buffer->elements[k].data) == 
+                            elements[i].data) {
                 search_progress.found += 1;
+                break;
             }
+        }
+
+        // a greedy mechanism: to ensure breaking the loop
+        // premarturely if the list buffer has been exhausted
+        // and the found items are less than expected (i.e., item is not found)
+        // as by the end of the former loop each time; this must be true:
+        // search_progress.found == search_progress.length
+        if (search_progress.found < search_progress.length) {
+            return ENOELEMENT;
         }
     }
     
-    if (search_progress.found == search_progress.length) {
-        return PASS; // all items are found!
-    }
-    
     // elements not found!
-    return ENOELEMENT;
+    return PASS;
 }
 
-static inline status_code contiguous_buffer_contains(list *list, list_element *element) {
-    if (rvalue(list) == NULL || rvalue(element) == NULL) {
+static inline status_code contiguous_buffer_contains(list *buffer, list_element *element) {
+    if (NULL == buffer || NULL == element) {
         return EUNDEFINEDBUFFER;
     }
     
     // ----- Clock Complexity Analysis ------
     // loop closure Pi(V2) = limit, N(c2) = V2 * E'(I) = limit * (1 + 1)
     // this subroutine complexity rises linearly when the length of the elements increases
-    for (uint64_t i = 0; i < list->position; i += 1) {
-        if (rvalue(list->elements[i]) == element) {
+    for (uint64_t i = 0; i < buffer->capacity; i += 1) {
+        list_element *buffer_element = buffer->elements + i;
+        if (rvalue(buffer_element->data) 
+                == element->data) {
             return PASS;
         }
     }
     return ENOELEMENT;
 }
 
-static inline status_code contiguous_buffer_get(list *list, uint64_t index,
-                                                list_element **element) {
-    if (rvalue(list) == NULL || rvalue(element) == NULL) {
+static inline status_code contiguous_buffer_compare(list *buffer, list_element *element) {
+    if (NULL == buffer || NULL == element || 0 == buffer->capacity) {
+        return EUNDEFINEDBUFFER;
+    }
+
+    if (NULL == element->compare) {
+        return UNEXPECTED_ERROR;
+    }
+
+    for (uint64_t i = 0; i < buffer->capacity; i += 1) {
+        list_element *buffer_element = buffer->elements + i;
+        if (PASS != element->compare(element, buffer_element)) {
+            continue;
+        }
+        return PASS;
+    }
+
+
+    return ENOELEMENT;
+}
+
+static inline status_code contiguous_buffer_get(list *buffer, uint64_t index,
+                                                list_element *out) {
+    if (NULL == buffer || NULL == out) {
         return EUNDEFINEDBUFFER;
     }
     
-    if (index >= list->limit) {
+    if (index >= buffer->capacity) {
         return EUNDEFINEDBUFFER;
     }
-    *element = list->elements[index];
-    if (NULL == *element) {
-        return ENOELEMENT;
-    }
+    list_element *buffer_element = buffer->elements + index;
+
+    out->data = buffer_element->data;
+    out->metadata = buffer_element->metadata;
+    out->size = buffer_element->size;
+    out->type = buffer_element->type;
+
     return PASS;
 }
 
-static inline status_code contiguous_buffer_indexof(list *list, list_element *element, uint64_t *index) {
-    if (rvalue(list) == NULL ||
-            rvalue(element) == NULL || rvalue(index) == NULL) {
+static inline status_code contiguous_buffer_indexof(list *buffer, list_element *element, uint64_t *index) {
+    if (NULL == buffer ||
+            NULL == index || NULL == element) {
         return EUNDEFINEDBUFFER;
     }
     
-    for (uint64_t i = 0; i < list->position; i++) {
-        if (rvalue(list->elements[i]) == element) {
+    for (uint64_t i = 0; i < buffer->position; i++) {
+        list_element *buffer_element = buffer->elements + i;
+        if (rvalue(buffer_element->data) == element->data) {
             *index = i;
             return PASS;
         }
@@ -427,21 +494,21 @@ static inline status_code dynamic_alloc_update_buffer_size(list *buffer, uint64_
         return EUNDEFINEDBUFFER;
     }
     // expand
-    if (caller == buffer->function_table->add ||
-        caller == buffer->function_table->insert ||
-        caller == buffer->function_table->insert_overwrite) {
+    if (caller == buffer->operations->add ||
+        caller == buffer->operations->insert ||
+        caller == buffer->operations->insert_overwrite) {
 
-        buffer->elements = realloc(buffer->elements, buffer->limit * sizeof(list_element *));
+        buffer->elements = realloc(buffer->elements, buffer->capacity * sizeof(list_element));
         if (NULL == buffer->elements) {
             return EBUFFERTURNCATION;
         }
 
         memset(buffer->elements + old_limit, 0,
-        (buffer->limit - old_limit) * sizeof(list_element *));
-    } else if (caller == buffer->function_table->remove_by_index) {
+        (buffer->capacity - old_limit) * sizeof(list_element));
+    } else if (caller == buffer->operations->remove_by_index) {
         // shrink
-        buffer->limit >>= 2; // shrunk the limit by power of 2
-        buffer->elements = realloc(buffer->elements, (size_t) (buffer->position << 2) * sizeof(list_element*));
+        buffer->capacity >>= 2; // shrunk the limit by power of 2
+        buffer->elements = realloc(buffer->elements, (size_t) (buffer->position << 2) * sizeof(list_element));
     }
 
     if (NULL == buffer->elements) {
@@ -451,9 +518,9 @@ static inline status_code dynamic_alloc_update_buffer_size(list *buffer, uint64_
     return PASS;
 }
 
-status_code init_contiguous_buffer(list *list, list_element **elements, list_function_table *table, api_lifecycle *lifecycle) {
+status_code init_contiguous_buffer(list *list, list_element *elements, list_operations *table, api_lifecycle *lifecycle) {
     if (rvalue(list) == NULL || rvalue(elements) == NULL ||
-        rvalue(table) == NULL || list->limit == 0) {
+        rvalue(table) == NULL || list->capacity == 0) {
         return EUNDEFINEDBUFFER;
     }
     
@@ -467,6 +534,7 @@ status_code init_contiguous_buffer(list *list, list_element **elements, list_fun
     table->remove_all = &contiguous_buffer_remove_all; // tested!
     table->retains_all = NULL;
     table->contains = &contiguous_buffer_contains; // tested!
+    table->compare = &contiguous_buffer_compare;
     table->contains_all = &contiguous_buffer_contains_all; // tested!
     table->resize = &contiguous_buffer_resize;
     table->get = &contiguous_buffer_get; // tested!
@@ -477,7 +545,7 @@ status_code init_contiguous_buffer(list *list, list_element **elements, list_fun
     // default update buffer size function
     table->update_buffer_size = &dynamic_alloc_update_buffer_size;
 
-    list->function_table = table;
+    list->operations = table;
     list->elements = elements;
     
     list->position = 0;
