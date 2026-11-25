@@ -1,9 +1,11 @@
+#include "electronetsoft/util/types.h"
 #include <electronetsoft/arithmos/patterns/pattern_matching.h>
 #include <electronetsoft/arithmos/adt/map.h>
 #include <electronetsoft/util/maps/lookup_table_util.h>
 #include <math.h>
 #include <alloca.h>
 #include <stdint.h>
+#include <stdio.h>
 #include <time.h>
 
 static inline status_code __lookup_preprocessor(text in, text pattern, size_t i) {
@@ -41,7 +43,7 @@ static inline status_code __lookup_preprocessor(text in, text pattern, size_t i)
 static inline status_code __eval_pattern(text in, text pattern, size_t leading_index) {
     for (size_t i = 0; i < pattern.length; i++) {
         // preprocessor memory validation
-        if ((leading_index + i) >= in.length) {
+        if ((leading_index + i) >= in.length - 2) {
             return ENOELEMENT;
         }
         if (in.chars[leading_index + i] != pattern.chars[i]) {
@@ -51,47 +53,45 @@ static inline status_code __eval_pattern(text in, text pattern, size_t leading_i
     return PASS;
 }
 
-static inline status_code __sigma_locate_pattern(map hashmap, text in,
+static inline status_code __sigma_locate_pattern(map *hashmap, text in,
                                                  text pattern,
                                                  text_substring *out) {
 
     status_code __code;
     map_element __element = {0};
-    list_element *__list_element = NULL;
+    list_element __list_element = {0};
     typed_pointer lookup_key = {0};
     size_t leading_index = 0;
-
     char initial_char[2] = {pattern.chars[0], '\0'};
-    __code = hashmap.function_table->get_raw(&hashmap, (typed_pointer) {
+
+    __code = hashmap->operations->get_raw(hashmap, (typed_pointer) {
             .address.str = (char *) initial_char,
             .type = TYPE_STR
     }, &__element);
-
     if (PASS != __code) {
         return ENOELEMENT;
     }
 
-    if (ELEMENT_LIST == __element.value->type) {
-        list *__buffer = __element.value->data;
+    if (ELEMENT_LIST == __element.value.type) {
+        list *__buffer = __element.value.data;
 
         if (NULL == __buffer || NULL == __buffer->elements) {
             return EUNDEFINEDBUFFER;
         }
 
-        for (uint64_t j = 0; j < __buffer->limit; j++) {
-            __code = __buffer->function_table->get(__buffer, j, &__list_element);
+        for (uint64_t j = 0; j < __buffer->position; j++) {
+            __code = __buffer->operations->get(__buffer, j, &__list_element);
             if (PASS != __code) {
-                if (j == __buffer->limit - 1) {
+                if (j == __buffer->position - 1) {
                     return ENOELEMENT;
                 }
                 continue;
             }
 
-            lookup_key = __list_element->metadata;
-            leading_index = *((size_t *) __list_element->data);
-
+            lookup_key = __list_element.metadata;
+            leading_index = *((size_t *) __list_element.data);
             if (strcmp(lookup_key.address.str, initial_char) != 0) {
-                if (j == __buffer->limit - 1) {
+                if (j == __buffer->position - 1) {
                     return ENOELEMENT;
                 }
                 continue;
@@ -99,16 +99,15 @@ static inline status_code __sigma_locate_pattern(map hashmap, text in,
 
             __code = __lookup_preprocessor(in, pattern, leading_index);
             if (PASS != __code) {
-                if (j == __buffer->limit - 1) {
+                if (j == __buffer->position - 1) {
                     return ENOELEMENT;
                 }
                 continue;
             }
-
             // start index found
             __code = __eval_pattern(in, pattern, leading_index);
             if (PASS != __code) {
-                if (j == __buffer->limit - 1) {
+                if (j == __buffer->position - 1) {
                     return ENOELEMENT;
                 }
                 continue;
@@ -122,8 +121,8 @@ static inline status_code __sigma_locate_pattern(map hashmap, text in,
     }
 
     __list_element = __element.value;
-    leading_index = *((size_t *) __list_element->data);
-    lookup_key = __list_element->metadata;
+    leading_index = *((size_t *) __list_element.data);
+    lookup_key = __list_element.metadata;
 
     if (strcmp(lookup_key.address.str, initial_char) != 0) {
         return ENOELEMENT;
@@ -201,31 +200,23 @@ status_code find_sigma_locator(text in, text pattern, text_substring *out) {
             .type = MAP_TYPE_HASHMAP,
             .col_scheme = ALLOW_DUPLICATES
     };
-    map_function_table table = {0};
+    map_operations operations = {0};
     map_element element = {0};
 
-    status_code __code = init_map_function_table(&hash_map, &table, NULL);
+    status_code __code = init_map(&hash_map, &operations, NULL);
     if (PASS != __code) {
-        deinit_map_function_table(&hash_map, NULL);
+        deinit_map(&hash_map, NULL);
         return __code;
     }
 
     char *__keys_buffer = alloca(sizeof(char) * in.length * 2);
     size_t *__indices_buffer = alloca(sizeof(size_t) * in.length);
-    list_element *elements = alloca(sizeof(list_element) * in.length);
-    map_element *__map_elements = alloca(sizeof(map_element) * in.length);
-    lookup_buffer_proc processors = {
-         .lookup_preprocessor = NULL,
-    };
 
     __code = lookup_table_init(&hash_map, (lookup_buffer) {
             .in = in,
             .pattern = pattern,
-            .__elements = elements,
             .__indices = __indices_buffer,
             .__keys = __keys_buffer,
-            .__map_elements = __map_elements,
-            .processors = &processors
     }, USE_INDICES);
 
     if (PASS != __code) {
@@ -251,18 +242,10 @@ status_code find_sigma_locator(text in, text pattern, text_substring *out) {
     // Worst Runtime: O(n + d.m); where (n) is the length of the input text
     //                                  (m) is the length of the input pattern
     //                                  (d) is the number of duplicates of the first character in the pattern
-    clock_t start = clock();
 
-    __code = __sigma_locate_pattern(hash_map, in, pattern, out);
+    __code = __sigma_locate_pattern(&hash_map, in, pattern, out);
     if (PASS == __code) {
-        clock_t end = clock();
-
-        double elapsed =
-                (double)(end - start) / CLOCKS_PER_SEC;
-
-        printf("Elapsed CPU time: %f seconds\n", elapsed);
-
-        __code = deinit_map_function_table(&hash_map, NULL);
+        __code = deinit_map(&hash_map, NULL);
         if (PASS != __code) {
             return __code;
         }
@@ -270,7 +253,7 @@ status_code find_sigma_locator(text in, text pattern, text_substring *out) {
     }
 
     // postprocessing automata
-    __code = deinit_map_function_table(&hash_map, NULL);
+    __code = deinit_map(&hash_map, NULL);
     if (PASS != __code) {
         return __code;
     }
