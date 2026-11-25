@@ -23,7 +23,7 @@ struct linked_buffer {
 
 status_code init_linked_buffer(list *list,
                                list_element **elements,
-                               list_function_table *table,
+                               list_operations *table,
                                api_lifecycle *lifecycle);
 
 #ifdef __cplusplus

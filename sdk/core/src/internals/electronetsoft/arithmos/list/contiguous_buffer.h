@@ -9,8 +9,8 @@ extern "C" {
 #endif
 
 status_code init_contiguous_buffer(list *list,
-                                   list_element **elements,
-                                   list_function_table *table,
+                                   list_element *elements,
+                                   list_operations *table,
                                    api_lifecycle *lifecycle);
 
 #ifdef __cplusplus
