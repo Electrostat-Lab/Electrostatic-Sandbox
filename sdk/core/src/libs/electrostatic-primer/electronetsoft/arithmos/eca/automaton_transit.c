@@ -28,7 +28,7 @@ status_code automaton_transit(automaton *machine, automaton_component *comp) {
     status_code __code;
 
     if (machine->is_deterministic) {
-        __code = machine->hashmap->function_table->get(machine->hashmap, p, &element);
+        __code = machine->hashmap->operations->get(machine->hashmap, p, &element);
         if (PASS == __code) {
             machine->transition_callback.transition_failure(comp, INVALID_OP);
             return INVALID_OP;
@@ -36,21 +36,21 @@ status_code automaton_transit(automaton *machine, automaton_component *comp) {
             // transit the machine
             // add the pathway
 
-            list_element *carrier = calloc(1, sizeof(list_element));
-            carrier->type = ELEMENT_MAP_ITEM;
-            carrier->data = comp;
-            carrier->size = sizeof(automaton_component);
+            // list_element *carrier = calloc(1, sizeof(list_element));
+            // carrier->type = ELEMENT_MAP_ITEM;
+            // carrier->data = comp;
+            // carrier->size = sizeof(automaton_component);
 
-            element.value = carrier;
-            element.key = p;
-            __code = machine->hashmap->function_table->insert(machine->hashmap, &element);
-            if (PASS != __code) {
-                return __code;
-            }
-            machine->current_state = comp->next;
-            machine->current_input = comp->input;
+            // element.value = carrier;
+            // element.key = p;
+            // __code = machine->hashmap->function_table->insert(machine->hashmap, &element);
+            // if (PASS != __code) {
+            //     return __code;
+            // }
+            // machine->current_state = comp->next;
+            // machine->current_input = comp->input;
 
-            machine->transition_callback.transition_success(comp);
+            // machine->transition_callback.transition_success(comp);
 
             return PASS;
         }
