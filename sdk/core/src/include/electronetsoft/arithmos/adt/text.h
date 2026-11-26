@@ -18,15 +18,15 @@ extern "C" {
 
 struct text {
     const char *chars;
-    size_t length;
-    size_t position;
+    uint64_t length;
+    uint64_t position;
     bool override_position;
     text_operations *operations;
 };
 
 struct text_substring {
-    size_t start_index;
-    size_t length;
+    uint64_t start_index;
+    uint64_t length;
 };
 
 struct text_operations {
