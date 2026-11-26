@@ -1,4 +1,4 @@
-#include "electronetsoft/util/types.h"
+#include <electronetsoft/util/types.h>
 #include <electronetsoft/arithmos/patterns/pattern_matching.h>
 #include <electronetsoft/arithmos/adt/map.h>
 #include <electronetsoft/util/maps/lookup_table_util.h>
@@ -245,11 +245,7 @@ status_code find_sigma_locator(text in, text pattern, text_substring *out) {
 
     __code = __sigma_locate_pattern(&hash_map, in, pattern, out);
     if (PASS == __code) {
-        __code = deinit_map(&hash_map, NULL);
-        if (PASS != __code) {
-            return __code;
-        }
-        return __code;
+        return deinit_map(&hash_map, NULL);
     }
 
     // postprocessing automata
