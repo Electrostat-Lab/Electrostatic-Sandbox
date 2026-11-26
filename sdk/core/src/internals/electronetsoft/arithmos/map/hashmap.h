@@ -7,10 +7,10 @@
 extern "C" {
 #endif
 
-status_code hashmap_init(map *, map_function_table *,
+status_code hashmap_init(map *, map_operations *,
                                api_lifecycle *);
 
-status_code hashmap_init_limit(map *, uint64_t, map_function_table *,
+status_code hashmap_init_capacity(map *, uint64_t, map_operations *,
                                api_lifecycle *);
 
 

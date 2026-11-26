@@ -91,7 +91,11 @@ static inline status_code hashmap_rehash(map *hashmap, uint64_t capacity) {
             if (NULL == __buffer->elements) {
                 continue;
             }
-            for (uint64_t j = 0; j < __buffer->capacity; j++) {
+            // use position to track the elements
+            // not the capactiy; as the inner chains use
+            // contiguous_buffer_add which respects the
+            // position
+            for (uint64_t j = 0; j < __buffer->position; j++) {
                 // rehash the key
                 hasher.key = __buffer->elements[j].metadata;
                 __code = crypto_hashkey_compress64(hasher, capacity);
@@ -318,9 +322,7 @@ static inline status_code __hashmap_remove(map *hashmap, hash_component hasher) 
             free(buffer->elements);
             free(buffer);
             
-            *buffer_element = (list_element) {0};
-            hashmap->count -= 1;
-            return PASS;
+            goto RESET;
         }
         key_element __key_element = {
                 .value = {0},
@@ -338,20 +340,19 @@ static inline status_code __hashmap_remove(map *hashmap, hash_component hasher) 
             return __code;
         }
 
-        if (NULL != hashmap->processors &&
-            NULL != hashmap->processors->on_removal) {
-            hashmap->processors->on_removal(hashmap, buffer, *(hasher.hash));
-        }
-
-        return PASS;
+        goto POSTPROCESSOR;
     }
 
-    *buffer_element = (list_element) {0};
-    hashmap->count -= 1;
+    RESET: {
+        *buffer_element = (list_element) {0};
+        hashmap->count -= 1;
+    }
 
-    if (NULL != hashmap->processors &&
-            NULL != hashmap->processors->on_removal) {
-        hashmap->processors->on_removal(hashmap, hashmap->adt, *(hasher.hash));
+    POSTPROCESSOR: {
+        if (NULL != hashmap->processors &&
+                NULL != hashmap->processors->on_removal) {
+            hashmap->processors->on_removal(hashmap, hashmap->adt, *(hasher.hash));
+        }
     }
 
     return PASS;
@@ -465,10 +466,7 @@ status_code hashmap_iterator(map *hashmap,
             if (NULL == __buffer->elements) {
                 continue;
             }
-            for (uint64_t j = 0; j < __buffer->capacity; j++) {
-                if (ELEMENT_MAP_ITEM != __buffer->elements[j].type) {
-                    continue;
-                }
+            for (uint64_t j = 0; j < __buffer->position; j++) {
                 element.value = __buffer->elements[j];
                 element.key = __buffer->elements[j].metadata;
                 __code = callback(hashmap, &element);
@@ -501,9 +499,9 @@ status_code map_get_lambda_factor(map *hashmap, float *lambda) {
     return PASS;
 }
 
-status_code hashmap_init_limit(map *hashmap, uint64_t limit, map_operations *table,
+status_code hashmap_init_capacity(map *hashmap, uint64_t limit, map_operations *operations,
                                api_lifecycle *lifecycle) {
-    if (NULL == hashmap || NULL == table) {
+    if (NULL == hashmap || NULL == operations) {
         return EUNDEFINEDBUFFER;
     }
 
@@ -519,18 +517,18 @@ status_code hashmap_init_limit(map *hashmap, uint64_t limit, map_operations *tab
     hashmap->adt = buffer;
     buffer->col_scheme = hashmap->col_scheme;
     hashmap->type = MAP_TYPE_HASHMAP;
-    hashmap->operations = table;
+    hashmap->operations = operations;
 
-    table->insert = &hashmap_insert;
-    table->insert_all = &hashmap_insert_all;
-    table->rehash = &hashmap_rehash;
-    table->iterator = &hashmap_iterator;
-    table->contains = &hashmap_contains;
-    table->contains_all = &hashmap_contains_all;
-    table->get = &hashmap_get;
-    table->get_raw = &hashmap_get_raw;
-    table->remove = &hashmap_remove;
-    table->remove_all = &hashmap_remove_all;
+    operations->insert = &hashmap_insert;
+    operations->insert_all = &hashmap_insert_all;
+    operations->rehash = &hashmap_rehash;
+    operations->iterator = &hashmap_iterator;
+    operations->contains = &hashmap_contains;
+    operations->contains_all = &hashmap_contains_all;
+    operations->get = &hashmap_get;
+    operations->get_raw = &hashmap_get_raw;
+    operations->remove = &hashmap_remove;
+    operations->remove_all = &hashmap_remove_all;
 
     if (NULL != hashmap->processors &&
         NULL != hashmap->processors->on_initialization) {
@@ -542,7 +540,7 @@ status_code hashmap_init_limit(map *hashmap, uint64_t limit, map_operations *tab
 
 status_code hashmap_init(map *hashmap, map_operations *table,
                          api_lifecycle *lifecycle) {
-    return hashmap_init_limit(hashmap, (1024 << 2) + 1, table, lifecycle);
+    return hashmap_init_capacity(hashmap, (1024 << 2) + 1, table, lifecycle);
 }
 
 status_code hashmap_deinit(map *hashmap,

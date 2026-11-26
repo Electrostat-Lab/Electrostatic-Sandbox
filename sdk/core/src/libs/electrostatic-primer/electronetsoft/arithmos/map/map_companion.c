@@ -71,11 +71,8 @@ status_code get_element_by_str_key(list *buffer,
     typed_pointer __key1 = {0};
     status_code __code;
 
-    for (uint64_t i = 0; i < buffer->capacity; i += 1) {
+    for (uint64_t i = 0; i < buffer->position; i += 1) {
         __key1 = buffer->elements[i].metadata;
-        if (NULL == __key1.address.str) {
-            continue;
-        }
         if (strcmp(__key0, __key1.address.str) != 0) {
             __code = ENOELEMENT;
             continue;
@@ -97,11 +94,8 @@ status_code get_element_by_long_key(list *buffer, uint64_t *key,
     typed_pointer __key1 = {0};
     status_code __code;
 
-    for (uint64_t i = 0; i < buffer->capacity; i += 1) {
+    for (uint64_t i = 0; i < buffer->position; i += 1) {
         __key1 = buffer->elements[i].metadata;
-        if (NULL == __key1.address.id) {
-            continue;
-        }
         if (*__key1.address.id != *key) {
             __code = ENOELEMENT;
             continue;
