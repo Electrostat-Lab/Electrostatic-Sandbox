@@ -16,7 +16,7 @@ extern "C" { // disables C++ Name Mangling
 
 // Abstract Data Types for Lists
 typedef struct list (list);
-typedef struct list_info (list_info);
+typedef struct iterator_info (iterator_info);
 
 typedef enum list_type {
     CONTIGUOUS_BUFFER,
@@ -24,7 +24,7 @@ typedef enum list_type {
 } list_type;
 
 typedef struct list_element (list_element);
-typedef struct list_function_table (list_function_table);
+typedef struct list_operations (list_operations);
 
 // Concretized types for linked buffers
 typedef struct linked_buffer (linked_buffer);
@@ -139,7 +139,7 @@ typedef enum map_type {
     MAP_TYPE_HASHMAP = COLUMN_CONVENTION_ITERATOR - 1,
     MAP_TYPE_TREEMAP = MAP_TYPE_HASHMAP - 1
 } map_type;
-typedef struct map_function_table (map_function_table);
+typedef struct map_operations (map_operations);
 typedef struct map_processors (map_processors);
 typedef struct hash_component (hash_component);
 
@@ -157,7 +157,7 @@ typedef enum {
 } element_type;
 
 typedef struct text (text);
-typedef struct text_op (text_op);
+typedef struct text_operations (text_operations);
 typedef struct text_substring (text_substring);
 
 typedef struct eca (eca);
