@@ -21,7 +21,7 @@ union pointer {
     list_element *m_list_element;
     list_element **m_elements;
     linked_buffer *m_linked_buffer;
-    list_function_table *m_list_function_table;
+    list_operations *m_list_operations;
     uint64_t *id;
     char *str;
     int *m_int;

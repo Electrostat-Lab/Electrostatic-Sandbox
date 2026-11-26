@@ -52,10 +52,11 @@ struct list_element {
   void *data;
   typed_pointer metadata;
   size_t size;
+  status_code (*compare)(list_element *, list_element *);
   element_type type;
 };
 
-struct list_info {
+struct iterator_info {
   uint64_t index;
   uint64_t length;
   uint64_t rate;
@@ -63,33 +64,34 @@ struct list_info {
 };
 
 struct list {
-  list_element **elements;
-  list_function_table *function_table;
+  list_element *elements;
+  list_operations *operations;
   list_type type;
   collision_scheme col_scheme;
   memory_partition elements_memory;
   uint64_t position;
-  uint64_t limit;
+  uint64_t capacity;
   uint64_t hash_key;
 };
 
-struct list_function_table {
+struct list_operations {
   status_code (*contains)(list *, list_element *);
-  status_code (*iterator)(list *, list_info,
-          status_code (*callback)(list *, list_info, list_element *));
+  status_code (*compare)(list *, list_element *);
+  status_code (*iterator)(list *, iterator_info,
+          status_code (*callback)(list *, iterator_info, list_element *));
   status_code (*add)(list *, list_element *);
   status_code (*insert)(list *, list_element *, uint64_t);
   status_code (*on_collision)(list *, uint64_t, list_element *);
   status_code (*insert_overwrite)(list *, list_element *, uint64_t);
   status_code (*on_collision_overwrite)(list *, uint64_t, list_element *);
-  status_code (*get)(list *, uint64_t, list_element **);
+  status_code (*get)(list *, uint64_t, list_element *);
   status_code (*index_of)(list *, list_element *, uint64_t *);
   status_code (*resize)(list *, uint16_t);
   status_code (*update_buffer_size)(list *, uint64_t, void *);
   status_code (*remove_by_element)(list *, list_element *);
   status_code (*remove_by_index)(list *, uint64_t);
-  status_code (*contains_all)(list *, list_element **);
-  status_code (*add_all)(list *, list_element **);
+  status_code (*contains_all)(list *, list_element *, size_t);
+  status_code (*add_all)(list *, list_element *, size_t);
   status_code (*remove_all)(list *, list_element **);
   status_code (*retains_all)(list *, list_element **);
   status_code (*get_start_address)(list *, list_element **);
@@ -97,8 +99,8 @@ struct list_function_table {
   api_lifecycle *lifecycle;
 };
 
-status_code init_list_function_table(list *, list_element **,
-                                     list_function_table *, api_lifecycle *lifecycle);
+status_code init_list(list *, list_element *,
+                                     list_operations *, api_lifecycle *lifecycle);
 
 #ifdef __cplusplus
 }

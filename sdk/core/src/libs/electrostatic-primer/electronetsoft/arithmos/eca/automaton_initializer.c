@@ -1,11 +1,9 @@
+#include "electronetsoft/util/types.h"
 #include <electronetsoft/arithmos/eca/automata.h>
 
 static inline status_code __iterator_callback(map *hashmap, map_element *element) {
-    if (NULL == element->value) {
-        return PASS;
-    }
-
-    free(element->value);
+    element->value = (list_element) {0};
+    element->key = (typed_pointer) {0};
 
     return PASS;
 }
@@ -25,12 +23,12 @@ status_code automaton_init(automaton *machine) {
     }
     machine->hashmap->type = MAP_TYPE_HASHMAP;
 
-    map_function_table *table = calloc(1, sizeof(map_function_table));
+    map_operations *table = calloc(1, sizeof(map_operations));
     if (NULL == table) {
         return EUNDEFINEDBUFFER;
     }
 
-    status_code __code = init_map_function_table(machine->hashmap, table, NULL);
+    status_code __code = init_map(machine->hashmap, table, NULL);
     if (PASS != __code) {
         return __code;
     }
@@ -52,12 +50,12 @@ status_code automaton_deinit(automaton *machine) {
 
     status_code __code;
 
-    __code = machine->hashmap->function_table->iterator(machine->hashmap, &__iterator_callback);
+    __code = machine->hashmap->operations->iterator(machine->hashmap, &__iterator_callback);
     if (PASS != __code) {
         return __code;
     }
 
-    __code = deinit_map_function_table(machine->hashmap, NULL);
+    __code = deinit_map(machine->hashmap, NULL);
     if (PASS != __code) {
         return __code;
     }

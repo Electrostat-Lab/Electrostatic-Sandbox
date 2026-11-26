@@ -1,3 +1,4 @@
+#include <electronetsoft/util/types.h>
 #include <electronetsoft/arithmos/adt/list.h>
 #include <electronetsoft/util/unit-testing/unit_test.h>
 #include <electronetsoft/util/console/colors.h>
@@ -21,23 +22,23 @@ static inline void on_assertion_failure(unit_test *test) {
 }
 
 int main() {
-    list_function_table table = {
+    list_operations operations = {
     };
     
     list buffer = {
         .type = CONTIGUOUS_BUFFER,
-        .function_table = &table,
-        .limit = 8 << 2
+        .operations = &operations,
+        .capacity = 8 << 2
     };
 
     // dynamically heap-allocate block for pointers
-    list_element **elements = calloc(buffer.limit, sizeof(list_element*));
+    list_element *elements = calloc(buffer.capacity, sizeof(list_element));
     
     // automatically stack-allocate a block for the unit test data
     list_element element = {
     };
 
-    status_code __code = init_list_function_table(&buffer, elements, &table, NULL);
+    status_code __code = init_list(&buffer, elements, &operations, NULL);
     if (PASS == __code) {
         fprintf(stdout, GREEN "Unit tests buffer init has succeeded!\n" RESET);
     } else {

@@ -8,14 +8,14 @@
 
 static inline status_code get_chain(list *buffer, linked_buffer **chain) {
     // preprocessing -- Input Validation
-    if (rvalue(buffer) == NULL || rvalue(buffer->elements[0]) == NULL) {
+    if (rvalue(buffer) == NULL || rvalue(buffer->elements) == NULL) {
         // log memory failure
         // use printf temporarily
         fprintf(stdout, "Segment Dereferencing has failed2!\n");
         return EUNDEFINEDBUFFER;
     }
     // processing -- LOAD instruction for the working address
-    *chain = (*buffer->elements)->data;
+    *chain = buffer->elements->data;
     return PASS;
 }
 
@@ -165,12 +165,12 @@ static inline status_code linked_buffer_add(list *buffer, list_element *element)
         return EINCOMPATTYPE;
     }
     // preprocessing automata -- Buffer limit check and resize
-    if (0 != buffer->limit && buffer->position >= buffer->limit) {
+    if (0 != buffer->capacity && buffer->position >= buffer->capacity) {
         // run a stretching algorithm
         // the stretching algorithm
-        if (NULL != buffer->function_table &&
-                NULL != buffer->function_table->resize) {
-            buffer->function_table->resize(buffer, 0x02);
+        if (NULL != buffer->operations &&
+                NULL != buffer->operations->resize) {
+            buffer->operations->resize(buffer, 0x02);
         } else {
             return INVALID_OP;
         }
@@ -439,9 +439,9 @@ static inline status_code linked_buffer_remove_by_index(list *buffer, uint64_t i
     return linked_buffer_remove_by_element(buffer, target);
 }
 
-static inline status_code linked_buffer_iterator(list *buffer, list_info info,
+static inline status_code linked_buffer_iterator(list *buffer, iterator_info info,
                                              status_code (*callback)(list *,
-                                                     list_info, list_element *)) {
+                                                     iterator_info, list_element *)) {
     // pre-processor automata -- Input Validation
     if (rvalue(buffer) == NULL || rvalue(callback) == NULL) {
         return EUNDEFINEDBUFFER;
@@ -465,10 +465,10 @@ static inline status_code linked_buffer_iterator(list *buffer, list_info info,
             (rvalue(element) != NULL &&
                     rvalue(element) != chain->end_address); // compatible with non-null terminated lists
                         get_next_element(chain, element, &element), index++) {
-        __code = callback(buffer, (list_info) {
+        __code = callback(buffer, (iterator_info) {
             .index = index,
             .metadata = info.metadata,
-            .length = buffer->limit,
+            .length = buffer->capacity,
             .rate = info.rate
         }, element);
         if (PASS != __code) {
@@ -478,44 +478,44 @@ static inline status_code linked_buffer_iterator(list *buffer, list_info info,
     return __code;
 }
 
-status_code init_linked_buffer(list *list, list_element **elements, list_function_table *table, api_lifecycle *lifecycle) {
+status_code init_linked_buffer(list *list, list_element **elements, list_operations *table, api_lifecycle *lifecycle) {
     if (rvalue(list) == NULL || rvalue(elements) == NULL || rvalue(table) == NULL) {
         return EUNDEFINEDBUFFER;
     }
-    table->lifecycle = lifecycle;
-    table->iterator = &linked_buffer_iterator;
-    table->add = &linked_buffer_add;
-    table->add_all = &linked_buffer_add_all;
-    table->remove_by_element = &linked_buffer_remove_by_element;
-    table->remove_by_index = &linked_buffer_remove_by_index;
-    table->remove_all = NULL;
-    table->retains_all = NULL;
-    table->contains = &linked_buffer_contains;
-    table->contains_all = NULL;
-    table->resize = NULL;
-    table->get = &linked_buffer_get;
-    table->index_of = &linked_buffer_index_of;
-    table->get_start_address = NULL;
-    table->get_end_address = NULL;
+    // table->lifecycle = lifecycle;
+    // table->iterator = &linked_buffer_iterator;
+    // table->add = &linked_buffer_add;
+    // table->add_all = &linked_buffer_add_all;
+    // table->remove_by_element = &linked_buffer_remove_by_element;
+    // table->remove_by_index = &linked_buffer_remove_by_index;
+    // table->remove_all = NULL;
+    // table->retains_all = NULL;
+    // table->contains = &linked_buffer_contains;
+    // table->contains_all = NULL;
+    // table->resize = NULL;
+    // table->get = &linked_buffer_get;
+    // table->index_of = &linked_buffer_index_of;
+    // table->get_start_address = NULL;
+    // table->get_end_address = NULL;
 
-    list->function_table = table;
-    list->elements = elements;
-    memset(list->elements, 0, list->position);
+    // list->function_table = table;
+    // list->elements = elements;
+    // memset(list->elements, 0, list->position);
 
-    list->position = 0;
-    list->limit = 8 << 2;
+    // list->position = 0;
+    // list->capacity = 8 << 2;
 
-    linked_buffer *chain = calloc(1, sizeof (linked_buffer));
-    chain->type = DOUBLE_ENDED;
-    list->elements[0] = calloc(1, sizeof (list_element));
-    list->elements[0]->data = chain;
+    // linked_buffer *chain = calloc(1, sizeof (linked_buffer));
+    // chain->type = DOUBLE_ENDED;
+    // list->elements = calloc(1, sizeof (list_element));
+    // list->elements->data = chain;
 
 
 
-    list->elements_memory = (memory_partition) {
-        .start_address = chain->start_address,
-        .end_address = chain->end_address // this is dynamic and it needs to be updated on each WRITE operation!
-    };
+    // list->elements_memory = (memory_partition) {
+    //     .start_address = chain->start_address,
+    //     .end_address = chain->end_address // this is dynamic and it needs to be updated on each WRITE operation!
+    // };
 
     return PASS;
 }

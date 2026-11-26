@@ -66,7 +66,7 @@ static inline status_code __text_substring(text in, text pattern0,
     return PASS;
 }
 
-status_code text_init(text *__text, text_op *__op) {
+status_code text_init(text *__text, text_operations *__op) {
     if (NULL == __text || NULL == __op) {
         return EUNDEFINEDBUFFER;
     }

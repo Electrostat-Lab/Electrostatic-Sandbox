@@ -3,7 +3,7 @@
 #include <electronetsoft/arithmos/adt/list.h>
 #include <stdio.h>
 
-status_code init_map_function_table(map *m, map_function_table *table,
+status_code init_map(map *m, map_operations *table,
                                     api_lifecycle *lifecycle) {
     if (NULL == m || NULL == table) {
         return EUNDEFINEDBUFFER;
@@ -28,7 +28,7 @@ status_code init_map_function_table(map *m, map_function_table *table,
 }
 
 
-status_code deinit_map_function_table(map *m, api_lifecycle *lifecycle) {
+status_code deinit_map(map *m, api_lifecycle *lifecycle) {
     if (NULL == m) {
         return EUNDEFINEDBUFFER;
     }

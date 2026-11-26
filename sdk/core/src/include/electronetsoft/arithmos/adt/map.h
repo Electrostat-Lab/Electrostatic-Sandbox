@@ -13,14 +13,14 @@ extern "C" {
 
 struct map_element {
     typed_pointer key;
-    list_element *value;
+    list_element value;
 };
 
 struct map_processors {
     status_code (*on_initialization)(map *);
     status_code (*on_deinitialization)(map *);
     status_code (*on_insertion)(map *, map_element *, uint64_t);
-    status_code (*on_rehash_dispatch)(map *, list_element **);
+    status_code (*on_rehash_dispatch)(map *, list_element *);
     status_code (*on_removal)(map *, list *, uint64_t);
     status_code (*on_collision)(list *,
                                 uint64_t,
@@ -31,7 +31,7 @@ struct map_processors {
 };
 
 struct map {
-    map_function_table *function_table;
+    map_operations *operations;
     map_type type;
     list *adt;
     map_processors *processors;
@@ -39,25 +39,25 @@ struct map {
     collision_scheme col_scheme;
 };
 
-struct map_function_table {
+struct map_operations {
     status_code (*insert)(map *, map_element *);
-    status_code (*insert_all)(map *, map_element **);
+    status_code (*insert_all)(map *, map_element *, size_t);
     status_code (*remove)(map *, typed_pointer);
-    status_code (*remove_all)(map *, typed_pointer **);
+    status_code (*remove_all)(map *, typed_pointer *, size_t);
     status_code (*rehash)(map *, uint64_t);
     status_code (*contains)(map *, typed_pointer);
-    status_code (*contains_all)(map *, typed_pointer **);
+    status_code (*contains_all)(map *, typed_pointer *, size_t);
     status_code (*get)(map *, typed_pointer key, map_element *);
     status_code (*get_raw)(map *, typed_pointer key, map_element *);
     status_code (*iterator)(map *, status_code (*callback)(map *, map_element *));
 };
 
-status_code init_map_function_table(map *, map_function_table *,
+status_code init_map(map *, map_operations *,
                                     api_lifecycle *);
 
 status_code map_get_lambda_factor(map *, float *);
 
-status_code deinit_map_function_table(map *, api_lifecycle *);
+status_code deinit_map(map *, api_lifecycle *);
 
 #ifdef __cplusplus
 };

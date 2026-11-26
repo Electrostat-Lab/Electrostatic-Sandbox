@@ -21,8 +21,6 @@ typedef struct {
     text pattern;
     size_t *__indices;
     char *__keys;
-    list_element *__elements;
-    map_element *__map_elements;
     lookup_buffer_proc *processors;
 } lookup_buffer;
 

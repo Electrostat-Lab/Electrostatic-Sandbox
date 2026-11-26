@@ -1,3 +1,4 @@
+#include "electronetsoft/util/types.h"
 #include <electronetsoft/util/unit-testing/unit_test.h>
 #include <electronetsoft/util/utilities.h>
 #include <electronetsoft/util/console/colors.h>
@@ -8,7 +9,7 @@
 #define HASHED_TYPE (SPREAD_HASHING(sizeof(unit_test), size_t))
 
 static inline status_code iterator_callback0(list *units,
-                                             list_info info,
+                                             iterator_info info,
                                              list_element *element) {
     if (rvalue(units) == NULL || rvalue(element) == NULL
             || rvalue(element->data) == NULL) {
@@ -24,7 +25,7 @@ static inline status_code iterator_callback0(list *units,
 }
 
 static inline status_code iterator_callback(list *units,
-                                            list_info info,
+                                            iterator_info info,
                                             list_element *element) {
     if (units == NULL || element == NULL || element->data == NULL) {
         return EUNDEFINEDBUFFER;
@@ -48,10 +49,10 @@ int64_t test(unit_test *test) {
 
 status_code test_units(list *units) {
     if (rvalue(units) == NULL
-        || rvalue(units->function_table) == NULL) {
+        || rvalue(units->operations) == NULL) {
         return EUNDEFINEDBUFFER;
     }
-    return units->function_table->iterator(units, (list_info) {
+    return units->operations->iterator(units, (iterator_info) {
        .index = 0,
        .length = units->position,
        .rate = 1
@@ -59,10 +60,10 @@ status_code test_units(list *units) {
 }
 
 status_code assert_test_units(list *units) {
-    if (units == NULL || units->function_table == NULL) {
+    if (units == NULL || units->operations == NULL) {
         return EUNDEFINEDBUFFER;
     }
-    return units->function_table->iterator(units, (list_info) {
+    return units->operations->iterator(units, (iterator_info) {
        .index = 0,
        .length = units->position,
        .rate = 1
@@ -92,25 +93,25 @@ status_code assert_test(unit_test *test) {
 }
 
 status_code add_unit_test(list *units, unit_test *test, list_element *element) {
-    if (units == NULL || units->function_table == NULL || test == NULL) {
+    if (units == NULL || units->operations == NULL || test == NULL) {
         return EUNDEFINEDBUFFER;
     }
     
     element->data = test;
     element->size = HASHED_TYPE;
     
-    return units->function_table->add(units, element);
+    return units->operations->add(units, element);
 }
 
 status_code remove_unit_test(list *units, list_element *element) {
-    if (units == NULL || units->function_table == NULL
+    if (units == NULL || units->operations == NULL
         || element == NULL || element->data == NULL) {
         return EUNDEFINEDBUFFER;
     }
     if (element->size != HASHED_TYPE) {
         return EINCOMPATTYPE;
     }
-    return units->function_table->remove_by_element(units, element);
+    return units->operations->remove_by_element(units, element);
 }
 
 status_code add_unit_tests(list *units, unit_test **tests, list_element **elements) {

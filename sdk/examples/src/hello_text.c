@@ -8,7 +8,7 @@
 
 int main(void) {
     // 1. Prepare the source text
-    text_op __text_op = {0};
+    text_operations __text_op = {0};
 
     const char *source_cstr = "LOCUS       AB664334                 555 bp    DNA     linear   BCT 06-MAR-2012\n"
                               "DEFINITION  Helicobacter pylori cagA gene for cytotoxin associated protein A,\n"
@@ -503,9 +503,8 @@ int main(void) {
             .length = strlen(source_cstr),
             .operations = &__text_op // Replace with your library's text operations table if required by validation
     };
-
     // 2. Prepare the pattern to search for
-    const char *pattern_cstr = "tggcgatcta";
+    const char *pattern_cstr = "caagaattga ctcgtagaat";
     text pattern = {
             .chars = (char *)pattern_cstr,
             .length = strlen(pattern_cstr),

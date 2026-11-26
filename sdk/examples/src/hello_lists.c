@@ -1,8 +1,9 @@
 /**
  * @brief A techdemo showcasing the use of dynamic contiguous buffers of the ElectroNetSoft Arithmos Framework.
- * @copyright BSD-3 Clause License ElectroNetSoft, Arithmos, The Electrostatic-Sandbox SDK project.
+ * @copyright GPLv3 Clause License ElectroNetSoft, Arithmos, The Electrostatic-Sandbox SDK project.
  * @author pavl_g
  */
+#include "electronetsoft/util/types.h"
 #include <alloca.h>
 #include <stddef.h>
 #include <stdio.h>
@@ -16,7 +17,7 @@
  * @param buffer the data buffer of interest
  * @param element the current item of iteration
  */
-status_code iterator_callback(list *buffer, list_info info, list_element *element) {
+status_code iterator_callback(list *buffer, iterator_info info, list_element *element) {
     printf("Index at %lud = %p\n", info.index, element->data);
     return PASS;
 }
@@ -24,18 +25,18 @@ status_code iterator_callback(list *buffer, list_info info, list_element *elemen
 int main() {
 
     // Preprocessing automata (pre-init phase) -- memory allocation
-    list_function_table table = {
+    list_operations operations = {
     };
     list buffer_ = {
             .type = CONTIGUOUS_BUFFER,
-            .function_table = &table,
-            .limit = (8 << 2) + 1,
+            .operations = &operations,
+            .capacity = (8 << 2) + 1,
     };
-    list_element **elements = calloc(buffer_.limit, sizeof(list_element*));
+    list_element *elements = calloc(buffer_.capacity, sizeof(list_element));
     list *buffer = &buffer_;
 
     // Preprocessing automata (initialization phase) -- list initialization
-    status_code _code0 = init_list_function_table(buffer, elements, &table, NULL);
+    status_code _code0 = init_list(buffer, elements, &operations, NULL);
     if (PASS == _code0) {
         printf("Init Succeeded!\n");
     } else {
@@ -50,7 +51,7 @@ int main() {
         *test_data = 260 + i;
         element->data = test_data;
 
-        _code1 = buffer->function_table->add(buffer, element);
+        _code1 = buffer->operations->add(buffer, element);
         if (PASS == _code1) {
             printf("Added Item!\n");
         } else {
@@ -59,10 +60,10 @@ int main() {
     }
 
     // Processing automata -- Data Read and Printing items
-    status_code _code2 = buffer->function_table->iterator(buffer,
-                                                    (list_info) {
+    status_code _code2 = buffer->operations->iterator(buffer,
+                                                    (iterator_info) {
                                                         .index = 0,
-                                                        .length = buffer->limit,
+                                                        .length = buffer->capacity,
                                                         .rate = 2
                                                     }, &iterator_callback);
     if (PASS != _code2) {
@@ -70,14 +71,14 @@ int main() {
     }
 
     // Processing automata -- Test remove
-    status_code _code3 = buffer->function_table->remove_by_index(buffer, 100);
+    status_code _code3 = buffer->operations->remove_by_index(buffer, 100);
     if (PASS != _code3) {
         perror("Failure to remove item\n");
     } else {
-        buffer->function_table->iterator(buffer,
-                                         (list_info) {
+        buffer->operations->iterator(buffer,
+                                         (iterator_info) {
                                                  .index = 0,
-                                                 .length = buffer->limit,
+                                                 .length = buffer->capacity,
                                                  .rate = 1
                                          }, &iterator_callback);
     }

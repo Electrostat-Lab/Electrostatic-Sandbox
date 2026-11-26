@@ -9,7 +9,7 @@ extern "C" {
 #endif
 
 typedef struct {
-    list_element *value;
+    list_element value;
     uint64_t index;
 } key_element;
 

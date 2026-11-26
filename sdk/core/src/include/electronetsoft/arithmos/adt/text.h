@@ -21,7 +21,7 @@ struct text {
     size_t length;
     size_t position;
     bool override_position;
-    text_op *operations;
+    text_operations *operations;
 };
 
 struct text_substring {
@@ -29,7 +29,7 @@ struct text_substring {
     size_t length;
 };
 
-struct text_op {
+struct text_operations {
     /**
      * Substrings the input text using an index and a length.
      */
@@ -56,7 +56,7 @@ struct text_op {
     status_code (*replace)(text, text, text, text *);
 };
 
-status_code text_init(text *, text_op *);
+status_code text_init(text *, text_operations *);
 status_code text_deinit(text *);
 
 #ifdef __cplusplus
