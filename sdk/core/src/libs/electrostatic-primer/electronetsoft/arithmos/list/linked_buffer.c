@@ -169,8 +169,8 @@ static inline status_code linked_buffer_add(list *buffer, list_element *element)
         // run a stretching algorithm
         // the stretching algorithm
         if (NULL != buffer->operations &&
-                NULL != buffer->operations->resize) {
-            buffer->operations->resize(buffer, 0x02);
+                NULL != buffer->operations->calculate_resize) {
+            buffer->operations->calculate_resize(buffer, 1, 0x02, buffer->operations->add);
         } else {
             return INVALID_OP;
         }
