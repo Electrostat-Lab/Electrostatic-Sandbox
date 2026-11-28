@@ -36,7 +36,7 @@
             "name": "Test hello_lists",
             "type": "node-terminal",
             "request": "launch",
-            "command": "./helper-scripts/ci-cd/test-electrostatic.sh hello_lists.c hello-listadt"
+            "command": "./helper-scripts/ci-cd/test-electrostatic.sh hello_lists.c hello_lists"
         },
         {
             "name": "Valgrind - hello_lists",
@@ -48,13 +48,13 @@
             "name": "Test hello_hashmaps",
             "type": "node-terminal",
             "request": "launch",
-            "command": "./helper-scripts/ci-cd/test-electrostatic.sh hello_hashmaps.c hello-hashmaps"
+            "command": "./helper-scripts/ci-cd/test-electrostatic.sh hello_hashmaps.c hello_hashmaps"
         },
         {
             "name": "Valgrind - hello_hashmaps",
             "type": "node-terminal",
             "request": "launch",
-            "command": "valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=all --verbose --num-callers=40 --error-exitcode=1 ./sdk/examples/cmake-build/linux/x86-64/hello-hashmaps.elf"
+            "command": "valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=all --verbose --num-callers=40 --error-exitcode=1 ./sdk/examples/cmake-build/linux/x86-64/hello_hashmaps.elf"
         },
         {
             "name": "Test hello_unittest",
