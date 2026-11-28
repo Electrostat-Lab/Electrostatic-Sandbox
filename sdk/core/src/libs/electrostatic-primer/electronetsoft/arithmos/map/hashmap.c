@@ -210,7 +210,7 @@ static inline status_code hashmap_insert(map *hashmap,
 
 static inline status_code hashmap_insert_all(map *hashmap,
                                              map_element *elements, 
-                                             size_t n_elements) {
+                                             uint64_t n_elements) {
     return PASS;
 }
 
@@ -380,7 +380,7 @@ static inline status_code hashmap_remove(map *hashmap, typed_pointer key) {
 }
 
 static inline status_code hashmap_remove_all(map *hashmap,
-                                             typed_pointer *keys, size_t n_keys) {
+                                             typed_pointer *keys, uint64_t n_keys) {
     // preprocessing automata -- Input Validation
     if (NULL == hashmap || NULL == hashmap->adt ||
            0 == hashmap->adt->capacity || NULL == keys) {
@@ -422,7 +422,7 @@ static inline status_code hashmap_remove_all(map *hashmap,
 }
 
 status_code hashmap_contains_all(map *hashmap,
-                                 typed_pointer *keys, size_t n_keys) {
+                                 typed_pointer *keys, uint64_t n_keys) {
     // preprocessing automata -- Input Validation
     if (NULL == hashmap || NULL == hashmap->adt || NULL == keys ||
         0 == hashmap->adt->capacity || 0 == n_keys) {

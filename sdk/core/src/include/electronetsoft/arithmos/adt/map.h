@@ -41,12 +41,12 @@ struct map {
 
 struct map_operations {
     status_code (*insert)(map *, map_element *);
-    status_code (*insert_all)(map *, map_element *, size_t);
+    status_code (*insert_all)(map *, map_element *, uint64_t);
     status_code (*remove)(map *, typed_pointer);
-    status_code (*remove_all)(map *, typed_pointer *, size_t);
+    status_code (*remove_all)(map *, typed_pointer *, uint64_t);
     status_code (*rehash)(map *, uint64_t);
     status_code (*contains)(map *, typed_pointer);
-    status_code (*contains_all)(map *, typed_pointer *, size_t);
+    status_code (*contains_all)(map *, typed_pointer *, uint64_t);
     status_code (*get)(map *, typed_pointer key, map_element *);
     status_code (*get_raw)(map *, typed_pointer key, map_element *);
     status_code (*iterator)(map *, status_code (*callback)(map *, map_element *));
