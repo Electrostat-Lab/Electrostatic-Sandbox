@@ -18,7 +18,7 @@
  * @param element the current item of iteration
  */
 status_code iterator_callback(list *buffer, iterator_info info, list_element *element) {
-    printf("Index at %lud = %p\n", info.index, element->data);
+    printf("Index at %lu = %p\n", info.index, element->data);
     return PASS;
 }
 
@@ -64,14 +64,14 @@ int main() {
                                                     (iterator_info) {
                                                         .index = 0,
                                                         .length = buffer->capacity,
-                                                        .rate = 2
+                                                        .rate = 1
                                                     }, &iterator_callback);
     if (PASS != _code2) {
         perror("Failure to iterate\n");
     }
 
     // Processing automata -- Test remove
-    status_code _code3 = buffer->operations->remove_by_index(buffer, 100);
+    status_code _code3 = buffer->operations->remove_by_index(buffer, 10);
     if (PASS != _code3) {
         perror("Failure to remove item\n");
     } else {
